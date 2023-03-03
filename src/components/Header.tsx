@@ -12,11 +12,17 @@ export const Header = () => {
   const [isConnectWalletModalOpen, setIsConnectWalletModalOpen] =
     useState<boolean>(false)
 
-  useEffect(() => {
-    if (isConnected) setIsConnectWalletModalOpen(false)
-  }, [isConnected])
+  const [buttonText, setButtonText] = useState<string | null>(t('Disconnect'))
 
-  console.log(isConnected)
+  useEffect(() => {
+    if (isConnected) {
+      setIsConnectWalletModalOpen(false)
+      setButtonText(t('Disconnect'))
+      return
+    }
+    setButtonText(t('Connect'))
+  }, [isConnected, t])
+
   return (
     <>
       <Stack direction={'row'} justifyContent={'space-between'}>
@@ -26,7 +32,7 @@ export const Header = () => {
             isConnected ? disconnect() : setIsConnectWalletModalOpen(true)
           }}
         >
-          {t(isConnected ? 'Disconnect' : 'Connect')}
+          {buttonText}
         </Button>
       </Stack>
       <ConnectWalletModal
