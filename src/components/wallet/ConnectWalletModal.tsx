@@ -1,6 +1,6 @@
 import { Button, Dialog } from '@mui/material'
 import { Stack } from '@mui/system'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { useConnect } from 'wagmi'
 
 interface ConnectWalletModalProps {
@@ -27,7 +27,7 @@ export const ConnectWalletModal = ({
             {connector.name}
           </Button>
         ))}
-        <Button onClick={() => setIsOpen(false)}>{t('Close')}</Button>
+        <Button onClick={() => setIsOpen(false)}>{t('close')}</Button>
       </Stack>
     </Dialog>
   )
