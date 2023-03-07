@@ -1,6 +1,7 @@
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
 import { GetServerSidePropsContext } from 'next'
+import React from 'react'
 
 export default function Home() {
   const { t } = useTranslation()
