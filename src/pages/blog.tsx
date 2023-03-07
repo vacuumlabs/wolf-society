@@ -3,9 +3,9 @@ import { useTranslation } from 'next-i18next'
 import { GetStaticPropsContext } from 'next'
 import React from 'react'
 
-export default function Home() {
+export default function Blog() {
   const { t } = useTranslation()
-  return <h1>{t('welcome')}</h1>
+  return <h1>{t('blog')}</h1>
 }
 
 export async function getStaticProps({ locale }: GetStaticPropsContext) {
