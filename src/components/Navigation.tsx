@@ -7,10 +7,10 @@ import { ConnectButton } from '@rainbow-me/rainbowkit'
 const Navigation = () => {
   const { t } = useTranslation()
   return (
-    <AppBar color="transparent" position="sticky">
+    <AppBar color="default" position="sticky">
       <Toolbar>
         <Typography variant="h6" style={{ flexGrow: 1 }}>
-          Wolf Society Foundation
+          {t('wolfSocietyFoundation')}
         </Typography>
         <Button href="/">{t('donate')}</Button>
         <Button href="/blog">{t('blog')}</Button>
