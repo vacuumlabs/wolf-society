@@ -1,6 +1,9 @@
 {
-  "welcome": "Welcome to Wolf Society Foundation.",
+  "welcome": "Welcome",
+  "wolfSocietyFoundation": "Wolf Society Foundation",
+  "blog": "Blog",
   "disconnect": "Disconnect",
   "connect": "Connect",
-  "close": "Close"
+  "close": "Close",
+  "support": "Support"
 }
