@@ -1,11 +1,11 @@
 import React from 'react'
 import { AppBar, Button, Toolbar, Typography } from '@mui/material'
-import { useTranslation } from 'next-i18next'
 import Support from './Support'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
+import { useTranslations } from '@/utils/hooks/useTranslations'
 
 const Navigation = () => {
-  const { t } = useTranslation()
+  const t = useTranslations()
   return (
     <AppBar color="default" position="sticky">
       <Toolbar>

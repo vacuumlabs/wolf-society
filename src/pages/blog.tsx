@@ -1,17 +1,19 @@
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { useTranslation } from 'next-i18next'
-import { GetStaticPropsContext } from 'next'
 import React from 'react'
+import { GetStaticPropsContext } from 'next'
 import contentful from '@/utils/configs/contentful'
 import { Stack, Typography } from '@mui/material'
 import Post, { TPost } from '@/components/Post'
+import {
+  injectTranslations,
+  useTranslations,
+} from '@/utils/hooks/useTranslations'
 
 type TBlog = {
   posts: TPost[]
 }
 
-export default function Blog({ posts }: TBlog) {
-  const { t } = useTranslation()
+const Blog = ({ posts }: TBlog) => {
+  const t = useTranslations()
   return (
     <Stack padding={4} spacing={8} width="fit-content" alignItems="center">
       <Typography variant="h3">{t('updates')}</Typography>
@@ -33,8 +35,10 @@ export async function getStaticProps({ locale }: GetStaticPropsContext) {
   return {
     props: {
       // Will be passed to the page component as props
-      ...(await serverSideTranslations(locale ?? 'en')),
+      translations: await injectTranslations(locale),
       posts,
     },
   }
 }
+
+export default Blog
