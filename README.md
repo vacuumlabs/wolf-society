@@ -1,6 +1,6 @@
 # wolf-society
 
-Lending App for Wolf Society Foundation.
+Website for Wolf Society Foundation.
 
 ## Getting Started
 
