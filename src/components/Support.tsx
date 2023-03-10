@@ -1,9 +1,9 @@
 import React from 'react'
-import { AppBar, Button, Menu, MenuItem } from '@mui/material'
-import { useTranslation } from 'next-i18next'
+import { Button, Menu, MenuItem } from '@mui/material'
+import { useTranslations } from '@/utils/hooks/useTranslations'
 
 const Support = () => {
-  const { t } = useTranslation()
+  const t = useTranslations()
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 

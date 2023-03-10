@@ -1,6 +1,4 @@
 import type { AppProps } from 'next/app'
-import { appWithTranslation } from 'next-i18next'
-import nextI18NextConfig from '../../next-i18next.config.js'
 import { RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import React from 'react'
 import { WagmiConfig } from 'wagmi'
@@ -8,6 +6,7 @@ import { wagmiClient, chains } from '@/utils/configs/wagmi'
 import '@rainbow-me/rainbowkit/styles.css'
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material'
 import Navigation from '@/components/Navigation'
+import { TranslationsContext } from '@/utils/hooks/useTranslations'
 
 const App = ({ Component, pageProps }: AppProps) => (
   <WagmiConfig client={wagmiClient}>
@@ -15,11 +14,13 @@ const App = ({ Component, pageProps }: AppProps) => (
       <title>Wolf Society</title>
       <ThemeProvider theme={createTheme()}>
         <CssBaseline />
-        <Navigation />
-        <Component {...pageProps} />
+        <TranslationsContext.Provider value={pageProps?.translations}>
+          <Navigation />
+          <Component {...pageProps} />
+        </TranslationsContext.Provider>
       </ThemeProvider>
     </RainbowKitProvider>
   </WagmiConfig>
 )
 
-export default appWithTranslation(App, nextI18NextConfig)
+export default App
