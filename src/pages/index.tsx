@@ -3,11 +3,23 @@ import {
   useTranslations,
 } from '@/utils/hooks/useTranslations'
 import { GetStaticPropsContext } from 'next'
-import React from 'react'
+import { useAccount } from 'wagmi'
+import { useGetNfts } from '@/utils/hooks/useGetNfts'
+import { NftCard } from '@/components/NftCard'
 
 const Home = () => {
   const t = useTranslations()
-  return <h1>{t('welcome')}</h1>
+  const { address } = useAccount()
+  const ownedNfts = useGetNfts(address)
+
+  return (
+    <>
+      <h1>{t('welcome')}</h1>
+      {ownedNfts?.map((nft) => (
+        <NftCard key={nft.contract.address} nft={nft} />
+      ))}
+    </>
+  )
 }
 
 export async function getStaticProps({ locale }: GetStaticPropsContext) {
