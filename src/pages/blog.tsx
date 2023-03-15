@@ -1,6 +1,6 @@
 import React from 'react'
 import { GetServerSidePropsContext } from 'next'
-import { Stack, Typography } from '@mui/material'
+import { Link, Stack, Typography } from '@mui/material'
 import Post, { TPost } from '@/components/Post'
 import {
   injectTranslations,
@@ -23,6 +23,13 @@ const Blog = ({ posts }: TBlog) => {
           <Post key={post.title} {...post} />
         ))}
       </Stack>
+      <Link
+        variant="h3"
+        href={`https://medium.com/@${process.env.NEXT_PUBLIC_MEDIUM_USER}`}
+        target="_blank"
+      >
+        Read more
+      </Link>
     </Stack>
   )
 }
