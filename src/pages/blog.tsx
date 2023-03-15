@@ -1,6 +1,5 @@
 import React from 'react'
-import { GetStaticPropsContext } from 'next'
-import contentful from '@/utils/configs/contentful'
+import { GetServerSidePropsContext } from 'next'
 import { Stack, Typography } from '@mui/material'
 import Post, { TPost } from '@/components/Post'
 import {
@@ -10,10 +9,12 @@ import {
 
 type TBlog = {
   posts: TPost[]
+  errorMessage: string
 }
 
 const Blog = ({ posts }: TBlog) => {
   const t = useTranslations()
+  console.log('posts', posts)
   return (
     <Stack padding={4} spacing={8} width="fit-content" alignItems="center">
       <Typography variant="h3">{t('updates')}</Typography>
@@ -26,17 +27,21 @@ const Blog = ({ posts }: TBlog) => {
   )
 }
 
-export async function getStaticProps({ locale }: GetStaticPropsContext) {
-  const entries = await contentful.getEntries({ content_type: 'post' })
-  const posts = await entries.items.map((item: any) => {
-    return item.fields
-  })
+export async function getServerSideProps({
+  locale,
+}: GetServerSidePropsContext) {
+  const response = await fetch(
+    `https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@${process.env.NEXT_PUBLIC_MEDIUM_USER}`
+  )
+
+  const data = await response.json()
 
   return {
     props: {
       // Will be passed to the page component as props
       translations: await injectTranslations(locale),
-      posts,
+      posts: data.items ?? [],
+      errorMessage: data.message ?? '',
     },
   }
 }
