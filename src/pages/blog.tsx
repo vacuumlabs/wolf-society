@@ -14,7 +14,6 @@ type TBlog = {
 
 const Blog = ({ posts }: TBlog) => {
   const t = useTranslations()
-  console.log('posts', posts)
   return (
     <Stack padding={4} spacing={8} width="fit-content" alignItems="center">
       <Typography variant="h3">{t('updates')}</Typography>
