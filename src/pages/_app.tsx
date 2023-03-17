@@ -112,6 +112,9 @@ const theme = createTheme({
     dkGreen: {
       main: '#2B4B2A',
     },
+    text: {
+      primary: '#1E1E1E',
+    },
   },
   components: {
     MuiButtonBase: {
