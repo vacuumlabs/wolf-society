@@ -37,7 +37,7 @@ const Hero = () => {
           src={heroImage}
           alt="Hero image"
           fill
-          style={{ objectFit: 'cover' }}
+          style={{ objectFit: 'cover', objectPosition: 'top' }}
         />
       </Box>
     </Box>

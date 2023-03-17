@@ -4,7 +4,7 @@ const Manifest = () => {
   return (
     <Box sx={{ bgcolor: 'dkGreen.main', textAlign: 'center' }}>
       <Container>
-        <Stack sx={{ gap: 4, py: '160px' }}>
+        <Stack sx={{ gap: 4, my: { mobile: 10, tablet: 20 } }}>
           <Typography
             variant="h2"
             color="secondary"

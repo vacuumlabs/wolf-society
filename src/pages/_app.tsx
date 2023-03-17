@@ -162,6 +162,7 @@ theme.typography.h2 = {
   fontWeight: 600,
   fontSize: '25px',
   lineHeight: '24px',
+  textTransform: 'uppercase',
   [theme.breakpoints.up('desktopM')]: {
     fontSize: '35px',
     lineHeight: '32px',
@@ -177,6 +178,7 @@ theme.typography.h3 = {
   fontWeight: 600,
   fontSize: '18px',
   lineHeight: '16px',
+  textTransform: 'uppercase',
 }
 // Label
 theme.typography.subtitle1 = {
@@ -209,6 +211,7 @@ theme.typography.button = {
   fontWeight: 700,
   fontSize: '16px',
   lineHeight: '24px',
+  textTransform: 'uppercase',
   [theme.breakpoints.up('desktopM')]: {
     fontSize: '20px',
   },
