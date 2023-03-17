@@ -68,6 +68,11 @@ const theme = createTheme({
   typography: {
     fontFamily: myFont.style.fontFamily,
   },
+  palette: {
+    primary: {
+      main: '#DB372D',
+    },
+  },
 })
 
 const App = ({ Component, pageProps }: AppProps) => (

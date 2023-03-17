@@ -21,10 +21,14 @@ const Home = () => {
             >
               The Earth Is What We ALL Have In Common
             </Typography>
-            <Typography variant="h2" sx={{}}>
-              Together we are supporting projects that matters to the Earth. You
-              are Wolf Society
-            </Typography>
+            <Box>
+              <Typography variant="h2" display="inline">
+                Together we are supporting projects that matters to the Earth.
+              </Typography>
+              <Typography variant="h2" display="inline" color="primary">
+                {} You are Wolf Society
+              </Typography>
+            </Box>
             <Stack sx={{ alignItems: 'center' }}>
               <Button variant="contained" sx={{ borderRadius: 0 }}>
                 Make Impact

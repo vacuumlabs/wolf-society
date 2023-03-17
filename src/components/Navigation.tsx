@@ -14,15 +14,17 @@ import {
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { Translations, useTranslations } from '@/utils/hooks/useTranslations'
 import MenuIcon from '@mui/icons-material/Menu'
+import { useRouter } from 'next/router'
 
 const subpages: { text: keyof Translations; href: string }[] = [
   { text: 'donate', href: '/' },
   { text: 'blog', href: '/blog' },
-  { text: 'support', href: '/' },
+  { text: 'support', href: '/support' },
 ]
 
 const Navigation = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
+  const router = useRouter()
 
   const t = useTranslations()
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -47,11 +49,15 @@ const Navigation = () => {
             flexGrow: 1,
           }}
         >
-          {subpages.map((subpage) => (
-            <Button key={subpage.text} href={subpage.href}>
-              {t(subpage.text)}
-            </Button>
-          ))}
+          {subpages.map((subpage) => {
+            const isCurrentSubpage = router.pathname === subpage.href
+            const color = isCurrentSubpage ? 'primary' : 'inherit'
+            return (
+              <Button key={subpage.text} href={subpage.href} color={color}>
+                {t(subpage.text)}
+              </Button>
+            )
+          })}
         </Stack>
         <Box
           sx={{
