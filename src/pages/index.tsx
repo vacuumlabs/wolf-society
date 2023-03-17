@@ -1,3 +1,4 @@
+import Collections from '@/components/landing/Collections'
 import Hero from '@/components/landing/Hero'
 import Manifest from '@/components/landing/Manifest'
 import Projects from '@/components/landing/Projects'
@@ -16,6 +17,7 @@ const Home = () => {
       <Hero />
       <Manifest />
       <Projects />
+      <Collections />
     </Stack>
   )
 }

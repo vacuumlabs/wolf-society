@@ -50,7 +50,7 @@ const Projects = () => {
           </Stack>
         </Stack>
         {/* Mobile view */}
-        <Stack sx={{ gap: 5, alignItems: 'center' }}>
+        <Stack sx={{ gap: 5, alignItems: 'center', mb: 10 }}>
           {MockedProjects.map((project) => (
             <ProjectCard {...project} key={project.name} />
           ))}
