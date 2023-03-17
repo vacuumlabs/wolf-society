@@ -7,7 +7,7 @@ const Manifest = () => {
         <Stack sx={{ gap: 4, py: '160px' }}>
           <Typography
             variant="h2"
-            color="secondary.dark"
+            color="secondary"
             sx={{ textAlign: 'center' }}
           >
             MANIFEST
@@ -15,7 +15,7 @@ const Manifest = () => {
           <Box>
             <Typography
               sx={{ textAlign: 'center' }}
-              color="secondary"
+              color="secondary.light"
               display="inline"
             >
               At Wolf society we build products that empower creators in the
@@ -24,7 +24,7 @@ const Manifest = () => {
             </Typography>
             <Typography
               sx={{ textAlign: 'center' }}
-              color="secondary.dark"
+              color="secondary"
               display="inline"
             >
               {} to the tools to create new experiences for their audiences.

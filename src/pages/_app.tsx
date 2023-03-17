@@ -106,8 +106,8 @@ const theme = createTheme({
       main: '#DB372D',
     },
     secondary: {
-      main: '#F2F2E7',
-      dark: '#B0B2A3',
+      main: '#B0B2A3',
+      light: '#F2F2E7',
     },
     dkGreen: {
       main: '#2B4B2A',

@@ -7,14 +7,14 @@ const Projects = () => {
         <Stack sx={{ gap: 4, py: '160px' }}>
           <Typography
             variant="h1"
-            color="secondary.dark"
+            color="secondary"
             sx={{ textAlign: 'center' }}
           >
             🌐
           </Typography>
           <Typography
             variant="h1"
-            color="secondary.dark"
+            color="secondary"
             sx={{ textAlign: 'center' }}
           >
             Supported
