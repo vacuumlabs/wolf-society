@@ -2,7 +2,7 @@ import { Box, Container, Stack, Typography } from '@mui/material'
 
 const Manifest = () => {
   return (
-    <Box sx={{ bgcolor: 'dkGreen.main', textAlign: 'center' }}>
+    <Box sx={{ bgcolor: 'wsGreen.main', textAlign: 'center' }}>
       <Container>
         <Stack sx={{ gap: 4, my: { mobile: 10, tablet: 20 } }}>
           <Typography

@@ -23,13 +23,13 @@ declare module '@mui/material/styles' {
     desktopL: true
   }
   interface Palette {
-    dkGreen: Palette['primary']
+    wsGreen: Palette['primary']
   }
   interface PaletteOptions {
-    dkGreen: PaletteOptions['primary']
+    wsGreen: PaletteOptions['primary']
   }
   interface CommonColors {
-    dkGreen: string
+    wsGreen: string
   }
 }
 
@@ -109,7 +109,7 @@ const theme = createTheme({
       main: '#B0B2A3',
       light: '#F2F2E7',
     },
-    dkGreen: {
+    wsGreen: {
       main: '#2B4B2A',
     },
     text: {

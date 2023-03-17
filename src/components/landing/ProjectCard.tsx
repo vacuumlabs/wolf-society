@@ -18,7 +18,7 @@ const ProjectCard = ({ name, imageUrl }: ProjectCardProps) => {
     <Card sx={{ maxWidth: 404, borderRadius: 0 }}>
       <CardMedia component="img" height="300" image={imageUrl} alt="hmm" />
       <CardContent sx={{ bgcolor: 'secondary.main', p: 4, textAlign: 'start' }}>
-        <Typography variant="h2" color="dkGreen.main">
+        <Typography variant="h2" color="wsGreen.main">
           {name}
         </Typography>
       </CardContent>
