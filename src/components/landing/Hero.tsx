@@ -7,10 +7,7 @@ const Hero = () => {
     <Box sx={{ bgcolor: '#F2F2E7' }}>
       <Container>
         <Stack sx={{ gap: 4, mt: '222px', textAlign: 'center' }}>
-          <Typography
-            variant="h1"
-            sx={{ fontWeight: 600, textTransform: 'uppercase' }}
-          >
+          <Typography variant="h1" sx={{ fontWeight: 600 }}>
             The Earth Is What
             <br /> We ALL Have In Common
           </Typography>

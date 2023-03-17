@@ -1,5 +1,6 @@
 import Hero from '@/components/landing/Hero'
 import Manifest from '@/components/landing/Manifest'
+import Projects from '@/components/landing/Projects'
 import {
   injectTranslations,
   useTranslations,
@@ -14,6 +15,7 @@ const Home = () => {
     <Stack>
       <Hero />
       <Manifest />
+      <Projects />
     </Stack>
   )
 }

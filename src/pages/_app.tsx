@@ -146,6 +146,7 @@ theme.typography.h1 = {
   fontWeight: 600,
   fontSize: '70px',
   lineHeight: '64px',
+  textTransform: 'uppercase',
   [theme.breakpoints.up('desktopM')]: {
     fontSize: '100px',
     lineHeight: '96px',
