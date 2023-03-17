@@ -1,5 +1,5 @@
 import type { AppProps } from 'next/app'
-import { RainbowKitProvider } from '@rainbow-me/rainbowkit'
+import { lightTheme, RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import React from 'react'
 import { WagmiConfig } from 'wagmi'
 import { wagmiClient, chains } from '@/utils/configs/wagmi'
@@ -210,9 +210,14 @@ theme.typography.button = {
   },
 }
 
+const rainbowKitTheme = lightTheme({
+  borderRadius: 'none',
+  accentColor: theme.palette.primary.main,
+})
+
 const App = ({ Component, pageProps }: AppProps) => (
   <WagmiConfig client={wagmiClient}>
-    <RainbowKitProvider chains={chains}>
+    <RainbowKitProvider chains={chains} theme={rainbowKitTheme}>
       <title>Wolf Society</title>
       <ThemeProvider theme={theme}>
         <CssBaseline />
