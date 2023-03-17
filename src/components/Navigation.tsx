@@ -18,8 +18,8 @@ import { useRouter } from 'next/router'
 
 const subpages: { text: keyof Translations; href: string }[] = [
   { text: 'donate', href: '/' },
-  { text: 'blog', href: '/blog' },
   { text: 'support', href: '/support' },
+  { text: 'blog', href: '/blog' },
 ]
 
 const Navigation = () => {
@@ -38,14 +38,16 @@ const Navigation = () => {
       color="transparent"
       position="absolute"
       style={{ boxShadow: 'none' }}
+      sx={(theme) => ({ fontSize: theme.typography.button.fontSize, py: 2 })}
     >
       <Toolbar>
         <Typography variant="h6">{t('wolfSocietyFoundation')}</Typography>
         <Stack
           direction="row"
           justifyContent="center"
+          gap={2}
           sx={{
-            display: { xs: 'none', sm: 'flex' },
+            display: { mobile: 'none', tablet: 'flex' },
             flexGrow: 1,
           }}
         >
@@ -61,7 +63,7 @@ const Navigation = () => {
         </Stack>
         <Box
           sx={{
-            display: { xs: 'none', sm: 'flex' },
+            display: { mobile: 'none', tablet: 'flex' },
           }}
         >
           <ConnectButton />
@@ -70,7 +72,7 @@ const Navigation = () => {
           sx={{
             flexGrow: 1,
             justifyContent: 'end',
-            display: { xs: 'flex', sm: 'none' },
+            display: { mobile: 'flex', tablet: 'none' },
           }}
         >
           <IconButton
@@ -97,7 +99,7 @@ const Navigation = () => {
             open={Boolean(anchorElNav)}
             onClose={handleCloseNavMenu}
             sx={{
-              display: { xs: 'block', md: 'none' },
+              display: { mobile: 'block', tablet: 'none' },
             }}
           >
             {subpages.map((subpage) => (
@@ -107,6 +109,9 @@ const Navigation = () => {
                 </Link>
               </MenuItem>
             ))}
+            <MenuItem key="connectWalletButton" onClick={handleCloseNavMenu}>
+              <ConnectButton />
+            </MenuItem>
           </Menu>
         </Box>
       </Toolbar>
