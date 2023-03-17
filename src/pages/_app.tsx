@@ -24,12 +24,21 @@ declare module '@mui/material/styles' {
   }
   interface Palette {
     wsGreen: Palette['primary']
+    wsBlue: Palette['primary']
+    wsBrown: Palette['primary']
+    wsBlack: Palette['primary']
   }
   interface PaletteOptions {
     wsGreen: PaletteOptions['primary']
+    wsBlue: PaletteOptions['primary']
+    wsBrown: PaletteOptions['primary']
+    wsBlack: PaletteOptions['primary']
   }
   interface CommonColors {
     wsGreen: string
+    wsBlue: string
+    wsBrown: string
+    wsBlack: string
   }
 }
 
@@ -111,6 +120,15 @@ const theme = createTheme({
     },
     wsGreen: {
       main: '#2B4B2A',
+    },
+    wsBlue: {
+      main: '#25506D',
+    },
+    wsBrown: {
+      main: '#553B32',
+    },
+    wsBlack: {
+      main: '#1E1E1E',
     },
     text: {
       primary: '#1E1E1E',
