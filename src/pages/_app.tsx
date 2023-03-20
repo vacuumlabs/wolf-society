@@ -116,7 +116,6 @@ const theme = createTheme({
     },
     secondary: {
       main: '#B0B2A3',
-      light: '#F2F2E7',
     },
     wsGreen: {
       main: '#2B4B2A',
@@ -162,42 +161,53 @@ const theme = createTheme({
 theme.typography.h1 = {
   ...theme.typography.h1,
   fontWeight: 600,
-  fontSize: '70px',
-  lineHeight: '64px',
+  fontSize: '50px',
+  lineHeight: '48px',
   textTransform: 'uppercase',
   [theme.breakpoints.up('desktopM')]: {
-    fontSize: '100px',
-    lineHeight: '96px',
-  },
-  [theme.breakpoints.up('desktopL')]: {
     fontSize: '141px',
     lineHeight: '128px',
   },
+  [theme.breakpoints.up('desktopL')]: {
+    fontSize: '199px',
+    lineHeight: '176px',
+  },
 }
+
 // Headline
 theme.typography.h2 = {
   ...theme.typography.h2,
   fontWeight: 600,
-  fontSize: '25px',
-  lineHeight: '24px',
+  fontSize: '35px',
+  lineHeight: '32px',
   textTransform: 'uppercase',
   [theme.breakpoints.up('desktopM')]: {
-    fontSize: '35px',
-    lineHeight: '32px',
+    fontSize: '70px',
+    lineHeight: '64px',
   },
   [theme.breakpoints.up('desktopL')]: {
-    fontSize: '50px',
-    lineHeight: '48px',
+    fontSize: '100px',
+    lineHeight: '96px',
   },
 }
+
 // Title
 theme.typography.h3 = {
   ...theme.typography.h3,
   fontWeight: 600,
-  fontSize: '18px',
-  lineHeight: '16px',
+  fontSize: '20px',
+  lineHeight: '20px',
   textTransform: 'uppercase',
+  [theme.breakpoints.up('desktopM')]: {
+    fontSize: '25px',
+    lineHeight: '24px',
+  },
+  [theme.breakpoints.up('desktopL')]: {
+    fontSize: '35px',
+    lineHeight: '32px',
+  },
 }
+
 // Label
 theme.typography.subtitle1 = {
   ...theme.typography.subtitle1,
@@ -210,19 +220,30 @@ theme.typography.subtitle1 = {
 theme.typography.body1 = {
   ...theme.typography.body1,
   fontWeight: 400,
-  fontSize: '18px',
-  lineHeight: '32px',
+  fontSize: '35px',
+  lineHeight: '40px',
   [theme.breakpoints.up('desktopM')]: {
-    // fontSize: '25px',
-    // lineHeight: '40px',
     fontSize: '50px',
     lineHeight: '64px',
   },
   [theme.breakpoints.up('desktopL')]: {
-    fontSize: '50px',
-    lineHeight: '64px',
+    fontSize: '70px',
+    lineHeight: '88px',
   },
 }
+
+// Body2
+theme.typography.body2 = {
+  ...theme.typography.body2,
+  fontWeight: 400,
+  fontSize: '18px',
+  lineHeight: '24px',
+  [theme.breakpoints.up('desktopM')]: {
+    fontSize: '25px',
+    lineHeight: '32px',
+  },
+}
+
 // Button
 theme.typography.button = {
   ...theme.typography.button,
@@ -232,6 +253,11 @@ theme.typography.button = {
   textTransform: 'uppercase',
   [theme.breakpoints.up('desktopM')]: {
     fontSize: '20px',
+    lineHeight: '24px',
+  },
+  [theme.breakpoints.up('desktopL')]: {
+    fontSize: '25px',
+    lineHeight: '32px',
   },
 }
 

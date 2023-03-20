@@ -15,10 +15,10 @@ export type ProjectCardProps = {
 
 const ProjectCard = ({ name, imageUrl }: ProjectCardProps) => {
   return (
-    <Card sx={{ maxWidth: 404, borderRadius: 0 }}>
+    <Card sx={{ maxWidth: 404, borderRadius: 0, width: '100%' }}>
       <CardMedia component="img" height="300" image={imageUrl} alt="hmm" />
       <CardContent sx={{ bgcolor: 'secondary.main', p: 4, textAlign: 'start' }}>
-        <Typography variant="h2" color="wsGreen.main">
+        <Typography variant="h3" color="wsGreen.main">
           {name}
         </Typography>
       </CardContent>

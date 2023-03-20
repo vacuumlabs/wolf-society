@@ -70,26 +70,15 @@ const CollectionCard = ({
               >
                 {subtitle}
               </Typography>
-              <Typography variant="h1" component="h2" color="secondary">
+              <Typography variant="h2" color="secondary">
                 {name}
               </Typography>
-              <CardActions sx={{ padding: 0, alignSelf: 'end' }}>
-                <Button
-                  color="primary"
-                  variant="contained"
-                  sx={{
-                    borderRadius: 200,
-                    width: '104px',
-                    height: '104px',
-                  }}
-                >
-                  <VisibilityIcon />
-                </Button>
-              </CardActions>
             </Stack>
           </Box>
           <Box>
-            <Typography color="secondary">{description}</Typography>
+            <Typography color="secondary" variant="body2">
+              {description}
+            </Typography>
           </Box>
         </Box>
       </Box>
