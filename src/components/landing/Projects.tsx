@@ -40,8 +40,7 @@ const Projects = () => {
             color="neutral.main"
             sx={{ textAlign: 'center' }}
           >
-            Supported
-            <br /> Projects
+            Supported Projects
           </Typography>
           <Stack sx={{ alignItems: 'center' }}>
             <Button color="neutral" variant="outlined">

@@ -8,13 +8,11 @@ const Hero = () => {
       <Container>
         <Stack sx={{ gap: 4, mt: '222px', textAlign: 'center' }}>
           <Typography variant="h1" sx={{ fontWeight: 600 }}>
-            The Earth Is What
-            <br /> We ALL Have In Common
+            The Earth Is What We ALL Have In Common
           </Typography>
           <Box>
             <Typography variant="body1" display="inline">
-              Together we are supporting projects that matter
-              <br /> to the Earth.
+              Together we are supporting projects that matter to the Earth.
             </Typography>
             <Typography variant="body1" display="inline" color="primary">
               {} You are Wolf Society
