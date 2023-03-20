@@ -33,7 +33,7 @@ const COLOR_ORDER: string[] = [
   'common.blue',
   'secondary.main',
   'common.brown',
-  'common.black',
+  'black.main',
 ]
 
 const Collections = () => {

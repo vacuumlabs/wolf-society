@@ -25,9 +25,11 @@ declare module '@mui/material/styles' {
   }
   interface Palette {
     neutral: Palette['primary']
+    black: Palette['primary']
   }
   interface PaletteOptions {
     neutral: PaletteOptions['primary']
+    black: PaletteOptions['primary']
   }
   interface CommonColors {
     blue: string
@@ -39,6 +41,7 @@ declare module '@mui/material/styles' {
 declare module '@mui/material/Button' {
   interface ButtonPropsColorOverrides {
     neutral: true
+    black: true
   }
 }
 
@@ -151,8 +154,10 @@ const theme = createTheme({
       '800': '#4F4F4A',
       '900': '#353531',
     },
+    black: {
+      main: '#1E1E1E',
+    },
     common: {
-      black: '#1E1E1E',
       blue: '#25506D',
       brown: '#553B32',
     },

@@ -11,6 +11,7 @@ import { GetStaticPropsContext } from 'next'
 import { useAccount } from 'wagmi'
 import { useGetNfts } from '@/utils/hooks/useGetNfts'
 import { NftCard } from '@/components/NftCard'
+import MakeImpact from '@/components/landing/MakeImpact'
 
 const Home = () => {
   const t = useTranslations()
@@ -19,6 +20,7 @@ const Home = () => {
       <Hero />
       <Manifest />
       <Projects />
+      <MakeImpact />
       <Collections />
     </Stack>
   )

@@ -4,7 +4,7 @@ import heroImage from 'public/images/hero.png'
 
 const Hero = () => {
   return (
-    <Box sx={{ bgcolor: '#F2F2E7' }}>
+    <Box sx={{ bgcolor: 'neutral.400' }}>
       <Container>
         <Stack sx={{ gap: 4, mt: '222px', textAlign: 'center' }}>
           <Typography variant="h1" sx={{ fontWeight: 600 }}>
