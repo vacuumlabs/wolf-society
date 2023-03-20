@@ -51,7 +51,7 @@ const Navigation = () => {
             justifyContent="center"
             gap={2}
             sx={{
-              display: { mobile: 'none', tabletS: 'flex' },
+              display: { mobile: 'none', tabletM: 'flex' },
               flexGrow: 1,
             }}
           >
@@ -67,7 +67,7 @@ const Navigation = () => {
           </Stack>
           <Box
             sx={{
-              display: { mobile: 'none', tabletS: 'flex' },
+              display: { mobile: 'none', tabletM: 'flex' },
             }}
           >
             <ConnectButton />
@@ -76,7 +76,7 @@ const Navigation = () => {
             sx={{
               flexGrow: 1,
               justifyContent: 'end',
-              display: { mobile: 'flex', tabletS: 'none' },
+              display: { mobile: 'flex', tabletM: 'none' },
             }}
           >
             <IconButton
@@ -103,7 +103,7 @@ const Navigation = () => {
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{
-                display: { mobile: 'block', tabletS: 'none' },
+                display: { mobile: 'block', tabletM: 'none' },
               }}
             >
               {subpages.map((subpage) => (
