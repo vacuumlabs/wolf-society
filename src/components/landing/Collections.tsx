@@ -43,7 +43,7 @@ const Collections = () => {
         <CollectionCard
           {...collection}
           key={collection.name}
-          color={COLOR_ORDER[index]}
+          color={COLOR_ORDER[index % COLOR_ORDER.length]}
         />
       ))}
     </Stack>
