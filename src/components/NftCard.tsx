@@ -14,8 +14,12 @@ export const NftCard = ({ nft }: NftCardProps) => {
           sx={{ width: '100%', height: 'auto' }}
           image={nft.rawMetadata?.image}
         />
-        <Typography textAlign={'center'}>{nft.title}</Typography>
-        <Typography textAlign={'center'}>{nft.contract.symbol}</Typography>
+        <Typography textAlign={'center'} variant="h3">
+          {nft.title}
+        </Typography>
+        <Typography textAlign={'center'} variant="subtitle1">
+          {nft.contract.symbol}
+        </Typography>
       </Stack>
     </Card>
   )
