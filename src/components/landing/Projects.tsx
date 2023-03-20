@@ -1,5 +1,7 @@
 import { Box, Button, Container, Stack, Typography } from '@mui/material'
 import ProjectCard, { ProjectCardProps } from './ProjectCard'
+import Image from 'next/image'
+import avatarImage from 'public/images/avatar.png'
 
 const MockedProjects: ProjectCardProps[] = [
   {
@@ -23,14 +25,16 @@ const Projects = () => {
   return (
     <Box sx={{ bgcolor: 'wsGreen.main', textAlign: 'center' }}>
       <Container>
-        <Stack sx={{ gap: 4, mt: { mobile: 10, desktopM: 20 }, mb: 5 }}>
-          <Typography
-            variant="h1"
-            color="secondary"
-            sx={{ textAlign: 'center' }}
-          >
-            🌐
-          </Typography>
+        <Stack
+          sx={{ gap: 4, mt: { mobile: 10, desktopM: 20 }, mb: 5 }}
+          alignItems="center"
+        >
+          <Image
+            src={avatarImage}
+            alt="Wolf Society Foundation logo"
+            height={56}
+            style={{ objectFit: 'cover', objectPosition: 'top' }}
+          />
           <Typography
             variant="h1"
             color="secondary"
