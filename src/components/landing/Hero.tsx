@@ -21,9 +21,7 @@ const Hero = () => {
             </Typography>
           </Box>
           <Stack sx={{ alignItems: 'center' }}>
-            <Button variant="contained" sx={{ borderRadius: 0 }}>
-              Make Impact
-            </Button>
+            <Button variant="contained">Make Impact</Button>
           </Stack>
         </Stack>
       </Container>

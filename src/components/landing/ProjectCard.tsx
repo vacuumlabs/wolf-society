@@ -15,7 +15,7 @@ export type ProjectCardProps = {
 
 const ProjectCard = ({ name, imageUrl }: ProjectCardProps) => {
   return (
-    <Card sx={{ maxWidth: 404, borderRadius: 0, width: '100%' }}>
+    <Card sx={{ maxWidth: 404, width: '100%' }}>
       <CardMedia component="img" height="300" image={imageUrl} alt="hmm" />
       <CardContent sx={{ bgcolor: 'neutral.main', p: 4, textAlign: 'start' }}>
         <Typography variant="h3" color="secondary">
@@ -26,7 +26,7 @@ const ProjectCard = ({ name, imageUrl }: ProjectCardProps) => {
         <Button
           color="primary"
           variant="contained"
-          sx={{ width: '100%', borderRadius: 0 }}
+          sx={{ width: '100%' }}
           endIcon={<ArrowForward />}
         >
           Read More

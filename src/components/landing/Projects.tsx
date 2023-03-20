@@ -44,7 +44,7 @@ const Projects = () => {
             <br /> Projects
           </Typography>
           <Stack sx={{ alignItems: 'center' }}>
-            <Button color="neutral" variant="outlined" sx={{ borderRadius: 0 }}>
+            <Button color="neutral" variant="outlined">
               All Projects
             </Button>
           </Stack>

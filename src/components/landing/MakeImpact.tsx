@@ -17,7 +17,7 @@ const MakeImpact = () => {
             </Typography>
           </Box>
           <Stack sx={{ alignItems: 'center' }}>
-            <Button color="black" variant="outlined" sx={{ borderRadius: 0 }}>
+            <Button color="black" variant="outlined">
               Read more
             </Button>
           </Stack>

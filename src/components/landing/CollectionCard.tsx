@@ -33,7 +33,6 @@ const CollectionCard = ({
   const horizontalCard = (
     <Card
       sx={{
-        borderRadius: 0,
         display: 'flex',
         width: '100%',
         height: '100vh',
@@ -81,11 +80,7 @@ const CollectionCard = ({
             </Typography>
           </Box>
           <CardActions sx={{ padding: 0 }}>
-            <Button
-              color="primary"
-              variant="contained"
-              sx={{ borderRadius: 0 }}
-            >
+            <Button color="primary" variant="contained">
               Show collection
             </Button>
           </CardActions>
@@ -95,7 +90,7 @@ const CollectionCard = ({
   )
 
   const verticalCard = (
-    <Card sx={{ borderRadius: 0 }}>
+    <Card>
       <CardContent sx={{ bgcolor: `${color}`, p: 5, textAlign: 'start' }}>
         <Stack gap={4}>
           <Typography
@@ -115,11 +110,7 @@ const CollectionCard = ({
       </Box>
 
       <CardActions sx={{ padding: 0 }}>
-        <Button
-          color="primary"
-          variant="contained"
-          sx={{ width: '100%', borderRadius: 0 }}
-        >
+        <Button color="primary" variant="contained" sx={{ width: '100%' }}>
           Show collection
         </Button>
       </CardActions>

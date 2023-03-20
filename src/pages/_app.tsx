@@ -180,6 +180,14 @@ theme.components = {
         paddingBottom: 16,
         paddingRight: 32,
         paddingLeft: 32,
+        borderRadius: 0,
+      },
+    },
+  },
+  MuiCard: {
+    styleOverrides: {
+      root: {
+        borderRadius: 0,
       },
     },
   },
