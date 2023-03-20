@@ -2,12 +2,12 @@ import { Box, Container, Stack, Typography } from '@mui/material'
 
 const Manifest = () => {
   return (
-    <Box sx={{ bgcolor: 'wsGreen.main', textAlign: 'center' }}>
+    <Box sx={{ bgcolor: 'secondary.main', textAlign: 'center' }}>
       <Container>
         <Stack sx={{ gap: 4, my: { mobile: 10, desktopM: 20 } }}>
           <Typography
             variant="h3"
-            color="secondary"
+            color="neutral.main"
             sx={{ textAlign: 'center' }}
           >
             Manifesto
@@ -15,7 +15,7 @@ const Manifest = () => {
           <Box>
             <Typography
               sx={{ textAlign: 'center' }}
-              color="secondary"
+              color="neutral.main"
               display="inline"
             >
               At Wolf society we build products that empower creators in the

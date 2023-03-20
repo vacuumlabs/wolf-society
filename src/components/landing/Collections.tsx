@@ -1,3 +1,4 @@
+import { Palette } from '@mui/material'
 import { CommonColors, Stack } from '@mui/material'
 import CollectionCard, { CollectionCardProps } from './CollectionCard'
 
@@ -28,11 +29,11 @@ const MockedCollections: Omit<CollectionCardProps, 'color'>[] = [
   // },
 ]
 
-const COLOR_ORDER: (keyof CommonColors)[] = [
-  'wsBlue',
-  'wsGreen',
-  'wsBrown',
-  'wsBlack',
+const COLOR_ORDER: string[] = [
+  'common.blue',
+  'secondary.main',
+  'common.brown',
+  'common.black',
 ]
 
 const Collections = () => {

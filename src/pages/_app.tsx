@@ -24,22 +24,21 @@ declare module '@mui/material/styles' {
     desktopL: true
   }
   interface Palette {
-    wsGreen: Palette['primary']
-    wsBlue: Palette['primary']
-    wsBrown: Palette['primary']
-    wsBlack: Palette['primary']
+    neutral: Palette['primary']
   }
   interface PaletteOptions {
-    wsGreen: PaletteOptions['primary']
-    wsBlue: PaletteOptions['primary']
-    wsBrown: PaletteOptions['primary']
-    wsBlack: PaletteOptions['primary']
+    neutral: PaletteOptions['primary']
   }
   interface CommonColors {
-    wsGreen: string
-    wsBlue: string
-    wsBrown: string
-    wsBlack: string
+    blue: string
+    brown: string
+  }
+}
+
+// Update the Button's color prop options
+declare module '@mui/material/Button' {
+  interface ButtonPropsColorOverrides {
+    neutral: true
   }
 }
 
@@ -114,22 +113,48 @@ const theme = createTheme({
   },
   palette: {
     primary: {
+      '50': '#FBEBEA',
+      '100': '#F4C1BE',
+      '200': '#EEA39E',
+      '300': '#E77972',
+      '400': '#E25F57',
       main: '#DB372D',
+      '500': '#DB372D',
+      '600': '#C73229',
+      '700': '#9B2720',
+      '800': '#781E19',
+      '900': '#5C1713',
     },
     secondary: {
-      main: '#B0B2A3',
-    },
-    wsGreen: {
+      '50': '#EAEDEA',
+      '100': '#BDC7BD',
+      '200': '#9DAC9D',
+      '300': '#718670',
+      '400': '#556F55',
       main: '#2B4B2A',
+      '500': '#2B4B2A',
+      '600': '#274426',
+      '700': '#1F351E',
+      '800': '#182917',
+      '900': '#122012',
     },
-    wsBlue: {
-      main: '#25506D',
+    neutral: {
+      '50': '#FBFBF8',
+      '100': '#F9F9F4',
+      '200': '#F6F6EF',
+      '300': '#F5F5EC',
+      '400': '#F2F2E7',
+      '500': '#DCDCD2',
+      main: '#B0B2A3',
+      '600': '#B0B2A3',
+      '700': '#666661',
+      '800': '#4F4F4A',
+      '900': '#353531',
     },
-    wsBrown: {
-      main: '#553B32',
-    },
-    wsBlack: {
-      main: '#1E1E1E',
+    common: {
+      black: '#1E1E1E',
+      blue: '#25506D',
+      brown: '#553B32',
     },
     text: {
       primary: '#1E1E1E',

@@ -28,7 +28,7 @@ const CollectionCard = ({
   subtitle,
 }: CollectionCardProps) => {
   const theme = useTheme()
-  const displayHorizontally = useMediaQuery(theme.breakpoints.up('desktopS'))
+  const displayHorizontally = useMediaQuery(theme.breakpoints.up('tabletM'))
 
   const horizontalCard = (
     <Card
@@ -41,7 +41,7 @@ const CollectionCard = ({
     >
       <Box
         width="50%"
-        bgcolor="secondary.main"
+        bgcolor="neutral.main"
         alignItems="center"
         display="flex"
         justifyContent="center"
@@ -53,7 +53,7 @@ const CollectionCard = ({
       <Box width="50%" sx={{ display: 'flex', flexDirection: 'column' }}>
         <Box
           sx={{
-            bgcolor: `${color}.main`,
+            bgcolor: `${color}`,
             textAlign: 'start',
             flexGrow: 1,
             display: 'flex',
@@ -65,21 +65,30 @@ const CollectionCard = ({
             <Stack gap={4}>
               <Typography
                 variant="h3"
-                color="secondary"
+                color="neutral.main"
                 sx={{ 'white-space': 'pre-wrap' }}
               >
                 {subtitle}
               </Typography>
-              <Typography variant="h2" color="secondary">
+              <Typography variant="h2" color="neutral.main">
                 {name}
               </Typography>
             </Stack>
           </Box>
-          <Box>
-            <Typography color="secondary" variant="body2">
+          <Box mb={10}>
+            <Typography color="neutral.main" variant="body2">
               {description}
             </Typography>
           </Box>
+          <CardActions sx={{ padding: 0 }}>
+            <Button
+              color="primary"
+              variant="contained"
+              sx={{ borderRadius: 0 }}
+            >
+              Show collection
+            </Button>
+          </CardActions>
         </Box>
       </Box>
     </Card>
@@ -87,21 +96,21 @@ const CollectionCard = ({
 
   const verticalCard = (
     <Card sx={{ borderRadius: 0 }}>
-      <CardContent sx={{ bgcolor: `${color}.main`, p: 5, textAlign: 'start' }}>
+      <CardContent sx={{ bgcolor: `${color}`, p: 5, textAlign: 'start' }}>
         <Stack gap={4}>
           <Typography
             variant="h3"
-            color="secondary"
+            color="neutral.main"
             sx={{ 'white-space': 'pre-wrap' }}
           >
             {subtitle}
           </Typography>
-          <Typography variant="h2" color="secondary">
+          <Typography variant="h2" color="neutral.main">
             {name}
           </Typography>
         </Stack>
       </CardContent>
-      <Box sx={{ p: 5, bgcolor: 'secondary.main' }}>
+      <Box sx={{ p: 5, bgcolor: 'neutral.main' }}>
         <CardMedia component="img" image={imageUrl} alt={name} />
       </Box>
 

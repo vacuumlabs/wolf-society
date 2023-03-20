@@ -23,7 +23,7 @@ const MockedProjects: ProjectCardProps[] = [
 
 const Projects = () => {
   return (
-    <Box sx={{ bgcolor: 'wsGreen.main', textAlign: 'center' }}>
+    <Box sx={{ bgcolor: 'secondary.main', textAlign: 'center' }}>
       <Container>
         <Stack
           sx={{ gap: 4, mt: { mobile: 10, desktopM: 20 }, mb: 5 }}
@@ -37,18 +37,14 @@ const Projects = () => {
           />
           <Typography
             variant="h1"
-            color="secondary"
+            color="neutral.main"
             sx={{ textAlign: 'center' }}
           >
             Supported
             <br /> Projects
           </Typography>
           <Stack sx={{ alignItems: 'center' }}>
-            <Button
-              color="secondary"
-              variant="outlined"
-              sx={{ borderRadius: 0 }}
-            >
+            <Button color="neutral" variant="outlined" sx={{ borderRadius: 0 }}>
               All Projects
             </Button>
           </Stack>
