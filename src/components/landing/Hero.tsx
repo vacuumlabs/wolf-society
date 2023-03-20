@@ -29,7 +29,7 @@ const Hero = () => {
       </Container>
       <Box
         sx={{
-          height: { mobile: '365px', tablet: '730px' },
+          height: { mobile: '365px', tabletM: '730px' },
           position: 'relative',
         }}
       >

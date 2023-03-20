@@ -23,7 +23,7 @@ const Projects = () => {
   return (
     <Box sx={{ bgcolor: 'wsGreen.main', textAlign: 'center' }}>
       <Container>
-        <Stack sx={{ gap: 4, my: { mobile: 10, tablet: 20 } }}>
+        <Stack sx={{ gap: 4, mt: { mobile: 10, desktopM: 20 }, mb: 5 }}>
           <Typography
             variant="h1"
             color="secondary"

@@ -17,7 +17,8 @@ declare module '@mui/material/styles' {
     lg: false
     xl: false
     mobile: true // adds our breakpoints
-    tablet: true
+    tabletS: true
+    tabletM: true
     desktopS: true
     desktopM: true
     desktopL: true
@@ -101,8 +102,9 @@ const theme = createTheme({
   breakpoints: {
     values: {
       mobile: 0,
-      tablet: 768,
-      desktopS: 1280,
+      tabletS: 600,
+      tabletM: 900,
+      desktopS: 1240,
       desktopM: 1440,
       desktopL: 1920,
     },
@@ -133,29 +135,50 @@ const theme = createTheme({
       primary: '#1E1E1E',
     },
   },
-  components: {
-    MuiButtonBase: {
-      defaultProps: {
-        disableRipple: true,
-      },
+})
+
+theme.components = {
+  MuiButtonBase: {
+    defaultProps: {
+      disableRipple: true,
     },
-    MuiButton: {
-      styleOverrides: {
-        root: {
-          paddingTop: 16,
-          paddingBottom: 16,
-          paddingRight: 32,
-          paddingLeft: 32,
-        },
-      },
-    },
-    MuiContainer: {
-      defaultProps: {
-        maxWidth: 'desktopL',
+  },
+  MuiButton: {
+    styleOverrides: {
+      root: {
+        paddingTop: 16,
+        paddingBottom: 16,
+        paddingRight: 32,
+        paddingLeft: 32,
       },
     },
   },
-})
+  MuiContainer: {
+    styleOverrides: {
+      root: {
+        padding: 0,
+        [theme.breakpoints.only('mobile')]: {
+          padding: '0 16px',
+        },
+        [theme.breakpoints.only('tabletS')]: {
+          padding: '0 24px',
+        },
+        [theme.breakpoints.only('tabletM')]: {
+          maxWidth: '840px',
+        },
+        [theme.breakpoints.only('desktopS')]: {
+          maxWidth: '1024px',
+        },
+        [theme.breakpoints.only('desktopM')]: {
+          maxWidth: '1280px',
+        },
+        [theme.breakpoints.only('desktopL')]: {
+          maxWidth: '1680px',
+        },
+      },
+    },
+  },
+}
 
 // Display
 theme.typography.h1 = {
@@ -236,8 +259,8 @@ theme.typography.body1 = {
 theme.typography.body2 = {
   ...theme.typography.body2,
   fontWeight: 400,
-  fontSize: '18px',
-  lineHeight: '24px',
+  fontSize: '20px',
+  lineHeight: '32px',
   [theme.breakpoints.up('desktopM')]: {
     fontSize: '25px',
     lineHeight: '32px',
