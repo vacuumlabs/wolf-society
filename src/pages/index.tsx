@@ -12,6 +12,7 @@ import { useAccount } from 'wagmi'
 import { useGetNfts } from '@/utils/hooks/useGetNfts'
 import { NftCard } from '@/components/NftCard'
 import MakeImpact from '@/components/landing/MakeImpact'
+import Roadmap from '@/components/landing/Roadmap'
 
 const Home = () => {
   const t = useTranslations()
@@ -22,6 +23,7 @@ const Home = () => {
       <Projects />
       <MakeImpact />
       <Collections />
+      <Roadmap />
     </Stack>
   )
 }
