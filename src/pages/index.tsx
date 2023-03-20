@@ -8,7 +8,9 @@ import {
 } from '@/utils/hooks/useTranslations'
 import { Stack } from '@mui/material'
 import { GetStaticPropsContext } from 'next'
-import React from 'react'
+import { useAccount } from 'wagmi'
+import { useGetNfts } from '@/utils/hooks/useGetNfts'
+import { NftCard } from '@/components/NftCard'
 
 const Home = () => {
   const t = useTranslations()

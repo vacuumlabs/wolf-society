@@ -18,13 +18,21 @@ export type Translator = (key: keyof Translations) => string
 export const injectTranslations = async (locale: string = 'en-US') => {
   const entries = await contentful.getEntries({
     content_type: 'translations',
-    locale,
+    'fields.locale': locale,
+  })
+  const entriesEng = await contentful.getEntries({
+    content_type: 'translations',
+    'fields.locale': 'en-US',
   })
   const translations = await entries.items.reduce(
     (all: Translations, item: any) => ({ ...all, ...item.fields }),
     {}
   )
-  return translations
+  const translationsEng = await entriesEng.items.reduce(
+    (all: Translations, item: any) => ({ ...all, ...item.fields }),
+    {}
+  )
+  return { ...translationsEng, ...translations }
 }
 
 export const TranslationsContext = createContext<Translations | undefined>(
