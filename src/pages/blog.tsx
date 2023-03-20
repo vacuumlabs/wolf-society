@@ -1,7 +1,6 @@
 import React from 'react'
-import { GetStaticPropsContext } from 'next'
-import contentful from '@/utils/configs/contentful'
-import { Stack, Typography } from '@mui/material'
+import { GetServerSidePropsContext } from 'next'
+import { Link, Stack, Typography } from '@mui/material'
 import Post, { TPost } from '@/components/Post'
 import {
   injectTranslations,
@@ -10,6 +9,7 @@ import {
 
 type TBlog = {
   posts: TPost[]
+  errorMessage: string
 }
 
 const Blog = ({ posts }: TBlog) => {
@@ -22,21 +22,32 @@ const Blog = ({ posts }: TBlog) => {
           <Post key={post.title} {...post} />
         ))}
       </Stack>
+      <Link
+        variant="h3"
+        href={`https://medium.com/@${process.env.NEXT_PUBLIC_MEDIUM_USER}`}
+        target="_blank"
+      >
+        Read more
+      </Link>
     </Stack>
   )
 }
 
-export async function getStaticProps({ locale }: GetStaticPropsContext) {
-  const entries = await contentful.getEntries({ content_type: 'post' })
-  const posts = await entries.items.map((item: any) => {
-    return item.fields
-  })
+export async function getServerSideProps({
+  locale,
+}: GetServerSidePropsContext) {
+  const response = await fetch(
+    `https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@${process.env.NEXT_PUBLIC_MEDIUM_USER}`
+  )
+
+  const data = await response.json()
 
   return {
     props: {
       // Will be passed to the page component as props
       translations: await injectTranslations(locale),
-      posts,
+      posts: data.items ?? [],
+      errorMessage: data.message ?? '',
     },
   }
 }
