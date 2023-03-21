@@ -17,7 +17,7 @@ const CTA = () => {
       <Image
         src={symbolImage}
         alt="Wolf Society Foundation symbol"
-        style={{ height: '100%', objectFit: 'contain' }}
+        style={{ height: '100%', width: 'auto', objectFit: 'contain' }}
       />
     </Icon>
   )

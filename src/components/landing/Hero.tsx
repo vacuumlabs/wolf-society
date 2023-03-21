@@ -33,6 +33,7 @@ const Hero = () => {
           src={heroImage}
           alt="Hero image"
           fill
+          priority
           style={{ objectFit: 'cover', objectPosition: 'top' }}
         />
       </Box>
