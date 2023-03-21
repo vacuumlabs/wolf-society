@@ -17,7 +17,7 @@ import { Translations, useTranslations } from '@/utils/hooks/useTranslations'
 import MenuIcon from '@mui/icons-material/Menu'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
-import logoImage from 'public/images/logo.png'
+import logoImage from 'public/images/Logo.svg'
 
 const subpages: { text: keyof Translations; href: string }[] = [
   { text: 'donate', href: '/' },

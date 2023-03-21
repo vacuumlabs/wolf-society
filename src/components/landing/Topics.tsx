@@ -1,6 +1,6 @@
 import { Box, Button, Container, Stack, Typography } from '@mui/material'
 import Image from 'next/image'
-import avatarImage from 'public/images/avatar.png'
+import symbolImage from 'public/images/Symbol.svg'
 import TopicCard, { TopicCardProps } from './TopicCard'
 
 const MockedTopics: TopicCardProps[] = [
@@ -33,7 +33,7 @@ const Topics = () => {
           alignItems="center"
         >
           <Image
-            src={avatarImage}
+            src={symbolImage}
             alt="Wolf Society Foundation logo"
             height={56}
             style={{ objectFit: 'cover', objectPosition: 'top' }}

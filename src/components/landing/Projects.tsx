@@ -1,7 +1,7 @@
 import { Box, Button, Container, Stack, Typography } from '@mui/material'
 import ProjectCard, { ProjectCardProps } from './ProjectCard'
 import Image from 'next/image'
-import avatarImage from 'public/images/avatar.png'
+import symbolImage from 'public/images/SymbolNeutral.svg'
 
 const MockedProjects: ProjectCardProps[] = [
   {
@@ -30,7 +30,7 @@ const Projects = () => {
           alignItems="center"
         >
           <Image
-            src={avatarImage}
+            src={symbolImage}
             alt="Wolf Society Foundation logo"
             height={56}
             style={{ objectFit: 'cover', objectPosition: 'top' }}

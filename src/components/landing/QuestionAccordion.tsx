@@ -3,9 +3,14 @@ import {
   AccordionDetails,
   AccordionSummary,
   Grid,
+  Icon,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material'
-import AddIcon from '@mui/icons-material/Add'
+import Image from 'next/image'
+import PlusIcon24 from 'public/images/icon/24/Plus.svg'
+import PlusIcon32 from 'public/images/icon/32/Plus.svg'
 
 export type QuestionAccordionProps = {
   question: string
@@ -13,6 +18,22 @@ export type QuestionAccordionProps = {
 }
 
 const QuestionAccordion = ({ question, answer }: QuestionAccordionProps) => {
+  const theme = useTheme()
+  const displayBiggerIcon = useMediaQuery(theme.breakpoints.up('desktopM'))
+  const expandIcon = (
+    <Icon
+      sx={{
+        display: 'flex',
+        fontSize: displayBiggerIcon ? '32px' : '24px',
+      }}
+    >
+      <Image
+        src={displayBiggerIcon ? PlusIcon32 : PlusIcon24}
+        height={displayBiggerIcon ? 32 : 24}
+        alt="Expand Icon"
+      />
+    </Icon>
+  )
   return (
     <Accordion
       disableGutters
@@ -20,7 +41,7 @@ const QuestionAccordion = ({ question, answer }: QuestionAccordionProps) => {
       TransitionProps={{}}
     >
       <AccordionSummary
-        expandIcon={<AddIcon />}
+        expandIcon={expandIcon}
         aria-controls={`${question}-content`}
         id={`${question}-header`}
         sx={{
