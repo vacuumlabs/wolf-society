@@ -1,7 +1,6 @@
 import { Box, Button, Container, Stack, Typography } from '@mui/material'
 import ProjectCard, { ProjectCardProps } from './ProjectCard'
-import Image from 'next/image'
-import symbolImage from 'public/images/SymbolNeutral.svg'
+import WSFSymbol from '../icons/WSFSymbol'
 
 const MockedProjects: ProjectCardProps[] = [
   {
@@ -29,12 +28,7 @@ const Projects = () => {
           sx={{ gap: 4, mt: { mobile: 10, desktopM: 20 }, mb: 5 }}
           alignItems="center"
         >
-          <Image
-            src={symbolImage}
-            alt="Wolf Society Foundation symbol"
-            height={56}
-            style={{ objectFit: 'cover', objectPosition: 'top' }}
-          />
+          <WSFSymbol color="neutral" />
           <Typography
             variant="h1"
             color="neutral.main"

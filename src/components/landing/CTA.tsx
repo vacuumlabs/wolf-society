@@ -1,6 +1,5 @@
 import { Box, Button, Container, Icon, Stack, Typography } from '@mui/material'
-import Image from 'next/image'
-import symbolImage from 'public/images/SymbolNeutral400.svg'
+import WSFSymbol from '../icons/WSFSymbol'
 
 const CTA = () => {
   const wsfSymbol = (
@@ -10,15 +9,16 @@ const CTA = () => {
         display: {
           mobile: 'none',
           tabletS: 'inline-block',
-          alignItems: 'center',
         },
       })}
     >
-      <Image
-        src={symbolImage}
-        alt="Wolf Society Foundation symbol"
-        style={{ height: '100%', width: 'auto', objectFit: 'contain' }}
-      />
+      <Box color="neutral.400">
+        <WSFSymbol
+          sx={(theme) => ({
+            fontSize: theme.typography.h2,
+          })}
+        />
+      </Box>
     </Icon>
   )
   return (
@@ -39,7 +39,7 @@ const CTA = () => {
             height: { mobile: '112px', desktopM: '256px' },
           })}
         >
-          <Stack direction="row" alignItems="center" spacing={4}>
+          <Stack direction="row" alignItems="center" gap={4}>
             {wsfSymbol}
             <Typography variant="h2">Make Impact</Typography>
             {wsfSymbol}

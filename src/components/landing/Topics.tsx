@@ -1,6 +1,5 @@
 import { Box, Button, Container, Stack, Typography } from '@mui/material'
-import Image from 'next/image'
-import symbolImage from 'public/images/Symbol.svg'
+import WSFSymbol from '../icons/WSFSymbol'
 import TopicCard, { TopicCardProps } from './TopicCard'
 
 const MockedTopics: TopicCardProps[] = [
@@ -32,12 +31,7 @@ const Topics = () => {
           sx={{ gap: 4, mt: { mobile: 10, desktopM: 20 }, mb: 5 }}
           alignItems="center"
         >
-          <Image
-            src={symbolImage}
-            alt="Wolf Society Foundation symbol"
-            height={56}
-            style={{ objectFit: 'cover', objectPosition: 'top' }}
-          />
+          <WSFSymbol color="black" />
           <Typography variant="h1" sx={{ textAlign: 'center' }}>
             Hot Topics
           </Typography>
