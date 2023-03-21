@@ -11,7 +11,7 @@ import {
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import heroImage from 'public/images/hero.png'
-import logoImage from 'public/images/Logo.svg'
+import WSLogo from './icons/WSLogo'
 import { subpages } from './Navigation'
 
 const socials: { text: string; href: string }[] = [
@@ -34,7 +34,7 @@ const Footer = () => {
               spacing={10}
               alignItems={{ mobile: 'center', [breakpoint]: 'start' }}
             >
-              <Image src={logoImage} alt="Logo" height="48" />
+              <WSLogo color="black" />
               <Typography
                 variant="button"
                 display={{ mobile: 'none', [breakpoint]: 'inherit' }}

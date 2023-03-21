@@ -2,7 +2,6 @@ import React from 'react'
 import {
   AppBar,
   Box,
-  Button,
   Container,
   IconButton,
   Link,
@@ -16,8 +15,7 @@ import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { Translations, useTranslations } from '@/utils/hooks/useTranslations'
 import MenuIcon from '@mui/icons-material/Menu'
 import { useRouter } from 'next/router'
-import Image from 'next/image'
-import logoImage from 'public/images/Logo.svg'
+import WSLogo from './icons/WSLogo'
 
 export const subpages: { text: keyof Translations; href: string }[] = [
   { text: 'donate', href: '/' },
@@ -46,7 +44,7 @@ const Navigation = () => {
       <Container>
         <Toolbar sx={{ p: 0 }}>
           <Link href="/" display="flex">
-            <Image src={logoImage} alt="Logo" height="48" />
+            <WSLogo color="black" />
           </Link>
           <Stack
             direction="row"
