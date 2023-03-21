@@ -31,7 +31,7 @@ const Projects = () => {
         >
           <Image
             src={symbolImage}
-            alt="Wolf Society Foundation logo"
+            alt="Wolf Society Foundation symbol"
             height={56}
             style={{ objectFit: 'cover', objectPosition: 'top' }}
           />

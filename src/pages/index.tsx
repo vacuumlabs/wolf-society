@@ -15,6 +15,7 @@ import MakeImpact from '@/components/landing/MakeImpact'
 import Roadmap from '@/components/landing/Roadmap'
 import Questions from '@/components/landing/Questions'
 import Topics from '@/components/landing/Topics'
+import CTA from '@/components/landing/CTA'
 
 const Home = () => {
   const t = useTranslations()
@@ -28,6 +29,7 @@ const Home = () => {
       <Roadmap />
       <Questions />
       <Topics />
+      <CTA />
     </Stack>
   )
 }
