@@ -14,6 +14,7 @@ import { NftCard } from '@/components/NftCard'
 import MakeImpact from '@/components/landing/MakeImpact'
 import Roadmap from '@/components/landing/Roadmap'
 import Questions from '@/components/landing/Questions'
+import Topics from '@/components/landing/Topics'
 
 const Home = () => {
   const t = useTranslations()
@@ -26,6 +27,7 @@ const Home = () => {
       <Collections />
       <Roadmap />
       <Questions />
+      <Topics />
     </Stack>
   )
 }
