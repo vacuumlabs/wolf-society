@@ -8,9 +8,8 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material'
-import Image from 'next/image'
-import PlusIcon24 from 'public/images/icon/24/Plus.svg'
-import PlusIcon32 from 'public/images/icon/32/Plus.svg'
+import PlusIcon24 from '../icons/PlusIcon24'
+import PlusIcon32 from '../icons/PlusIcon32'
 
 export type QuestionAccordionProps = {
   question: string
@@ -20,26 +19,14 @@ export type QuestionAccordionProps = {
 const QuestionAccordion = ({ question, answer }: QuestionAccordionProps) => {
   const theme = useTheme()
   const displayBiggerIcon = useMediaQuery(theme.breakpoints.up('desktopM'))
-  const expandIcon = (
-    <Icon
-      sx={{
-        display: 'flex',
-        fontSize: displayBiggerIcon ? '32px' : '24px',
-      }}
-    >
-      <Image
-        src={displayBiggerIcon ? PlusIcon32 : PlusIcon24}
-        height={displayBiggerIcon ? 32 : 24}
-        alt="Expand Icon"
-      />
-    </Icon>
+  const expandIcon = displayBiggerIcon ? (
+    <PlusIcon32 color="black" sx={{ fontSize: 32 }} />
+  ) : (
+    <PlusIcon24 color="black" />
   )
+
   return (
-    <Accordion
-      disableGutters
-      sx={{ bgcolor: 'transparent', boxShadow: 0 }}
-      TransitionProps={{}}
-    >
+    <Accordion disableGutters sx={{ bgcolor: 'transparent', boxShadow: 0 }}>
       <AccordionSummary
         expandIcon={expandIcon}
         aria-controls={`${question}-content`}

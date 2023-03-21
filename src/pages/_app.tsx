@@ -46,6 +46,14 @@ declare module '@mui/material/Button' {
   }
 }
 
+// Update the SvgIcon's color prop options
+declare module '@mui/material/SvgIcon' {
+  interface SvgIconPropsColorOverrides {
+    neutral: true
+    black: true
+  }
+}
+
 const myFont = localFont({
   src: [
     {
