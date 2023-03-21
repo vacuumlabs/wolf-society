@@ -7,7 +7,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material'
-import ArrowForward from '@mui/icons-material/ArrowForward'
+import ArrowRightIcon from '../icons/ArrowRightIcon'
 
 export type TopicCardProps = {
   title: string
@@ -30,7 +30,7 @@ const TopicCard = ({ title, date, imageUrl }: TopicCardProps) => {
           color="primary"
           variant="contained"
           sx={{ width: '100%' }}
-          endIcon={<ArrowForward />}
+          endIcon={<ArrowRightIcon />}
         >
           Read More
         </Button>
