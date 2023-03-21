@@ -51,7 +51,7 @@ const Navigation = () => {
           <Stack
             direction="row"
             justifyContent="center"
-            gap={2}
+            gap={4}
             sx={{
               display: { mobile: 'none', tabletM: 'flex' },
               flexGrow: 1,
@@ -59,11 +59,13 @@ const Navigation = () => {
           >
             {subpages.map((subpage) => {
               const isCurrentSubpage = router.pathname === subpage.href
-              const color = isCurrentSubpage ? 'primary' : 'inherit'
+              const color = isCurrentSubpage ? 'primary' : 'black.main'
               return (
-                <Button key={subpage.text} href={subpage.href} color={color}>
-                  {t(subpage.text)}
-                </Button>
+                <Typography variant="button" key={subpage.text} color={color}>
+                  <Link color="inherit" href={subpage.href} underline="hover">
+                    {t(subpage.text)}
+                  </Link>
+                </Typography>
               )
             })}
           </Stack>

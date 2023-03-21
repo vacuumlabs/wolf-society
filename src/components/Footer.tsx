@@ -52,14 +52,11 @@ const Footer = () => {
                 const isCurrentSubpage = router.pathname === subpage.href
                 const color = isCurrentSubpage ? 'primary' : 'inherit'
                 return (
-                  <Link
-                    variant="button"
-                    href={subpage.href}
-                    key={subpage.text}
-                    color={color}
-                  >
-                    {t(subpage.text)}
-                  </Link>
+                  <Typography variant="button" key={subpage.text} color={color}>
+                    <Link color="inherit" href={subpage.href} underline="hover">
+                      {t(subpage.text)}
+                    </Link>
+                  </Typography>
                 )
               })}
             </Stack>
@@ -72,15 +69,16 @@ const Footer = () => {
             >
               {socials.map((social) => {
                 return (
-                  <Link
-                    variant="button"
-                    href={social.href}
-                    key={social.text}
-                    color="inherit"
-                    target="_blank"
-                  >
-                    {social.text}
-                  </Link>
+                  <Typography variant="button" key={social.text}>
+                    <Link
+                      color="inherit"
+                      href={social.href}
+                      underline="hover"
+                      target="_blank"
+                    >
+                      {social.text}
+                    </Link>
+                  </Typography>
                 )
               })}
             </Stack>
