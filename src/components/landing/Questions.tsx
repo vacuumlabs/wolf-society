@@ -19,11 +19,8 @@ const Questions = () => {
         >
           <Typography variant="h3">Common Questions</Typography>
           <div>
-            {MockedQuestions.map((questionData) => (
-              <QuestionAccordion
-                {...questionData}
-                key={questionData.question}
-              />
+            {MockedQuestions.map((questionData, index) => (
+              <QuestionAccordion {...questionData} key={`Question${index}`} />
             ))}
           </div>
         </Stack>

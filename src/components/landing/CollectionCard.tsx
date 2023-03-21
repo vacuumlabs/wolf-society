@@ -65,7 +65,7 @@ const CollectionCard = ({
               <Typography
                 variant="h3"
                 color="neutral.main"
-                sx={{ 'white-space': 'pre-wrap' }}
+                sx={{ whiteSpace: 'pre-wrap' }}
               >
                 {subtitle}
               </Typography>
@@ -96,7 +96,7 @@ const CollectionCard = ({
           <Typography
             variant="h3"
             color="neutral.main"
-            sx={{ 'white-space': 'pre-wrap' }}
+            sx={{ whiteSpace: 'pre-wrap' }}
           >
             {subtitle}
           </Typography>
