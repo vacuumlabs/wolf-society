@@ -8,7 +8,7 @@ import { createTheme, CssBaseline, ThemeProvider } from '@mui/material'
 import Navigation from '@/components/Navigation'
 import { TranslationsContext } from '@/utils/hooks/useTranslations'
 import localFont from 'next/font/local'
-import Footer from '@/components/landing/Footer'
+import Footer from '@/components/Footer'
 
 declare module '@mui/material/styles' {
   interface BreakpointOverrides {

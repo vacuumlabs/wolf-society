@@ -12,7 +12,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import heroImage from 'public/images/hero.png'
 import logoImage from 'public/images/Logo.svg'
-import { subpages } from '../Navigation'
+import { subpages } from './Navigation'
 
 const socials: { text: string; href: string }[] = [
   { text: 'discord', href: 'https://discord.gg' },
