@@ -6,9 +6,9 @@ function PlusIcon24(props: SvgIconProps) {
       <path
         d="M3.51471 12.0049H20.4853"
         stroke="currentColor"
-        stroke-width="2"
+        strokeWidth="2"
       />
-      <path d="M12 3.51953V20.4901" stroke="currentColor" stroke-width="2" />
+      <path d="M12 3.51953V20.4901" stroke="currentColor" strokeWidth="2" />
     </SvgIcon>
   )
 }
