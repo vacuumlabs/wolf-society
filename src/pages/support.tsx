@@ -1,7 +1,11 @@
 import { NftCard } from '@/components/NftCard'
 import { useGetNfts } from '@/utils/hooks/useGetNfts'
-import { useTranslations } from '@/utils/hooks/useTranslations'
+import {
+  injectTranslations,
+  useTranslations,
+} from '@/utils/hooks/useTranslations'
 import { Container } from '@mui/material'
+import { GetStaticPropsContext } from 'next'
 import { useAccount } from 'wagmi'
 
 const Support = () => {
@@ -18,4 +22,14 @@ const Support = () => {
     </Container>
   )
 }
+
+export async function getStaticProps({ locale }: GetStaticPropsContext) {
+  return {
+    // Will be passed to the page component as props
+    props: {
+      translations: await injectTranslations(locale),
+    },
+  }
+}
+
 export default Support
