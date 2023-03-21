@@ -92,6 +92,8 @@ const Navigation = () => {
             >
               <MenuIcon />
             </IconButton>
+
+            {/* Mobile hamburger menu */}
             <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
@@ -111,11 +113,13 @@ const Navigation = () => {
               }}
             >
               {subpages.map((subpage) => (
-                <MenuItem key={subpage.text} onClick={handleCloseNavMenu}>
-                  <Link textAlign="center" href={subpage.href} underline="none">
-                    {t(subpage.text)}
-                  </Link>
-                </MenuItem>
+                <Link href={subpage.href} key={subpage.text} underline="hover">
+                  <MenuItem onClick={handleCloseNavMenu}>
+                    <Typography textAlign="center">
+                      {t(subpage.text)}
+                    </Typography>
+                  </MenuItem>
+                </Link>
               ))}
               <MenuItem key="connectWalletButton" onClick={handleCloseNavMenu}>
                 <ConnectButton />
