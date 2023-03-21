@@ -44,8 +44,10 @@ const Navigation = () => {
       sx={(theme) => ({ fontSize: theme.typography.button.fontSize, py: 2 })}
     >
       <Container>
-        <Toolbar>
-          <Image src={logoImage} alt="Logo" height="48" />
+        <Toolbar sx={{ p: 0 }}>
+          <Link href="/" display="flex">
+            <Image src={logoImage} alt="Logo" height="48" />
+          </Link>
           <Stack
             direction="row"
             justifyContent="center"
