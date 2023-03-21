@@ -264,6 +264,11 @@ theme.components = {
       },
     },
   },
+  MuiGrid: {
+    defaultProps: {
+      columnSpacing: { mobile: 2, desktopS: 3, desktopM: 4, desktopL: 5 },
+    },
+  },
 }
 
 // Display

@@ -1,9 +1,7 @@
 import {
   Accordion,
-  AccordionDetails,
   AccordionSummary,
   Grid,
-  Icon,
   Typography,
   useMediaQuery,
   useTheme,
@@ -32,6 +30,7 @@ const QuestionAccordion = ({ question, answer }: QuestionAccordionProps) => {
         aria-controls={`${question}-content`}
         id={`${question}-header`}
         sx={{
+          px: 0,
           py: 5,
           '& 	.MuiAccordionSummary-content': {
             m: 0,
@@ -43,19 +42,14 @@ const QuestionAccordion = ({ question, answer }: QuestionAccordionProps) => {
       >
         <Typography>{question}</Typography>
       </AccordionSummary>
-      <AccordionDetails>
-        <Grid container>
-          <Grid item mobile={12} desktopS={5}></Grid>
-          <Grid item mobile={12} desktopS={7}>
-            <Typography
-              variant="body2"
-              sx={{ py: { mobile: 5, destkopM: 10 } }}
-            >
-              {answer}
-            </Typography>
-          </Grid>
+      <Grid container>
+        <Grid item mobile={12} desktopS={5}></Grid>
+        <Grid item mobile={12} desktopS={7}>
+          <Typography variant="body2" sx={{ py: { mobile: 5, destkopM: 10 } }}>
+            {answer}
+          </Typography>
         </Grid>
-      </AccordionDetails>
+      </Grid>
     </Accordion>
   )
 }
