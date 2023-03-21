@@ -1,8 +1,13 @@
-import { Box, Container, Stack, Typography, Button } from '@mui/material'
+import { Box, Container, Stack, Typography, Button, Link } from '@mui/material'
 import Image from 'next/image'
 import heroImage from 'public/images/hero.png'
+import React from 'react'
 
-const Hero = () => {
+type Props = {
+  manifestRef: React.RefObject<HTMLElement>
+}
+
+const Hero = ({ manifestRef }: Props) => {
   return (
     <Box sx={{ bgcolor: 'neutral.400' }}>
       <Container>
@@ -15,7 +20,17 @@ const Hero = () => {
               Together we are supporting projects that matter to the Earth.
             </Typography>
             <Typography variant="body1" display="inline" color="primary">
-              {} You are Wolf Society
+              <Link
+                variant="inherit"
+                underline="hover"
+                sx={{ cursor: 'pointer' }}
+                onClick={() => {
+                  console.log('scrolling')
+                  manifestRef?.current?.scrollIntoView()
+                }}
+              >
+                {} You are Wolf Society
+              </Link>
             </Typography>
           </Box>
           <Stack sx={{ alignItems: 'center' }}>

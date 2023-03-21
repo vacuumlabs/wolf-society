@@ -10,12 +10,14 @@ import Roadmap from '@/components/landing/Roadmap'
 import Questions from '@/components/landing/Questions'
 import Topics from '@/components/landing/Topics'
 import CTA from '@/components/landing/CTA'
+import { useRef } from 'react'
 
 const Home = () => {
+  const manifestRef = useRef(null)
   return (
     <Stack>
-      <Hero />
-      <Manifest />
+      <Hero manifestRef={manifestRef} />
+      <Manifest manifestRef={manifestRef} />
       <Projects />
       <MakeImpact />
       <Collections />

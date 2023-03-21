@@ -1,8 +1,15 @@
 import { Box, Container, Stack, Typography } from '@mui/material'
 
-const Manifest = () => {
+type Props = {
+  manifestRef: React.RefObject<HTMLElement>
+}
+
+const Manifest = ({ manifestRef }: Props) => {
   return (
-    <Box sx={{ bgcolor: 'secondary.main', textAlign: 'center' }}>
+    <Box
+      ref={manifestRef}
+      sx={{ bgcolor: 'secondary.main', textAlign: 'center' }}
+    >
       <Container>
         <Stack sx={{ gap: 4, my: { mobile: 10, desktopM: 20 } }}>
           <Typography
