@@ -10,7 +10,6 @@ import {
   useTheme,
 } from '@mui/material'
 import useMediaQuery from '@mui/material/useMediaQuery'
-import VisibilityIcon from '@mui/icons-material/Visibility'
 
 export type CollectionCardProps = {
   name: string
