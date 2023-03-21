@@ -19,7 +19,7 @@ import { useRouter } from 'next/router'
 import Image from 'next/image'
 import logoImage from 'public/images/Logo.svg'
 
-const subpages: { text: keyof Translations; href: string }[] = [
+export const subpages: { text: keyof Translations; href: string }[] = [
   { text: 'donate', href: '/' },
   { text: 'support', href: '/support' },
   { text: 'blog', href: '/blog' },
