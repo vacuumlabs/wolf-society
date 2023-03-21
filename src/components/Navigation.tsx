@@ -13,7 +13,7 @@ import {
 } from '@mui/material'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { Translations, useTranslations } from '@/utils/hooks/useTranslations'
-import MenuIcon from '@mui/icons-material/Menu'
+import MenuIcon from './icons/MenuIcon'
 import { useRouter } from 'next/router'
 import WSLogo from './icons/WSLogo'
 
