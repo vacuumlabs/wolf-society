@@ -6,17 +6,25 @@ import { GetStaticPropsContext } from 'next'
 import { useAccount } from 'wagmi'
 import { useGetNfts } from '@/utils/hooks/useGetNfts'
 import { NftCard } from '@/components/NftCard'
+import { useGetNftsCollections } from '@/utils/hooks/useGetNftsCollection'
+import { ourCollectionsAddresses } from '@/consts'
+import { compareNfts } from '@/utils/helpers'
 
 const Home = () => {
   const t = useTranslations()
   const { address } = useAccount()
   const ownedNfts = useGetNfts(address)
+  const wlfSocietyNfts = useGetNftsCollections(ourCollectionsAddresses)
 
   return (
     <>
       <h1>{t('welcome')}</h1>
-      {ownedNfts?.map((nft) => (
-        <NftCard key={nft.contract.address} nft={nft} />
+      {wlfSocietyNfts?.map((nft, index) => (
+        <NftCard
+          key={index}
+          nft={nft}
+          owned={ownedNfts.some((ownedNft) => compareNfts(ownedNft, nft))}
+        />
       ))}
     </>
   )
