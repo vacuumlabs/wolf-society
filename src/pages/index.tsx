@@ -1,32 +1,31 @@
-import {
-  injectTranslations,
-  useTranslations,
-} from '@/utils/hooks/useTranslations'
+import Collections from '@/components/landing/Collections'
+import Hero from '@/components/landing/Hero'
+import Manifest from '@/components/landing/Manifest'
+import Projects from '@/components/landing/Projects'
+import { injectTranslations } from '@/utils/hooks/useTranslations'
+import { Stack } from '@mui/material'
 import { GetStaticPropsContext } from 'next'
-import { useAccount } from 'wagmi'
-import { useGetNfts } from '@/utils/hooks/useGetNfts'
-import { NftCard } from '@/components/NftCard'
-import { useGetNftsCollections } from '@/utils/hooks/useGetNftsCollection'
-import { ourCollectionsAddresses } from '@/consts'
-import { compareNfts } from '@/utils/helpers'
+import MakeImpact from '@/components/landing/MakeImpact'
+import Roadmap from '@/components/landing/Roadmap'
+import Questions from '@/components/landing/Questions'
+import Topics from '@/components/landing/Topics'
+import CTA from '@/components/landing/CTA'
+import { useRef } from 'react'
 
 const Home = () => {
-  const t = useTranslations()
-  const { address } = useAccount()
-  const ownedNfts = useGetNfts(address)
-  const wlfSocietyNfts = useGetNftsCollections(ourCollectionsAddresses)
-
+  const manifestRef = useRef(null)
   return (
-    <>
-      <h1>{t('welcome')}</h1>
-      {wlfSocietyNfts?.map((nft, index) => (
-        <NftCard
-          key={index}
-          nft={nft}
-          owned={ownedNfts.some((ownedNft) => compareNfts(ownedNft, nft))}
-        />
-      ))}
-    </>
+    <Stack>
+      <Hero manifestRef={manifestRef} />
+      <Manifest manifestRef={manifestRef} />
+      <Projects />
+      <MakeImpact />
+      <Collections />
+      <Roadmap />
+      <Questions />
+      <Topics />
+      <CTA />
+    </Stack>
   )
 }
 

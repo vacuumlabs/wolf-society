@@ -1,7 +1,7 @@
 import { createContext, useContext } from 'react'
 import contentful from '../configs/contentful'
 
-type Translations = {
+export type Translations = {
   welcome: string
   wolfSocietyFoundation: string
   updates: string
