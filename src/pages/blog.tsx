@@ -1,5 +1,5 @@
 import React from 'react'
-import { GetServerSidePropsContext } from 'next'
+import { GetStaticPropsContext } from 'next'
 import { Container, Link, Stack, Typography } from '@mui/material'
 import Post, { TPost } from '@/components/Post'
 import {
@@ -36,9 +36,7 @@ const Blog = ({ posts }: TBlog) => {
   )
 }
 
-export async function getServerSideProps({
-  locale,
-}: GetServerSidePropsContext) {
+export async function getStaticProps({ locale }: GetStaticPropsContext) {
   const response = await fetch(
     `https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@${process.env.NEXT_PUBLIC_MEDIUM_USER}`
   )
@@ -52,6 +50,7 @@ export async function getServerSideProps({
       posts: data.items ?? [],
       errorMessage: data.message ?? '',
     },
+    revalidate: 60, // In seconds
   }
 }
 
