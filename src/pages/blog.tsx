@@ -3,9 +3,10 @@ import { GetServerSidePropsContext } from 'next'
 import { Container, Link, Stack, Typography } from '@mui/material'
 import Post, { TPost } from '@/components/Post'
 import {
-  injectTranslations,
-  useTranslations,
-} from '@/utils/hooks/useTranslations'
+  ContentTypes,
+  injectCMSContent,
+  useContentful,
+} from '@/utils/hooks/useContentful'
 
 type TBlog = {
   posts: TPost[]
@@ -13,11 +14,11 @@ type TBlog = {
 }
 
 const Blog = ({ posts }: TBlog) => {
-  const t = useTranslations()
+  const translate = useContentful(ContentTypes.articlesPage)
   return (
     <Container sx={{ mt: 10 }}>
       <Stack padding={4} spacing={8} width="fit-content" alignItems="center">
-        <Typography variant="h3">{t('updates')}</Typography>
+        <Typography variant="h3">{translate('articles')}</Typography>
         <Stack sx={{ width: '60%' }}>
           {posts.map((post) => (
             <Post key={post.title} {...post} />
@@ -47,7 +48,7 @@ export async function getServerSideProps({
   return {
     props: {
       // Will be passed to the page component as props
-      translations: await injectTranslations(locale),
+      translations: await injectCMSContent(ContentTypes.landingPage, locale),
       posts: data.items ?? [],
       errorMessage: data.message ?? '',
     },

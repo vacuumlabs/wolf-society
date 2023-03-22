@@ -1,9 +1,9 @@
 import React from 'react'
 import { Button, Menu, MenuItem } from '@mui/material'
-import { useTranslations } from '@/utils/hooks/useTranslations'
+import { useContentful } from '@/utils/hooks/useContentful'
 
 const Support = () => {
-  const t = useTranslations()
+  const t = useContentful()
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 

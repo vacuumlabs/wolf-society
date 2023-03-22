@@ -2,7 +2,7 @@ import Collections from '@/components/landing/Collections'
 import Hero from '@/components/landing/Hero'
 import Manifest from '@/components/landing/Manifest'
 import Projects from '@/components/landing/Projects'
-import { injectTranslations } from '@/utils/hooks/useTranslations'
+import { ContentTypes, injectCMSContent } from '@/utils/hooks/useContentful'
 import { Stack } from '@mui/material'
 import { GetStaticPropsContext } from 'next'
 import MakeImpact from '@/components/landing/MakeImpact'
@@ -33,7 +33,7 @@ export async function getStaticProps({ locale }: GetStaticPropsContext) {
   return {
     // Will be passed to the page component as props
     props: {
-      translations: await injectTranslations(locale),
+      translations: await injectCMSContent(ContentTypes.landingPage, locale),
     },
   }
 }

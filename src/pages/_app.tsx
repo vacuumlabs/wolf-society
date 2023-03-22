@@ -6,7 +6,7 @@ import { wagmiClient, chains } from '@/utils/configs/wagmi'
 import '@rainbow-me/rainbowkit/styles.css'
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material'
 import Navigation from '@/components/Navigation'
-import { TranslationsContext } from '@/utils/hooks/useTranslations'
+import { ContentContext } from '@/utils/hooks/useContentful'
 import localFont from 'next/font/local'
 import Footer from '@/components/Footer'
 
@@ -386,11 +386,11 @@ const App = ({ Component, pageProps }: AppProps) => (
       <title>Wolf Society</title>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <TranslationsContext.Provider value={pageProps?.translations}>
+        <ContentContext.Provider value={pageProps?.translations}>
           <Navigation />
           <Component {...pageProps} />
           <Footer />
-        </TranslationsContext.Provider>
+        </ContentContext.Provider>
       </ThemeProvider>
     </RainbowKitProvider>
   </WagmiConfig>

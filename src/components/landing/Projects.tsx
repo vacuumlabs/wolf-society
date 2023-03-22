@@ -1,6 +1,7 @@
 import { Box, Button, Container, Stack, Typography } from '@mui/material'
 import ProjectCard, { ProjectCardProps } from './ProjectCard'
 import WSFSymbol from '../icons/WSFSymbol'
+import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
 
 const MockedProjects: ProjectCardProps[] = [
   {
@@ -21,6 +22,7 @@ const MockedProjects: ProjectCardProps[] = [
 ]
 
 const Projects = () => {
+  const translate = useContentful(ContentTypes.landingPage)
   return (
     <Box sx={{ bgcolor: 'secondary.main', textAlign: 'center' }}>
       <Container>
@@ -34,11 +36,11 @@ const Projects = () => {
             color="neutral.main"
             sx={{ textAlign: 'center' }}
           >
-            Supported Projects
+            {translate('supportedProjects')}
           </Typography>
           <Stack sx={{ alignItems: 'center' }}>
             <Button color="neutral" variant="outlined">
-              All Projects
+              {translate('allProjects')}
             </Button>
           </Stack>
         </Stack>

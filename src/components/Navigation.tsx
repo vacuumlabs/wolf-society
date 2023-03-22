@@ -12,14 +12,21 @@ import {
   Typography,
 } from '@mui/material'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
-import { Translations, useTranslations } from '@/utils/hooks/useTranslations'
+import {
+  ContentTypes,
+  Content,
+  useContentful,
+} from '@/utils/hooks/useContentful'
 import MenuIcon from './icons/MenuIcon'
 import { useRouter } from 'next/router'
 import WSLogo from './icons/WSLogo'
 
-export const subpages: { text: keyof Translations; href: string }[] = [
-  { text: 'donate', href: '/' },
-  { text: 'support', href: '/support' },
+export const subpages: {
+  text: keyof Content[ContentTypes.navbar]
+  href: string
+}[] = [
+  { text: 'about', href: '/' },
+  { text: 'collections', href: '/support' },
   { text: 'blog', href: '/blog' },
 ]
 
@@ -27,7 +34,7 @@ const Navigation = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
   const router = useRouter()
 
-  const t = useTranslations()
+  const translate = useContentful(ContentTypes.navbar)
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget)
   }
@@ -61,7 +68,7 @@ const Navigation = () => {
               return (
                 <Typography variant="button" key={subpage.text} color={color}>
                   <Link color="inherit" href={subpage.href} underline="hover">
-                    {t(subpage.text)}
+                    {translate(subpage.text)}
                   </Link>
                 </Typography>
               )
@@ -114,7 +121,7 @@ const Navigation = () => {
                 <Link href={subpage.href} key={subpage.text} underline="hover">
                   <MenuItem onClick={handleCloseNavMenu}>
                     <Typography textAlign="center">
-                      {t(subpage.text)}
+                      {translate(subpage.text)}
                     </Typography>
                   </MenuItem>
                 </Link>

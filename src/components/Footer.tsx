@@ -1,4 +1,4 @@
-import { useTranslations } from '@/utils/hooks/useTranslations'
+import { ContentTypes, useContentful } from '@/utils/hooks/useContentful'
 import {
   Box,
   Container,
@@ -21,7 +21,7 @@ const socials: { text: string; href: string }[] = [
 ]
 
 const Footer = () => {
-  const t = useTranslations()
+  const translate = useContentful(ContentTypes.navbar)
   const router = useRouter()
   const breakpoint: keyof BreakpointOverrides = 'tabletM'
 
@@ -39,7 +39,7 @@ const Footer = () => {
                 variant="button"
                 display={{ mobile: 'none', [breakpoint]: 'inherit' }}
               >
-                MAKE-IMPACT@wolfsociety.com
+                {translate('email')}
               </Typography>
             </Stack>
           </Grid>
@@ -54,7 +54,7 @@ const Footer = () => {
                 return (
                   <Typography variant="button" key={subpage.text} color={color}>
                     <Link color="inherit" href={subpage.href} underline="hover">
-                      {t(subpage.text)}
+                      {translate(subpage.text)}
                     </Link>
                   </Typography>
                 )

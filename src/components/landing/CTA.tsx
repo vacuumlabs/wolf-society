@@ -1,7 +1,9 @@
+import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
 import { Box, Button, Container, Icon, Stack, Typography } from '@mui/material'
 import WSFSymbol from '../icons/WSFSymbol'
 
 const CTA = () => {
+  const translate = useContentful(ContentTypes.landingPage)
   const wsfSymbol = (
     <Icon
       sx={(theme) => ({
@@ -41,7 +43,7 @@ const CTA = () => {
         >
           <Stack direction="row" alignItems="center" gap={4}>
             {wsfSymbol}
-            <Typography variant="h2">Make Impact</Typography>
+            <Typography variant="h2">{translate('makeImpact')}</Typography>
             {wsfSymbol}
           </Stack>
         </Button>

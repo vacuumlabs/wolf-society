@@ -1,7 +1,8 @@
 import {
-  injectTranslations,
-  useTranslations,
-} from '@/utils/hooks/useTranslations'
+  ContentTypes,
+  injectCMSContent,
+  useContentful,
+} from '@/utils/hooks/useContentful'
 import { GetStaticPropsContext } from 'next'
 import { useAccount } from 'wagmi'
 import { useGetNfts } from '@/utils/hooks/useGetNfts'
@@ -11,14 +12,13 @@ import { ourCollectionsAddresses } from '@/consts'
 import { compareNfts } from '@/utils/helpers'
 
 const Home = () => {
-  const t = useTranslations()
+  const translate = useContentful(ContentTypes.collectionsPage)
   const { address } = useAccount()
   const ownedNfts = useGetNfts(address)
   const wlfSocietyNfts = useGetNftsCollections(ourCollectionsAddresses)
 
   return (
     <>
-      <h1>{t('welcome')}</h1>
       {wlfSocietyNfts?.map((nft, index) => (
         <NftCard
           key={index}
@@ -34,7 +34,10 @@ export async function getStaticProps({ locale }: GetStaticPropsContext) {
   return {
     // Will be passed to the page component as props
     props: {
-      translations: await injectTranslations(locale),
+      translations: await injectCMSContent(
+        ContentTypes.collectionsPage,
+        locale
+      ),
     },
   }
 }
