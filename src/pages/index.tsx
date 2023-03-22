@@ -11,6 +11,7 @@ import Questions from '@/components/landing/Questions'
 import Topics from '@/components/landing/Topics'
 import CTA from '@/components/landing/CTA'
 import { useRef } from 'react'
+import Activities from '@/components/landing/Activities'
 
 const Home = () => {
   const manifestRef = useRef(null)
@@ -20,6 +21,7 @@ const Home = () => {
       <Manifest manifestRef={manifestRef} />
       <Projects />
       <MakeImpact />
+      <Activities />
       <Collections />
       <Roadmap />
       <Questions />

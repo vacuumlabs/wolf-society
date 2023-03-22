@@ -34,6 +34,12 @@ export type Content = {
     allProjects: string
     makeImpactText: string
     readMore: string
+    makeItHappen: string
+    makeItHappenText: string
+    haveFun: string
+    haveFunText: string
+    breadAndButter: string
+    breadAndButterText: string
     showCollection: string
     questions: string
     articles: string
