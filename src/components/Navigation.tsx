@@ -26,7 +26,7 @@ export const subpages: {
   href: string
 }[] = [
   { text: 'about', href: '/' },
-  { text: 'collections', href: '/support' },
+  { text: 'collections', href: '/collections' },
   { text: 'blog', href: '/blog' },
 ]
 

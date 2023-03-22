@@ -11,7 +11,7 @@ import { useGetNftsCollections } from '@/utils/hooks/useGetNftsCollection'
 import { ourCollectionsAddresses } from '@/consts'
 import { compareNfts } from '@/utils/helpers'
 
-const Home = () => {
+const Collections = () => {
   const translate = useContentful(ContentTypes.collectionsPage)
   const { address } = useAccount()
   const ownedNfts = useGetNfts(address)
@@ -42,4 +42,4 @@ export async function getStaticProps({ locale }: GetStaticPropsContext) {
   }
 }
 
-export default Home
+export default Collections
