@@ -1,3 +1,4 @@
+import { ContentTypes, useContentful } from '@/utils/hooks/useContentful'
 import { Box, Container, Stack, Typography, Button, Link } from '@mui/material'
 import Image from 'next/image'
 import heroImage from 'public/images/hero.png'
@@ -8,16 +9,17 @@ type Props = {
 }
 
 const Hero = ({ manifestRef }: Props) => {
+  const translate = useContentful(ContentTypes.landingPage)
   return (
     <Box sx={{ bgcolor: 'neutral.400' }}>
       <Container>
         <Stack sx={{ gap: 4, mt: '222px', textAlign: 'center' }}>
           <Typography variant="h1" sx={{ fontWeight: 600 }}>
-            The Earth Is What We ALL Have In Common
+            {translate('heroTitle')}
           </Typography>
           <Box>
             <Typography variant="body1" display="inline">
-              Together we are supporting projects that matter to the Earth.
+              {translate('heroSubtitle')}
             </Typography>
             <Typography variant="body1" display="inline" color="primary">
               <Link
@@ -29,12 +31,12 @@ const Hero = ({ manifestRef }: Props) => {
                   manifestRef?.current?.scrollIntoView()
                 }}
               >
-                {} You are Wolf Society
+                {} {translate('youAreWolfSociety')}
               </Link>
             </Typography>
           </Box>
           <Stack sx={{ alignItems: 'center' }}>
-            <Button variant="contained">Make Impact</Button>
+            <Button variant="contained">{translate('makeImpact')}</Button>
           </Stack>
         </Stack>
       </Container>

@@ -1,3 +1,4 @@
+import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
 import {
   Box,
   Button,
@@ -26,6 +27,7 @@ const CollectionCard = ({
   color,
   subtitle,
 }: CollectionCardProps) => {
+  const translate = useContentful(ContentTypes.landingPage)
   const theme = useTheme()
   const displayHorizontally = useMediaQuery(theme.breakpoints.up('tabletM'))
 
@@ -80,7 +82,7 @@ const CollectionCard = ({
           </Box>
           <CardActions sx={{ padding: 0 }}>
             <Button color="primary" variant="contained">
-              Show collection
+              {translate('showCollection')}
             </Button>
           </CardActions>
         </Box>
@@ -110,7 +112,7 @@ const CollectionCard = ({
 
       <CardActions sx={{ padding: 0 }}>
         <Button color="primary" variant="contained" sx={{ width: '100%' }}>
-          Show collection
+          {translate('showCollection')}
         </Button>
       </CardActions>
     </Card>

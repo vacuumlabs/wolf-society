@@ -1,3 +1,4 @@
+import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
 import {
   Button,
   Card,
@@ -14,6 +15,7 @@ export type ProjectCardProps = {
 }
 
 const ProjectCard = ({ name, imageUrl }: ProjectCardProps) => {
+  const translate = useContentful(ContentTypes.landingPage)
   return (
     <Card sx={{ maxWidth: 404, width: '100%' }}>
       <CardMedia component="img" height="300" image={imageUrl} alt="hmm" />
@@ -29,7 +31,7 @@ const ProjectCard = ({ name, imageUrl }: ProjectCardProps) => {
           sx={{ width: '100%' }}
           endIcon={<ArrowRightIcon />}
         >
-          Read More
+          {translate('readMore')}
         </Button>
       </CardActions>
     </Card>

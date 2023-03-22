@@ -1,3 +1,4 @@
+import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
 import { Box, Button, Container, Stack, Typography } from '@mui/material'
 import WSFSymbol from '../icons/WSFSymbol'
 import TopicCard, { TopicCardProps } from './TopicCard'
@@ -24,6 +25,7 @@ const MockedTopics: TopicCardProps[] = [
 ]
 
 const Topics = () => {
+  const translate = useContentful(ContentTypes.landingPage)
   return (
     <Box sx={{ bgcolor: 'neutral.400', textAlign: 'center' }}>
       <Container>
@@ -33,11 +35,11 @@ const Topics = () => {
         >
           <WSFSymbol color="black" />
           <Typography variant="h1" sx={{ textAlign: 'center' }}>
-            Hot Topics
+            {translate('articles')}
           </Typography>
           <Stack sx={{ alignItems: 'center' }}>
             <Button color="black" variant="outlined">
-              All Topics
+              {translate('allArticles')}
             </Button>
           </Stack>
         </Stack>

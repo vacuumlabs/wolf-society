@@ -1,3 +1,4 @@
+import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
 import { Box, Container, Stack, Typography } from '@mui/material'
 import QuestionAccordion from './QuestionAccordion'
 
@@ -10,6 +11,7 @@ const MockedQuestion = {
 const MockedQuestions = new Array(4).fill(MockedQuestion)
 
 const Questions = () => {
+  const translate = useContentful(ContentTypes.landingPage)
   return (
     <Box sx={{ bgcolor: 'neutral.400' }}>
       <Container>
@@ -17,7 +19,7 @@ const Questions = () => {
           sx={{ width: '100%', my: { mobile: 10, desktopM: 20 } }}
           spacing={4}
         >
-          <Typography variant="h3">Common Questions</Typography>
+          <Typography variant="h3">{translate('questions')}</Typography>
           <div>
             {MockedQuestions.map((questionData, index) => (
               <QuestionAccordion {...questionData} key={`Question${index}`} />
