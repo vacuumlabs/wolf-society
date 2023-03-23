@@ -1,4 +1,5 @@
 import { Card, Divider, Grid, Stack, Typography } from '@mui/material'
+import WSFSymbol from '../icons/WSFSymbol'
 
 export type RoadmapCardProps = {
   quarter: string
@@ -19,17 +20,27 @@ const RoadmapCard = ({ quarter, year, items, color }: RoadmapCardProps) => {
       >
         <Grid item mobile={12} tabletS={5}>
           <Stack
+            justifyContent="space-between"
+            height="100%"
             sx={{
-              px: { mobile: 5, desktopM: 10 },
-              pt: { mobile: 5, desktopM: 10 },
+              p: { mobile: 5, desktopM: 10 },
             }}
           >
-            <Typography variant="h2" color="neutral.main">
-              {quarter}
-            </Typography>
-            <Typography variant="h2" color="neutral.main">
-              {year}
-            </Typography>
+            <Stack>
+              <Typography variant="h2" color="neutral.main">
+                {quarter}
+              </Typography>
+              <Typography variant="h2" color="neutral.main">
+                {year}
+              </Typography>
+            </Stack>
+            <WSFSymbol
+              color="neutral"
+              sx={{
+                fontSize: '35px',
+                display: { mobile: 'none', tabletS: 'inline-block' },
+              }}
+            />
           </Stack>
         </Grid>
         <Grid item mobile={12} tabletS={7}>
