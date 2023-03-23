@@ -182,6 +182,7 @@ const theme = createTheme({
       '700': '#9B2720',
       '800': '#781E19',
       '900': '#5C1713',
+      contrastText: '#F2F2E7',
     },
     secondary: {
       '50': '#EAEDEA',

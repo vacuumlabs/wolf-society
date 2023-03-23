@@ -19,6 +19,7 @@ const CTA = () => {
         <WSFSymbol
           sx={(theme) => ({
             fontSize: theme.typography.headline,
+            color: 'primary.contrastText',
           })}
         />
       </Box>
