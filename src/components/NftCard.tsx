@@ -18,13 +18,13 @@ export const NftCard = ({ nft, owned }: NftCardProps) => {
           sx={{ width: '100%', height: 'auto' }}
           image={nft.rawMetadata?.image}
         />
-        <Typography textAlign={'center'} variant="h3">
+        <Typography textAlign={'center'} variant="title">
           {nft.title}
         </Typography>
-        <Typography textAlign={'center'} variant="subtitle1">
+        <Typography textAlign={'center'} variant="label">
           {nft.contract.symbol}
         </Typography>
-        <Typography textAlign={'center'} variant="subtitle1">
+        <Typography textAlign={'center'} variant="label">
           {owned ? 'OWNED' : 'NOT OWNED'}
         </Typography>
       </Stack>

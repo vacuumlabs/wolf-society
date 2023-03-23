@@ -1,3 +1,4 @@
+import { SUBPAGES } from '@/consts'
 import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
 import { Box, Button, Container, Icon, Stack, Typography } from '@mui/material'
 import WSFSymbol from '../icons/WSFSymbol'
@@ -7,7 +8,7 @@ const CTA = () => {
   const wsfSymbol = (
     <Icon
       sx={(theme) => ({
-        fontSize: theme.typography.h2,
+        fontSize: theme.typography.headline,
         display: {
           mobile: 'none',
           tabletS: 'inline-block',
@@ -17,7 +18,8 @@ const CTA = () => {
       <Box color="neutral.400">
         <WSFSymbol
           sx={(theme) => ({
-            fontSize: theme.typography.h2,
+            fontSize: theme.typography.headline,
+            color: 'primary.contrastText',
           })}
         />
       </Box>
@@ -35,15 +37,18 @@ const CTA = () => {
         <Button
           color="primary"
           variant="contained"
-          sx={(theme) => ({
+          sx={{
             borderRadius: '170px',
             width: '100%',
             height: { mobile: '112px', desktopM: '256px' },
-          })}
+          }}
+          href={SUBPAGES['collections']}
         >
           <Stack direction="row" alignItems="center" gap={4}>
             {wsfSymbol}
-            <Typography variant="h2">{translate('makeImpact')}</Typography>
+            <Typography variant="headline">
+              {translate('makeImpact')}
+            </Typography>
             {wsfSymbol}
           </Stack>
         </Button>

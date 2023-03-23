@@ -7,7 +7,7 @@ const MakeImpact = () => {
     <Box sx={{ bgcolor: 'neutral.400', textAlign: 'center' }}>
       <Container>
         <Stack sx={{ gap: 4, my: { mobile: 10, desktopM: 20 } }}>
-          <Typography variant="h3" sx={{ textAlign: 'center' }}>
+          <Typography variant="title" sx={{ textAlign: 'center' }}>
             {translate('makeImpact')}
           </Typography>
           <Box>
@@ -15,11 +15,6 @@ const MakeImpact = () => {
               {translate('makeImpactText')}
             </Typography>
           </Box>
-          <Stack sx={{ alignItems: 'center' }}>
-            <Button color="black" variant="outlined">
-              {translate('readMore')}
-            </Button>
-          </Stack>
         </Stack>
       </Container>
     </Box>

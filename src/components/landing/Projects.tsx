@@ -32,13 +32,13 @@ const Projects = () => {
         >
           <WSFSymbol color="neutral" />
           <Typography
-            variant="h1"
+            variant="display"
             color="neutral.main"
             sx={{ textAlign: 'center' }}
           >
             {translate('supportedProjects')}
           </Typography>
-          <Stack sx={{ alignItems: 'center' }}>
+          <Stack sx={{ alignItems: 'center', display: 'none' }}>
             <Button color="neutral" variant="outlined">
               {translate('allProjects')}
             </Button>

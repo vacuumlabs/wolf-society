@@ -36,6 +36,31 @@ declare module '@mui/material/styles' {
     blue: string
     brown: string
   }
+
+  interface TypographyVariants {
+    display: React.CSSProperties
+    headline: React.CSSProperties
+    title: React.CSSProperties
+    caption: React.CSSProperties
+    label: React.CSSProperties
+  }
+
+  // allow configuration using `createTheme`
+  interface TypographyVariantsOptions {
+    display?: React.CSSProperties
+    headline?: React.CSSProperties
+    title?: React.CSSProperties
+    caption?: React.CSSProperties
+    label?: React.CSSProperties
+  }
+}
+
+// Update the AppBar's color prop options
+declare module '@mui/material/AppBar' {
+  interface AppBarPropsColorOverrides {
+    neutral: true
+    black: true
+  }
 }
 
 // Update the Button's color prop options
@@ -51,6 +76,22 @@ declare module '@mui/material/SvgIcon' {
   interface SvgIconPropsColorOverrides {
     neutral: true
     black: true
+  }
+}
+
+// Update the Typography's variant prop options
+declare module '@mui/material/Typography' {
+  interface TypographyPropsVariantOverrides {
+    display: true
+    headline: true
+    title: true
+    caption: true
+    label: true
+    h1: false
+    h2: false
+    h3: false
+    subtitle1: false
+    subtitle2: false
   }
 }
 
@@ -121,6 +162,11 @@ const theme = createTheme({
     },
   },
   typography: {
+    h1: undefined,
+    h2: undefined,
+    h3: undefined,
+    subtitle1: undefined,
+    subtitle2: undefined,
     fontFamily: myFont.style.fontFamily,
   },
   palette: {
@@ -136,6 +182,7 @@ const theme = createTheme({
       '700': '#9B2720',
       '800': '#781E19',
       '900': '#5C1713',
+      contrastText: '#F2F2E7',
     },
     secondary: {
       '50': '#EAEDEA',
@@ -269,11 +316,22 @@ theme.components = {
       columnSpacing: { mobile: 2, desktopS: 3, desktopM: 4, desktopL: 5 },
     },
   },
+  MuiTypography: {
+    defaultProps: {
+      variantMapping: {
+        // Map the new variant to render a <h1> by default
+        display: 'h1',
+        headline: 'h2',
+        title: 'h3',
+        caption: 'h4',
+        label: 'h5',
+      },
+    },
+  },
 }
 
-// Display
-theme.typography.h1 = {
-  ...theme.typography.h1,
+theme.typography.display = {
+  ...theme.typography.display,
   fontWeight: 600,
   fontSize: '50px',
   lineHeight: '48px',
@@ -288,9 +346,8 @@ theme.typography.h1 = {
   },
 }
 
-// Headline
-theme.typography.h2 = {
-  ...theme.typography.h2,
+theme.typography.headline = {
+  ...theme.typography.headline,
   fontWeight: 600,
   fontSize: '35px',
   lineHeight: '32px',
@@ -305,9 +362,24 @@ theme.typography.h2 = {
   },
 }
 
-// Title
-theme.typography.h3 = {
-  ...theme.typography.h3,
+theme.typography.title = {
+  ...theme.typography.title,
+  fontWeight: 600,
+  fontSize: '25px',
+  lineHeight: '24px',
+  textTransform: 'uppercase',
+  [theme.breakpoints.up('desktopM')]: {
+    fontSize: '50px',
+    lineHeight: '48px',
+  },
+  [theme.breakpoints.up('desktopL')]: {
+    fontSize: '70px',
+    lineHeight: '64px',
+  },
+}
+
+theme.typography.caption = {
+  ...theme.typography.caption,
   fontWeight: 600,
   fontSize: '20px',
   lineHeight: '20px',
@@ -322,20 +394,18 @@ theme.typography.h3 = {
   },
 }
 
-// Label
-theme.typography.subtitle1 = {
-  ...theme.typography.subtitle1,
+theme.typography.label = {
+  ...theme.typography.label,
   fontWeight: 400,
   fontSize: '18px',
   lineHeight: '32px',
 }
 
-// Body
 theme.typography.body1 = {
   ...theme.typography.body1,
   fontWeight: 400,
   fontSize: '35px',
-  lineHeight: '40px',
+  lineHeight: '48px',
   [theme.breakpoints.up('desktopM')]: {
     fontSize: '50px',
     lineHeight: '64px',

@@ -18,14 +18,14 @@ const Blog = ({ posts }: TBlog) => {
   return (
     <Container sx={{ mt: 10 }}>
       <Stack padding={4} spacing={8} width="fit-content" alignItems="center">
-        <Typography variant="h3">{translate('articles')}</Typography>
+        <Typography variant="title">{translate('articles')}</Typography>
         <Stack sx={{ width: '60%' }}>
           {posts.map((post) => (
             <Post key={post.title} {...post} />
           ))}
         </Stack>
         <Link
-          variant="h3"
+          variant="title"
           href={`https://medium.com/@${process.env.NEXT_PUBLIC_MEDIUM_USER}`}
           target="_blank"
         >
