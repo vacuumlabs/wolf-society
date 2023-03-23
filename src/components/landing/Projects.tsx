@@ -38,7 +38,7 @@ const Projects = () => {
           >
             {translate('supportedProjects')}
           </Typography>
-          <Stack sx={{ alignItems: 'center' }}>
+          <Stack sx={{ alignItems: 'center', display: 'none' }}>
             <Button color="neutral" variant="outlined">
               {translate('allProjects')}
             </Button>
