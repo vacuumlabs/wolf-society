@@ -8,7 +8,7 @@ const CTA = () => {
   const wsfSymbol = (
     <Icon
       sx={(theme) => ({
-        fontSize: theme.typography.h2,
+        fontSize: theme.typography.headline,
         display: {
           mobile: 'none',
           tabletS: 'inline-block',
@@ -18,7 +18,7 @@ const CTA = () => {
       <Box color="neutral.400">
         <WSFSymbol
           sx={(theme) => ({
-            fontSize: theme.typography.h2,
+            fontSize: theme.typography.headline,
           })}
         />
       </Box>
@@ -45,7 +45,9 @@ const CTA = () => {
         >
           <Stack direction="row" alignItems="center" gap={4}>
             {wsfSymbol}
-            <Typography variant="h2">{translate('makeImpact')}</Typography>
+            <Typography variant="headline">
+              {translate('makeImpact')}
+            </Typography>
             {wsfSymbol}
           </Stack>
         </Button>

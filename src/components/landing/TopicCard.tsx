@@ -24,7 +24,7 @@ const TopicCard = ({ title, date, imageUrl }: TopicCardProps) => {
       <CardContent sx={{ bgcolor: 'neutral.main', p: 4, textAlign: 'start' }}>
         <Stack spacing={4}>
           <Typography variant="body2">{date}</Typography>
-          <Typography variant="h3">{title}</Typography>
+          <Typography variant="title">{title}</Typography>
         </Stack>
       </CardContent>
       <CardActions sx={{ padding: 0 }}>

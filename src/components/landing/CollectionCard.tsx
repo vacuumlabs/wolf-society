@@ -64,13 +64,13 @@ const CollectionCard = ({
           <Box flexGrow={1}>
             <Stack gap={4}>
               <Typography
-                variant="h3"
+                variant="title"
                 color="neutral.main"
                 sx={{ whiteSpace: 'pre-wrap' }}
               >
                 {subtitle}
               </Typography>
-              <Typography variant="h2" color="neutral.main">
+              <Typography variant="headline" color="neutral.main">
                 {name}
               </Typography>
             </Stack>
@@ -95,13 +95,13 @@ const CollectionCard = ({
       <CardContent sx={{ bgcolor: `${color}`, p: 5, textAlign: 'start' }}>
         <Stack gap={4}>
           <Typography
-            variant="h3"
+            variant="title"
             color="neutral.main"
             sx={{ whiteSpace: 'pre-wrap' }}
           >
             {subtitle}
           </Typography>
-          <Typography variant="h2" color="neutral.main">
+          <Typography variant="headline" color="neutral.main">
             {name}
           </Typography>
         </Stack>

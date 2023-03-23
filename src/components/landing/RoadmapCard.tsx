@@ -27,10 +27,10 @@ const RoadmapCard = ({ quarter, year, items, color }: RoadmapCardProps) => {
             }}
           >
             <Stack>
-              <Typography variant="h2" color="neutral.main">
+              <Typography variant="headline" color="neutral.main">
                 {quarter}
               </Typography>
-              <Typography variant="h2" color="neutral.main">
+              <Typography variant="headline" color="neutral.main">
                 {year}
               </Typography>
             </Stack>

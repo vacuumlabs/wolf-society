@@ -32,7 +32,7 @@ const Projects = () => {
         >
           <WSFSymbol color="neutral" />
           <Typography
-            variant="h1"
+            variant="display"
             color="neutral.main"
             sx={{ textAlign: 'center' }}
           >

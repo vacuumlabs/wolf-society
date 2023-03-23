@@ -35,7 +35,7 @@ const Topics = () => {
           alignItems="center"
         >
           <WSFSymbol color="black" />
-          <Typography variant="h1" sx={{ textAlign: 'center' }}>
+          <Typography variant="display" sx={{ textAlign: 'center' }}>
             {translate('articles')}
           </Typography>
           <Stack sx={{ alignItems: 'center' }}>

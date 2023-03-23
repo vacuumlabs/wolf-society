@@ -58,7 +58,7 @@ const ActivityItem = ({
       height="100%"
       justifyContent="center"
     >
-      <Typography variant="h1" component="h2">
+      <Typography variant="display" component="headline">
         {title}
       </Typography>
       <Typography>{description}</Typography>
@@ -96,7 +96,7 @@ const ActivityItem = ({
       </Grid>
       <Drawer anchor="right" open={drawerOpened} onClose={toggleDrawer(false)}>
         <Stack>
-          <Typography variant="h2">Title</Typography>
+          <Typography variant="headline">Title</Typography>
         </Stack>
       </Drawer>
     </>

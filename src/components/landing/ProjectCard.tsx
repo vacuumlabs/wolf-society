@@ -43,7 +43,7 @@ const ProjectCard = ({ name, imageUrl }: ProjectCardProps) => {
         <CardMedia component="img" height="300" image={imageUrl} alt="hmm" />
         <CardContent sx={{ p: 0, transition: 'translate 0.25s' }}>
           <Typography
-            variant="h3"
+            variant="title"
             color="secondary"
             sx={{ p: 4, textAlign: 'start', transition: 'translate 0.25s' }}
           >
