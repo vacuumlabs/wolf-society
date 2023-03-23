@@ -36,10 +36,13 @@ const Navigation = () => {
   }
   return (
     <AppBar
-      color="transparent"
-      position="absolute"
+      color="neutral"
       style={{ boxShadow: 'none' }}
-      sx={(theme) => ({ fontSize: theme.typography.button.fontSize, py: 2 })}
+      sx={(theme) => ({
+        fontSize: theme.typography.button.fontSize,
+        py: 2,
+        bgcolor: 'neutral.400',
+      })}
     >
       <Container>
         <Toolbar sx={{ p: 0 }}>
