@@ -15,11 +15,6 @@ const MakeImpact = () => {
               {translate('makeImpactText')}
             </Typography>
           </Box>
-          <Stack sx={{ alignItems: 'center' }}>
-            <Button color="black" variant="outlined">
-              {translate('readMore')}
-            </Button>
-          </Stack>
         </Stack>
       </Container>
     </Box>
