@@ -20,15 +20,8 @@ import {
 import MenuIcon from './icons/MenuIcon'
 import { useRouter } from 'next/router'
 import WSLogo from './icons/WSLogo'
-
-export const subpages: {
-  text: keyof Content[ContentTypes.navbar]
-  href: string
-}[] = [
-  { text: 'about', href: '/' },
-  { text: 'collections', href: '/collections' },
-  { text: 'blog', href: '/blog' },
-]
+import { SUBPAGES } from '@/consts'
+import { getSubpagesKeys } from '@/utils/helpers'
 
 const Navigation = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
@@ -62,13 +55,17 @@ const Navigation = () => {
               flexGrow: 1,
             }}
           >
-            {subpages.map((subpage) => {
-              const isCurrentSubpage = router.pathname === subpage.href
+            {getSubpagesKeys().map((subpageKey) => {
+              const isCurrentSubpage = router.pathname === SUBPAGES[subpageKey]
               const color = isCurrentSubpage ? 'primary' : 'black.main'
               return (
-                <Typography variant="button" key={subpage.text} color={color}>
-                  <Link color="inherit" href={subpage.href} underline="hover">
-                    {translate(subpage.text)}
+                <Typography variant="button" key={subpageKey} color={color}>
+                  <Link
+                    color="inherit"
+                    href={SUBPAGES[subpageKey]}
+                    underline="hover"
+                  >
+                    {translate(subpageKey)}
                   </Link>
                 </Typography>
               )
@@ -117,11 +114,15 @@ const Navigation = () => {
                 display: { mobile: 'block', tabletM: 'none' },
               }}
             >
-              {subpages.map((subpage) => (
-                <Link href={subpage.href} key={subpage.text} underline="hover">
+              {getSubpagesKeys().map((subpageKey) => (
+                <Link
+                  href={SUBPAGES[subpageKey]}
+                  key={subpageKey}
+                  underline="hover"
+                >
                   <MenuItem onClick={handleCloseNavMenu}>
                     <Typography textAlign="center">
-                      {translate(subpage.text)}
+                      {translate(subpageKey)}
                     </Typography>
                   </MenuItem>
                 </Link>

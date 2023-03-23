@@ -1,3 +1,5 @@
+import { SUBPAGES } from '@/consts'
+import { getSubpagesKeys } from '@/utils/helpers'
 import { ContentTypes, useContentful } from '@/utils/hooks/useContentful'
 import {
   Box,
@@ -12,7 +14,6 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import heroImage from 'public/images/hero.png'
 import WSLogo from './icons/WSLogo'
-import { subpages } from './Navigation'
 
 const socials: { text: string; href: string }[] = [
   { text: 'discord', href: 'https://discord.gg' },
@@ -48,13 +49,18 @@ const Footer = () => {
               spacing={{ mobile: 3, [breakpoint]: 5 }}
               alignItems={{ mobile: 'center', [breakpoint]: 'start' }}
             >
-              {subpages.map((subpage) => {
-                const isCurrentSubpage = router.pathname === subpage.href
+              {getSubpagesKeys().map((subpageKey) => {
+                const isCurrentSubpage =
+                  router.pathname === SUBPAGES[subpageKey]
                 const color = isCurrentSubpage ? 'primary' : 'inherit'
                 return (
-                  <Typography variant="button" key={subpage.text} color={color}>
-                    <Link color="inherit" href={subpage.href} underline="hover">
-                      {translate(subpage.text)}
+                  <Typography variant="button" key={subpageKey} color={color}>
+                    <Link
+                      color="inherit"
+                      href={SUBPAGES[subpageKey]}
+                      underline="hover"
+                    >
+                      {translate(subpageKey)}
                     </Link>
                   </Typography>
                 )
