@@ -3,6 +3,7 @@ import {
   Box,
   BreakpointOverrides,
   Button,
+  Drawer,
   Grid,
   Stack,
   Typography,
@@ -10,6 +11,7 @@ import {
   useTheme,
 } from '@mui/material'
 import Image, { StaticImageData } from 'next/image'
+import { useState } from 'react'
 
 type ActivityItemProps = {
   title: string
@@ -24,11 +26,25 @@ const ActivityItem = ({
   image,
   imageOnTheRight = true,
 }: ActivityItemProps) => {
+  const [drawerOpened, setDrawerOpened] = useState(false)
   const translate = useContentful(ContentTypes.landingPage)
   const breakpoint: keyof BreakpointOverrides = 'tabletS'
   const theme = useTheme()
   const displayHorizontally = useMediaQuery(theme.breakpoints.up(breakpoint))
   const displayImageOnTheRight = !displayHorizontally || imageOnTheRight
+
+  const toggleDrawer =
+    (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+      if (
+        event.type === 'keydown' &&
+        ((event as React.KeyboardEvent).key === 'Tab' ||
+          (event as React.KeyboardEvent).key === 'Shift')
+      ) {
+        return
+      }
+
+      setDrawerOpened(open)
+    }
 
   const textStack = (
     <Stack
@@ -47,7 +63,7 @@ const ActivityItem = ({
       </Typography>
       <Typography>{description}</Typography>
       <Box>
-        <Button color="black" variant="outlined">
+        <Button color="black" variant="outlined" onClick={toggleDrawer(true)}>
           {translate('readMore')}
         </Button>
       </Box>
@@ -69,14 +85,21 @@ const ActivityItem = ({
   )
 
   return (
-    <Grid container sx={{ my: { mobile: 5, [breakpoint]: 17 } }}>
-      <Grid item mobile={12} {...{ [breakpoint]: 6 }}>
-        {displayImageOnTheRight ? textStack : imageBox}
+    <>
+      <Grid container sx={{ my: { mobile: 5, [breakpoint]: 17 } }}>
+        <Grid item mobile={12} {...{ [breakpoint]: 6 }}>
+          {displayImageOnTheRight ? textStack : imageBox}
+        </Grid>
+        <Grid item mobile={12} {...{ [breakpoint]: 6 }}>
+          {displayImageOnTheRight ? imageBox : textStack}
+        </Grid>
       </Grid>
-      <Grid item mobile={12} {...{ [breakpoint]: 6 }}>
-        {displayImageOnTheRight ? imageBox : textStack}
-      </Grid>
-    </Grid>
+      <Drawer anchor="right" open={drawerOpened} onClose={toggleDrawer(false)}>
+        <Stack>
+          <Typography variant="h2">Title</Typography>
+        </Stack>
+      </Drawer>
+    </>
   )
 }
 export default ActivityItem
