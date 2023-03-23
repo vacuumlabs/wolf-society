@@ -15,7 +15,7 @@ const Manifest = ({ manifestRef }: Props) => {
       <Container>
         <Stack sx={{ gap: 4, my: { mobile: 10, desktopM: 20 } }}>
           <Typography
-            variant="title"
+            variant="caption"
             color="neutral.main"
             sx={{ textAlign: 'center' }}
           >
