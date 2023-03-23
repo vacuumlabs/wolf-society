@@ -1,3 +1,4 @@
+import { SUBPAGES } from '@/consts'
 import { ContentTypes, useContentful } from '@/utils/hooks/useContentful'
 import { Box, Container, Stack, Typography, Button, Link } from '@mui/material'
 import Image from 'next/image'
@@ -36,7 +37,9 @@ const Hero = ({ manifestRef }: Props) => {
             </Typography>
           </Box>
           <Stack sx={{ alignItems: 'center' }}>
-            <Button variant="contained">{translate('makeImpact')}</Button>
+            <Button variant="contained" href={SUBPAGES['collections']}>
+              {translate('makeImpact')}
+            </Button>
           </Stack>
         </Stack>
       </Container>

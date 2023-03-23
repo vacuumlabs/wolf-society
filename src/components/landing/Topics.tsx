@@ -1,3 +1,4 @@
+import { SUBPAGES } from '@/consts'
 import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
 import { Box, Button, Container, Stack, Typography } from '@mui/material'
 import WSFSymbol from '../icons/WSFSymbol'
@@ -38,7 +39,7 @@ const Topics = () => {
             {translate('articles')}
           </Typography>
           <Stack sx={{ alignItems: 'center' }}>
-            <Button color="black" variant="outlined">
+            <Button color="black" variant="outlined" href={SUBPAGES['blog']}>
               {translate('allArticles')}
             </Button>
           </Stack>

@@ -1,3 +1,4 @@
+import { SUBPAGES } from '@/consts'
 import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
 import { Box, Button, Container, Icon, Stack, Typography } from '@mui/material'
 import WSFSymbol from '../icons/WSFSymbol'
@@ -35,11 +36,12 @@ const CTA = () => {
         <Button
           color="primary"
           variant="contained"
-          sx={(theme) => ({
+          sx={{
             borderRadius: '170px',
             width: '100%',
             height: { mobile: '112px', desktopM: '256px' },
-          })}
+          }}
+          href={SUBPAGES['collections']}
         >
           <Stack direction="row" alignItems="center" gap={4}>
             {wsfSymbol}
