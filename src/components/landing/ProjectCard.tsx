@@ -25,11 +25,11 @@ const ProjectCard = ({ name, imageUrl }: ProjectCardProps) => {
         bgcolor: 'neutral.main',
         maxWidth: 404,
         width: '100%',
-        '& .MuiCardActions-root': {
+        '& .MuiCardContent-root': {
           mobile: {},
-          [breakpoint]: { translate: '0 100%' },
+          [breakpoint]: { translate: '0 64px' },
         },
-        '&:hover .MuiCardActions-root': {
+        '&:hover .MuiCardContent-root': {
           mobile: {},
           [breakpoint]: { translate: '0 0' },
         },
@@ -41,12 +41,14 @@ const ProjectCard = ({ name, imageUrl }: ProjectCardProps) => {
         }}
       >
         <CardMedia component="img" height="300" image={imageUrl} alt="hmm" />
-        <CardContent sx={{ p: 4, textAlign: 'start' }}>
-          <Typography variant="h3" color="secondary">
+        <CardContent sx={{ p: 0, transition: 'translate 0.25s' }}>
+          <Typography
+            variant="h3"
+            color="secondary"
+            sx={{ p: 4, textAlign: 'start', transition: 'translate 0.25s' }}
+          >
             {name}
           </Typography>
-        </CardContent>
-        <CardActions sx={{ padding: 0, transition: 'translate 0.25s' }}>
           <Button
             component="div"
             color="primary"
@@ -56,7 +58,7 @@ const ProjectCard = ({ name, imageUrl }: ProjectCardProps) => {
           >
             {translate('readMore')}
           </Button>
-        </CardActions>
+        </CardContent>
       </CardActionArea>
     </Card>
   )
