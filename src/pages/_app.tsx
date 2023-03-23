@@ -14,6 +14,7 @@ import Navigation from '@/components/Navigation'
 import { ContentContext } from '@/utils/hooks/useContentful'
 import localFont from 'next/font/local'
 import Footer from '@/components/Footer'
+import { Reenie_Beanie } from 'next/font/google'
 
 declare module '@mui/material/styles' {
   interface BreakpointOverrides {
@@ -75,6 +76,7 @@ declare module '@mui/material/styles' {
     title: React.CSSProperties
     caption: React.CSSProperties
     label: React.CSSProperties
+    handwriting: React.CSSProperties
   }
 
   // allow configuration using `createTheme`
@@ -84,6 +86,7 @@ declare module '@mui/material/styles' {
     title?: React.CSSProperties
     caption?: React.CSSProperties
     label?: React.CSSProperties
+    handwriting?: React.CSSProperties
   }
 }
 
@@ -119,6 +122,7 @@ declare module '@mui/material/Typography' {
     title: true
     caption: true
     label: true
+    handwriting: true
     h1: false
     h2: false
     h3: false
@@ -126,6 +130,11 @@ declare module '@mui/material/Typography' {
     subtitle2: false
   }
 }
+
+const reenieBeanie = Reenie_Beanie({
+  weight: '400',
+  subsets: ['latin'],
+})
 
 const myFont = localFont({
   src: [
@@ -358,6 +367,7 @@ theme.components = {
         title: 'h3',
         caption: 'h4',
         label: 'h5',
+        handwriting: 'h5',
       },
     },
   },
@@ -449,7 +459,6 @@ theme.typography.body1 = {
   },
 }
 
-// Body2
 theme.typography.body2 = {
   ...theme.typography.body2,
   fontWeight: 400,
@@ -461,7 +470,6 @@ theme.typography.body2 = {
   },
 }
 
-// Button
 theme.typography.button = {
   ...theme.typography.button,
   fontWeight: 700,
@@ -475,6 +483,18 @@ theme.typography.button = {
   [theme.breakpoints.up('desktopL')]: {
     fontSize: '25px',
     lineHeight: '32px',
+  },
+}
+
+theme.typography.handwriting = {
+  ...theme.typography.handwriting,
+  fontFamily: reenieBeanie.style.fontFamily,
+  fontWeight: '500',
+  fontSize: '28px',
+  lineHeight: '34px',
+  [theme.breakpoints.up('desktopM')]: {
+    fontSize: '38px',
+    lineHeight: '38px',
   },
 }
 

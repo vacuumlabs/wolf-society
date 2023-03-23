@@ -48,6 +48,8 @@ export type Content = {
   [ContentTypes.collectionsPage]: {}
   [ContentTypes.articlesPage]: {
     articles: string
+    readMore: string
+    exploreMore: string
   }
 }
 
