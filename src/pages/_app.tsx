@@ -55,6 +55,14 @@ declare module '@mui/material/styles' {
   }
 }
 
+// Update the AppBar's color prop options
+declare module '@mui/material/AppBar' {
+  interface AppBarPropsColorOverrides {
+    neutral: true
+    black: true
+  }
+}
+
 // Update the Button's color prop options
 declare module '@mui/material/Button' {
   interface ButtonPropsColorOverrides {
@@ -396,7 +404,7 @@ theme.typography.body1 = {
   ...theme.typography.body1,
   fontWeight: 400,
   fontSize: '35px',
-  lineHeight: '40px',
+  lineHeight: '48px',
   [theme.breakpoints.up('desktopM')]: {
     fontSize: '50px',
     lineHeight: '64px',

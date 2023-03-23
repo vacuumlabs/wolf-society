@@ -58,7 +58,7 @@ const ActivityItem = ({
       height="100%"
       justifyContent="center"
     >
-      <Typography variant="display" component="headline">
+      <Typography variant="display" component="h2">
         {title}
       </Typography>
       <Typography>{description}</Typography>
