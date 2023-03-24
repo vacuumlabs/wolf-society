@@ -6,12 +6,12 @@ const Button = styled(MuiButton)<ButtonProps & { component?: string }>(
     boxShadow: 'none',
     color: theme.palette.primary.contrastText,
     height: '48px',
-    'padding-left': '24px',
-    'padding-right': '24px',
+    paddingLeft: '24px',
+    paddingRight: '24px',
     [theme.breakpoints.up('desktopM')]: {
       height: '56px',
-      'padding-left': '32px',
-      'padding-right': '32px',
+      paddingLeft: '32px',
+      paddingRight: '32px',
     },
     '&:hover': {
       backgroundColor: theme.palette.primary['400'],
