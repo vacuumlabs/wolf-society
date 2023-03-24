@@ -1,6 +1,7 @@
 import { SUBPAGES } from '@/consts'
 import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
-import { Box, Button, Container, Stack, Typography } from '@mui/material'
+import { Box, Container, Stack, Typography } from '@mui/material'
+import Button from '../Button'
 import { ParallaxProvider } from 'react-scroll-parallax'
 import WSFSymbol from '../icons/WSFSymbol'
 import TopicCard, { TopicCardProps } from './TopicCard'
@@ -48,7 +49,7 @@ const Topics = () => {
               {translate('articles')}
             </Typography>
             <Stack sx={{ alignItems: 'center' }}>
-              <Button color="black" variant="outlined" href={SUBPAGES['blog']}>
+              <Button variant="outlined" href={SUBPAGES['blog']}>
                 {translate('allArticles')}
               </Button>
             </Stack>

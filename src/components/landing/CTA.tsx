@@ -1,6 +1,7 @@
 import { SUBPAGES } from '@/consts'
 import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
-import { Box, Button, Container, Icon, Stack, Typography } from '@mui/material'
+import { Box, Container, Icon, Stack, Typography } from '@mui/material'
+import Button from '../Button'
 import WSFSymbol from '../icons/WSFSymbol'
 
 const CTA = () => {
@@ -35,8 +36,6 @@ const CTA = () => {
     >
       <Container>
         <Button
-          color="primary"
-          variant="contained"
           sx={{
             borderRadius: '170px',
             width: '100%',
