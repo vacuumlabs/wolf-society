@@ -427,6 +427,16 @@ theme.typography.body2 = {
     lineHeight: '32px',
   },
 }
+theme.typography.overline = {
+  ...theme.typography.overline,
+  fontWeight: 600,
+  fontSize: '196px',
+  lineHeight: '100px',
+  [theme.breakpoints.up('desktopM')]: {
+    fontSize: '196px',
+    lineHeight: '100px',
+  },
+}
 
 // Button
 theme.typography.button = {
