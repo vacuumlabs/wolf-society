@@ -64,7 +64,7 @@ const CollectionCard = ({
           <Box flexGrow={1}>
             <Stack gap={4}>
               <Typography
-                variant="title"
+                variant="caption"
                 color="neutral.main"
                 sx={{ whiteSpace: 'pre-wrap' }}
               >
@@ -95,7 +95,7 @@ const CollectionCard = ({
       <CardContent sx={{ bgcolor: `${color}`, p: 5, textAlign: 'start' }}>
         <Stack gap={4}>
           <Typography
-            variant="title"
+            variant="caption"
             color="neutral.main"
             sx={{ whiteSpace: 'pre-wrap' }}
           >
