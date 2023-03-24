@@ -72,6 +72,6 @@ const ProjectCard = ({ name, imageUrl, offsetLeft }: ProjectCardProps) => {
     </Card>
   )
 
-  return isMobile ? projectCard : <Parallax speed={10}>{projectCard}</Parallax>
+  return isMobile ? projectCard : <Parallax speed={100}>{projectCard}</Parallax>
 }
 export default ProjectCard
