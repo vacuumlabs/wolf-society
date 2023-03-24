@@ -1,6 +1,5 @@
 import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
 import {
-  Button,
   Card,
   CardActions,
   CardContent,
@@ -10,6 +9,7 @@ import {
   Typography,
   useMediaQuery,
 } from '@mui/material'
+import Button from '../Button'
 import { Parallax } from 'react-scroll-parallax'
 import ArrowRightIcon from '../icons/ArrowRightIcon'
 
@@ -43,12 +43,7 @@ const TopicCard = ({ title, date, imageUrl, offsetLeft }: TopicCardProps) => {
         </Stack>
       </CardContent>
       <CardActions sx={{ padding: 0 }}>
-        <Button
-          color="primary"
-          variant="contained"
-          sx={{ width: '100%' }}
-          endIcon={<ArrowRightIcon />}
-        >
+        <Button sx={{ width: '100%' }} endIcon={<ArrowRightIcon />}>
           {translate('readMore')}
         </Button>
       </CardActions>

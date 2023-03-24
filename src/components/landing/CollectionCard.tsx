@@ -1,7 +1,6 @@
 import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
 import {
   Box,
-  Button,
   Card,
   CardActions,
   CardContent,
@@ -11,6 +10,7 @@ import {
   useTheme,
 } from '@mui/material'
 import useMediaQuery from '@mui/material/useMediaQuery'
+import Button from '../Button'
 
 export type CollectionCardProps = {
   name: string
@@ -81,9 +81,7 @@ const CollectionCard = ({
             </Typography>
           </Box>
           <CardActions sx={{ padding: 0 }}>
-            <Button color="primary" variant="contained">
-              {translate('showCollection')}
-            </Button>
+            <Button>{translate('showCollection')}</Button>
           </CardActions>
         </Box>
       </Box>
@@ -111,9 +109,7 @@ const CollectionCard = ({
       </Box>
 
       <CardActions sx={{ padding: 0 }}>
-        <Button color="primary" variant="contained" sx={{ width: '100%' }}>
-          {translate('showCollection')}
-        </Button>
+        <Button sx={{ width: '100%' }}>{translate('showCollection')}</Button>
       </CardActions>
     </Card>
   )

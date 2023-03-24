@@ -1,9 +1,10 @@
 import { SUBPAGES } from '@/consts'
 import { ContentTypes, useContentful } from '@/utils/hooks/useContentful'
-import { Box, Container, Stack, Typography, Button, Link } from '@mui/material'
+import { Box, Container, Stack, Typography, Link } from '@mui/material'
 import Image from 'next/image'
 import heroImage from 'public/images/hero.png'
 import React from 'react'
+import Button from '../Button'
 
 type Props = {
   manifestRef: React.RefObject<HTMLElement>
@@ -37,7 +38,7 @@ const Hero = ({ manifestRef }: Props) => {
             </Typography>
           </Box>
           <Stack sx={{ alignItems: 'center' }}>
-            <Button variant="contained" href={SUBPAGES['collections']}>
+            <Button href={SUBPAGES['collections']}>
               {translate('makeImpact')}
             </Button>
           </Stack>

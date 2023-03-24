@@ -1,7 +1,6 @@
 import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
 import {
   BreakpointOverrides,
-  Button,
   Card,
   CardActionArea,
   CardContent,
@@ -10,6 +9,7 @@ import {
   Typography,
   useMediaQuery,
 } from '@mui/material'
+import Button from '../Button'
 import { Parallax } from 'react-scroll-parallax'
 import ArrowRightIcon from '../icons/ArrowRightIcon'
 
@@ -60,8 +60,6 @@ const ProjectCard = ({ name, imageUrl, offsetLeft }: ProjectCardProps) => {
           </Typography>
           <Button
             component="div"
-            color="primary"
-            variant="contained"
             sx={{ width: '100%' }}
             endIcon={<ArrowRightIcon />}
           >

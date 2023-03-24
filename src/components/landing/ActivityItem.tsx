@@ -2,7 +2,6 @@ import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
 import {
   Box,
   BreakpointOverrides,
-  Button,
   Drawer,
   Grid,
   Stack,
@@ -12,6 +11,7 @@ import {
 } from '@mui/material'
 import Image, { StaticImageData } from 'next/image'
 import { useState } from 'react'
+import Button from '../Button'
 
 type ActivityItemProps = {
   title: string
@@ -63,7 +63,7 @@ const ActivityItem = ({
       </Typography>
       <Typography>{description}</Typography>
       <Box>
-        <Button color="black" variant="outlined" onClick={toggleDrawer(true)}>
+        <Button variant="outlined" onClick={toggleDrawer(true)}>
           {translate('readMore')}
         </Button>
       </Box>

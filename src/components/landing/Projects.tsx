@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Container,
   Stack,
   Theme,
@@ -10,6 +9,7 @@ import {
 import ProjectCard, { ProjectCardProps } from './ProjectCard'
 import WSFSymbol from '../icons/WSFSymbol'
 import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
+import Button from '../Button'
 import { ParallaxProvider } from 'react-scroll-parallax'
 
 const MockedProjects: Omit<ProjectCardProps, 'offsetLeft'>[] = [

@@ -4,7 +4,12 @@ import React from 'react'
 import { WagmiConfig } from 'wagmi'
 import { wagmiClient, chains } from '@/utils/configs/wagmi'
 import '@rainbow-me/rainbowkit/styles.css'
-import { createTheme, CssBaseline, ThemeProvider } from '@mui/material'
+import {
+  createTheme,
+  CssBaseline,
+  PaletteColorOptions,
+  ThemeProvider,
+} from '@mui/material'
 import Navigation from '@/components/Navigation'
 import { ContentContext } from '@/utils/hooks/useContentful'
 import localFont from 'next/font/local'
@@ -32,6 +37,33 @@ declare module '@mui/material/styles' {
     neutral: PaletteOptions['primary']
     black: PaletteOptions['primary']
   }
+
+  interface PaletteColor {
+    50?: string
+    100?: string
+    200?: string
+    300?: string
+    400?: string
+    500?: string
+    600?: string
+    700?: string
+    800?: string
+    900?: string
+  }
+
+  interface SimplePaletteColorOptions {
+    50?: string
+    100?: string
+    200?: string
+    300?: string
+    400?: string
+    500?: string
+    600?: string
+    700?: string
+    800?: string
+    900?: string
+  }
+
   interface CommonColors {
     blue: string
     brown: string
@@ -283,6 +315,7 @@ theme.components = {
     styleOverrides: {
       root: {
         borderRadius: 0,
+        boxShadow: 'none',
       },
     },
   },
