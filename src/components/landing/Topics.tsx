@@ -37,7 +37,7 @@ const Topics = () => {
               gap: 4,
               pt: { mobile: 15, desktopM: 20 },
               mb: 5,
-              position: 'sticky',
+              position: { mobile: 'static', desktopM: 'sticky' },
               top: 0,
               left: 0,
             }}
@@ -53,7 +53,6 @@ const Topics = () => {
               </Button>
             </Stack>
           </Stack>
-          {/* Mobile view */}
           <Stack sx={{ gap: 5, alignItems: 'center', mb: 10 }}>
             {MockedTopics.map((topic, index) => (
               <TopicCard

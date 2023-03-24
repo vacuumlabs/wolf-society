@@ -1,4 +1,12 @@
-import { Box, Button, Container, Stack, Typography } from '@mui/material'
+import {
+  Box,
+  Button,
+  Container,
+  Stack,
+  Theme,
+  Typography,
+  useMediaQuery,
+} from '@mui/material'
 import ProjectCard, { ProjectCardProps } from './ProjectCard'
 import WSFSymbol from '../icons/WSFSymbol'
 import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
@@ -24,6 +32,9 @@ const MockedProjects: Omit<ProjectCardProps, 'offsetLeft'>[] = [
 
 const Projects = () => {
   const translate = useContentful(ContentTypes.landingPage)
+  const isMobile = useMediaQuery((theme: Theme) =>
+    theme.breakpoints.down('tabletS')
+  )
   return (
     <Box
       sx={{
@@ -38,7 +49,7 @@ const Projects = () => {
               gap: 4,
               pt: { mobile: 15, desktopM: 20 },
               mb: 5,
-              position: 'sticky',
+              position: { mobile: 'static', desktopM: 'sticky' },
               top: 0,
               left: 0,
             }}
@@ -58,7 +69,6 @@ const Projects = () => {
               </Button>
             </Stack>
           </Stack>
-          {/* Mobile view */}
           <Stack sx={{ gap: 5, alignItems: 'center', mb: 10 }}>
             {MockedProjects.map((project, index) => (
               <ProjectCard

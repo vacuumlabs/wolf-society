@@ -6,7 +6,9 @@ import {
   CardContent,
   CardMedia,
   Stack,
+  Theme,
   Typography,
+  useMediaQuery,
 } from '@mui/material'
 import { Parallax } from 'react-scroll-parallax'
 import ArrowRightIcon from '../icons/ArrowRightIcon'
@@ -20,7 +22,11 @@ export type TopicCardProps = {
 
 const TopicCard = ({ title, date, imageUrl, offsetLeft }: TopicCardProps) => {
   const translate = useContentful(ContentTypes.landingPage)
-  return (
+  const isMobile = useMediaQuery((theme: Theme) =>
+    theme.breakpoints.down('tabletS')
+  )
+
+  const topicCard = (
     <Parallax speed={100}>
       <Card
         sx={{
@@ -50,5 +56,7 @@ const TopicCard = ({ title, date, imageUrl, offsetLeft }: TopicCardProps) => {
       </Card>
     </Parallax>
   )
+
+  return isMobile ? topicCard : <Parallax speed={10}>{topicCard}</Parallax>
 }
 export default TopicCard
