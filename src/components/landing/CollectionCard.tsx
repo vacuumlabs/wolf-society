@@ -35,7 +35,7 @@ const CollectionCard = ({
     <Card
       sx={{
         display: 'flex',
-        width: '100%',
+        minWidth: '100vw',
         height: 'calc(100vh - 88px)',
       }}
     >
