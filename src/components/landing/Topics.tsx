@@ -1,10 +1,11 @@
 import { SUBPAGES } from '@/consts'
 import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
 import { Box, Button, Container, Stack, Typography } from '@mui/material'
+import { ParallaxProvider } from 'react-scroll-parallax'
 import WSFSymbol from '../icons/WSFSymbol'
 import TopicCard, { TopicCardProps } from './TopicCard'
 
-const MockedTopics: TopicCardProps[] = [
+const MockedTopics: Omit<TopicCardProps, 'offsetLeft'>[] = [
   {
     title: 'THE WORLD’S GLACIERS campaign 2023',
     date: 'March 6, 2023',
@@ -30,26 +31,38 @@ const Topics = () => {
   return (
     <Box sx={{ bgcolor: 'neutral.400', textAlign: 'center' }}>
       <Container>
-        <Stack
-          sx={{ gap: 4, mt: { mobile: 10, desktopM: 20 }, mb: 5 }}
-          alignItems="center"
-        >
-          <WSFSymbol color="black" />
-          <Typography variant="display" sx={{ textAlign: 'center' }}>
-            {translate('articles')}
-          </Typography>
-          <Stack sx={{ alignItems: 'center' }}>
-            <Button color="black" variant="outlined" href={SUBPAGES['blog']}>
-              {translate('allArticles')}
-            </Button>
+        <ParallaxProvider>
+          <Stack
+            sx={{
+              gap: 4,
+              pt: { mobile: 15, desktopM: 20 },
+              mb: 5,
+              position: { mobile: 'static', desktopM: 'sticky' },
+              top: 0,
+              left: 0,
+            }}
+            alignItems="center"
+          >
+            <WSFSymbol color="black" />
+            <Typography variant="display" sx={{ textAlign: 'center' }}>
+              {translate('articles')}
+            </Typography>
+            <Stack sx={{ alignItems: 'center' }}>
+              <Button color="black" variant="outlined" href={SUBPAGES['blog']}>
+                {translate('allArticles')}
+              </Button>
+            </Stack>
           </Stack>
-        </Stack>
-        {/* Mobile view */}
-        <Stack sx={{ gap: 5, alignItems: 'center', mb: 10 }}>
-          {MockedTopics.map((topic) => (
-            <TopicCard {...topic} key={topic.title} />
-          ))}
-        </Stack>
+          <Stack sx={{ gap: 5, alignItems: 'center', mb: 10 }}>
+            {MockedTopics.map((topic, index) => (
+              <TopicCard
+                {...topic}
+                key={topic.title}
+                offsetLeft={index % 2 === 0}
+              />
+            ))}
+          </Stack>
+        </ParallaxProvider>
       </Container>
     </Box>
   )

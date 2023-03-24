@@ -4,26 +4,35 @@ import {
   Button,
   Card,
   CardActionArea,
-  CardActions,
   CardContent,
   CardMedia,
+  Theme,
   Typography,
+  useMediaQuery,
 } from '@mui/material'
+import { Parallax } from 'react-scroll-parallax'
 import ArrowRightIcon from '../icons/ArrowRightIcon'
 
 export type ProjectCardProps = {
   name: string
   imageUrl: string
+  offsetLeft: boolean
 }
 
-const ProjectCard = ({ name, imageUrl }: ProjectCardProps) => {
+const ProjectCard = ({ name, imageUrl, offsetLeft }: ProjectCardProps) => {
   const translate = useContentful(ContentTypes.landingPage)
   const breakpoint: keyof BreakpointOverrides = 'desktopS'
-  return (
+  const isMobile = useMediaQuery((theme: Theme) =>
+    theme.breakpoints.down('tabletS')
+  )
+
+  const projectCard = (
     <Card
       sx={{
+        ml: { mobile: 0, desktopM: offsetLeft ? 40 : 0 },
+        mr: { mobile: 0, desktopM: offsetLeft ? 0 : 40 },
         bgcolor: 'neutral.main',
-        maxWidth: 404,
+        maxWidth: 424,
         width: '100%',
         '& .MuiCardContent-root': {
           mobile: {},
@@ -62,5 +71,7 @@ const ProjectCard = ({ name, imageUrl }: ProjectCardProps) => {
       </CardActionArea>
     </Card>
   )
+
+  return isMobile ? projectCard : <Parallax speed={100}>{projectCard}</Parallax>
 }
 export default ProjectCard
