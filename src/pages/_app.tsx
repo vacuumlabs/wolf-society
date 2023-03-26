@@ -9,6 +9,7 @@ import Navigation from '@/components/Navigation'
 import { ContentContext } from '@/utils/hooks/useContentful'
 import localFont from 'next/font/local'
 import Footer from '@/components/Footer'
+import '../../public/style.css'
 
 declare module '@mui/material/styles' {
   interface BreakpointOverrides {
