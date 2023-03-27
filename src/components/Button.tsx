@@ -2,8 +2,12 @@ import { Button as MuiButton, ButtonProps, styled } from '@mui/material'
 import { HTMLAttributeAnchorTarget } from 'react'
 
 const Button = styled(MuiButton)<
-  ButtonProps & { component?: string; target?: HTMLAttributeAnchorTarget }
->(({ theme }) => ({
+  ButtonProps & {
+    component?: string
+    target?: HTMLAttributeAnchorTarget
+    iconatend?: number
+  }
+>(({ theme, iconatend }) => ({
   backgroundColor: theme.palette.primary.main,
   boxShadow: 'none',
   color: theme.palette.primary.contrastText,
@@ -60,6 +64,13 @@ const Button = styled(MuiButton)<
   '&.MuiButton-outlined:active': {
     backgroundColor: theme.palette.black.main,
     color: theme.palette.neutral['400'],
+  },
+
+  '& .MuiButton-endIcon': {
+    marginRight: iconatend ? 'auto' : '-16px',
+    position: iconatend ? 'absolute' : 'relative',
+    right: iconatend == 1 ? '16px' : 'auto',
+    left: iconatend == -1 ? '16px' : 'auto',
   },
 }))
 

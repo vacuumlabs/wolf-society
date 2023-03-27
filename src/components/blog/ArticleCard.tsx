@@ -10,7 +10,7 @@ import {
 } from '@mui/material'
 import Link from 'next/link'
 import Button from '../Button'
-import ArrowRightIcon from '../icons/ArrowRightIcon'
+import ArrowTurnTopIcon from '../icons/ArrowTurnTopIcon'
 
 export type ArticleCardProps = {
   title: string
@@ -107,7 +107,8 @@ const ArticleCard = ({
                 position: { mobile: 'relative', [breakpoint]: 'absolute' },
                 transition: 'translate 0.25s',
               }}
-              endIcon={<ArrowRightIcon />}
+              endIcon={<ArrowTurnTopIcon />}
+              iconatend={1}
             >
               {translate('readMore')}
             </Button>

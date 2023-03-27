@@ -9,7 +9,7 @@ import {
 } from '@mui/material'
 import React from 'react'
 import Button from '../Button'
-import ArrowRightIcon from '../icons/ArrowRightIcon'
+import ArrowTurnTopIcon from '../icons/ArrowTurnTopIcon'
 import { ArticleCardProps } from './ArticleCard'
 
 type Props = {
@@ -88,7 +88,7 @@ const HeaderArticle = ({ post, image }: Props) => {
                     <Button
                       href={post.link}
                       target="_blank"
-                      endIcon={<ArrowRightIcon />}
+                      endIcon={<ArrowTurnTopIcon />}
                     >
                       {translate('readMore')}
                     </Button>
