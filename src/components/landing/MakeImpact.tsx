@@ -11,10 +11,8 @@ const MakeImpact = () => {
     >
       <HorizontalScrollText
         text={translate('makeImpact')}
-        numerOfItems={10}
-        elementWidth={1244}
+        numberOfItems={10}
         offsetStep={10}
-        height={196}
         color={'secondary.500'}
       />
       <Container>

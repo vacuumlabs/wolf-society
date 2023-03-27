@@ -431,11 +431,11 @@ theme.typography.body2 = {
 theme.typography.overline = {
   ...theme.typography.overline,
   fontWeight: 600,
-  fontSize: '196px',
-  lineHeight: '100px',
+  fontSize: '128px',
+  lineHeight: '60px',
   [theme.breakpoints.up('desktopM')]: {
-    fontSize: '196px',
-    lineHeight: '100px',
+    fontSize: '380px',
+    lineHeight: '196px',
   },
 }
 

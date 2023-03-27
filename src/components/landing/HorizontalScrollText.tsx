@@ -1,28 +1,32 @@
-import { Stack, Typography } from '@mui/material'
-import { useEffect, useState } from 'react'
+import { Box, Stack, Theme, Typography } from '@mui/material'
+import { MutableRefObject, RefObject, useEffect, useRef, useState } from 'react'
+import StarDelimiter from '../icons/StarDelimiter'
 
 interface HorizontalScrollTextProps {
   text: string
-  numerOfItems: number
-  elementWidth: number
+  numberOfItems: number
   offsetStep: number
   color: string
-  height: number
 }
 
 export const HorizontalScrollText = ({
   text,
-  numerOfItems,
-  elementWidth,
+  numberOfItems,
   offsetStep,
   color,
-  height,
 }: HorizontalScrollTextProps) => {
-  const [offsets, setOffsets] = useState<Array<number>>(
-    Array(numerOfItems)
+  const textElemetnRef = useRef<HTMLDivElement>(null)
+  const elementWidth = textElemetnRef?.current
+    ? textElemetnRef.current.offsetWidth
+    : 0
+  const [offsets, setOffsets] = useState<Array<number>>([])
+
+  useEffect(() => {
+    const newOffsets = Array(numberOfItems)
       .fill(0)
       .map((_, index) => index * elementWidth)
-  )
+    setOffsets(newOffsets)
+  }, [elementWidth, numberOfItems])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -40,9 +44,10 @@ export const HorizontalScrollText = ({
   }, [elementWidth, offsetStep, offsets])
 
   return (
-    <Stack direction={'row'} height={`${height}px`}>
+    <Stack direction={'row'} height={{ mobile: 80, desktopM: 196 }}>
       {offsets.map((offset, index) => (
         <HorizontalScrollTextItem
+          myRef={textElemetnRef}
           key={index}
           text={text}
           leftOffset={offset}
@@ -59,6 +64,7 @@ interface HorizontalScrollTextItemProps {
   leftOffset: number
   elementWidth: number
   color: string
+  myRef: RefObject<HTMLDivElement>
 }
 
 const HorizontalScrollTextItem = ({
@@ -66,27 +72,42 @@ const HorizontalScrollTextItem = ({
   text,
   elementWidth,
   color,
+  myRef,
 }: HorizontalScrollTextItemProps) => {
   return (
-    <Typography
-      variant="overline"
-      display="inline-block"
+    <Stack
+      direction={'row'}
+      ref={myRef}
+      style={{ left: leftOffset }}
       sx={{
-        minWidth: `${elementWidth}px`,
         textAlign: 'left',
         position: 'absolute',
-        left: leftOffset,
         transition:
           //prevent animation when object are moved back at the end of scroll effect
           leftOffset < globalThis.window?.innerWidth + elementWidth &&
           leftOffset > -2 * elementWidth
             ? 'all 1s ease-out'
             : 'none',
-        color,
+        alignItems: 'center',
       }}
     >
-      {text}
-    </Typography>
+      <Typography
+        variant="overline"
+        color={color}
+        sx={{
+          display: 'inline-flex',
+          alignAitems: 'center',
+        }}
+      >
+        {text.replace(' ', '\u00a0')}
+      </Typography>
+      <StarDelimiter
+        sx={{
+          fontSize: { mobile: 50, desktopM: 160 },
+          color,
+        }}
+      />
+    </Stack>
   )
 }
 
