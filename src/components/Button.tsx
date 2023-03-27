@@ -13,14 +13,14 @@ const Button = styled(MuiButton)<ButtonProps & { component?: string }>(
       paddingLeft: '32px',
       paddingRight: '32px',
     },
-    '&:hover': {
-      backgroundColor: theme.palette.primary['400'],
-      boxShadow: 'none',
-    },
 
     '&:focus': {
       backgroundColor: theme.palette.primary.main,
       boxShadow: `0 0 0 5px ${theme.palette.primary['200']} inset`,
+    },
+
+    '&:hover': {
+      backgroundColor: theme.palette.primary['400'],
     },
 
     '&:active': {
@@ -45,14 +45,14 @@ const Button = styled(MuiButton)<ButtonProps & { component?: string }>(
       },
     },
 
-    '&.MuiButton-outlined:hover': {
-      backgroundColor: 'rgba(30, 30, 30, 0.1)',
-      color: theme.palette.black.main,
-    },
-
     '&.MuiButton-outlined:focus': {
       backgroundColor: 'transparent',
       boxShadow: `0 0 0 4px ${theme.palette.black.main} inset`,
+    },
+
+    '&.MuiButton-outlined:hover': {
+      backgroundColor: 'rgba(30, 30, 30, 0.1)',
+      color: theme.palette.black.main,
     },
 
     '&.MuiButton-outlined:active': {

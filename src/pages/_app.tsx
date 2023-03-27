@@ -312,6 +312,36 @@ theme.components = {
       },
     },
   },
+  MuiIconButton: {
+    styleOverrides: {
+      root: {
+        padding: 12,
+        backgroundColor: 'transparent',
+        border: 'none',
+        borderRadius: 0,
+        boxShadow: `0 0 0 2px ${theme.palette.black.main} inset`,
+        color: theme.palette.black.main,
+
+        '&:focus': {
+          backgroundColor: 'transparent',
+          boxShadow: `0 0 0 4px ${theme.palette.black.main} inset`,
+        },
+        '&:hover': {
+          backgroundColor: 'rgba(30, 30, 30, 0.1)',
+          color: theme.palette.black.main,
+        },
+        '&:active': {
+          backgroundColor: theme.palette.black.main,
+          color: theme.palette.neutral['200'],
+        },
+
+        '&.Mui-disabled': {
+          backgroundColor: theme.palette.neutral['500'],
+          color: 'white',
+        },
+      },
+    },
+  },
   MuiCard: {
     styleOverrides: {
       root: {

@@ -22,6 +22,7 @@ import { useRouter } from 'next/router'
 import WSLogo from './icons/WSLogo'
 import { SUBPAGES } from '@/consts'
 import { getSubpagesKeys } from '@/utils/helpers'
+import CloseIcon from './icons/CloseIcon'
 
 const Navigation = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
@@ -89,13 +90,11 @@ const Navigation = () => {
             }}
           >
             <IconButton
-              size="large"
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
-              color="inherit"
             >
-              <MenuIcon />
+              {anchorElNav ? <CloseIcon /> : <MenuIcon />}
             </IconButton>
 
             {/* Mobile hamburger menu */}
