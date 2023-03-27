@@ -14,6 +14,7 @@ import Navigation from '@/components/Navigation'
 import { ContentContext } from '@/utils/hooks/useContentful'
 import localFont from 'next/font/local'
 import Footer from '@/components/Footer'
+import '../../public/style.css'
 
 declare module '@mui/material/styles' {
   interface BreakpointOverrides {
@@ -458,6 +459,16 @@ theme.typography.body2 = {
   [theme.breakpoints.up('desktopM')]: {
     fontSize: '25px',
     lineHeight: '32px',
+  },
+}
+theme.typography.overline = {
+  ...theme.typography.overline,
+  fontWeight: 600,
+  fontSize: '128px',
+  lineHeight: '60px',
+  [theme.breakpoints.up('desktopM')]: {
+    fontSize: '380px',
+    lineHeight: '196px',
   },
 }
 

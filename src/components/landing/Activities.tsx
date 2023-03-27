@@ -9,6 +9,7 @@ import haveFunImage from 'public/images/haveFun.png'
 import breadAndButterImage from 'public/images/breadAndButter.png'
 import ActivityItem from './ActivityItem'
 import { StaticImageData } from 'next/image'
+import Collections from './Collections'
 
 const ACTIVITIES_ITEMS: {
   title: keyof Content[ContentTypes.landingPage]
@@ -35,7 +36,9 @@ const ACTIVITIES_ITEMS: {
 const Activities = () => {
   const translate = useContentful(ContentTypes.landingPage)
   return (
-    <Box sx={{ bgcolor: 'neutral.400' }}>
+    <Box
+      sx={{ bgcolor: 'neutral.400', pb: { mobile: '80px', desktopM: '160px' } }}
+    >
       <Container>
         {ACTIVITIES_ITEMS.map((activityItem, index) => (
           <ActivityItem
@@ -47,6 +50,7 @@ const Activities = () => {
           />
         ))}
       </Container>
+      <Collections />
     </Box>
   )
 }
