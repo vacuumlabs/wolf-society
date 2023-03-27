@@ -50,6 +50,8 @@ export type Content = {
     articles: string
     readMore: string
     exploreMore: string
+    gratefulPart1: string
+    gratefulPart2: string
   }
 }
 

@@ -126,7 +126,7 @@ const HeaderArticle = ({ post, image }: Props) => {
               display={{ mobile: 'none', [breakpoint]: 'block' }}
             >
               <Typography textAlign="end" variant="handwriting">
-                I am grateful to journalism for
+                {translate('gratefulPart1')}
               </Typography>
             </Grid>
             <Grid
@@ -146,7 +146,7 @@ const HeaderArticle = ({ post, image }: Props) => {
               display={{ mobile: 'none', [breakpoint]: 'block' }}
             >
               <Typography variant="handwriting">
-                waking me up to the realities of the world.
+                {translate('gratefulPart2')}
               </Typography>
             </Grid>
             <Grid
@@ -155,8 +155,7 @@ const HeaderArticle = ({ post, image }: Props) => {
               display={{ mobile: 'block', [breakpoint]: 'none' }}
             >
               <Typography variant="handwriting">
-                I am grateful to journalism for waking me up to the realities of
-                the world.
+                {translate('gratefulPart1')} {translate('gratefulPart2')}
               </Typography>
             </Grid>
           </Grid>
