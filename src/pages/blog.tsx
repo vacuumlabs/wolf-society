@@ -6,6 +6,7 @@ import HeaderArticle from '@/components/blog/HeaderArticle'
 import Articles from '@/components/blog/Articles'
 import { formatCategories, formatDate } from '@/utils/helpers'
 import { ArticleCardProps } from '@/components/blog/ArticleCard'
+import CTA from '@/components/landing/CTA'
 
 export type ArticleProps = {
   title: string
@@ -37,7 +38,7 @@ const Blog = ({ posts, errorMessage, locale, image }: TBlog) => {
   }, [])
 
   return (
-    <Box mt={11}>
+    <Stack mt={11}>
       {errorMessage ? (
         <Box sx={{ bgcolor: 'neutral.400' }}>
           <Container>
@@ -50,7 +51,8 @@ const Blog = ({ posts, errorMessage, locale, image }: TBlog) => {
           <Articles posts={formattedPosts.slice(1)} />
         </Stack>
       )}
-    </Box>
+      <CTA />
+    </Stack>
   )
 }
 
