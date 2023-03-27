@@ -35,7 +35,12 @@ const TopicCard = ({ title, date, imageUrl, offsetLeft }: TopicCardProps) => {
         mr: { mobile: 0, desktopM: offsetLeft ? 0 : 40 },
       }}
     >
-      <CardMedia component="img" height="300" image={imageUrl} alt="hmm" />
+      <CardMedia
+        component="img"
+        height="300"
+        image={imageUrl}
+        alt="Article image"
+      />
       <CardContent sx={{ bgcolor: 'neutral.main', p: 4, textAlign: 'start' }}>
         <Stack spacing={4}>
           <Typography variant="body2">{date}</Typography>

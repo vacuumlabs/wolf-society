@@ -49,7 +49,12 @@ const ProjectCard = ({ name, imageUrl, offsetLeft }: ProjectCardProps) => {
           console.log(`Clicked ${name}`)
         }}
       >
-        <CardMedia component="img" height="300" image={imageUrl} alt="hmm" />
+        <CardMedia
+          component="img"
+          height="300"
+          image={imageUrl}
+          alt="Project image"
+        />
         <CardContent sx={{ p: 0, transition: 'translate 0.25s' }}>
           <Typography
             variant="caption"
