@@ -17,7 +17,7 @@ const MakeImpact = () => {
       />
       <Container>
         <Stack sx={{ gap: 4, my: { mobile: 10, desktopM: 20 } }}>
-          <Typography variant="title" sx={{ textAlign: 'center' }}>
+          <Typography variant="caption" sx={{ textAlign: 'center' }}>
             {translate('makeImpact')}
           </Typography>
           <Box>
