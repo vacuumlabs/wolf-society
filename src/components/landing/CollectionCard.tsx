@@ -1,4 +1,5 @@
 import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
+import { useLocale } from '@/utils/hooks/useLocale'
 import {
   Box,
   Card,
@@ -11,6 +12,7 @@ import {
 } from '@mui/material'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import Button from '../Button'
+import { Countdown } from '../Countdown'
 
 export type CollectionCardProps = {
   name: string
@@ -18,6 +20,8 @@ export type CollectionCardProps = {
   description: string
   color: string
   subtitle: string
+  deadline?: Date
+  remainingPieces?: number
 }
 
 const CollectionCard = ({
@@ -26,11 +30,21 @@ const CollectionCard = ({
   description,
   color,
   subtitle,
+  deadline,
+  remainingPieces,
 }: CollectionCardProps) => {
   const translate = useContentful(ContentTypes.landingPage)
+  const translateCommon = useContentful(ContentTypes.common)
+  const locale = useLocale()
   const theme = useTheme()
   const displayHorizontally = useMediaQuery(theme.breakpoints.up('tabletM'))
   const nameFormatted = name.replaceAll(' ', '\n')
+
+  const countdownOrPieces = deadline ? (
+    <Countdown deadline={deadline} />
+  ) : (
+    `${remainingPieces?.toLocaleString(locale)} ${translateCommon('pieces')}`
+  )
 
   const horizontalCard = (
     <Card
@@ -64,13 +78,14 @@ const CollectionCard = ({
         >
           <Box flexGrow={1}>
             <Stack gap={4}>
-              <Typography
-                variant="caption"
-                color="neutral.main"
-                sx={{ whiteSpace: 'pre-wrap' }}
-              >
-                {subtitle}
-              </Typography>
+              <Stack direction="row" justifyContent="space-between">
+                <Typography variant="caption" color="neutral.main">
+                  {subtitle}
+                </Typography>
+                <Typography variant="caption" color="neutral.main">
+                  {countdownOrPieces}
+                </Typography>
+              </Stack>
               <Typography
                 variant="headline"
                 color="neutral.main"
@@ -80,7 +95,7 @@ const CollectionCard = ({
               </Typography>
             </Stack>
           </Box>
-          <Box mb={10}>
+          <Box mb={5}>
             <Typography color="neutral.main" variant="body2">
               {description}
             </Typography>
@@ -97,13 +112,14 @@ const CollectionCard = ({
     <Card>
       <CardContent sx={{ bgcolor: `${color}`, p: 5, textAlign: 'start' }}>
         <Stack gap={4}>
-          <Typography
-            variant="caption"
-            color="neutral.main"
-            sx={{ whiteSpace: 'pre-wrap' }}
-          >
-            {subtitle}
-          </Typography>
+          <Stack gap="4px">
+            <Typography variant="caption" color="neutral.main">
+              {subtitle}
+            </Typography>
+            <Typography variant="caption" color="neutral.main">
+              {countdownOrPieces}
+            </Typography>
+          </Stack>
           <Typography
             variant="headline"
             color="neutral.main"

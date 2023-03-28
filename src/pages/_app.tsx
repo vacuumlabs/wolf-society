@@ -15,6 +15,7 @@ import { ContentContext } from '@/utils/hooks/useContentful'
 import localFont from 'next/font/local'
 import Footer from '@/components/Footer'
 import '../../public/style.css'
+import { LocaleContext } from '@/utils/hooks/useLocale'
 
 declare module '@mui/material/styles' {
   interface BreakpointOverrides {
@@ -531,9 +532,11 @@ const App = ({ Component, pageProps }: AppProps) => (
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <ContentContext.Provider value={pageProps?.translations}>
-          <Navigation />
-          <Component {...pageProps} />
-          <Footer />
+          <LocaleContext.Provider value={pageProps?.locale}>
+            <Navigation />
+            <Component {...pageProps} />
+            <Footer />
+          </LocaleContext.Provider>
         </ContentContext.Provider>
       </ThemeProvider>
     </RainbowKitProvider>

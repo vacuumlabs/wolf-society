@@ -35,6 +35,7 @@ export async function getStaticProps({ locale }: GetStaticPropsContext) {
     // Will be passed to the page component as props
     props: {
       translations: await injectCMSContent(ContentTypes.landingPage, locale),
+      locale,
     },
   }
 }

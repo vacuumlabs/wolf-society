@@ -22,7 +22,13 @@ export type Content = {
     blog: string
     email: string
   }
-  [ContentTypes.common]: {}
+  [ContentTypes.common]: {
+    secondsShort: string
+    minutesShort: string
+    hoursShort: string
+    daysShort: string
+    pieces: string
+  }
   [ContentTypes.landingPage]: {
     heroTitle: string
     heroSubtitle: string
