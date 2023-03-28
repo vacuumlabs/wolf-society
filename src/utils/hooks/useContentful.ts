@@ -22,6 +22,7 @@ export type Content = {
     blog: string
     email: string
     makeImpact: string
+    launchApp: string
   }
   [ContentTypes.common]: {
     secondsShort: string

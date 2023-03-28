@@ -13,11 +13,7 @@ import {
   useScrollTrigger,
 } from '@mui/material'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
-import {
-  ContentTypes,
-  Content,
-  useContentful,
-} from '@/utils/hooks/useContentful'
+import { ContentTypes, useContentful } from '@/utils/hooks/useContentful'
 import MenuIcon from './icons/MenuIcon'
 import { useRouter } from 'next/router'
 import WSLogo from './icons/WSLogo'
@@ -25,6 +21,7 @@ import { SUBPAGES } from '@/consts'
 import { getSubpagesKeys } from '@/utils/helpers'
 import CloseIcon from './icons/CloseIcon'
 import Button from './Button'
+import { LaunchAppButton } from './LaunchAppButton'
 
 const Navigation = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
@@ -95,11 +92,18 @@ const Navigation = () => {
               display: { mobile: 'none', tabletM: 'flex' },
             }}
           >
-            <ConnectButton />
+            <LaunchAppButton />
             {trigger && (
               <Button
                 style={{ height: '48px', padding: '12px 24px' }}
                 href={SUBPAGES['collections']}
+                sx={(theme) => ({
+                  // Button S for M breakpoint
+                  [theme.breakpoints.down('desktopL')]: {
+                    fontSize: '16px',
+                    lineHeight: '24px',
+                  },
+                })}
               >
                 {translate('makeImpact')}
               </Button>
