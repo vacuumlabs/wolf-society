@@ -1,10 +1,17 @@
 import { SUBPAGES } from '@/consts'
 import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
-import { Box, Container, Stack, Typography } from '@mui/material'
+import {
+  Box,
+  BreakpointOverrides,
+  Container,
+  Stack,
+  Typography,
+} from '@mui/material'
 import Button from '../Button'
 import { ParallaxProvider } from 'react-scroll-parallax'
 import WSFSymbol from '../icons/WSFSymbol'
 import TopicCard, { TopicCardProps } from './TopicCard'
+import ScrollingCard from '../ScrollingCard'
 
 const MockedTopics: Omit<TopicCardProps, 'offsetLeft'>[] = [
   {
@@ -29,6 +36,7 @@ const MockedTopics: Omit<TopicCardProps, 'offsetLeft'>[] = [
 
 const Topics = () => {
   const translate = useContentful(ContentTypes.landingPage)
+  const breakpoint: keyof BreakpointOverrides = 'tabletS'
   return (
     <Box sx={{ bgcolor: 'neutral.400', textAlign: 'center' }}>
       <Container>
@@ -54,13 +62,13 @@ const Topics = () => {
               </Button>
             </Stack>
           </Stack>
-          <Stack sx={{ gap: 5, alignItems: 'center', mb: 10 }}>
+          <Stack spacing={{ mobile: 5, [breakpoint]: -21 }} sx={{ mb: 10 }}>
             {MockedTopics.map((topic, index) => (
-              <TopicCard
-                {...topic}
-                key={topic.title}
-                offsetLeft={index % 2 === 0}
-              />
+              <Stack width="100%" alignItems="center" key={topic.title}>
+                <ScrollingCard index={index}>
+                  <TopicCard {...topic} />
+                </ScrollingCard>
+              </Stack>
             ))}
           </Stack>
         </ParallaxProvider>

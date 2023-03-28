@@ -5,12 +5,9 @@ import {
   CardActionArea,
   CardContent,
   CardMedia,
-  Theme,
   Typography,
-  useMediaQuery,
 } from '@mui/material'
 import Button from '../Button'
-import { Parallax } from 'react-scroll-parallax'
 import ArrowRightIcon from '../icons/ArrowRightIcon'
 
 export type ProjectCardProps = {
@@ -25,7 +22,6 @@ const ProjectCard = ({ name, imageUrl }: ProjectCardProps) => {
     <Card
       sx={{
         bgcolor: 'neutral.main',
-        maxWidth: 424,
         width: '100%',
         '& .MuiCardContent-root': {
           mobile: {},
