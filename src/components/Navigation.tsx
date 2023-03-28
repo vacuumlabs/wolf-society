@@ -10,6 +10,7 @@ import {
   Stack,
   Toolbar,
   Typography,
+  useScrollTrigger,
 } from '@mui/material'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import {
@@ -23,10 +24,12 @@ import WSLogo from './icons/WSLogo'
 import { SUBPAGES } from '@/consts'
 import { getSubpagesKeys } from '@/utils/helpers'
 import CloseIcon from './icons/CloseIcon'
+import Button from './Button'
 
 const Navigation = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
   const router = useRouter()
+  const trigger = useScrollTrigger({ disableHysteresis: true })
 
   const translate = useContentful(ContentTypes.navbar)
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -46,7 +49,9 @@ const Navigation = () => {
       })}
     >
       <Container>
-        <Toolbar sx={{ p: 0 }}>
+        <Toolbar
+          sx={{ p: 0, justifyContent: 'space-between', minHeight: '48px' }}
+        >
           <Link href="/" display="flex">
             <WSLogo color="black" />
           </Link>
@@ -56,7 +61,8 @@ const Navigation = () => {
             gap={4}
             sx={{
               display: { mobile: 'none', tabletM: 'flex' },
-              flexGrow: 1,
+              width: '100%',
+              position: 'absolute',
             }}
           >
             {getSubpagesKeys().map((subpageKey) => {
@@ -82,13 +88,23 @@ const Navigation = () => {
               )
             })}
           </Stack>
-          <Box
+          <Stack
+            direction="row"
+            gap={2}
             sx={{
               display: { mobile: 'none', tabletM: 'flex' },
             }}
           >
             <ConnectButton />
-          </Box>
+            {trigger && (
+              <Button
+                style={{ height: '48px', padding: '12px 24px' }}
+                href={SUBPAGES['collections']}
+              >
+                {translate('makeImpact')}
+              </Button>
+            )}
+          </Stack>
           <Box
             sx={{
               flexGrow: 1,

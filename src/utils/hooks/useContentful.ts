@@ -21,6 +21,7 @@ export type Content = {
     collections: string
     blog: string
     email: string
+    makeImpact: string
   }
   [ContentTypes.common]: {
     secondsShort: string
