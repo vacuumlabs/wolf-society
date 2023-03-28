@@ -30,6 +30,7 @@ const CollectionCard = ({
   const translate = useContentful(ContentTypes.landingPage)
   const theme = useTheme()
   const displayHorizontally = useMediaQuery(theme.breakpoints.up('tabletM'))
+  const nameFormatted = name.replaceAll(' ', '\n')
 
   const horizontalCard = (
     <Card
@@ -70,8 +71,12 @@ const CollectionCard = ({
               >
                 {subtitle}
               </Typography>
-              <Typography variant="headline" color="neutral.main">
-                {name}
+              <Typography
+                variant="headline"
+                color="neutral.main"
+                sx={{ whiteSpace: 'pre-wrap' }}
+              >
+                {nameFormatted}
               </Typography>
             </Stack>
           </Box>
@@ -99,8 +104,12 @@ const CollectionCard = ({
           >
             {subtitle}
           </Typography>
-          <Typography variant="headline" color="neutral.main">
-            {name}
+          <Typography
+            variant="headline"
+            color="neutral.main"
+            sx={{ whiteSpace: 'pre-wrap' }}
+          >
+            {nameFormatted}
           </Typography>
         </Stack>
       </CardContent>
