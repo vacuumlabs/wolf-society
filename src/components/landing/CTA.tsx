@@ -45,7 +45,16 @@ const CTA = () => {
         >
           <Stack direction="row" alignItems="center" gap={4}>
             {wsfSymbol}
-            <Typography variant="headline">
+            <Typography
+              variant="headline"
+              sx={(theme) => ({
+                // Headline L for M breakpoint
+                [theme.breakpoints.up('desktopM')]: {
+                  fontSize: '100px',
+                  lineHeight: '96px',
+                },
+              })}
+            >
               {translate('makeImpact')}
             </Typography>
             {wsfSymbol}

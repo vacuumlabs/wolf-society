@@ -68,6 +68,13 @@ const Navigation = () => {
                     color="inherit"
                     href={SUBPAGES[subpageKey]}
                     underline="hover"
+                    sx={(theme) => ({
+                      // Button S for M breakpoint
+                      [theme.breakpoints.down('desktopL')]: {
+                        fontSize: '16px',
+                        lineHeight: '24px',
+                      },
+                    })}
                   >
                     {translate(subpageKey)}
                   </Link>
