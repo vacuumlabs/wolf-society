@@ -1,4 +1,6 @@
+import { ContentTypes, useContentful } from '@/utils/hooks/useContentful'
 import { Box, Container, Stack } from '@mui/material'
+import { HorizontalScrollText } from './HorizontalScrollText'
 import RoadmapCard, { RoadmapCardProps } from './RoadmapCard'
 
 const MockedItem =
@@ -35,8 +37,15 @@ const COLOR_ORDER: string[] = [
 ]
 
 const Roadmap = () => {
+  const translate = useContentful(ContentTypes.landingPage)
   return (
     <Box sx={{ bgcolor: 'neutral.main' }}>
+      <HorizontalScrollText
+        text={translate('roadmap')}
+        numberOfItems={10}
+        offsetStep={10}
+        color="neutral.400"
+      />
       <Container>
         <Stack
           sx={{ alignItems: 'center', my: { mobile: 10, desktopM: 20 } }}

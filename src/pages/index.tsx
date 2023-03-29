@@ -22,7 +22,6 @@ const Home = () => {
       <Projects />
       <MakeImpact />
       <Activities />
-      <Collections />
       <Roadmap />
       <Questions />
       <Topics />

@@ -46,6 +46,7 @@ export type Content = {
     questions: string
     articles: string
     allArticles: string
+    roadmap: string
   }
   [ContentTypes.collectionsPage]: {}
   [ContentTypes.articlesPage]: {

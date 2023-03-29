@@ -1,5 +1,6 @@
 import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
 import { Box, Container, Stack, Typography } from '@mui/material'
+import { HorizontalScrollText } from './HorizontalScrollText'
 import QuestionAccordion from './QuestionAccordion'
 
 const MockedQuestion = {
@@ -14,6 +15,12 @@ const Questions = () => {
   const translate = useContentful(ContentTypes.landingPage)
   return (
     <Box sx={{ bgcolor: 'neutral.400' }}>
+      <HorizontalScrollText
+        text={translate('questions')}
+        numberOfItems={10}
+        offsetStep={10}
+        color="neutral.600"
+      />
       <Container>
         <Stack
           sx={{ width: '100%', my: { mobile: 10, desktopM: 20 } }}
