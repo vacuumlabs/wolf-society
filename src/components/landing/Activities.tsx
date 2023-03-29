@@ -10,6 +10,7 @@ import breadAndButterImage from 'public/images/breadAndButter.png'
 import ActivityItem from './ActivityItem'
 import { StaticImageData } from 'next/image'
 import Collections from './Collections'
+import { Parallax, ParallaxProvider } from 'react-scroll-parallax'
 
 const ACTIVITIES_ITEMS: {
   title: keyof Content[ContentTypes.landingPage]
