@@ -54,7 +54,7 @@ const ProjectCard = ({ name, imageUrl, offsetLeft }: ProjectCardProps) => {
           <Typography
             variant="caption"
             color="secondary"
-            sx={{ p: 4, textAlign: 'start', transition: 'translate 0.25s' }}
+            sx={{ p: 4, textAlign: 'start' }}
           >
             {name}
           </Typography>

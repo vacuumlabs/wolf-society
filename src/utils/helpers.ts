@@ -14,3 +14,16 @@ export const getSubpagesKeys = () => {
     Content[ContentTypes.navbar]
   >)[]
 }
+
+export const formatDate = (date: string, locale: any) => {
+  return new Date(date).toLocaleDateString(locale, { dateStyle: 'medium' })
+}
+
+export const formatCategories = (categories: string[]) => {
+  return categories.map((category) =>
+    category
+      .split('-')
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ')
+  )
+}

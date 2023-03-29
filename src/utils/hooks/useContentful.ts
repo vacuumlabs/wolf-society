@@ -22,7 +22,9 @@ export type Content = {
     blog: string
     email: string
   }
-  [ContentTypes.common]: {}
+  [ContentTypes.common]: {
+    makeImpactButton: string
+  }
   [ContentTypes.landingPage]: {
     heroTitle: string
     heroSubtitle: string
@@ -49,6 +51,10 @@ export type Content = {
   [ContentTypes.collectionsPage]: {}
   [ContentTypes.articlesPage]: {
     articles: string
+    readMore: string
+    exploreMore: string
+    gratefulPart1: string
+    gratefulPart2: string
   }
 }
 

@@ -5,7 +5,7 @@ import Button from '../Button'
 import WSFSymbol from '../icons/WSFSymbol'
 
 const CTA = () => {
-  const translate = useContentful(ContentTypes.landingPage)
+  const translate = useContentful(ContentTypes.common)
   const wsfSymbol = (
     <Icon
       sx={(theme) => ({
@@ -46,7 +46,7 @@ const CTA = () => {
           <Stack direction="row" alignItems="center" gap={4}>
             {wsfSymbol}
             <Typography variant="headline">
-              {translate('makeImpact')}
+              {translate('makeImpactButton')}
             </Typography>
             {wsfSymbol}
           </Stack>
