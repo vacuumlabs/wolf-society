@@ -77,6 +77,11 @@ const Navigation = () => {
                         fontSize: '16px',
                         lineHeight: '24px',
                       },
+                      // Button M for L breakpoint
+                      [theme.breakpoints.up('desktopL')]: {
+                        fontSize: '20px',
+                        lineHeight: '24px',
+                      },
                     })}
                   >
                     {translate(subpageKey)}
@@ -101,6 +106,11 @@ const Navigation = () => {
                   // Button S for M breakpoint
                   [theme.breakpoints.down('desktopL')]: {
                     fontSize: '16px',
+                    lineHeight: '24px',
+                  },
+                  // Button M for L breakpoint
+                  [theme.breakpoints.up('desktopL')]: {
+                    fontSize: '20px',
                     lineHeight: '24px',
                   },
                 })}

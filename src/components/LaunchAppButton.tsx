@@ -13,6 +13,11 @@ export const LaunchAppButton = () => {
           fontSize: '16px',
           lineHeight: '24px',
         },
+        // Button M for L breakpoint
+        [theme.breakpoints.up('desktopL')]: {
+          fontSize: '20px',
+          lineHeight: '24px',
+        },
       })}
     >
       {translate('launchApp')}
