@@ -4,6 +4,7 @@ import {
   BreakpointOverrides,
   Drawer,
   Grid,
+  IconButton,
   Stack,
   Typography,
   useMediaQuery,
@@ -12,12 +13,14 @@ import {
 import Image, { StaticImageData } from 'next/image'
 import { useState } from 'react'
 import Button from '../Button'
+import CloseIcon from '../icons/CloseIcon'
 
 type ActivityItemProps = {
   title: string
   description: string
   image: StaticImageData
   imageOnTheRight?: boolean
+  drawerContent: React.ReactNode
 }
 
 const ActivityItem = ({
@@ -25,6 +28,7 @@ const ActivityItem = ({
   description,
   image,
   imageOnTheRight = true,
+  drawerContent,
 }: ActivityItemProps) => {
   const [drawerOpened, setDrawerOpened] = useState(false)
   const translate = useContentful(ContentTypes.landingPage)
@@ -94,9 +98,35 @@ const ActivityItem = ({
           {displayImageOnTheRight ? imageBox : textStack}
         </Grid>
       </Grid>
-      <Drawer anchor="right" open={drawerOpened} onClose={toggleDrawer(false)}>
+      <Drawer
+        anchor="right"
+        open={drawerOpened}
+        onClose={toggleDrawer(false)}
+        sx={(theme) => ({
+          '& .MuiPaper-root': {
+            width: {
+              mobile: 'inherit',
+              desktopS: '50%',
+              backgroundColor: theme.palette.neutral[400],
+            },
+          },
+        })}
+      >
         <Stack>
-          <Typography variant="headline">Title</Typography>
+          <Stack sx={{ alignSelf: 'end' }} p={2}>
+            <IconButton onClick={toggleDrawer(false)}>
+              <CloseIcon />
+            </IconButton>
+          </Stack>
+        </Stack>
+        <Stack px={10}>
+          <Typography variant="caption" pb={3}>
+            {title}
+          </Typography>
+          <Typography variant="body1" pb={5} pr={4}>
+            {description}
+          </Typography>
+          {drawerContent}
         </Stack>
       </Drawer>
     </>
