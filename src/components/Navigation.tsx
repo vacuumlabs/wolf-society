@@ -1,18 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   AppBar,
   Box,
   Container,
+  Drawer,
   IconButton,
   Link,
-  Menu,
-  MenuItem,
   Stack,
   Toolbar,
   Typography,
   useScrollTrigger,
 } from '@mui/material'
-import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { ContentTypes, useContentful } from '@/utils/hooks/useContentful'
 import MenuIcon from './icons/MenuIcon'
 import { useRouter } from 'next/router'
@@ -22,19 +20,26 @@ import { getSubpagesKeys } from '@/utils/helpers'
 import CloseIcon from './icons/CloseIcon'
 import Button from './Button'
 import { LaunchAppButton } from './LaunchAppButton'
+import WSFSymbol from './icons/WSFSymbol'
 
 const Navigation = () => {
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
+  const [drawerOpened, setDrawerOpened] = useState(false)
   const router = useRouter()
   const trigger = useScrollTrigger({ disableHysteresis: true })
 
   const translate = useContentful(ContentTypes.navbar)
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElNav(event.currentTarget)
-  }
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null)
-  }
+  const toggleDrawer =
+    (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+      if (
+        event.type === 'keydown' &&
+        ((event as React.KeyboardEvent).key === 'Tab' ||
+          (event as React.KeyboardEvent).key === 'Shift')
+      ) {
+        return
+      }
+
+      setDrawerOpened(open)
+    }
   return (
     <AppBar
       color="neutral"
@@ -129,47 +134,76 @@ const Navigation = () => {
             <IconButton
               aria-controls="menu-appbar"
               aria-haspopup="true"
-              onClick={handleOpenNavMenu}
+              onClick={toggleDrawer(true)}
             >
-              {anchorElNav ? <CloseIcon /> : <MenuIcon />}
+              <MenuIcon />
             </IconButton>
 
-            {/* Mobile hamburger menu */}
-            <Menu
+            {/* Mobile menu */}
+            <Drawer
               id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { mobile: 'block', tabletM: 'none' },
-              }}
+              anchor="right"
+              open={drawerOpened}
+              onClose={toggleDrawer(false)}
             >
-              {getSubpagesKeys().map((subpageKey) => (
-                <Link
-                  href={SUBPAGES[subpageKey]}
-                  key={subpageKey}
-                  underline="hover"
-                >
-                  <MenuItem onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">
-                      {translate(subpageKey)}
-                    </Typography>
-                  </MenuItem>
-                </Link>
-              ))}
-              <MenuItem key="connectWalletButton" onClick={handleCloseNavMenu}>
-                <ConnectButton />
-              </MenuItem>
-            </Menu>
+              <Box width="100vw" height="100vh" bgcolor="neutral.600">
+                <Container sx={{ height: '100%' }}>
+                  <Stack height="100%" py={2}>
+                    <Stack sx={{ alignSelf: 'end' }}>
+                      <IconButton
+                        aria-controls="menu-appbar"
+                        aria-haspopup="true"
+                        onClick={toggleDrawer(false)}
+                      >
+                        <CloseIcon />
+                      </IconButton>
+                    </Stack>
+                    <Stack
+                      flexGrow={1}
+                      alignItems="center"
+                      justifyContent="center"
+                      gap={5}
+                    >
+                      <WSFSymbol />
+                      <Stack gap={4}>
+                        {getSubpagesKeys().map((subpageKey) => {
+                          const isCurrentSubpage =
+                            router.pathname === SUBPAGES[subpageKey]
+                          return (
+                            <Typography
+                              key={subpageKey}
+                              textAlign="center"
+                              variant="display"
+                              component="p"
+                              color="black"
+                              sx={{
+                                textDecoration: isCurrentSubpage
+                                  ? 'line-through'
+                                  : '',
+                              }}
+                            >
+                              <Link
+                                href={SUBPAGES[subpageKey]}
+                                underline="hover"
+                                color="inherit"
+                              >
+                                {translate(subpageKey)}
+                              </Link>
+                            </Typography>
+                          )
+                        })}
+                      </Stack>
+                    </Stack>
+                    <Stack gap={2}>
+                      <LaunchAppButton />
+                      <Button href={SUBPAGES['collections']}>
+                        {translate('makeImpact')}
+                      </Button>
+                    </Stack>
+                  </Stack>
+                </Container>
+              </Box>
+            </Drawer>
           </Box>
         </Toolbar>
       </Container>
