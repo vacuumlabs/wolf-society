@@ -416,8 +416,8 @@ theme.typography.display = {
     lineHeight: '128px',
   },
   [theme.breakpoints.up('desktopL')]: {
-    fontSize: '199px',
-    lineHeight: '176px',
+    fontSize: '189px',
+    lineHeight: '166px',
   },
 }
 
@@ -486,8 +486,8 @@ theme.typography.body1 = {
     lineHeight: '64px',
   },
   [theme.breakpoints.up('desktopL')]: {
-    fontSize: '70px',
-    lineHeight: '88px',
+    fontSize: '65px',
+    lineHeight: '80px',
   },
 }
 
