@@ -390,6 +390,11 @@ theme.components = {
       columnSpacing: { mobile: 2, desktopS: 3, desktopM: 4, desktopL: 5 },
     },
   },
+  MuiLink: {
+    defaultProps: {
+      underline: 'hover',
+    },
+  },
   MuiTypography: {
     defaultProps: {
       variantMapping: {
