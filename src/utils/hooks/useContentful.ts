@@ -31,6 +31,7 @@ export type Content = {
     daysShort: string
     pieces: string
     makeImpactButton: string
+    readMore: string
   }
   [ContentTypes.landingPage]: {
     heroTitle: string

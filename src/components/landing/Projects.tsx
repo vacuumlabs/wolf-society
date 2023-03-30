@@ -79,7 +79,7 @@ const Projects = () => {
               </Button>
             </Stack>
           </Stack>
-          <Stack spacing={{ mobile: 5, [breakpoint]: -21 }} sx={{ mb: 10 }}>
+          <Stack spacing={{ mobile: 5, [breakpoint]: 0 }} sx={{ mb: 10 }}>
             {MockedProjects.map((project, index) => (
               <Stack width="100%" alignItems="center" key={project.name}>
                 <ScrollingCard index={index}>

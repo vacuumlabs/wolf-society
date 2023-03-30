@@ -1,5 +1,6 @@
 import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
 import {
+  Box,
   BreakpointOverrides,
   Card,
   CardActionArea,
@@ -31,7 +32,7 @@ const ArticleCard = ({
   link,
   categories,
 }: ArticleCardProps) => {
-  const translate = useContentful(ContentTypes.articlesPage)
+  const translate = useContentful(ContentTypes.common)
   const breakpoint: keyof BreakpointOverrides = 'desktopS'
 
   return (
@@ -89,10 +90,30 @@ const ArticleCard = ({
               justifyContent="space-between"
             >
               <Stack direction="row" justifyContent="space-between">
-                <Typography variant="body2" color="black">
+                <Typography
+                  variant="body2"
+                  color="black"
+                  sx={(theme) => ({
+                    // Body2 S for M+ breakpoint
+                    [theme.breakpoints.up('desktopM')]: {
+                      fontSize: '20px',
+                      lineHeight: '32px',
+                    },
+                  })}
+                >
                   {pubDate}
                 </Typography>
-                <Typography variant="body2" color="black">
+                <Typography
+                  variant="body2"
+                  color="black"
+                  sx={(theme) => ({
+                    // Body2 S for M+ breakpoint
+                    [theme.breakpoints.up('desktopM')]: {
+                      fontSize: '20px',
+                      lineHeight: '32px',
+                    },
+                  })}
+                >
                   {categories.slice(0, MAX_CATEGORIES).join(', ')}
                 </Typography>
               </Stack>
@@ -100,18 +121,25 @@ const ArticleCard = ({
                 {title}
               </Typography>
             </Stack>
-            <Button
-              component="div"
+            <Box
               sx={{
                 width: '100%',
                 position: { mobile: 'relative', [breakpoint]: 'absolute' },
                 transition: 'translate 0.25s',
+                left: 0,
               }}
-              endIcon={<ArrowTurnTopIcon />}
-              iconatend={1}
             >
-              {translate('readMore')}
-            </Button>
+              <Button
+                component="div"
+                sx={{
+                  width: '100%',
+                }}
+                endIcon={<ArrowTurnTopIcon />}
+                iconatend={1}
+              >
+                {translate('readMore')}
+              </Button>
+            </Box>
           </CardContent>
         </CardActionArea>
       </Link>
