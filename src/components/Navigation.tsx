@@ -159,64 +159,68 @@ const Navigation = () => {
           anchor="right"
           open={drawerOpened}
           onClose={toggleDrawer(false)}
+          sx={{
+            '& .MuiPaper-root': {
+              width: '100vw',
+              bgcolor: 'neutral.600',
+            },
+          }}
         >
-          <Box width="100vw" height="100vh" bgcolor="neutral.600">
-            <Container sx={{ height: '100%' }}>
-              <Stack height="100%" py={2}>
-                <Stack sx={{ alignSelf: 'end' }}>
-                  <IconButton
-                    aria-controls="menu-appbar"
-                    aria-haspopup="true"
-                    onClick={toggleDrawer(false)}
-                  >
-                    <CloseIcon />
-                  </IconButton>
-                </Stack>
-                <Stack
-                  flexGrow={1}
-                  alignItems="center"
-                  justifyContent="center"
-                  gap={5}
+          <Container sx={{ height: '100%' }}>
+            <Stack height="100%" py={2}>
+              <Stack sx={{ alignSelf: 'end' }}>
+                <IconButton
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={toggleDrawer(false)}
                 >
-                  <WSFSymbol />
-                  <Stack gap={4}>
-                    {getSubpagesKeys().map((subpageKey) => {
-                      const isCurrentSubpage =
-                        router.pathname === SUBPAGES[subpageKey]
-                      return (
-                        <Typography
-                          key={subpageKey}
-                          textAlign="center"
-                          variant="display"
-                          component="p"
-                          color="black"
-                          sx={{
-                            textDecoration: isCurrentSubpage
-                              ? 'line-through'
-                              : '',
-                          }}
+                  <CloseIcon />
+                </IconButton>
+              </Stack>
+              <Stack
+                flexGrow={1}
+                alignItems="center"
+                justifyContent="center"
+                gap={5}
+              >
+                <WSFSymbol />
+                <Stack gap={4}>
+                  {getSubpagesKeys().map((subpageKey) => {
+                    const isCurrentSubpage =
+                      router.pathname === SUBPAGES[subpageKey]
+                    return (
+                      <Typography
+                        key={subpageKey}
+                        textAlign="center"
+                        variant="display"
+                        component="p"
+                        color="black"
+                        sx={{
+                          textDecoration: isCurrentSubpage
+                            ? 'line-through'
+                            : '',
+                        }}
+                      >
+                        <Link
+                          href={SUBPAGES[subpageKey]}
+                          underline="hover"
+                          color="inherit"
                         >
-                          <Link
-                            href={SUBPAGES[subpageKey]}
-                            underline="hover"
-                            color="inherit"
-                          >
-                            {translate(subpageKey)}
-                          </Link>
-                        </Typography>
-                      )
-                    })}
-                  </Stack>
-                </Stack>
-                <Stack gap={2}>
-                  <LaunchAppButton />
-                  <Button href={SUBPAGES['collections']}>
-                    {translate('makeImpact')}
-                  </Button>
+                          {translate(subpageKey)}
+                        </Link>
+                      </Typography>
+                    )
+                  })}
                 </Stack>
               </Stack>
-            </Container>
-          </Box>
+              <Stack gap={2}>
+                <LaunchAppButton />
+                <Button href={SUBPAGES['collections']}>
+                  {translate('makeImpact')}
+                </Button>
+              </Stack>
+            </Stack>
+          </Container>
         </Drawer>
       </AppBar>
     </AppearingComponent>
