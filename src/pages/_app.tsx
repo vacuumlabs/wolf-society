@@ -337,8 +337,8 @@ theme.components = {
           boxShadow: `0 0 0 4px ${theme.palette.black.main} inset`,
         },
         '&:hover': {
-          backgroundColor: 'rgba(30, 30, 30, 0.1)',
-          color: theme.palette.black.main,
+          backgroundColor: theme.palette.black.main,
+          color: theme.palette.neutral['200'],
         },
         '&:active': {
           backgroundColor: theme.palette.black.main,
