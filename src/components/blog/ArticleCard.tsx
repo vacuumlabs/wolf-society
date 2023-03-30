@@ -89,10 +89,30 @@ const ArticleCard = ({
               justifyContent="space-between"
             >
               <Stack direction="row" justifyContent="space-between">
-                <Typography variant="body2" color="black">
+                <Typography
+                  variant="body2"
+                  color="black"
+                  sx={(theme) => ({
+                    // Body2 S for M+ breakpoint
+                    [theme.breakpoints.up('desktopM')]: {
+                      fontSize: '20px',
+                      lineHeight: '32px',
+                    },
+                  })}
+                >
                   {pubDate}
                 </Typography>
-                <Typography variant="body2" color="black">
+                <Typography
+                  variant="body2"
+                  color="black"
+                  sx={(theme) => ({
+                    // Body2 S for M+ breakpoint
+                    [theme.breakpoints.up('desktopM')]: {
+                      fontSize: '20px',
+                      lineHeight: '32px',
+                    },
+                  })}
+                >
                   {categories.slice(0, MAX_CATEGORIES).join(', ')}
                 </Typography>
               </Stack>
