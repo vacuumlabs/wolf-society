@@ -45,12 +45,8 @@ export const HorizontalScrollText = ({
         Math.max(...newOffsets) === Math.min(...newOffsets) ||
         newOffsets.length === 0
       ) {
-        console.log('XXXXX')
-
         newOffsets = calculateOffsets(numberOfItems, elementWidth)
       }
-      console.log(newOffsets)
-
       setOffsets(newOffsets)
     }
     window.addEventListener('scroll', handleScroll, { passive: true })
