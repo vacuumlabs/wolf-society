@@ -40,6 +40,10 @@ const Navigation = () => {
 
       setDrawerOpened(open)
     }
+  const currentPage = getSubpagesKeys().filter(
+    (key) => SUBPAGES[key] === router.pathname
+  )[0]
+
   return (
     <AppBar
       color="neutral"
@@ -124,13 +128,18 @@ const Navigation = () => {
               </Button>
             )}
           </Stack>
-          <Box
+          <Stack
+            direction="row"
+            alignItems="center"
+            gap={2}
             sx={{
               flexGrow: 1,
               justifyContent: 'end',
               display: { mobile: 'flex', tabletM: 'none' },
             }}
           >
+            <Typography variant="button">{translate(currentPage)}</Typography>
+
             <IconButton
               aria-controls="menu-appbar"
               aria-haspopup="true"
@@ -138,75 +147,74 @@ const Navigation = () => {
             >
               <MenuIcon />
             </IconButton>
-
-            {/* Mobile menu */}
-            <Drawer
-              id="menu-appbar"
-              anchor="right"
-              open={drawerOpened}
-              onClose={toggleDrawer(false)}
-            >
-              <Box width="100vw" height="100vh" bgcolor="neutral.600">
-                <Container sx={{ height: '100%' }}>
-                  <Stack height="100%" py={2}>
-                    <Stack sx={{ alignSelf: 'end' }}>
-                      <IconButton
-                        aria-controls="menu-appbar"
-                        aria-haspopup="true"
-                        onClick={toggleDrawer(false)}
-                      >
-                        <CloseIcon />
-                      </IconButton>
-                    </Stack>
-                    <Stack
-                      flexGrow={1}
-                      alignItems="center"
-                      justifyContent="center"
-                      gap={5}
-                    >
-                      <WSFSymbol />
-                      <Stack gap={4}>
-                        {getSubpagesKeys().map((subpageKey) => {
-                          const isCurrentSubpage =
-                            router.pathname === SUBPAGES[subpageKey]
-                          return (
-                            <Typography
-                              key={subpageKey}
-                              textAlign="center"
-                              variant="display"
-                              component="p"
-                              color="black"
-                              sx={{
-                                textDecoration: isCurrentSubpage
-                                  ? 'line-through'
-                                  : '',
-                              }}
-                            >
-                              <Link
-                                href={SUBPAGES[subpageKey]}
-                                underline="hover"
-                                color="inherit"
-                              >
-                                {translate(subpageKey)}
-                              </Link>
-                            </Typography>
-                          )
-                        })}
-                      </Stack>
-                    </Stack>
-                    <Stack gap={2}>
-                      <LaunchAppButton />
-                      <Button href={SUBPAGES['collections']}>
-                        {translate('makeImpact')}
-                      </Button>
-                    </Stack>
-                  </Stack>
-                </Container>
-              </Box>
-            </Drawer>
-          </Box>
+          </Stack>
         </Toolbar>
       </Container>
+      {/* Mobile menu */}
+      <Drawer
+        id="menu-appbar"
+        anchor="right"
+        open={drawerOpened}
+        onClose={toggleDrawer(false)}
+      >
+        <Box width="100vw" height="100vh" bgcolor="neutral.600">
+          <Container sx={{ height: '100%' }}>
+            <Stack height="100%" py={2}>
+              <Stack sx={{ alignSelf: 'end' }}>
+                <IconButton
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={toggleDrawer(false)}
+                >
+                  <CloseIcon />
+                </IconButton>
+              </Stack>
+              <Stack
+                flexGrow={1}
+                alignItems="center"
+                justifyContent="center"
+                gap={5}
+              >
+                <WSFSymbol />
+                <Stack gap={4}>
+                  {getSubpagesKeys().map((subpageKey) => {
+                    const isCurrentSubpage =
+                      router.pathname === SUBPAGES[subpageKey]
+                    return (
+                      <Typography
+                        key={subpageKey}
+                        textAlign="center"
+                        variant="display"
+                        component="p"
+                        color="black"
+                        sx={{
+                          textDecoration: isCurrentSubpage
+                            ? 'line-through'
+                            : '',
+                        }}
+                      >
+                        <Link
+                          href={SUBPAGES[subpageKey]}
+                          underline="hover"
+                          color="inherit"
+                        >
+                          {translate(subpageKey)}
+                        </Link>
+                      </Typography>
+                    )
+                  })}
+                </Stack>
+              </Stack>
+              <Stack gap={2}>
+                <LaunchAppButton />
+                <Button href={SUBPAGES['collections']}>
+                  {translate('makeImpact')}
+                </Button>
+              </Stack>
+            </Stack>
+          </Container>
+        </Box>
+      </Drawer>
     </AppBar>
   )
 }
