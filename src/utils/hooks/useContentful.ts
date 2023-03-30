@@ -30,6 +30,7 @@ export type Content = {
     hoursShort: string
     daysShort: string
     pieces: string
+    makeImpactButton: string
   }
   [ContentTypes.landingPage]: {
     heroTitle: string
@@ -57,6 +58,10 @@ export type Content = {
   [ContentTypes.collectionsPage]: {}
   [ContentTypes.articlesPage]: {
     articles: string
+    readMore: string
+    exploreMore: string
+    gratefulPart1: string
+    gratefulPart2: string
   }
 }
 
