@@ -10,28 +10,15 @@ import {
 import Button from '../Button'
 import { ParallaxProvider } from 'react-scroll-parallax'
 import WSFSymbol from '../icons/WSFSymbol'
-import TopicCard, { TopicCardProps } from './TopicCard'
 import ScrollingCard from '../ScrollingCard'
+import ArticleCard from '../blog/ArticleCard'
+import { BlogData } from '@/utils/blog'
 
-const MockedTopics: Omit<TopicCardProps, 'offsetLeft'>[] = [
-  {
-    title: 'THE WORLD’S GLACIERS campaign 2023',
-    date: 'March 6, 2023',
-    imageUrl: 'https://picsum.photos/id/235/400/300',
-  },
-  {
-    title: 'HEALING IN THE PERUVIAN AMAZON',
-    date: 'March 4, 2023',
-    imageUrl: 'https://picsum.photos/id/232/400/300',
-  },
-  {
-    title: 'UN Biodiversity campaign',
-    date: 'February 27, 2023',
-    imageUrl: 'https://picsum.photos/id/233/400/300',
-  },
-]
+type Props = {
+  posts: ArticleProps[]
+}
 
-const Topics = () => {
+const Topics = ({ posts }: Props) => {
   const translate = useContentful(ContentTypes.landingPage)
   const breakpoint: keyof BreakpointOverrides = 'tabletS'
   return (
@@ -60,10 +47,10 @@ const Topics = () => {
             </Stack>
           </Stack>
           <Stack spacing={{ mobile: 5, [breakpoint]: -21 }} sx={{ mb: 10 }}>
-            {MockedTopics.map((topic, index) => (
-              <Stack width="100%" alignItems="center" key={topic.title}>
+            {posts.map((post, index) => (
+              <Stack width="100%" alignItems="center" key={post.title}>
                 <ScrollingCard index={index}>
-                  <TopicCard {...topic} />
+                  <ArticleCard {...post} />
                 </ScrollingCard>
               </Stack>
             ))}

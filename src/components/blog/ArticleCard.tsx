@@ -31,7 +31,7 @@ const ArticleCard = ({
   link,
   categories,
 }: ArticleCardProps) => {
-  const translate = useContentful(ContentTypes.articlesPage)
+  const translate = useContentful(ContentTypes.common)
   const breakpoint: keyof BreakpointOverrides = 'desktopS'
 
   return (
@@ -126,6 +126,7 @@ const ArticleCard = ({
                 width: '100%',
                 position: { mobile: 'relative', [breakpoint]: 'absolute' },
                 transition: 'translate 0.25s',
+                left: 0,
               }}
               endIcon={<ArrowTurnTopIcon />}
               iconatend={1}
