@@ -46,7 +46,7 @@ const Topics = ({ posts }: Props) => {
               </Button>
             </Stack>
           </Stack>
-          <Stack spacing={{ mobile: 5, [breakpoint]: -21 }} sx={{ mb: 10 }}>
+          <Stack spacing={{ mobile: 5, [breakpoint]: 0 }} sx={{ mb: 10 }}>
             {posts.map((post, index) => (
               <Stack width="100%" alignItems="center" key={post.title}>
                 <ScrollingCard index={index}>
