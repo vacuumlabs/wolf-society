@@ -9,6 +9,15 @@ interface HorizontalScrollTextProps {
   color: string
 }
 
+const calculateOffsets = (
+  numberOfItems: number,
+  elementWidth: number
+): number[] => {
+  return Array(numberOfItems)
+    .fill(0)
+    .map((_, index) => index * elementWidth)
+}
+
 export const HorizontalScrollText = ({
   text,
   numberOfItems,
@@ -22,18 +31,22 @@ export const HorizontalScrollText = ({
   const [offsets, setOffsets] = useState<Array<number>>([])
 
   useEffect(() => {
-    const newOffsets = Array(numberOfItems)
-      .fill(0)
-      .map((_, index) => index * elementWidth)
+    const newOffsets = calculateOffsets(numberOfItems, elementWidth)
     setOffsets(newOffsets)
   }, [elementWidth, numberOfItems])
 
   useEffect(() => {
     const handleScroll = () => {
       const lastOffset = Math.max(...offsets)
-      const newOffsets = offsets.map((offset) =>
+      let newOffsets = offsets.map((offset) =>
         calculateOffset(offset, elementWidth, lastOffset, offsetStep)
       )
+      if (
+        Math.max(...newOffsets) === Math.min(...newOffsets) ||
+        newOffsets.length === 0
+      ) {
+        newOffsets = calculateOffsets(numberOfItems, elementWidth)
+      }
       setOffsets(newOffsets)
     }
     window.addEventListener('scroll', handleScroll, { passive: true })
@@ -41,10 +54,14 @@ export const HorizontalScrollText = ({
     return () => {
       window.removeEventListener('scroll', handleScroll)
     }
-  }, [elementWidth, offsetStep, offsets])
+  }, [elementWidth, numberOfItems, offsetStep, offsets])
 
   return (
-    <Stack direction={'row'} height={{ mobile: 80, desktopM: 196 }}>
+    <Stack
+      direction={'row'}
+      height={{ mobile: 80, desktopM: 196 }}
+      position="relative"
+    >
       {offsets.map((offset, index) => (
         <HorizontalScrollTextItem
           myRef={textElemetnRef}

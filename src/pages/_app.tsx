@@ -15,7 +15,6 @@ import { ContentContext } from '@/utils/hooks/useContentful'
 import localFont from 'next/font/local'
 import Footer from '@/components/Footer'
 import { Reenie_Beanie } from 'next/font/google'
-import '../../public/style.css'
 import { LocaleContext } from '@/utils/hooks/useLocale'
 
 declare module '@mui/material/styles' {
