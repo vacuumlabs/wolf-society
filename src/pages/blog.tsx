@@ -7,6 +7,8 @@ import Articles from '@/components/blog/Articles'
 import { formatCategories, formatDate } from '@/utils/helpers'
 import { ArticleCardProps } from '@/components/blog/ArticleCard'
 import CTA from '@/components/landing/CTA'
+import { BlogData, getBlogData } from '@/utils/blog'
+import { useBlogData } from '@/utils/hooks/useBlogData'
 
 export type ArticleProps = {
   title: string
@@ -18,24 +20,14 @@ export type ArticleProps = {
   categories: string[]
 }
 
-type TBlog = {
-  posts: ArticleProps[]
-  errorMessage: string
-  image: string
+type Props = {
+  blogData: BlogData
   locale: string
 }
 
-const Blog = ({ posts, errorMessage, locale, image }: TBlog) => {
-  const [formattedPosts, setFormattedPosts] = useState<ArticleCardProps[]>([])
-  useEffect(() => {
-    setFormattedPosts(
-      posts.map((post) => ({
-        ...post,
-        pubDate: formatDate(post.pubDate, locale),
-        categories: formatCategories(post.categories),
-      }))
-    )
-  }, [])
+const Blog = ({ blogData, locale }: Props) => {
+  const formattedPosts = useBlogData(blogData, locale)
+  const { errorMessage, image } = blogData
 
   return (
     <Stack mt={11}>
@@ -57,19 +49,11 @@ const Blog = ({ posts, errorMessage, locale, image }: TBlog) => {
 }
 
 export async function getStaticProps({ locale }: GetStaticPropsContext) {
-  const response = await fetch(
-    `https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@${process.env.NEXT_PUBLIC_MEDIUM_USER}`
-  )
-
-  const data = await response.json()
-
   return {
     props: {
       // Will be passed to the page component as props
       translations: await injectCMSContent(ContentTypes.articlesPage, locale),
-      posts: data.items ?? [],
-      image: data.feed?.image ?? '',
-      errorMessage: data.message ?? '',
+      blogData: await getBlogData(),
     },
     revalidate: 60, // In seconds
   }

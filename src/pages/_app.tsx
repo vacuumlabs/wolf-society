@@ -15,7 +15,6 @@ import { ContentContext } from '@/utils/hooks/useContentful'
 import localFont from 'next/font/local'
 import Footer from '@/components/Footer'
 import { Reenie_Beanie } from 'next/font/google'
-import '../../public/style.css'
 import { LocaleContext } from '@/utils/hooks/useLocale'
 
 declare module '@mui/material/styles' {
@@ -337,8 +336,8 @@ theme.components = {
           boxShadow: `0 0 0 4px ${theme.palette.black.main} inset`,
         },
         '&:hover': {
-          backgroundColor: 'rgba(30, 30, 30, 0.1)',
-          color: theme.palette.black.main,
+          backgroundColor: theme.palette.black.main,
+          color: theme.palette.neutral['200'],
         },
         '&:active': {
           backgroundColor: theme.palette.black.main,

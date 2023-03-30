@@ -6,8 +6,10 @@ export default function Document() {
     <Html lang="en">
       <Head />
       <body>
-        <Main />
-        <NextScript />
+        <div style={{ overflowX: 'hidden' }}>
+          <Main />
+          <NextScript />
+        </div>
       </body>
     </Html>
   )

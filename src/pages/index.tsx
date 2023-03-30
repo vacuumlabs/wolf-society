@@ -12,9 +12,20 @@ import Topics from '@/components/landing/Topics'
 import CTA from '@/components/landing/CTA'
 import { useRef } from 'react'
 import Activities from '@/components/landing/Activities'
+import { BlogData, getBlogData } from '@/utils/blog'
+import { useBlogData } from '@/utils/hooks/useBlogData'
 
-const Home = () => {
+type Props = {
+  blogData: BlogData
+  locale: string
+}
+
+const Home = ({ blogData, locale }: Props) => {
   const manifestRef = useRef(null)
+  const formattedPosts = useBlogData(
+    { ...blogData, posts: blogData.posts.slice(0, 3) },
+    locale
+  )
   return (
     <Stack>
       <Hero manifestRef={manifestRef} />
@@ -24,7 +35,7 @@ const Home = () => {
       <Activities />
       <Roadmap />
       <Questions />
-      <Topics />
+      <Topics posts={formattedPosts} />
       <CTA />
     </Stack>
   )
@@ -34,6 +45,7 @@ export async function getStaticProps({ locale }: GetStaticPropsContext) {
   return {
     // Will be passed to the page component as props
     props: {
+      blogData: await getBlogData(),
       translations: await injectCMSContent(ContentTypes.landingPage, locale),
       locale,
     },
