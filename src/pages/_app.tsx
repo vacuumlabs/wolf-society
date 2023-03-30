@@ -16,6 +16,7 @@ import localFont from 'next/font/local'
 import Footer from '@/components/Footer'
 import { Reenie_Beanie } from 'next/font/google'
 import '../../public/style.css'
+import { LocaleContext } from '@/utils/hooks/useLocale'
 
 declare module '@mui/material/styles' {
   interface BreakpointOverrides {
@@ -321,6 +322,36 @@ theme.components = {
       },
     },
   },
+  MuiIconButton: {
+    styleOverrides: {
+      root: {
+        padding: 12,
+        backgroundColor: 'transparent',
+        border: 'none',
+        borderRadius: 0,
+        boxShadow: `0 0 0 2px ${theme.palette.black.main} inset`,
+        color: theme.palette.black.main,
+
+        '&:focus': {
+          backgroundColor: 'transparent',
+          boxShadow: `0 0 0 4px ${theme.palette.black.main} inset`,
+        },
+        '&:hover': {
+          backgroundColor: 'rgba(30, 30, 30, 0.1)',
+          color: theme.palette.black.main,
+        },
+        '&:active': {
+          backgroundColor: theme.palette.black.main,
+          color: theme.palette.neutral['200'],
+        },
+
+        '&.Mui-disabled': {
+          backgroundColor: theme.palette.neutral['500'],
+          color: 'white',
+        },
+      },
+    },
+  },
   MuiCard: {
     styleOverrides: {
       root: {
@@ -385,8 +416,8 @@ theme.typography.display = {
     lineHeight: '128px',
   },
   [theme.breakpoints.up('desktopL')]: {
-    fontSize: '199px',
-    lineHeight: '176px',
+    fontSize: '189px',
+    lineHeight: '166px',
   },
 }
 
@@ -455,8 +486,8 @@ theme.typography.body1 = {
     lineHeight: '64px',
   },
   [theme.breakpoints.up('desktopL')]: {
-    fontSize: '70px',
-    lineHeight: '88px',
+    fontSize: '65px',
+    lineHeight: '80px',
   },
 }
 
@@ -521,9 +552,11 @@ const App = ({ Component, pageProps }: AppProps) => (
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <ContentContext.Provider value={pageProps?.translations}>
-          <Navigation />
-          <Component {...pageProps} />
-          <Footer />
+          <LocaleContext.Provider value={pageProps?.locale}>
+            <Navigation />
+            <Component {...pageProps} />
+            <Footer />
+          </LocaleContext.Provider>
         </ContentContext.Provider>
       </ThemeProvider>
     </RainbowKitProvider>

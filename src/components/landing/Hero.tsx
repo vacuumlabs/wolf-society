@@ -15,7 +15,9 @@ const Hero = ({ manifestRef }: Props) => {
   return (
     <Box sx={{ bgcolor: 'neutral.400' }}>
       <Container>
-        <Stack sx={{ gap: 4, mt: '222px', textAlign: 'center' }}>
+        <Stack
+          sx={{ gap: 4, mt: { mobile: 15, desktopM: 20 }, textAlign: 'center' }}
+        >
           <Typography variant="display" sx={{ fontWeight: 600 }}>
             {translate('heroTitle')}
           </Typography>

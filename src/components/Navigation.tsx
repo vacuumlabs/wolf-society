@@ -10,22 +10,23 @@ import {
   Stack,
   Toolbar,
   Typography,
+  useScrollTrigger,
 } from '@mui/material'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
-import {
-  ContentTypes,
-  Content,
-  useContentful,
-} from '@/utils/hooks/useContentful'
+import { ContentTypes, useContentful } from '@/utils/hooks/useContentful'
 import MenuIcon from './icons/MenuIcon'
 import { useRouter } from 'next/router'
 import WSLogo from './icons/WSLogo'
 import { SUBPAGES } from '@/consts'
 import { getSubpagesKeys } from '@/utils/helpers'
+import CloseIcon from './icons/CloseIcon'
+import Button from './Button'
+import { LaunchAppButton } from './LaunchAppButton'
 
 const Navigation = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
   const router = useRouter()
+  const trigger = useScrollTrigger({ disableHysteresis: true })
 
   const translate = useContentful(ContentTypes.navbar)
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -45,7 +46,9 @@ const Navigation = () => {
       })}
     >
       <Container>
-        <Toolbar sx={{ p: 0 }}>
+        <Toolbar
+          sx={{ p: 0, justifyContent: 'space-between', minHeight: '48px' }}
+        >
           <Link href="/" display="flex">
             <WSLogo color="black" />
           </Link>
@@ -55,7 +58,8 @@ const Navigation = () => {
             gap={4}
             sx={{
               display: { mobile: 'none', tabletM: 'flex' },
-              flexGrow: 1,
+              width: '100%',
+              position: 'absolute',
             }}
           >
             {getSubpagesKeys().map((subpageKey) => {
@@ -67,6 +71,18 @@ const Navigation = () => {
                     color="inherit"
                     href={SUBPAGES[subpageKey]}
                     underline="hover"
+                    sx={(theme) => ({
+                      // Button S for M breakpoint
+                      [theme.breakpoints.down('desktopL')]: {
+                        fontSize: '16px',
+                        lineHeight: '24px',
+                      },
+                      // Button M for L breakpoint
+                      [theme.breakpoints.up('desktopL')]: {
+                        fontSize: '20px',
+                        lineHeight: '24px',
+                      },
+                    })}
                   >
                     {translate(subpageKey)}
                   </Link>
@@ -74,13 +90,35 @@ const Navigation = () => {
               )
             })}
           </Stack>
-          <Box
+          <Stack
+            direction="row"
+            gap={2}
             sx={{
               display: { mobile: 'none', tabletM: 'flex' },
             }}
           >
-            <ConnectButton />
-          </Box>
+            <LaunchAppButton />
+            {trigger && (
+              <Button
+                style={{ height: '48px', padding: '12px 24px' }}
+                href={SUBPAGES['collections']}
+                sx={(theme) => ({
+                  // Button S for M breakpoint
+                  [theme.breakpoints.down('desktopL')]: {
+                    fontSize: '16px',
+                    lineHeight: '24px',
+                  },
+                  // Button M for L breakpoint
+                  [theme.breakpoints.up('desktopL')]: {
+                    fontSize: '20px',
+                    lineHeight: '24px',
+                  },
+                })}
+              >
+                {translate('makeImpact')}
+              </Button>
+            )}
+          </Stack>
           <Box
             sx={{
               flexGrow: 1,
@@ -89,13 +127,11 @@ const Navigation = () => {
             }}
           >
             <IconButton
-              size="large"
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
-              color="inherit"
             >
-              <MenuIcon />
+              {anchorElNav ? <CloseIcon /> : <MenuIcon />}
             </IconButton>
 
             {/* Mobile hamburger menu */}

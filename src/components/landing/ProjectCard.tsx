@@ -5,34 +5,23 @@ import {
   CardActionArea,
   CardContent,
   CardMedia,
-  Theme,
   Typography,
-  useMediaQuery,
 } from '@mui/material'
 import Button from '../Button'
-import { Parallax } from 'react-scroll-parallax'
 import ArrowRightIcon from '../icons/ArrowRightIcon'
 
 export type ProjectCardProps = {
   name: string
   imageUrl: string
-  offsetLeft: boolean
 }
 
-const ProjectCard = ({ name, imageUrl, offsetLeft }: ProjectCardProps) => {
+const ProjectCard = ({ name, imageUrl }: ProjectCardProps) => {
   const translate = useContentful(ContentTypes.landingPage)
   const breakpoint: keyof BreakpointOverrides = 'desktopS'
-  const isMobile = useMediaQuery((theme: Theme) =>
-    theme.breakpoints.down('tabletS')
-  )
-
-  const projectCard = (
+  return (
     <Card
       sx={{
-        ml: { mobile: 0, desktopM: offsetLeft ? 40 : 0 },
-        mr: { mobile: 0, desktopM: offsetLeft ? 0 : 40 },
         bgcolor: 'neutral.main',
-        maxWidth: 424,
         width: '100%',
         '& .MuiCardContent-root': {
           mobile: {},
@@ -49,7 +38,12 @@ const ProjectCard = ({ name, imageUrl, offsetLeft }: ProjectCardProps) => {
           console.log(`Clicked ${name}`)
         }}
       >
-        <CardMedia component="img" height="300" image={imageUrl} alt="hmm" />
+        <CardMedia
+          component="img"
+          height="300"
+          image={imageUrl}
+          alt="Project image"
+        />
         <CardContent sx={{ p: 0, transition: 'translate 0.25s' }}>
           <Typography
             variant="caption"
@@ -69,7 +63,5 @@ const ProjectCard = ({ name, imageUrl, offsetLeft }: ProjectCardProps) => {
       </CardActionArea>
     </Card>
   )
-
-  return isMobile ? projectCard : <Parallax speed={100}>{projectCard}</Parallax>
 }
 export default ProjectCard

@@ -21,8 +21,15 @@ export type Content = {
     collections: string
     blog: string
     email: string
+    makeImpact: string
+    launchApp: string
   }
   [ContentTypes.common]: {
+    secondsShort: string
+    minutesShort: string
+    hoursShort: string
+    daysShort: string
+    pieces: string
     makeImpactButton: string
   }
   [ContentTypes.landingPage]: {

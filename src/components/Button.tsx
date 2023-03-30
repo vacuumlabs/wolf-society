@@ -19,14 +19,14 @@ const Button = styled(MuiButton)<
     paddingLeft: '32px',
     paddingRight: '32px',
   },
-  '&:hover': {
-    backgroundColor: theme.palette.primary['400'],
-    boxShadow: 'none',
-  },
 
   '&:focus': {
     backgroundColor: theme.palette.primary.main,
     boxShadow: `0 0 0 5px ${theme.palette.primary['200']} inset`,
+  },
+
+  '&:hover': {
+    backgroundColor: theme.palette.primary['400'],
   },
 
   '&:active': {
@@ -51,14 +51,15 @@ const Button = styled(MuiButton)<
     },
   },
 
-  '&.MuiButton-outlined:hover': {
-    backgroundColor: 'rgba(30, 30, 30, 0.1)',
-    color: theme.palette.black.main,
-  },
-
   '&.MuiButton-outlined:focus': {
     backgroundColor: 'transparent',
     boxShadow: `0 0 0 4px ${theme.palette.black.main} inset`,
+    color: theme.palette.black.main,
+  },
+
+  '&.MuiButton-outlined:hover': {
+    backgroundColor: theme.palette.black.main,
+    color: theme.palette.neutral['400'],
   },
 
   '&.MuiButton-outlined:active': {
