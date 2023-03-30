@@ -22,7 +22,10 @@ type Props = {
 
 const Home = ({ blogData, locale }: Props) => {
   const manifestRef = useRef(null)
-  const formattedPosts = useBlogData(blogData, locale)
+  const formattedPosts = useBlogData(
+    { ...blogData, posts: blogData.posts.slice(0, 3) },
+    locale
+  )
   return (
     <Stack>
       <Hero manifestRef={manifestRef} />

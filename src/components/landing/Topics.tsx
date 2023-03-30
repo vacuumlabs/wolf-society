@@ -12,7 +12,7 @@ import { ParallaxProvider } from 'react-scroll-parallax'
 import WSFSymbol from '../icons/WSFSymbol'
 import ScrollingCard from '../ScrollingCard'
 import ArticleCard from '../blog/ArticleCard'
-import { BlogData } from '@/utils/blog'
+import { ArticleProps } from '@/pages/blog'
 
 type Props = {
   posts: ArticleProps[]
