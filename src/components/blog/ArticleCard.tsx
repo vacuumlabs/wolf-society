@@ -1,5 +1,6 @@
 import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
 import {
+  Box,
   BreakpointOverrides,
   Card,
   CardActionArea,
@@ -120,19 +121,25 @@ const ArticleCard = ({
                 {title}
               </Typography>
             </Stack>
-            <Button
-              component="div"
+            <Box
               sx={{
                 width: '100%',
                 position: { mobile: 'relative', [breakpoint]: 'absolute' },
                 transition: 'translate 0.25s',
                 left: 0,
               }}
-              endIcon={<ArrowTurnTopIcon />}
-              iconatend={1}
             >
-              {translate('readMore')}
-            </Button>
+              <Button
+                component="div"
+                sx={{
+                  width: '100%',
+                }}
+                endIcon={<ArrowTurnTopIcon />}
+                iconatend={1}
+              >
+                {translate('readMore')}
+              </Button>
+            </Box>
           </CardContent>
         </CardActionArea>
       </Link>
