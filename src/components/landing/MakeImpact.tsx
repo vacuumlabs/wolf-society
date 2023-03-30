@@ -1,5 +1,6 @@
 import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
 import { Box, Container, Stack, Typography } from '@mui/material'
+import MuiMarkdown from 'mui-markdown'
 import { HorizontalScrollText } from './HorizontalScrollText'
 
 const MakeImpact = () => {
@@ -22,7 +23,7 @@ const MakeImpact = () => {
           </Typography>
           <Box>
             <Typography sx={{ textAlign: 'center' }} display="inline">
-              {translate('makeImpactText')}
+              <MuiMarkdown>{translate('makeImpactText')}</MuiMarkdown>
             </Typography>
           </Box>
         </Stack>

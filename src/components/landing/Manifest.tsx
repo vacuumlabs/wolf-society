@@ -1,5 +1,6 @@
 import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
 import { Box, Container, Stack, Typography } from '@mui/material'
+import MuiMarkdown from 'mui-markdown'
 
 type Props = {
   manifestRef: React.RefObject<HTMLElement>
@@ -27,7 +28,7 @@ const Manifest = ({ manifestRef }: Props) => {
               color="neutral.main"
               display="inline"
             >
-              {translate('manifestContent')}
+              <MuiMarkdown>{translate('manifestContent')}</MuiMarkdown>
             </Typography>
           </Box>
         </Stack>
