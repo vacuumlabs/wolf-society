@@ -1,6 +1,7 @@
 import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
 import { Box, Container, Stack, Typography } from '@mui/material'
 import MuiMarkdown from 'mui-markdown'
+import AppearingComponent from '../AppearingComponent'
 import { HorizontalScrollText } from './HorizontalScrollText'
 
 const MakeImpact = () => {
@@ -16,18 +17,20 @@ const MakeImpact = () => {
         offsetStep={10}
         color={'secondary.500'}
       />
-      <Container>
-        <Stack sx={{ gap: 4, my: { mobile: 10, desktopM: 20 } }}>
-          <Typography variant="caption" sx={{ textAlign: 'center' }}>
-            {translate('makeImpact')}
-          </Typography>
-          <Box>
-            <Typography sx={{ textAlign: 'center' }} display="inline">
-              <MuiMarkdown>{translate('makeImpactText')}</MuiMarkdown>
+      <AppearingComponent>
+        <Container>
+          <Stack sx={{ gap: 4, my: { mobile: 10, desktopM: 20 } }}>
+            <Typography variant="caption" sx={{ textAlign: 'center' }}>
+              {translate('makeImpact')}
             </Typography>
-          </Box>
-        </Stack>
-      </Container>
+            <Box>
+              <Typography sx={{ textAlign: 'center' }} display="inline">
+                <MuiMarkdown>{translate('makeImpactText')}</MuiMarkdown>
+              </Typography>
+            </Box>
+          </Stack>
+        </Container>
+      </AppearingComponent>
     </Box>
   )
 }

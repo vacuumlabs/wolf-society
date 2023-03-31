@@ -14,6 +14,7 @@ import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
 import Button from '../Button'
 import { ParallaxProvider } from 'react-scroll-parallax'
 import ScrollingCard from '../ScrollingCard'
+import AppearingComponent from '../AppearingComponent'
 
 const MockedProjects: Omit<ProjectCardProps, 'offsetLeft'>[] = [
   {
@@ -52,45 +53,47 @@ const Projects = () => {
         textAlign: 'center',
       }}
     >
-      <Container
-        sx={{ position: 'relative', mb: { mobile: 10, [breakpoint]: 20 } }}
-      >
-        <ParallaxProvider>
-          <Stack
-            sx={{
-              gap: 4,
-              pt: { mobile: 15, desktopM: 20 },
-              position: { mobile: 'static', desktopM: 'sticky' },
-              top: 0,
-              left: 0,
-            }}
-            alignItems="center"
-          >
-            <WSFSymbol color="neutral" />
-            <Typography
-              variant="display"
-              color="neutral.main"
-              sx={{ textAlign: 'center' }}
+      <AppearingComponent>
+        <Container
+          sx={{ position: 'relative', mb: { mobile: 10, [breakpoint]: 20 } }}
+        >
+          <ParallaxProvider>
+            <Stack
+              sx={{
+                gap: 4,
+                pt: { mobile: 15, desktopM: 20 },
+                position: { mobile: 'static', desktopM: 'sticky' },
+                top: 0,
+                left: 0,
+              }}
+              alignItems="center"
             >
-              {translate('supportedProjects')}
-            </Typography>
-            <Stack sx={{ alignItems: 'center', display: 'none' }}>
-              <Button color="neutral" variant="outlined">
-                {translate('allProjects')}
-              </Button>
-            </Stack>
-          </Stack>
-          <Stack spacing={{ mobile: 5, [breakpoint]: 0 }}>
-            {MockedProjects.map((project, index) => (
-              <Stack width="100%" alignItems="center" key={project.name}>
-                <ScrollingCard index={index}>
-                  <ProjectCard {...project} />
-                </ScrollingCard>
+              <WSFSymbol color="neutral" />
+              <Typography
+                variant="display"
+                color="neutral.main"
+                sx={{ textAlign: 'center' }}
+              >
+                {translate('supportedProjects')}
+              </Typography>
+              <Stack sx={{ alignItems: 'center', display: 'none' }}>
+                <Button color="neutral" variant="outlined">
+                  {translate('allProjects')}
+                </Button>
               </Stack>
-            ))}
-          </Stack>
-        </ParallaxProvider>
-      </Container>
+            </Stack>
+            <Stack spacing={{ mobile: 5, [breakpoint]: 0 }}>
+              {MockedProjects.map((project, index) => (
+                <Stack width="100%" alignItems="center" key={project.name}>
+                  <ScrollingCard index={index}>
+                    <ProjectCard {...project} />
+                  </ScrollingCard>
+                </Stack>
+              ))}
+            </Stack>
+          </ParallaxProvider>
+        </Container>
+      </AppearingComponent>
     </Box>
   )
 }

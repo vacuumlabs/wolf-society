@@ -1,6 +1,7 @@
 import { SUBPAGES } from '@/consts'
 import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
 import { Box, Container, Icon, Stack, Typography } from '@mui/material'
+import AppearingComponent from '../AppearingComponent'
 import Button from '../Button'
 import WSFSymbol from '../icons/WSFSymbol'
 
@@ -33,33 +34,35 @@ const CTA = () => {
         textAlign: 'center',
       }}
     >
-      <Container>
-        <Button
-          sx={{
-            borderRadius: '170px',
-            width: '100%',
-            height: { mobile: '112px', desktopM: '256px' },
-          }}
-          href={SUBPAGES['collections']}
-        >
-          <Stack direction="row" alignItems="center" gap={4}>
-            {wsfSymbol}
-            <Typography
-              variant="headline"
-              sx={(theme) => ({
-                // Headline L for M breakpoint
-                [theme.breakpoints.up('desktopM')]: {
-                  fontSize: '100px',
-                  lineHeight: '96px',
-                },
-              })}
-            >
-              {translate('makeImpactButton')}
-            </Typography>
-            {wsfSymbol}
-          </Stack>
-        </Button>
-      </Container>
+      <AppearingComponent>
+        <Container>
+          <Button
+            sx={{
+              borderRadius: '170px',
+              width: '100%',
+              height: { mobile: '112px', desktopM: '256px' },
+            }}
+            href={SUBPAGES['collections']}
+          >
+            <Stack direction="row" alignItems="center" gap={4}>
+              {wsfSymbol}
+              <Typography
+                variant="headline"
+                sx={(theme) => ({
+                  // Headline L for M breakpoint
+                  [theme.breakpoints.up('desktopM')]: {
+                    fontSize: '100px',
+                    lineHeight: '96px',
+                  },
+                })}
+              >
+                {translate('makeImpactButton')}
+              </Typography>
+              {wsfSymbol}
+            </Stack>
+          </Button>
+        </Container>
+      </AppearingComponent>
     </Box>
   )
 }

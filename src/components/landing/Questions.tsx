@@ -1,5 +1,6 @@
 import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
 import { Box, Container, Stack, Typography } from '@mui/material'
+import AppearingComponent from '../AppearingComponent'
 import { HorizontalScrollText } from './HorizontalScrollText'
 import QuestionAccordion from './QuestionAccordion'
 
@@ -21,19 +22,21 @@ const Questions = () => {
         offsetStep={10}
         color="neutral.600"
       />
-      <Container>
-        <Stack
-          sx={{ width: '100%', my: { mobile: 10, desktopM: 20 } }}
-          spacing={4}
-        >
-          <Typography variant="caption">{translate('questions')}</Typography>
-          <div>
-            {MockedQuestions.map((questionData, index) => (
-              <QuestionAccordion {...questionData} key={`Question${index}`} />
-            ))}
-          </div>
-        </Stack>
-      </Container>
+      <AppearingComponent>
+        <Container>
+          <Stack
+            sx={{ width: '100%', my: { mobile: 10, desktopM: 20 } }}
+            spacing={4}
+          >
+            <Typography variant="caption">{translate('questions')}</Typography>
+            <div>
+              {MockedQuestions.map((questionData, index) => (
+                <QuestionAccordion {...questionData} key={`Question${index}`} />
+              ))}
+            </div>
+          </Stack>
+        </Container>
+      </AppearingComponent>
     </Box>
   )
 }

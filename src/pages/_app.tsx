@@ -16,6 +16,7 @@ import localFont from 'next/font/local'
 import Footer from '@/components/Footer'
 import { Reenie_Beanie } from 'next/font/google'
 import { LocaleContext } from '@/utils/hooks/useLocale'
+import 'public/style.css'
 
 declare module '@mui/material/styles' {
   interface BreakpointOverrides {
