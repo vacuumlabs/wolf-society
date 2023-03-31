@@ -26,7 +26,7 @@ const Questions = () => {
           sx={{ width: '100%', my: { mobile: 10, desktopM: 20 } }}
           spacing={4}
         >
-          <Typography variant="title">{translate('questions')}</Typography>
+          <Typography variant="caption">{translate('questions')}</Typography>
           <div>
             {MockedQuestions.map((questionData, index) => (
               <QuestionAccordion {...questionData} key={`Question${index}`} />
