@@ -31,7 +31,6 @@ const CTA = () => {
       sx={{
         bgcolor: 'neutral.400',
         textAlign: 'center',
-        pt: { mobile: 0, tabletS: 20 },
       }}
     >
       <Container>

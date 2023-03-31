@@ -60,6 +60,7 @@ export type Content = {
     articles: string
     allArticles: string
     roadmap: string
+    partners: string
   }
   [ContentTypes.collectionsPage]: {}
   [ContentTypes.articlesPage]: {
