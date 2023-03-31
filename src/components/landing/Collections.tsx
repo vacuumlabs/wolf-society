@@ -74,7 +74,12 @@ const Collections = () => {
   })
 
   return (
-    <Stack ref={component}>
+    <Stack
+      ref={component}
+      sx={{
+        overflowX: 'hidden',
+      }}
+    >
       <Box
         ref={slider}
         sx={
