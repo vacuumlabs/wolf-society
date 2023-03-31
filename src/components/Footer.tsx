@@ -15,6 +15,7 @@ import {
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import heroImage from 'public/images/hero.png'
+import AppearingComponent from './AppearingComponent'
 import DiscordIcon from './icons/DiscordIcon'
 import MediumIcon from './icons/MediumIcon'
 import TwitterIcon from './icons/TwitterIcon'
@@ -35,105 +36,107 @@ const Footer = () => {
   )
   return (
     <Box sx={{ bgcolor: 'neutral.400' }}>
-      <Container sx={{ pb: 5, pt: { mobile: 5, [breakpoint]: 10 } }}>
-        <Grid container spacing={{ mobile: 5, [breakpoint]: 0 }}>
-          <Grid item mobile={12} {...{ [breakpoint]: 6 }}>
-            <Stack
-              spacing={10}
-              alignItems={{ mobile: 'center', [breakpoint]: 'start' }}
-            >
-              <WSLogo color="black" />
-              <Typography
-                variant="button"
-                display={{ mobile: 'none', [breakpoint]: 'inherit' }}
+      <AppearingComponent>
+        <Container sx={{ pb: 5, pt: { mobile: 5, [breakpoint]: 10 } }}>
+          <Grid container spacing={{ mobile: 5, [breakpoint]: 0 }}>
+            <Grid item mobile={12} {...{ [breakpoint]: 6 }}>
+              <Stack
+                spacing={10}
+                alignItems={{ mobile: 'center', [breakpoint]: 'start' }}
               >
-                {translate('email')}
-              </Typography>
-            </Stack>
-          </Grid>
-          <Grid item mobile={12} {...{ [breakpoint]: 3 }}>
-            <Stack
-              spacing={{ mobile: 3, [breakpoint]: 5 }}
-              alignItems={{ mobile: 'center', [breakpoint]: 'start' }}
-            >
-              {getSubpagesKeys().map((subpageKey) => {
-                const isCurrentSubpage =
-                  router.pathname === SUBPAGES[subpageKey]
-                const color = isCurrentSubpage ? 'primary' : 'inherit'
-                return (
-                  <Typography variant="button" key={subpageKey} color={color}>
-                    <Link
-                      color="inherit"
-                      href={SUBPAGES[subpageKey]}
-                      underline="hover"
-                    >
-                      {translate(subpageKey)}
-                    </Link>
-                  </Typography>
-                )
-              })}
-            </Stack>
-          </Grid>
-          <Grid item mobile={12} {...{ [breakpoint]: 3 }}>
-            <Stack
-              spacing={{ mobile: 3, [breakpoint]: 5 }}
-              direction={{ mobile: 'row', [breakpoint]: 'column' }}
-              justifyContent={{ mobile: 'center' }}
-            >
-              {socials.map((social) => {
-                return (
-                  <Typography variant="button" key={social.text}>
-                    <Link
-                      color="inherit"
-                      href={social.href}
-                      underline="hover"
-                      target="_blank"
-                    >
-                      <Stack
-                        direction={{ mobile: 'column', [breakpoint]: 'row' }}
-                        alignItems="center"
-                        gap={1}
+                <WSLogo color="black" />
+                <Typography
+                  variant="button"
+                  display={{ mobile: 'none', [breakpoint]: 'inherit' }}
+                >
+                  {translate('email')}
+                </Typography>
+              </Stack>
+            </Grid>
+            <Grid item mobile={12} {...{ [breakpoint]: 3 }}>
+              <Stack
+                spacing={{ mobile: 3, [breakpoint]: 5 }}
+                alignItems={{ mobile: 'center', [breakpoint]: 'start' }}
+              >
+                {getSubpagesKeys().map((subpageKey) => {
+                  const isCurrentSubpage =
+                    router.pathname === SUBPAGES[subpageKey]
+                  const color = isCurrentSubpage ? 'primary' : 'inherit'
+                  return (
+                    <Typography variant="button" key={subpageKey} color={color}>
+                      <Link
+                        color="inherit"
+                        href={SUBPAGES[subpageKey]}
+                        underline="hover"
                       >
-                        {social.icon}
-                        {social.text}
-                      </Stack>
-                    </Link>
-                  </Typography>
-                )
-              })}
-            </Stack>
+                        {translate(subpageKey)}
+                      </Link>
+                    </Typography>
+                  )
+                })}
+              </Stack>
+            </Grid>
+            <Grid item mobile={12} {...{ [breakpoint]: 3 }}>
+              <Stack
+                spacing={{ mobile: 3, [breakpoint]: 5 }}
+                direction={{ mobile: 'row', [breakpoint]: 'column' }}
+                justifyContent={{ mobile: 'center' }}
+              >
+                {socials.map((social) => {
+                  return (
+                    <Typography variant="button" key={social.text}>
+                      <Link
+                        color="inherit"
+                        href={social.href}
+                        underline="hover"
+                        target="_blank"
+                      >
+                        <Stack
+                          direction={{ mobile: 'column', [breakpoint]: 'row' }}
+                          alignItems="center"
+                          gap={1}
+                        >
+                          {social.icon}
+                          {social.text}
+                        </Stack>
+                      </Link>
+                    </Typography>
+                  )
+                })}
+              </Stack>
+            </Grid>
           </Grid>
-        </Grid>
-      </Container>
-      <Box
-        sx={{
-          height: 'auto',
-          position: 'relative',
-          maxHeight: '1000px',
-        }}
-      >
-        <Image
-          src={heroImage}
-          alt="Hero image"
-          priority
-          style={{
-            objectFit: isMobileHero ? 'cover' : 'contain',
-            objectPosition: 'top',
+        </Container>
+        <Box
+          sx={{
+            height: 'auto',
             position: 'relative',
-            height: isMobileHero ? '365px' : '100%',
-            width: '100%',
-            zIndex: 1,
             maxHeight: '1000px',
           }}
-        />
-        <Box
-          bgcolor="secondary.main"
-          height="27%"
-          position="absolute"
-          width="100%"
-          bottom="0"
-        />
-      </Box>
+        >
+          <Image
+            src={heroImage}
+            alt="Hero image"
+            priority
+            style={{
+              objectFit: isMobileHero ? 'cover' : 'contain',
+              objectPosition: 'top',
+              position: 'relative',
+              height: isMobileHero ? '365px' : '100%',
+              width: '100%',
+              zIndex: 1,
+              maxHeight: '1000px',
+            }}
+          />
+          <Box
+            bgcolor="secondary.main"
+            height="27%"
+            position="absolute"
+            width="100%"
+            bottom="0"
+          />
+        </Box>
+      </AppearingComponent>
     </Box>
   )
 }

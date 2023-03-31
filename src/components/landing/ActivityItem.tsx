@@ -12,6 +12,7 @@ import {
 } from '@mui/material'
 import Image, { StaticImageData } from 'next/image'
 import { useState } from 'react'
+import AppearingComponent from '../AppearingComponent'
 import Button from '../Button'
 import CloseIcon from '../icons/CloseIcon'
 
@@ -89,7 +90,7 @@ const ActivityItem = ({
   )
 
   return (
-    <>
+    <AppearingComponent>
       <Grid container sx={{ my: { mobile: 5, [breakpoint]: 17 } }}>
         <Grid item mobile={12} {...{ [breakpoint]: 6 }}>
           {displayImageOnTheRight ? textStack : imageBox}
@@ -129,7 +130,7 @@ const ActivityItem = ({
           {drawerContent}
         </Stack>
       </Drawer>
-    </>
+    </AppearingComponent>
   )
 }
 export default ActivityItem

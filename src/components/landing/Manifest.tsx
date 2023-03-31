@@ -1,6 +1,7 @@
 import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
 import { Box, Container, Stack, Typography } from '@mui/material'
 import MuiMarkdown from 'mui-markdown'
+import AppearingComponent from '../AppearingComponent'
 
 type Props = {
   manifestRef: React.RefObject<HTMLElement>
@@ -13,26 +14,28 @@ const Manifest = ({ manifestRef }: Props) => {
       ref={manifestRef}
       sx={{ bgcolor: 'secondary.main', textAlign: 'center' }}
     >
-      <Container>
-        <Stack sx={{ gap: 4, my: { mobile: 10, desktopM: 20 } }}>
-          <Typography
-            variant="caption"
-            color="neutral.main"
-            sx={{ textAlign: 'center' }}
-          >
-            {translate('manifestTitle')}
-          </Typography>
-          <Box>
+      <AppearingComponent>
+        <Container>
+          <Stack sx={{ gap: 4, my: { mobile: 10, desktopM: 20 } }}>
             <Typography
-              sx={{ textAlign: 'center' }}
+              variant="caption"
               color="neutral.main"
-              display="inline"
+              sx={{ textAlign: 'center' }}
             >
-              <MuiMarkdown>{translate('manifestContent')}</MuiMarkdown>
+              {translate('manifestTitle')}
             </Typography>
-          </Box>
-        </Stack>
-      </Container>
+            <Box>
+              <Typography
+                sx={{ textAlign: 'center' }}
+                color="neutral.main"
+                display="inline"
+              >
+                <MuiMarkdown>{translate('manifestContent')}</MuiMarkdown>
+              </Typography>
+            </Box>
+          </Stack>
+        </Container>
+      </AppearingComponent>
     </Box>
   )
 }
