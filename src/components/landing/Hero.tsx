@@ -1,6 +1,15 @@
 import { SUBPAGES } from '@/consts'
 import { ContentTypes, useContentful } from '@/utils/hooks/useContentful'
-import { Box, Container, Stack, Typography, Link } from '@mui/material'
+import {
+  Box,
+  Container,
+  Stack,
+  Typography,
+  Link,
+  BreakpointOverrides,
+  useMediaQuery,
+  Theme,
+} from '@mui/material'
 import Image from 'next/image'
 import heroImage from 'public/images/hero.png'
 import React from 'react'
@@ -12,6 +21,10 @@ type Props = {
 
 const Hero = ({ manifestRef }: Props) => {
   const translate = useContentful(ContentTypes.landingPage)
+  const breakpoint: keyof BreakpointOverrides = 'tabletS'
+  const isMobile = useMediaQuery((theme: Theme) =>
+    theme.breakpoints.down(breakpoint)
+  )
   return (
     <Box sx={{ bgcolor: 'neutral.400' }}>
       <Container>
@@ -48,16 +61,31 @@ const Hero = ({ manifestRef }: Props) => {
       </Container>
       <Box
         sx={{
-          height: { mobile: '365px', tabletM: '730px' },
+          height: 'auto',
           position: 'relative',
+          maxHeight: '1000px',
         }}
       >
         <Image
           src={heroImage}
           alt="Hero image"
-          fill
           priority
-          style={{ objectFit: 'cover', objectPosition: 'top' }}
+          style={{
+            objectFit: isMobile ? 'cover' : 'contain',
+            objectPosition: 'top',
+            position: 'relative',
+            height: isMobile ? '365px' : '100%',
+            width: '100%',
+            zIndex: 1,
+            maxHeight: '1000px',
+          }}
+        />
+        <Box
+          bgcolor="secondary.main"
+          height="27%"
+          position="absolute"
+          width="100%"
+          bottom="0"
         />
       </Box>
     </Box>
