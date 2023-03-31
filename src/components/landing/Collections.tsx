@@ -55,22 +55,24 @@ const Collections = () => {
     let ctx = gsap.context(() => {
       const pixelsPause = 0
       let panels = gsap.utils.toArray('.panel')
-      gsap.to(panels, {
-        xPercent: -100 * (panels.length - 1),
-        ease: 'none',
-        scrollTrigger: {
+      if (panels.length) {
+        gsap.to(panels, {
+          xPercent: -100 * (panels.length - 1),
+          ease: 'none',
+          scrollTrigger: {
+            trigger: slider.current,
+            scrub: 1,
+            snap: 1 / (panels.length - 1),
+            start: `top+=${pixelsPause} top`,
+            end: () => '+=' + window.innerWidth * panels.length,
+          },
+        })
+        ScrollTrigger.create({
           trigger: slider.current,
-          scrub: 1,
-          snap: 1 / (panels.length - 1),
-          start: `top+=${pixelsPause} top`,
-          end: () => '+=' + window.innerWidth * panels.length,
-        },
-      })
-      ScrollTrigger.create({
-        trigger: slider.current,
-        end: () => '+=' + (window.innerWidth * panels.length + pixelsPause),
-        pin: true,
-      })
+          end: () => '+=' + (window.innerWidth * panels.length + pixelsPause),
+          pin: true,
+        })
+      }
     }, component)
     return () => ctx.revert()
   })
