@@ -16,9 +16,7 @@ const Partners = () => {
   const breakpoint: keyof BreakpointOverrides = 'desktopS'
 
   return (
-    <Box
-      sx={{ bgcolor: 'neutral.400', textAlign: 'center', overflowX: 'hidden' }}
-    >
+    <Box sx={{ bgcolor: 'neutral.400', textAlign: 'center' }}>
       <Container>
         <Stack
           sx={{
@@ -29,10 +27,9 @@ const Partners = () => {
           }}
           direction={{ mobile: 'column', [breakpoint]: 'row' }}
           alignItems="center"
+          justifyContent="center"
         >
-          <Typography variant="title" sx={{ textAlign: 'center' }}>
-            {translate('partners')}
-          </Typography>
+          <Typography variant="title">{translate('partners')}</Typography>
           <Stack
             gap={{ mobile: 5, [breakpoint]: 10 }}
             direction={{ mobile: 'column', [breakpoint]: 'row' }}
