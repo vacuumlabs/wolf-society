@@ -52,13 +52,14 @@ const Projects = () => {
         textAlign: 'center',
       }}
     >
-      <Container sx={{ position: 'relative' }}>
+      <Container
+        sx={{ position: 'relative', mb: { mobile: 10, [breakpoint]: 20 } }}
+      >
         <ParallaxProvider>
           <Stack
             sx={{
               gap: 4,
               pt: { mobile: 15, desktopM: 20 },
-              mb: 5,
               position: { mobile: 'static', desktopM: 'sticky' },
               top: 0,
               left: 0,
@@ -79,7 +80,7 @@ const Projects = () => {
               </Button>
             </Stack>
           </Stack>
-          <Stack spacing={{ mobile: 5, [breakpoint]: 0 }} sx={{ mb: 10 }}>
+          <Stack spacing={{ mobile: 5, [breakpoint]: 0 }}>
             {MockedProjects.map((project, index) => (
               <Stack width="100%" alignItems="center" key={project.name}>
                 <ScrollingCard index={index}>

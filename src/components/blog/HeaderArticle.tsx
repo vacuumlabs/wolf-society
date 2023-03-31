@@ -57,10 +57,14 @@ const HeaderArticle = ({ post, image }: Props) => {
                 <Stack gap={5}>
                   <Stack direction="row" justifyContent="space-between">
                     <Stack>
-                      <Typography variant="body2" color="neutral.main">
+                      <Typography
+                        variant="body2S"
+                        color="neutral.main"
+                        sx={{ fontSize: '20px', lineHeight: '32px' }}
+                      >
                         {post.pubDate}
                       </Typography>
-                      <Typography variant="body2" color="neutral.main">
+                      <Typography variant="body2S" color="neutral.main">
                         {post.categories.slice(0, MAX_CATEGORIES).join(', ')}
                       </Typography>
                     </Stack>
@@ -75,10 +79,10 @@ const HeaderArticle = ({ post, image }: Props) => {
                         />
                       )}
                       <Stack>
-                        <Typography variant="body2" color="neutral.main">
+                        <Typography variant="body2S" color="neutral.main">
                           {firstName}
                         </Typography>
-                        <Typography variant="body2" color="neutral.main">
+                        <Typography variant="body2S" color="neutral.main">
                           {lastName}
                         </Typography>
                       </Stack>

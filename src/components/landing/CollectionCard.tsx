@@ -78,7 +78,7 @@ const CollectionCard = ({
           }}
         >
           <Box flexGrow={1}>
-            <Stack gap={4}>
+            <Stack gap={5}>
               <Stack direction="row" justifyContent="space-between">
                 <Typography variant="caption" color="neutral.main">
                   {subtitle}
@@ -112,7 +112,7 @@ const CollectionCard = ({
   const verticalCard = (
     <Card>
       <CardContent sx={{ bgcolor: `${color}`, p: 5, textAlign: 'start' }}>
-        <Stack gap={4}>
+        <Stack gap={5}>
           <Stack gap="4px">
             <Typography variant="caption" color="neutral.main">
               {subtitle}
