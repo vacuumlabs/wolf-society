@@ -81,7 +81,7 @@ const Collections = () => {
     <Stack
       ref={component}
       sx={{
-        overflowX: 'hidden',
+        overflow: 'hidden',
       }}
     >
       <Box
