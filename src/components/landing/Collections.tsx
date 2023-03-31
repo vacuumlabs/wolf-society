@@ -15,7 +15,7 @@ const MockedCollections: Omit<CollectionCardProps, 'color'>[] = [
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eu neque eget augue fringilla pretium vitae vitae leo. Suspendisse suscipit neque sapien, blandit commodo nulla convallis eget. Donec pretium iaculis ipsum, a commodo odio lobortis in.',
     deadline: d,
-    // remainingPieces: 2000,
+    remainingPieces: 2000,
   },
   {
     name: 'Global Warming',
@@ -23,13 +23,15 @@ const MockedCollections: Omit<CollectionCardProps, 'color'>[] = [
     imageUrl: 'https://picsum.photos/id/987/1000/1000',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eu neque eget augue fringilla pretium vitae vitae leo. Suspendisse suscipit neque sapien, blandit commodo nulla convallis eget. Donec pretium iaculis ipsum, a commodo odio lobortis in.',
+    remainingPieces: 2000,
   },
   {
     name: 'Species Extinction',
-    subtitle: 'Minted out\n3,000 pieces',
+    subtitle: 'Minted out',
     imageUrl: 'https://picsum.photos/id/988/1000/1000',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eu neque eget augue fringilla pretium vitae vitae leo. Suspendisse suscipit neque sapien, blandit commodo nulla convallis eget. Donec pretium iaculis ipsum, a commodo odio lobortis in.',
+    remainingPieces: 3000,
   },
 ]
 
@@ -42,7 +44,7 @@ const COLOR_ORDER: string[] = [
 
 const Collections = () => {
   const isMobile = useMediaQuery((theme: Theme) =>
-    theme.breakpoints.down('tabletS')
+    theme.breakpoints.down('tabletM')
   )
   const component = useRef<HTMLDivElement>(null)
   const slider = useRef<HTMLDivElement>(null)
