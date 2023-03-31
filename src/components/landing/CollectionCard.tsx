@@ -50,9 +50,10 @@ const CollectionCard = ({
     <Card
       sx={{
         display: 'flex',
-        width: '100%',
+        width: '100vw',
         height: 'calc(100vh - 88px)',
       }}
+      className="panel"
     >
       <Box
         width="50%"
