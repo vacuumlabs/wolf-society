@@ -17,7 +17,12 @@ const Articles = ({ posts }: TBlog) => {
   const translate = useContentful(ContentTypes.articlesPage)
   return (
     <Box sx={{ bgcolor: 'neutral.400' }}>
-      <Container sx={{ mt: { mobile: 5, desktopS: 10 } }}>
+      <Container
+        sx={{
+          mt: { mobile: 5, desktopS: 10 },
+          mb: { mobile: 10, desktopS: 20 },
+        }}
+      >
         <Stack spacing={5}>
           <Typography variant="title">{translate('articles')}</Typography>
           <Box>
