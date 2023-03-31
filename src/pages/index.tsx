@@ -14,6 +14,7 @@ import { useRef } from 'react'
 import Activities from '@/components/landing/Activities'
 import { BlogData, getBlogData } from '@/utils/blog'
 import { useBlogData } from '@/utils/hooks/useBlogData'
+import Partners from '@/components/landing/Partners'
 
 type Props = {
   blogData: BlogData
@@ -36,6 +37,7 @@ const Home = ({ blogData, locale }: Props) => {
       <Roadmap />
       <Questions />
       <Topics posts={formattedPosts} />
+      <Partners />
       <CTA />
     </Stack>
   )
