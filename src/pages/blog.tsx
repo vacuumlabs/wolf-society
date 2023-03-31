@@ -30,7 +30,7 @@ const Blog = ({ blogData, locale }: Props) => {
   const { errorMessage, image } = blogData
 
   return (
-    <Stack mt={11}>
+    <Stack mt={10}>
       {errorMessage ? (
         <Box sx={{ bgcolor: 'neutral.400' }}>
           <Container>
