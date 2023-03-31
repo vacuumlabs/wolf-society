@@ -25,6 +25,7 @@
     "eslint": "8.35.0",
     "eslint-config-next": "13.2.1",
     "ethers": "^5",
+    "gsap": "^3.11.5",
     "html-react-parser": "^3.0.12",
     "markdown-to-jsx": "^7.2.0",
     "mui-markdown": "^0.5.6",
