@@ -13,12 +13,15 @@ import {
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import heroImage from 'public/images/hero.png'
+import DiscordIcon from './icons/DiscordIcon'
+import MediumIcon from './icons/MediumIcon'
+import TwitterIcon from './icons/TwitterIcon'
 import WSLogo from './icons/WSLogo'
 
-const socials: { text: string; href: string }[] = [
-  { text: 'discord', href: 'https://discord.gg' },
-  { text: 'twitter', href: 'https://twitter.com' },
-  { text: 'medium', href: 'https://medium.com' },
+const socials: { text: string; href: string; icon: React.ReactNode }[] = [
+  { text: 'discord', href: 'https://discord.gg', icon: <DiscordIcon /> },
+  { text: 'twitter', href: 'https://twitter.com', icon: <TwitterIcon /> },
+  { text: 'medium', href: 'https://medium.com', icon: <MediumIcon /> },
 ]
 
 const Footer = () => {
@@ -82,7 +85,14 @@ const Footer = () => {
                       underline="hover"
                       target="_blank"
                     >
-                      {social.text}
+                      <Stack
+                        direction={{ mobile: 'column', [breakpoint]: 'row' }}
+                        alignItems="center"
+                        gap={1}
+                      >
+                        {social.icon}
+                        {social.text}
+                      </Stack>
                     </Link>
                   </Typography>
                 )
