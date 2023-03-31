@@ -9,6 +9,7 @@ import { ArticleCardProps } from '@/components/blog/ArticleCard'
 import CTA from '@/components/landing/CTA'
 import { BlogData, getBlogData } from '@/utils/blog'
 import { useBlogData } from '@/utils/hooks/useBlogData'
+import AppearingComponent from '@/components/AppearingComponent'
 
 export type ArticleProps = {
   title: string
@@ -43,7 +44,9 @@ const Blog = ({ blogData, locale }: Props) => {
           <Articles posts={formattedPosts.slice(1)} />
         </Stack>
       )}
-      <CTA />
+      <AppearingComponent>
+        <CTA />
+      </AppearingComponent>
     </Stack>
   )
 }
