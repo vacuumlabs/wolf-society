@@ -19,7 +19,7 @@ const MockedCollections: Omit<CollectionCardProps, 'color'>[] = [
   },
   {
     name: 'Global Warming',
-    subtitle: 'Limited Edition\n2,000 pieces',
+    subtitle: 'Limited Edition',
     imageUrl: 'https://picsum.photos/id/987/1000/1000',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eu neque eget augue fringilla pretium vitae vitae leo. Suspendisse suscipit neque sapien, blandit commodo nulla convallis eget. Donec pretium iaculis ipsum, a commodo odio lobortis in.',
