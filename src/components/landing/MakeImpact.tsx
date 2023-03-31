@@ -8,7 +8,7 @@ const MakeImpact = () => {
 
   return (
     <Box
-      sx={{ bgcolor: 'neutral.400', textAlign: 'center', overflow: 'hidden' }}
+      sx={{ bgcolor: 'neutral.400', textAlign: 'center', overflowX: 'hidden' }}
     >
       <HorizontalScrollText
         text={translate('makeImpact')}

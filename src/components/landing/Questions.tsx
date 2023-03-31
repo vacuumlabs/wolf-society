@@ -14,7 +14,7 @@ const MockedQuestions = new Array(4).fill(MockedQuestion)
 const Questions = () => {
   const translate = useContentful(ContentTypes.landingPage)
   return (
-    <Box sx={{ bgcolor: 'neutral.400' }}>
+    <Box sx={{ bgcolor: 'neutral.400', overflowX: 'hidden' }}>
       <HorizontalScrollText
         text={translate('questions')}
         numberOfItems={10}

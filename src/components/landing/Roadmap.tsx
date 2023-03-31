@@ -39,7 +39,7 @@ const COLOR_ORDER: string[] = [
 const Roadmap = () => {
   const translate = useContentful(ContentTypes.landingPage)
   return (
-    <Box sx={{ bgcolor: 'neutral.main' }}>
+    <Box sx={{ bgcolor: 'neutral.main', overflowX: 'hidden' }}>
       <HorizontalScrollText
         text={translate('roadmap')}
         numberOfItems={10}
