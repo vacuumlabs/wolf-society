@@ -40,7 +40,7 @@ const Hero = ({ manifestRef }: Props) => {
             <Typography variant="display" sx={{ fontWeight: 600 }}>
               {translate('heroTitle')}
             </Typography>
-            <Box>
+            <Stack direction="column">
               <Typography variant="body1" display="inline">
                 {translate('heroSubtitle')}
               </Typography>
@@ -57,7 +57,7 @@ const Hero = ({ manifestRef }: Props) => {
                   {} {translate('youAreWolfSociety')}
                 </Link>
               </Typography>
-            </Box>
+            </Stack>
             <Stack sx={{ alignItems: 'center' }}>
               <Button href={SUBPAGES['collections']}>
                 {translate('makeImpact')}

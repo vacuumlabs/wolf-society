@@ -196,6 +196,36 @@ const myFont = localFont({
   ],
 })
 
+const horizontalScrollTextFont = localFont({
+  src: [
+    {
+      path: '../../public/fonts/TestFoundersGroteskCondensed-Bold.otf',
+      weight: '700',
+      style: 'bold',
+    },
+    {
+      path: '../../public/fonts/TestFoundersGroteskCondensed-Light.otf',
+      weight: '300',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/TestFoundersGroteskCondensed-Medium.otf',
+      weight: '500',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/TestFoundersGroteskCondensed-Regular.otf',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/TestFoundersGroteskCondensed-Semibold.otf',
+      weight: '600',
+      style: 'normal',
+    },
+  ],
+})
+
 const theme = createTheme({
   breakpoints: {
     values: {
@@ -519,6 +549,7 @@ theme.typography.body2S = {
 
 theme.typography.overline = {
   ...theme.typography.overline,
+  fontFamily: horizontalScrollTextFont.style.fontFamily,
   fontWeight: 600,
   fontSize: '128px',
   lineHeight: '60px',
