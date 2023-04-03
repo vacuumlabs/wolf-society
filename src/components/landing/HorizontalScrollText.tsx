@@ -95,7 +95,7 @@ const HorizontalScrollTextItem = ({
     <Stack
       direction={'row'}
       ref={myRef}
-      style={{ left: leftOffset }}
+      style={{ transform: `translate(${leftOffset}px, 0px)` }}
       sx={{
         textAlign: 'left',
         position: 'absolute',
