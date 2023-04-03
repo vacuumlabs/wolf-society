@@ -1,3 +1,4 @@
+import { Asset } from 'contentful'
 import { createContext, useContext } from 'react'
 import contentful from '../configs/contentful'
 
@@ -7,6 +8,13 @@ export enum ContentTypes {
   landingPage = 'landingPage',
   collectionsPage = 'collectionsPage',
   articlesPage = 'articlesPage',
+  project = 'project',
+}
+
+export type Project = {
+  id: string
+  name: string
+  image: Asset
 }
 
 // Content to be injected into every page
@@ -70,9 +78,11 @@ export type Content = {
     gratefulPart1: string
     gratefulPart2: string
   }
+  [ContentTypes.project]: Project
 }
 
 const getSharedContent = async (locale: string = 'en-US') => {
+  if (!contentful) return {}
   let result = {}
   for (const sharedContentType of SHARED_CONTENT) {
     const entries = await contentful.getEntries({
@@ -83,14 +93,14 @@ const getSharedContent = async (locale: string = 'en-US') => {
       content_type: sharedContentType,
       'fields.locale': 'en-US',
     })
-    const contentLocalized = await entries.items.reduce(
+    const contentLocalized = entries.items.reduce(
       (all: Content[typeof sharedContentType], item: any) => ({
         ...all,
         ...item.fields,
       }),
       {}
     )
-    const contentEnglish = await entriesEng.items.reduce(
+    const contentEnglish = entriesEng.items.reduce(
       (all: Content[typeof sharedContentType], item: any) => ({
         ...all,
         ...item.fields,
@@ -105,10 +115,45 @@ const getSharedContent = async (locale: string = 'en-US') => {
   return result
 }
 
+/**
+ * Fetches array of contents of certain content type, matched by id
+ * @param contentType Content Type to get entries for
+ * @param locale Locale to localize for, if it exists. Located as field 'locale' on the Content Type
+ * @returns Array of content ordered by id descending
+ */
+export const getArrayOfContent = async <T>(
+  contentType: ContentTypes,
+  locale: string = 'en-US'
+): Promise<T[] | null> => {
+  if (!contentful) return null
+  const entriesLocalized = await contentful.getEntries<T>({
+    content_type: contentType,
+    'fields.locale': locale,
+    order: '-fields.id',
+  })
+  const entriesEnglish = await contentful.getEntries<T>({
+    content_type: contentType,
+    'fields.locale': 'en-US',
+    order: '-fields.id',
+  })
+  const content = entriesEnglish.items.reduce((all: T[], item: any) => {
+    let fields = item.fields
+    const itemLocalized = entriesLocalized.items.filter(
+      (content: any) => content.fields.id === item.fields.id
+    )
+    if (itemLocalized.length > 0) {
+      fields = { ...fields, ...itemLocalized[0].fields }
+    }
+    return all.concat(fields)
+  }, [])
+  return content
+}
+
 export const injectCMSContent = async (
   contentType: ContentTypes,
   locale: string = 'en-US'
 ) => {
+  if (!contentful) return {}
   const entriesLocalized = await contentful.getEntries({
     content_type: contentType,
     'fields.locale': locale,
@@ -117,12 +162,12 @@ export const injectCMSContent = async (
     content_type: contentType,
     'fields.locale': 'en-US',
   })
-  const contentLocalized = await entriesLocalized.items.reduce(
-    (all: Content, item: any) => ({ ...all, ...item.fields }),
+  const contentLocalized = entriesLocalized.items.reduce(
+    (all: Partial<Content>, item: any) => ({ ...all, ...item.fields }),
     {}
   )
-  const contentEnglish = await entriesEnglish.items.reduce(
-    (all: Content, item: any) => ({ ...all, ...item.fields }),
+  const contentEnglish = entriesEnglish.items.reduce(
+    (all: Partial<Content>, item: any) => ({ ...all, ...item.fields }),
     {}
   )
   const sharedContent = await getSharedContent(locale)
@@ -131,6 +176,9 @@ export const injectCMSContent = async (
     [contentType]: { ...contentEnglish, ...contentLocalized },
   }
 }
+
+export const getProjects = (locale?: string) =>
+  getArrayOfContent<Project>(ContentTypes.project, locale)
 
 export const ContentContext = createContext<Content | undefined>(undefined)
 

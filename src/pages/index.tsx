@@ -1,8 +1,12 @@
-import Collections from '@/components/landing/Collections'
 import Hero from '@/components/landing/Hero'
 import Manifest from '@/components/landing/Manifest'
 import Projects from '@/components/landing/Projects'
-import { ContentTypes, injectCMSContent } from '@/utils/hooks/useContentful'
+import {
+  ContentTypes,
+  getProjects,
+  injectCMSContent,
+  Project,
+} from '@/utils/hooks/useContentful'
 import { Stack } from '@mui/material'
 import { GetStaticPropsContext } from 'next'
 import MakeImpact from '@/components/landing/MakeImpact'
@@ -19,9 +23,10 @@ import Partners from '@/components/landing/Partners'
 type Props = {
   blogData: BlogData
   locale: string
+  projects: Project[]
 }
 
-const Home = ({ blogData, locale }: Props) => {
+const Home = ({ blogData, locale, projects }: Props) => {
   const manifestRef = useRef(null)
   const formattedPosts = useBlogData(
     { ...blogData, posts: blogData.posts.slice(0, 3) },
@@ -31,7 +36,7 @@ const Home = ({ blogData, locale }: Props) => {
     <Stack>
       <Hero manifestRef={manifestRef} />
       <Manifest manifestRef={manifestRef} />
-      <Projects />
+      <Projects projects={projects} />
       <MakeImpact />
       <Activities />
       <Roadmap />
@@ -49,6 +54,7 @@ export async function getStaticProps({ locale }: GetStaticPropsContext) {
     props: {
       blogData: await getBlogData(),
       translations: await injectCMSContent(ContentTypes.landingPage, locale),
+      projects: await getProjects(locale),
       locale,
     },
   }
