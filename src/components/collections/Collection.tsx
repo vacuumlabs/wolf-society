@@ -22,6 +22,8 @@ const getMockNft = (index: number): NftCardProps => {
     imageUrl: `https://picsum.photos/id/${index}/404/404`,
     priceEth: '0.5 ETH',
     priceFiat: '750 EUR',
+    minted: 100,
+    supply: 1000,
   }
 }
 

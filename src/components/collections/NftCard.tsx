@@ -1,5 +1,6 @@
 import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
 import {
+  Box,
   BreakpointOverrides,
   Card,
   CardActionArea,
@@ -16,9 +17,18 @@ export type NftCardProps = {
   imageUrl: string
   priceEth: string
   priceFiat: string
+  minted: number
+  supply: number
 }
 
-const NftCard = ({ name, imageUrl, priceEth, priceFiat }: NftCardProps) => {
+const NftCard = ({
+  name,
+  imageUrl,
+  priceEth,
+  priceFiat,
+  minted,
+  supply,
+}: NftCardProps) => {
   const translate = useContentful(ContentTypes.common)
   const breakpoint: keyof BreakpointOverrides = 'desktopS'
   return (
@@ -42,12 +52,29 @@ const NftCard = ({ name, imageUrl, priceEth, priceFiat }: NftCardProps) => {
           console.log(`Clicked ${name}`)
         }}
       >
-        <CardMedia
-          component="img"
-          sx={{ height: '100%' }}
-          image={imageUrl}
-          alt="Project image"
-        />
+        <Box position="relative">
+          <CardMedia
+            component="img"
+            sx={{ height: '100%' }}
+            image={imageUrl}
+            alt="Project image"
+          />
+          <Box
+            bgcolor="black.main"
+            position="absolute"
+            bottom={0}
+            right={0}
+            px={2}
+            py={1}
+          >
+            <Typography variant="body2" display="inline" color="neutral.400">
+              {minted}
+            </Typography>
+            <Typography variant="body2" display="inline" color="neutral.700">
+              /{supply} {translate('pieces')}
+            </Typography>
+          </Box>
+        </Box>
         <CardContent sx={{ p: 0, transition: 'translate 0.25s' }}>
           <Stack sx={{ p: 4, textAlign: 'start' }} gap={1}>
             <Typography variant="caption" color="secondary">
