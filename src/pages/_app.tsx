@@ -80,6 +80,7 @@ declare module '@mui/material/styles' {
     body2S: React.CSSProperties
     label: React.CSSProperties
     handwriting: React.CSSProperties
+    handwritingLarge: React.CSSProperties
   }
 
   // allow configuration using `createTheme`
@@ -91,6 +92,7 @@ declare module '@mui/material/styles' {
     body2S?: React.CSSProperties
     label?: React.CSSProperties
     handwriting?: React.CSSProperties
+    handwritingLarge?: React.CSSProperties
   }
 }
 
@@ -127,6 +129,7 @@ declare module '@mui/material/Typography' {
     caption: true
     label: true
     handwriting: true
+    handwritingLarge: true
     body2S: true
     h1: false
     h2: false
@@ -408,6 +411,7 @@ theme.components = {
         caption: 'h4',
         label: 'h5',
         handwriting: 'h5',
+        handwritingLarge: 'h5',
       },
     },
   },
@@ -553,6 +557,18 @@ theme.typography.handwriting = {
   [theme.breakpoints.up('desktopM')]: {
     fontSize: '38px',
     lineHeight: '38px',
+  },
+}
+
+theme.typography.handwritingLarge = {
+  ...theme.typography.handwritingLarge,
+  fontFamily: reenieBeanie.style.fontFamily,
+  fontWeight: '500',
+  fontSize: '48px',
+  lineHeight: '38px',
+  [theme.breakpoints.up('desktopM')]: {
+    fontSize: '58px',
+    lineHeight: '48px',
   },
 }
 
