@@ -77,9 +77,8 @@ const Hero = ({ manifestRef }: Props) => {
       <AppearingComponent>
         <Box
           style={{
-            height: '45vw',
+            height: '51vw',
             position: 'relative',
-            maxHeight: '1000px',
             width: '100%',
             overflow: 'hidden',
           }}
@@ -104,7 +103,7 @@ const Hero = ({ manifestRef }: Props) => {
           >
             <MouseParallaxChild
               factorX={0.2}
-              style={{ position: 'absolute', zIndex: 91, top: 0, right: 0 }}
+              style={{ position: 'absolute', zIndex: 91, top: 0, right: '-1%' }}
             >
               <Image
                 src={mountainImage}
@@ -117,7 +116,12 @@ const Hero = ({ manifestRef }: Props) => {
             </MouseParallaxChild>
             <MouseParallaxChild
               factorX={0.1}
-              style={{ position: 'absolute', zIndex: 91, top: '6.5%', left: 0 }}
+              style={{
+                position: 'absolute',
+                zIndex: 91,
+                top: '6.5%',
+                left: '-1%',
+              }}
             >
               <Image
                 src={factoryImage}
