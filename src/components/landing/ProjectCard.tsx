@@ -25,7 +25,8 @@ const ProjectCard = ({ name, imageUrl }: ProjectCardProps) => {
         width: '100%',
         '& .MuiCardContent-root': {
           mobile: {},
-          [breakpoint]: { translate: '0 64px' },
+          [breakpoint]: { translate: '0 48px' },
+          desktopM: { translate: '0 56px' },
         },
         '&:hover .MuiCardContent-root': {
           mobile: {},
