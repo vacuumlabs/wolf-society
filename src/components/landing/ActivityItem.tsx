@@ -130,7 +130,7 @@ const ActivityItem = ({
             </IconButton>
           </Stack>
         </Stack>
-        <Stack px={10}>
+        <Stack px={10} pb={10}>
           <Typography variant="caption" pb={3}>
             {title}
           </Typography>
