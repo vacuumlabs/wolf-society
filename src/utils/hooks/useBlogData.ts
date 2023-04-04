@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { BlogData } from '../blog'
 import { formatDate, formatCategories } from '../helpers'
 
-export const useBlogData = (blogData: BlogData, locale: string) => {
+export const useBlogData = (blogData: BlogData, locale: string = 'en-US') => {
   const [formattedPosts, setFormattedPosts] = useState<ArticleCardProps[]>([])
   useEffect(() => {
     if (blogData.errorMessage) return

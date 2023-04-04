@@ -2,10 +2,13 @@ import Hero from '@/components/landing/Hero'
 import Manifest from '@/components/landing/Manifest'
 import Projects from '@/components/landing/Projects'
 import {
+  Content,
   ContentTypes,
   getProjects,
+  getRoadmap,
   injectCMSContent,
-  Project,
+  ProjectData,
+  RoadmapData,
 } from '@/utils/hooks/useContentful'
 import { Stack } from '@mui/material'
 import { GetStaticPropsContext } from 'next'
@@ -22,11 +25,13 @@ import Partners from '@/components/landing/Partners'
 
 type Props = {
   blogData: BlogData
-  locale: string
-  projects: Project[]
+  translations: Partial<Content>
+  locale: string | undefined
+  projectsData: ProjectData[] | null
+  roadmapData: RoadmapData[] | null
 }
 
-const Home = ({ blogData, locale, projects }: Props) => {
+const Home = ({ blogData, locale, projectsData, roadmapData }: Props) => {
   const manifestRef = useRef(null)
   const formattedPosts = useBlogData(
     { ...blogData, posts: blogData.posts.slice(0, 3) },
@@ -36,10 +41,10 @@ const Home = ({ blogData, locale, projects }: Props) => {
     <Stack>
       <Hero manifestRef={manifestRef} />
       <Manifest manifestRef={manifestRef} />
-      <Projects projects={projects} />
+      <Projects projectsData={projectsData} />
       <MakeImpact />
       <Activities />
-      <Roadmap />
+      <Roadmap roadmapData={roadmapData} />
       <Questions />
       <Topics posts={formattedPosts} />
       <Partners />
@@ -48,13 +53,16 @@ const Home = ({ blogData, locale, projects }: Props) => {
   )
 }
 
-export async function getStaticProps({ locale }: GetStaticPropsContext) {
+export async function getStaticProps({
+  locale,
+}: GetStaticPropsContext): Promise<{ props: Props }> {
   return {
     // Will be passed to the page component as props
     props: {
       blogData: await getBlogData(),
       translations: await injectCMSContent(ContentTypes.landingPage, locale),
-      projects: await getProjects(locale),
+      projectsData: await getProjects(locale),
+      roadmapData: await getRoadmap(locale),
       locale,
     },
   }

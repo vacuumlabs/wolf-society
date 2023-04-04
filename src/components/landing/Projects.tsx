@@ -10,7 +10,7 @@ import WSFSymbol from '../icons/WSFSymbol'
 import {
   useContentful,
   ContentTypes,
-  Project,
+  ProjectData,
 } from '@/utils/hooks/useContentful'
 import Button from '../Button'
 import { ParallaxProvider } from 'react-scroll-parallax'
@@ -18,13 +18,15 @@ import ScrollingCard from '../ScrollingCard'
 import AppearingComponent from '../AppearingComponent'
 
 type Props = {
-  projects: Project[]
+  projectsData: ProjectData[] | null
 }
 
-const Projects = ({ projects }: Props) => {
+const Projects = ({ projectsData }: Props) => {
   const translate = useContentful(ContentTypes.landingPage)
   const breakpoint: keyof BreakpointOverrides = 'tabletS'
-  return (
+  return !projectsData ? (
+    <></>
+  ) : (
     <Box
       sx={{
         bgcolor: 'secondary.main',
@@ -61,7 +63,7 @@ const Projects = ({ projects }: Props) => {
               </Stack>
             </Stack>
             <Stack spacing={{ mobile: 5, [breakpoint]: 0 }}>
-              {projects.map((project, index) => (
+              {projectsData.map((project, index) => (
                 <Stack width="100%" alignItems="center" key={project.name}>
                   <ScrollingCard index={index}>
                     <ProjectCard

@@ -9,12 +9,20 @@ export enum ContentTypes {
   collectionsPage = 'collectionsPage',
   articlesPage = 'articlesPage',
   project = 'project',
+  roadmap = 'roadmap',
 }
 
-export type Project = {
+export type ProjectData = {
   id: string
   name: string
   image: Asset
+}
+
+export type RoadmapData = {
+  id: string
+  quarter: string
+  year: string
+  items: string
 }
 
 // Content to be injected into every page
@@ -78,7 +86,8 @@ export type Content = {
     gratefulPart1: string
     gratefulPart2: string
   }
-  [ContentTypes.project]: Project
+  [ContentTypes.project]: ProjectData
+  [ContentTypes.roadmap]: RoadmapData
 }
 
 const getSharedContent = async (locale: string = 'en-US') => {
@@ -119,22 +128,24 @@ const getSharedContent = async (locale: string = 'en-US') => {
  * Fetches array of contents of certain content type, matched by id
  * @param contentType Content Type to get entries for
  * @param locale Locale to localize for, if it exists. Located as field 'locale' on the Content Type
- * @returns Array of content ordered by id descending
+ * @param orderBy String parameter for the query to order results by. If you want descending order, prefix with a minus. E.g. '-fields.id'
+ * @returns Array of content
  */
 export const getArrayOfContent = async <T>(
   contentType: ContentTypes,
-  locale: string = 'en-US'
+  locale: string = 'en-US',
+  orderBy?: string
 ): Promise<T[] | null> => {
   if (!contentful) return null
   const entriesLocalized = await contentful.getEntries<T>({
     content_type: contentType,
     'fields.locale': locale,
-    order: '-fields.id',
+    order: orderBy,
   })
   const entriesEnglish = await contentful.getEntries<T>({
     content_type: contentType,
     'fields.locale': 'en-US',
-    order: '-fields.id',
+    order: orderBy,
   })
   const content = entriesEnglish.items.reduce((all: T[], item: any) => {
     let fields = item.fields
@@ -152,7 +163,7 @@ export const getArrayOfContent = async <T>(
 export const injectCMSContent = async (
   contentType: ContentTypes,
   locale: string = 'en-US'
-) => {
+): Promise<Partial<Content>> => {
   if (!contentful) return {}
   const entriesLocalized = await contentful.getEntries({
     content_type: contentType,
@@ -178,7 +189,14 @@ export const injectCMSContent = async (
 }
 
 export const getProjects = (locale?: string) =>
-  getArrayOfContent<Project>(ContentTypes.project, locale)
+  getArrayOfContent<ProjectData>(
+    ContentTypes.project,
+    locale,
+    'fields.orderNumber'
+  )
+
+export const getRoadmap = (locale?: string) =>
+  getArrayOfContent<RoadmapData>(ContentTypes.roadmap, locale, 'fields.id')
 
 export const ContentContext = createContext<Content | undefined>(undefined)
 
