@@ -59,7 +59,6 @@ const ActivityItem = ({
         gap: 4,
         py: { mobile: 0, [breakpoint]: 8 },
         pb: { mobile: 5, [breakpoint]: 0 },
-        pl: displayImageOnTheRight ? 0 : 17,
         textAlign: { mobile: 'center', [breakpoint]: 'start' },
       }}
       height="100%"
@@ -78,7 +77,11 @@ const ActivityItem = ({
   )
 
   const imageBox = (
-    <Box sx={{ position: 'relative' }} width="100%" height="100%">
+    <Box
+      sx={{ position: 'relative', display: 'grid', alignItems: 'center' }}
+      width="100%"
+      height="100%"
+    >
       {displayHorizontally ? (
         imageElement
       ) : (
@@ -93,11 +96,16 @@ const ActivityItem = ({
 
   return (
     <AppearingComponent>
-      <Grid container sx={{ my: { mobile: 5, [breakpoint]: 17 } }}>
+      <Grid container sx={{ py: { mobile: 5, [breakpoint]: 10 } }}>
         <Grid item mobile={12} {...{ [breakpoint]: 6 }}>
           {displayImageOnTheRight ? textStack : imageBox}
         </Grid>
-        <Grid item mobile={12} {...{ [breakpoint]: 6 }}>
+        {!imageOnTheRight && <Grid item mobile={12} {...{ [breakpoint]: 1 }} />}
+        <Grid
+          item
+          mobile={12}
+          {...{ [breakpoint]: displayImageOnTheRight ? 6 : 5 }}
+        >
           {displayImageOnTheRight ? imageBox : textStack}
         </Grid>
       </Grid>
