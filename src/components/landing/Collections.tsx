@@ -22,7 +22,6 @@ type Props = {
 }
 
 const Collections = ({ collectionsData }: Props) => {
-  console.log('coldata', collectionsData)
   const translate = useContentful(ContentTypes.common)
   const isMobile = useMediaQuery((theme: Theme) =>
     theme.breakpoints.down('tabletM')

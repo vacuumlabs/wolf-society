@@ -33,7 +33,6 @@ const CollectionCard = ({
   deadline,
   numberOfPieces,
 }: CollectionCardProps) => {
-  console.log(name, deadline)
   const translate = useContentful(ContentTypes.landingPage)
   const translateCommon = useContentful(ContentTypes.common)
   const locale = useLocale()
