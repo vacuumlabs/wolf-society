@@ -40,7 +40,7 @@ const Collection = ({
   color,
   subtitle,
   deadline,
-  remainingPieces,
+  numberOfPieces,
 }: CollectionCardProps) => {
   const [countdownOrPieces, setCountdownOrPieces] = useState<React.ReactNode>()
   const locale = useLocale()
@@ -52,9 +52,7 @@ const Collection = ({
       deadline ? (
         <Countdown deadline={deadline} />
       ) : (
-        `${remainingPieces?.toLocaleString(locale)} ${translateCommon(
-          'pieces'
-        )}`
+        `${numberOfPieces?.toLocaleString(locale)} ${translateCommon('pieces')}`
       )
     )
   }, [])

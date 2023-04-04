@@ -50,7 +50,6 @@ const Hero = ({ manifestRef }: Props) => {
                   underline="hover"
                   sx={{ cursor: 'pointer' }}
                   onClick={() => {
-                    console.log('scrolling')
                     manifestRef?.current?.scrollIntoView()
                   }}
                 >

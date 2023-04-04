@@ -34,11 +34,7 @@ const ProjectCard = ({ name, imageUrl }: ProjectCardProps) => {
         },
       }}
     >
-      <CardActionArea
-        onClick={() => {
-          console.log(`Clicked ${name}`)
-        }}
-      >
+      <CardActionArea onClick={() => {}}>
         <CardMedia
           component="img"
           height="300"

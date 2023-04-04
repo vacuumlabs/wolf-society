@@ -1,8 +1,19 @@
-import Collections from '@/components/landing/Collections'
 import Hero from '@/components/landing/Hero'
 import Manifest from '@/components/landing/Manifest'
 import Projects from '@/components/landing/Projects'
-import { ContentTypes, injectCMSContent } from '@/utils/hooks/useContentful'
+import {
+  CollectionData,
+  Content,
+  ContentTypes,
+  getCollections,
+  getProjects,
+  getQuestionsAndAnswers,
+  getRoadmap,
+  getTranslations,
+  ProjectData,
+  QuestionAndAnswerData,
+  RoadmapData,
+} from '@/utils/hooks/useContentful'
 import { Stack } from '@mui/material'
 import { GetStaticPropsContext } from 'next'
 import MakeImpact from '@/components/landing/MakeImpact'
@@ -15,13 +26,26 @@ import Activities from '@/components/landing/Activities'
 import { BlogData, getBlogData } from '@/utils/blog'
 import { useBlogData } from '@/utils/hooks/useBlogData'
 import Partners from '@/components/landing/Partners'
+import Collections from '@/components/landing/Collections'
 
 type Props = {
   blogData: BlogData
-  locale: string
+  translations: Partial<Content>
+  locale: string | undefined
+  projectsData: ProjectData[] | null
+  roadmapData: RoadmapData[] | null
+  questionsAndAnswersData: QuestionAndAnswerData[] | null
+  collectionsData: CollectionData[] | null
 }
 
-const Home = ({ blogData, locale }: Props) => {
+const Home = ({
+  blogData,
+  locale,
+  projectsData,
+  roadmapData,
+  questionsAndAnswersData,
+  collectionsData,
+}: Props) => {
   const manifestRef = useRef(null)
   const formattedPosts = useBlogData(
     { ...blogData, posts: blogData.posts.slice(0, 3) },
@@ -31,11 +55,12 @@ const Home = ({ blogData, locale }: Props) => {
     <Stack>
       <Hero manifestRef={manifestRef} />
       <Manifest manifestRef={manifestRef} />
-      <Projects />
+      <Projects projectsData={projectsData} />
       <MakeImpact />
       <Activities />
-      <Roadmap />
-      <Questions />
+      <Collections collectionsData={collectionsData} />
+      <Roadmap roadmapData={roadmapData} />
+      <Questions questionsAndAnswersData={questionsAndAnswersData} />
       <Topics posts={formattedPosts} />
       <Partners />
       <CTA />
@@ -43,12 +68,18 @@ const Home = ({ blogData, locale }: Props) => {
   )
 }
 
-export async function getStaticProps({ locale }: GetStaticPropsContext) {
+export async function getStaticProps({
+  locale,
+}: GetStaticPropsContext): Promise<{ props: Props }> {
   return {
     // Will be passed to the page component as props
     props: {
       blogData: await getBlogData(),
-      translations: await injectCMSContent(ContentTypes.landingPage, locale),
+      translations: await getTranslations(ContentTypes.landingPage, locale),
+      projectsData: await getProjects(locale),
+      roadmapData: await getRoadmap(locale),
+      questionsAndAnswersData: await getQuestionsAndAnswers(locale),
+      collectionsData: await getCollections(locale),
       locale,
     },
   }

@@ -1,6 +1,6 @@
 import {
   ContentTypes,
-  injectCMSContent,
+  getTranslations,
   useContentful,
 } from '@/utils/hooks/useContentful'
 import { GetStaticPropsContext } from 'next'
@@ -34,10 +34,7 @@ export async function getStaticProps({ locale }: GetStaticPropsContext) {
   return {
     // Will be passed to the page component as props
     props: {
-      translations: await injectCMSContent(
-        ContentTypes.collectionsPage,
-        locale
-      ),
+      translations: await getTranslations(ContentTypes.collectionsPage, locale),
     },
   }
 }
