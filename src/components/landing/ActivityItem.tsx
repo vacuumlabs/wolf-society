@@ -19,7 +19,8 @@ import CloseIcon from '../icons/CloseIcon'
 type ActivityItemProps = {
   title: string
   description: string
-  image: StaticImageData
+  imageElement: JSX.Element
+  mobileImage: StaticImageData
   imageOnTheRight?: boolean
   drawerContent: React.ReactNode
 }
@@ -27,7 +28,8 @@ type ActivityItemProps = {
 const ActivityItem = ({
   title,
   description,
-  image,
+  imageElement,
+  mobileImage,
   imageOnTheRight = true,
   drawerContent,
 }: ActivityItemProps) => {
@@ -78,10 +80,10 @@ const ActivityItem = ({
   const imageBox = (
     <Box sx={{ position: 'relative' }} width="100%" height="100%">
       {displayHorizontally ? (
-        <Image src={image} alt={title} fill style={{ objectFit: 'contain' }} />
+        imageElement
       ) : (
         <Image
-          src={image}
+          src={mobileImage}
           alt={title}
           style={{ width: '100%', height: '100%', objectFit: 'contain' }}
         />

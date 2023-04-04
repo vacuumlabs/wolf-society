@@ -16,6 +16,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import heroImage from 'public/images/hero.png'
 import AppearingComponent from './AppearingComponent'
+import HeroParallax from './HeroParallax'
 import DiscordIcon from './icons/DiscordIcon'
 import MediumIcon from './icons/MediumIcon'
 import TwitterIcon from './icons/TwitterIcon'
@@ -107,35 +108,7 @@ const Footer = () => {
             </Grid>
           </Grid>
         </Container>
-        <Box
-          sx={{
-            height: 'auto',
-            position: 'relative',
-            maxHeight: '1000px',
-          }}
-        >
-          <Image
-            src={heroImage}
-            alt="Hero image"
-            priority
-            style={{
-              objectFit: isMobileHero ? 'cover' : 'contain',
-              objectPosition: 'top',
-              position: 'relative',
-              height: isMobileHero ? '365px' : '100%',
-              width: '100%',
-              zIndex: 1,
-              maxHeight: '1000px',
-            }}
-          />
-          <Box
-            bgcolor="secondary.main"
-            height="27%"
-            position="absolute"
-            width="100%"
-            bottom="0"
-          />
-        </Box>
+        <HeroParallax />
       </AppearingComponent>
     </Box>
   )
