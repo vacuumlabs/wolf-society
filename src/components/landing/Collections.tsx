@@ -1,39 +1,14 @@
-import { Box, Palette, Theme, useMediaQuery } from '@mui/material'
-import { CommonColors, Stack } from '@mui/material'
+import { Box, Theme, useMediaQuery } from '@mui/material'
+import { Stack } from '@mui/material'
 import gsap from 'gsap'
-import { useEffect, useLayoutEffect, useRef } from 'react'
-import CollectionCard, { CollectionCardProps } from './CollectionCard'
+import { useEffect, useRef } from 'react'
+import CollectionCard from './CollectionCard'
 import ScrollTrigger from 'gsap/dist/ScrollTrigger'
-
-const d = new Date()
-d.setHours(d.getHours() + 2)
-const MockedCollections: Omit<CollectionCardProps, 'color'>[] = [
-  {
-    name: 'Earth Pollution',
-    subtitle: 'Limited Edition',
-    imageUrl: 'https://picsum.photos/id/986/1000/1000',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eu neque eget augue fringilla pretium vitae vitae leo. Suspendisse suscipit neque sapien, blandit commodo nulla convallis eget. Donec pretium iaculis ipsum, a commodo odio lobortis in.',
-    deadline: d,
-    remainingPieces: 2000,
-  },
-  {
-    name: 'Global Warming',
-    subtitle: 'Limited Edition',
-    imageUrl: 'https://picsum.photos/id/987/1000/1000',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eu neque eget augue fringilla pretium vitae vitae leo. Suspendisse suscipit neque sapien, blandit commodo nulla convallis eget. Donec pretium iaculis ipsum, a commodo odio lobortis in.',
-    remainingPieces: 2000,
-  },
-  {
-    name: 'Species Extinction',
-    subtitle: 'Minted out',
-    imageUrl: 'https://picsum.photos/id/988/1000/1000',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eu neque eget augue fringilla pretium vitae vitae leo. Suspendisse suscipit neque sapien, blandit commodo nulla convallis eget. Donec pretium iaculis ipsum, a commodo odio lobortis in.',
-    remainingPieces: 3000,
-  },
-]
+import {
+  CollectionData,
+  ContentTypes,
+  useContentful,
+} from '@/utils/hooks/useContentful'
 
 const COLOR_ORDER: string[] = [
   'common.blue',
@@ -42,7 +17,13 @@ const COLOR_ORDER: string[] = [
   'black.main',
 ]
 
-const Collections = () => {
+type Props = {
+  collectionsData: CollectionData[] | null
+}
+
+const Collections = ({ collectionsData }: Props) => {
+  console.log('coldata', collectionsData)
+  const translate = useContentful(ContentTypes.common)
   const isMobile = useMediaQuery((theme: Theme) =>
     theme.breakpoints.down('tabletM')
   )
@@ -77,37 +58,50 @@ const Collections = () => {
     return () => ctx.revert()
   })
 
-  return (
-    <Stack
-      ref={component}
-      sx={{
-        overflow: 'hidden',
-      }}
+  return !collectionsData ? (
+    <></>
+  ) : (
+    <Box
+      sx={{ bgcolor: 'neutral.400', pb: { mobile: '80px', desktopM: '160px' } }}
     >
-      <Box
-        ref={slider}
-        sx={
-          isMobile
-            ? {}
-            : {
-                pt: '88px',
-                width: `${100 * MockedCollections.length}vw`,
-                height: `calc(${100 * MockedCollections.length}vw + 100vh)`,
-                display: 'flex',
-                flexWrap: 'wrap',
-              }
-        }
-        className="container"
+      <Stack
+        ref={component}
+        sx={{
+          overflow: 'hidden',
+        }}
       >
-        {MockedCollections.map((collection, index) => (
-          <CollectionCard
-            {...collection}
-            key={collection.name}
-            color={COLOR_ORDER[index % COLOR_ORDER.length]}
-          />
-        ))}
-      </Box>
-    </Stack>
+        <Box
+          ref={slider}
+          sx={
+            isMobile
+              ? {}
+              : {
+                  pt: '80px',
+                  width: `${100 * collectionsData.length}vw`,
+                  height: `calc(${100 * collectionsData.length}vw + 100vh)`,
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                }
+          }
+          className="container"
+        >
+          {collectionsData.map((collection, index) => (
+            <CollectionCard
+              name={collection.name}
+              description={collection.description}
+              subtitle={translate('limitedEdition')}
+              imageUrl={collection.image.fields.file.url}
+              deadline={
+                collection.deadline ? new Date(collection.deadline) : undefined
+              }
+              numberOfPieces={collection.numberOfPieces}
+              key={collection.name}
+              color={COLOR_ORDER[index % COLOR_ORDER.length]}
+            />
+          ))}
+        </Box>
+      </Stack>
+    </Box>
   )
 }
 export default Collections

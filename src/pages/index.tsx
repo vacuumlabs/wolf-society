@@ -2,8 +2,10 @@ import Hero from '@/components/landing/Hero'
 import Manifest from '@/components/landing/Manifest'
 import Projects from '@/components/landing/Projects'
 import {
+  CollectionData,
   Content,
   ContentTypes,
+  getCollections,
   getProjects,
   getQuestionsAndAnswers,
   getRoadmap,
@@ -24,6 +26,7 @@ import Activities from '@/components/landing/Activities'
 import { BlogData, getBlogData } from '@/utils/blog'
 import { useBlogData } from '@/utils/hooks/useBlogData'
 import Partners from '@/components/landing/Partners'
+import Collections from '@/components/landing/Collections'
 
 type Props = {
   blogData: BlogData
@@ -32,6 +35,7 @@ type Props = {
   projectsData: ProjectData[] | null
   roadmapData: RoadmapData[] | null
   questionsAndAnswersData: QuestionAndAnswerData[] | null
+  collectionsData: CollectionData[] | null
 }
 
 const Home = ({
@@ -40,6 +44,7 @@ const Home = ({
   projectsData,
   roadmapData,
   questionsAndAnswersData,
+  collectionsData,
 }: Props) => {
   const manifestRef = useRef(null)
   const formattedPosts = useBlogData(
@@ -53,6 +58,7 @@ const Home = ({
       <Projects projectsData={projectsData} />
       <MakeImpact />
       <Activities />
+      <Collections collectionsData={collectionsData} />
       <Roadmap roadmapData={roadmapData} />
       <Questions questionsAndAnswersData={questionsAndAnswersData} />
       <Topics posts={formattedPosts} />
@@ -73,6 +79,7 @@ export async function getStaticProps({
       projectsData: await getProjects(locale),
       roadmapData: await getRoadmap(locale),
       questionsAndAnswersData: await getQuestionsAndAnswers(locale),
+      collectionsData: await getCollections(locale),
       locale,
     },
   }

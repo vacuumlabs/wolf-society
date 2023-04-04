@@ -54,9 +54,7 @@ const Activities = () => {
     },
   ]
   return (
-    <Box
-      sx={{ bgcolor: 'neutral.400', pb: { mobile: '80px', desktopM: '160px' } }}
-    >
+    <Box sx={{ bgcolor: 'neutral.400' }}>
       <Container>
         {ACTIVITIES_ITEMS.map((activityItem, index) => (
           <ActivityItem
@@ -70,7 +68,6 @@ const Activities = () => {
           />
         ))}
       </Container>
-      <Collections />
     </Box>
   )
 }

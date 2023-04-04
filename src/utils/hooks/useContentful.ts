@@ -11,6 +11,7 @@ export enum ContentTypes {
   project = 'project',
   roadmap = 'roadmap',
   questionAndAnswer = 'questionAndAnswer',
+  collection = 'collection',
 }
 
 export type ProjectData = {
@@ -30,6 +31,15 @@ export type QuestionAndAnswerData = {
   id: string
   question: string
   answer: string
+}
+
+export type CollectionData = {
+  id: string
+  name: string
+  description: string
+  deadline: string
+  numberOfPieces: number
+  image: Asset
 }
 
 // Content to be injected into every page
@@ -53,6 +63,7 @@ export type Content = {
     hoursShort: string
     daysShort: string
     pieces: string
+    limitedEdition: string
     makeImpactButton: string
     readMore: string
     allocationPart1: string
@@ -96,6 +107,7 @@ export type Content = {
   [ContentTypes.project]: ProjectData
   [ContentTypes.roadmap]: RoadmapData
   [ContentTypes.questionAndAnswer]: QuestionAndAnswerData
+  [ContentTypes.collection]: CollectionData
 }
 
 /**
@@ -192,6 +204,13 @@ export const getQuestionsAndAnswers = (locale?: string) =>
     contentType: ContentTypes.questionAndAnswer,
     locale,
     orderBy: 'fields.id',
+  })
+
+export const getCollections = (locale?: string) =>
+  getArrayOfContent<CollectionData>({
+    contentType: ContentTypes.collection,
+    locale,
+    orderBy: 'fields.orderNumber',
   })
 
 export const ContentContext = createContext<Content | undefined>(undefined)

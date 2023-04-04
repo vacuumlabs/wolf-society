@@ -21,7 +21,7 @@ export type CollectionCardProps = {
   color: string
   subtitle: string
   deadline?: Date
-  remainingPieces?: number
+  numberOfPieces?: number
 }
 
 const CollectionCard = ({
@@ -31,8 +31,9 @@ const CollectionCard = ({
   color,
   subtitle,
   deadline,
-  remainingPieces,
+  numberOfPieces,
 }: CollectionCardProps) => {
+  console.log(name, deadline)
   const translate = useContentful(ContentTypes.landingPage)
   const translateCommon = useContentful(ContentTypes.common)
   const locale = useLocale()
@@ -43,7 +44,7 @@ const CollectionCard = ({
   const countdownOrPieces = deadline ? (
     <Countdown deadline={deadline} />
   ) : (
-    `${remainingPieces?.toLocaleString(locale)} ${translateCommon('pieces')}`
+    `${numberOfPieces?.toLocaleString(locale)} ${translateCommon('pieces')}`
   )
 
   const horizontalCard = (
@@ -51,7 +52,7 @@ const CollectionCard = ({
       sx={{
         display: 'flex',
         width: '100vw',
-        height: 'calc(100vh - 88px)',
+        height: 'calc(100vh - 80px)',
       }}
       className="panel"
     >
