@@ -20,7 +20,11 @@ const DrawerTextList = ({ texts }: DrawerTextListProps) => {
             lineHeight: '0px',
           }}
         >
-          <Typography variant="body2" sx={{ color: 'black.main' }}>
+          <Typography
+            variant="body2"
+            component="div"
+            sx={{ color: 'black.main' }}
+          >
             <MuiMarkdown>{text}</MuiMarkdown>
           </Typography>
         </ListItem>
