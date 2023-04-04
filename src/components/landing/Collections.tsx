@@ -7,7 +7,7 @@ import ScrollTrigger from 'gsap/dist/ScrollTrigger'
 
 const d = new Date()
 d.setHours(d.getHours() + 2)
-const MockedCollections: Omit<CollectionCardProps, 'color'>[] = [
+export const MockedCollections: Omit<CollectionCardProps, 'color'>[] = [
   {
     name: 'Earth Pollution',
     subtitle: 'Limited Edition',
