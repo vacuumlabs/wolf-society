@@ -98,40 +98,6 @@ export type Content = {
   [ContentTypes.questionAndAnswer]: QuestionAndAnswerData
 }
 
-const getSharedContent = async (locale: string = 'en-US') => {
-  if (!contentful) return {}
-  let result = {}
-  for (const sharedContentType of SHARED_CONTENT) {
-    const entries = await contentful.getEntries({
-      content_type: sharedContentType,
-      'fields.locale': locale,
-    })
-    const entriesEng = await contentful.getEntries({
-      content_type: sharedContentType,
-      'fields.locale': 'en-US',
-    })
-    const contentLocalized = entries.items.reduce(
-      (all: Content[typeof sharedContentType], item: any) => ({
-        ...all,
-        ...item.fields,
-      }),
-      {}
-    )
-    const contentEnglish = entriesEng.items.reduce(
-      (all: Content[typeof sharedContentType], item: any) => ({
-        ...all,
-        ...item.fields,
-      }),
-      {}
-    )
-    result = {
-      ...result,
-      [sharedContentType]: { ...contentEnglish, ...contentLocalized },
-    }
-  }
-  return result
-}
-
 /**
  * Fetches array of contents of certain content type, matched by id
  * @param contentType Content Type to get entries for
@@ -139,18 +105,26 @@ const getSharedContent = async (locale: string = 'en-US') => {
  * @param orderBy String parameter for the query to order results by. If you want descending order, prefix with a minus. E.g. '-fields.id'
  * @returns Array of content
  */
-export const getArrayOfContent = async <T>(
-  contentType: ContentTypes,
-  locale: string = 'en-US',
+export const getArrayOfContent = async <T>({
+  contentType,
+  locale = 'en-US',
+  orderBy,
+  query = {},
+}: {
+  contentType: ContentTypes
+  locale?: string
   orderBy?: string
-): Promise<T[] | null> => {
+  query?: any
+}): Promise<T[] | null> => {
   if (!contentful) return null
   const entriesLocalized = await contentful.getEntries<T>({
+    ...query,
     content_type: contentType,
     'fields.locale': locale,
     order: orderBy,
   })
   const entriesEnglish = await contentful.getEntries<T>({
+    ...query,
     content_type: contentType,
     'fields.locale': 'en-US',
     order: orderBy,
@@ -168,50 +142,57 @@ export const getArrayOfContent = async <T>(
   return content
 }
 
-export const injectCMSContent = async (
+export const getTranslations = async (
   contentType: ContentTypes,
   locale: string = 'en-US'
 ): Promise<Partial<Content>> => {
   if (!contentful) return {}
-  const entriesLocalized = await contentful.getEntries({
-    content_type: contentType,
-    'fields.locale': locale,
-  })
-  const entriesEnglish = await contentful.getEntries({
-    content_type: contentType,
-    'fields.locale': 'en-US',
-  })
-  const contentLocalized = entriesLocalized.items.reduce(
-    (all: Partial<Content>, item: any) => ({ ...all, ...item.fields }),
-    {}
-  )
-  const contentEnglish = entriesEnglish.items.reduce(
-    (all: Partial<Content>, item: any) => ({ ...all, ...item.fields }),
-    {}
-  )
-  const sharedContent = await getSharedContent(locale)
-  return {
-    ...sharedContent,
-    [contentType]: { ...contentEnglish, ...contentLocalized },
+  let result = {}
+  for (const contType of SHARED_CONTENT.concat(contentType)) {
+    const entriesLocalized = await contentful.getEntries({
+      content_type: contType,
+      'fields.locale': locale,
+    })
+    const entriesEnglish = await contentful.getEntries({
+      content_type: contType,
+      'fields.locale': 'en-US',
+    })
+    const contentLocalized = entriesLocalized.items.reduce(
+      (all: Partial<Content>, item: any) => ({ ...all, ...item.fields }),
+      {}
+    )
+    const contentEnglish = entriesEnglish.items.reduce(
+      (all: Partial<Content>, item: any) => ({ ...all, ...item.fields }),
+      {}
+    )
+    result = {
+      ...result,
+      [contType]: { ...contentEnglish, ...contentLocalized },
+    }
   }
+  return result
 }
 
 export const getProjects = (locale?: string) =>
-  getArrayOfContent<ProjectData>(
-    ContentTypes.project,
+  getArrayOfContent<ProjectData>({
+    contentType: ContentTypes.project,
     locale,
-    'fields.orderNumber'
-  )
+    orderBy: 'fields.orderNumber',
+  })
 
 export const getRoadmap = (locale?: string) =>
-  getArrayOfContent<RoadmapData>(ContentTypes.roadmap, locale, 'fields.id')
+  getArrayOfContent<RoadmapData>({
+    contentType: ContentTypes.roadmap,
+    locale,
+    orderBy: 'fields.id',
+  })
 
 export const getQuestionsAndAnswers = (locale?: string) =>
-  getArrayOfContent<QuestionAndAnswerData>(
-    ContentTypes.questionAndAnswer,
+  getArrayOfContent<QuestionAndAnswerData>({
+    contentType: ContentTypes.questionAndAnswer,
     locale,
-    'fields.id'
-  )
+    orderBy: 'fields.id',
+  })
 
 export const ContentContext = createContext<Content | undefined>(undefined)
 

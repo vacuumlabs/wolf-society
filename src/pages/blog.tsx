@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { GetStaticPropsContext } from 'next'
 import { Box, Container, Stack, Typography } from '@mui/material'
-import { ContentTypes, injectCMSContent } from '@/utils/hooks/useContentful'
+import { ContentTypes, getTranslations } from '@/utils/hooks/useContentful'
 import HeaderArticle from '@/components/blog/HeaderArticle'
 import Articles from '@/components/blog/Articles'
 import { formatCategories, formatDate } from '@/utils/helpers'
@@ -55,7 +55,7 @@ export async function getStaticProps({ locale }: GetStaticPropsContext) {
   return {
     props: {
       // Will be passed to the page component as props
-      translations: await injectCMSContent(ContentTypes.articlesPage, locale),
+      translations: await getTranslations(ContentTypes.articlesPage, locale),
       blogData: await getBlogData(),
     },
     revalidate: 60, // In seconds

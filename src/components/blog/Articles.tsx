@@ -3,7 +3,7 @@ import { GetStaticPropsContext } from 'next'
 import { Box, Container, Grid, Stack, Typography } from '@mui/material'
 import {
   ContentTypes,
-  injectCMSContent,
+  getTranslations,
   useContentful,
 } from '@/utils/hooks/useContentful'
 import ArticleCard, { ArticleCardProps } from './ArticleCard'
@@ -56,24 +56,6 @@ const Articles = ({ posts }: TBlog) => {
       </AppearingComponent>
     </Box>
   )
-}
-
-export async function getStaticProps({ locale }: GetStaticPropsContext) {
-  const response = await fetch(
-    `https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@${process.env.NEXT_PUBLIC_MEDIUM_USER}`
-  )
-
-  const data = await response.json()
-
-  return {
-    props: {
-      // Will be passed to the page component as props
-      translations: await injectCMSContent(ContentTypes.landingPage, locale),
-      posts: data.items ?? [],
-      errorMessage: data.message ?? '',
-    },
-    revalidate: 60, // In seconds
-  }
 }
 
 export default Articles

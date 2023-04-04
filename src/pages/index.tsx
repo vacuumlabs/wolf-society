@@ -7,7 +7,7 @@ import {
   getProjects,
   getQuestionsAndAnswers,
   getRoadmap,
-  injectCMSContent,
+  getTranslations,
   ProjectData,
   QuestionAndAnswerData,
   RoadmapData,
@@ -69,7 +69,7 @@ export async function getStaticProps({
     // Will be passed to the page component as props
     props: {
       blogData: await getBlogData(),
-      translations: await injectCMSContent(ContentTypes.landingPage, locale),
+      translations: await getTranslations(ContentTypes.landingPage, locale),
       projectsData: await getProjects(locale),
       roadmapData: await getRoadmap(locale),
       questionsAndAnswersData: await getQuestionsAndAnswers(locale),
