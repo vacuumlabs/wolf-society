@@ -5,9 +5,11 @@ import {
   Content,
   ContentTypes,
   getProjects,
+  getQuestionsAndAnswers,
   getRoadmap,
   injectCMSContent,
   ProjectData,
+  QuestionAndAnswerData,
   RoadmapData,
 } from '@/utils/hooks/useContentful'
 import { Stack } from '@mui/material'
@@ -29,9 +31,16 @@ type Props = {
   locale: string | undefined
   projectsData: ProjectData[] | null
   roadmapData: RoadmapData[] | null
+  questionsAndAnswersData: QuestionAndAnswerData[] | null
 }
 
-const Home = ({ blogData, locale, projectsData, roadmapData }: Props) => {
+const Home = ({
+  blogData,
+  locale,
+  projectsData,
+  roadmapData,
+  questionsAndAnswersData,
+}: Props) => {
   const manifestRef = useRef(null)
   const formattedPosts = useBlogData(
     { ...blogData, posts: blogData.posts.slice(0, 3) },
@@ -45,7 +54,7 @@ const Home = ({ blogData, locale, projectsData, roadmapData }: Props) => {
       <MakeImpact />
       <Activities />
       <Roadmap roadmapData={roadmapData} />
-      <Questions />
+      <Questions questionsAndAnswersData={questionsAndAnswersData} />
       <Topics posts={formattedPosts} />
       <Partners />
       <CTA />
@@ -63,6 +72,7 @@ export async function getStaticProps({
       translations: await injectCMSContent(ContentTypes.landingPage, locale),
       projectsData: await getProjects(locale),
       roadmapData: await getRoadmap(locale),
+      questionsAndAnswersData: await getQuestionsAndAnswers(locale),
       locale,
     },
   }

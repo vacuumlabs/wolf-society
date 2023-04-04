@@ -10,6 +10,7 @@ export enum ContentTypes {
   articlesPage = 'articlesPage',
   project = 'project',
   roadmap = 'roadmap',
+  questionAndAnswer = 'questionAndAnswer',
 }
 
 export type ProjectData = {
@@ -23,6 +24,12 @@ export type RoadmapData = {
   quarter: string
   year: string
   items: string
+}
+
+export type QuestionAndAnswerData = {
+  id: string
+  question: string
+  answer: string
 }
 
 // Content to be injected into every page
@@ -88,6 +95,7 @@ export type Content = {
   }
   [ContentTypes.project]: ProjectData
   [ContentTypes.roadmap]: RoadmapData
+  [ContentTypes.questionAndAnswer]: QuestionAndAnswerData
 }
 
 const getSharedContent = async (locale: string = 'en-US') => {
@@ -197,6 +205,13 @@ export const getProjects = (locale?: string) =>
 
 export const getRoadmap = (locale?: string) =>
   getArrayOfContent<RoadmapData>(ContentTypes.roadmap, locale, 'fields.id')
+
+export const getQuestionsAndAnswers = (locale?: string) =>
+  getArrayOfContent<QuestionAndAnswerData>(
+    ContentTypes.questionAndAnswer,
+    locale,
+    'fields.id'
+  )
 
 export const ContentContext = createContext<Content | undefined>(undefined)
 
