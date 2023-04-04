@@ -1,32 +1,48 @@
 import {
+  CollectionData,
+  Content,
   ContentTypes,
+  getCollections,
   getTranslations,
   useContentful,
 } from '@/utils/hooks/useContentful'
 import { GetStaticPropsContext } from 'next'
-import { useAccount } from 'wagmi'
-import { useGetNfts } from '@/utils/hooks/useGetNfts'
-import { NftCard } from '@/components/NftCard'
-import { useGetNftsCollections } from '@/utils/hooks/useGetNftsCollection'
-import { ourCollectionsAddresses } from '@/consts'
-import { compareNfts } from '@/utils/helpers'
+import { Stack } from '@mui/material'
+import Collection from '@/components/collections/Collection'
 
-const Collections = () => {
-  const translate = useContentful(ContentTypes.collectionsPage)
-  const { address } = useAccount()
-  const ownedNfts = useGetNfts(address)
-  const wlfSocietyNfts = useGetNftsCollections(ourCollectionsAddresses)
+const COLOR_ORDER: string[] = [
+  'secondary.main',
+  'common.blue',
+  'common.brown',
+  'black.main',
+]
 
-  return (
-    <>
-      {wlfSocietyNfts?.map((nft, index) => (
-        <NftCard
-          key={index}
-          nft={nft}
-          owned={ownedNfts.some((ownedNft) => compareNfts(ownedNft, nft))}
+type Props = {
+  translations: Partial<Content>
+  collectionsData: CollectionData[] | null
+}
+
+const Collections = ({ collectionsData }: Props) => {
+  const translate = useContentful(ContentTypes.common)
+  return !collectionsData ? (
+    <></>
+  ) : (
+    <Stack mt={10}>
+      {collectionsData.map((collection, index) => (
+        <Collection
+          name={collection.name}
+          subtitle={translate('limitedEdition')}
+          imageUrl={collection.image.fields.file.url}
+          description={collection.description}
+          deadline={
+            collection.deadline ? new Date(collection.deadline) : undefined
+          }
+          numberOfPieces={collection.numberOfPieces}
+          key={collection.name}
+          color={COLOR_ORDER[index % COLOR_ORDER.length]}
         />
       ))}
-    </>
+    </Stack>
   )
 }
 
@@ -35,6 +51,7 @@ export async function getStaticProps({ locale }: GetStaticPropsContext) {
     // Will be passed to the page component as props
     props: {
       translations: await getTranslations(ContentTypes.collectionsPage, locale),
+      collectionsData: await getCollections(locale),
     },
   }
 }

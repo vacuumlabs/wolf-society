@@ -66,6 +66,7 @@ export type Content = {
     limitedEdition: string
     makeImpactButton: string
     readMore: string
+    showDetails: string
     allocationPart1: string
     allocationPart2: string
     allocationPart3: string

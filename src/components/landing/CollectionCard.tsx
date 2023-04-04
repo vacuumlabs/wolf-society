@@ -11,6 +11,7 @@ import {
   useTheme,
 } from '@mui/material'
 import useMediaQuery from '@mui/material/useMediaQuery'
+import { useEffect, useState } from 'react'
 import Button from '../Button'
 import { Countdown } from '../Countdown'
 
@@ -33,6 +34,7 @@ const CollectionCard = ({
   deadline,
   numberOfPieces,
 }: CollectionCardProps) => {
+  const [countdownOrPieces, setCountdownOrPieces] = useState<React.ReactNode>()
   const translate = useContentful(ContentTypes.landingPage)
   const translateCommon = useContentful(ContentTypes.common)
   const locale = useLocale()
@@ -40,11 +42,15 @@ const CollectionCard = ({
   const displayHorizontally = useMediaQuery(theme.breakpoints.up('tabletM'))
   const nameFormatted = name.replaceAll(' ', '\n')
 
-  const countdownOrPieces = deadline ? (
-    <Countdown deadline={deadline} />
-  ) : (
-    `${numberOfPieces?.toLocaleString(locale)} ${translateCommon('pieces')}`
-  )
+  useEffect(() => {
+    setCountdownOrPieces(
+      deadline ? (
+        <Countdown deadline={deadline} />
+      ) : (
+        `${numberOfPieces?.toLocaleString(locale)} ${translateCommon('pieces')}`
+      )
+    )
+  }, [])
 
   const horizontalCard = (
     <Card

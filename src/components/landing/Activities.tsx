@@ -55,7 +55,7 @@ const Activities = () => {
   ]
   return (
     <Box sx={{ bgcolor: 'neutral.400' }}>
-      <Container>
+      <Container sx={{ mb: { mobile: 0, tabletM: '-80px' } }}>
         {ACTIVITIES_ITEMS.map((activityItem, index) => (
           <ActivityItem
             key={activityItem.title}
