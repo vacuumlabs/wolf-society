@@ -21,8 +21,7 @@ const Button = styled(MuiButton)<
   },
 
   '&:focus': {
-    backgroundColor: theme.palette.primary.main,
-    boxShadow: `0 0 0 5px ${theme.palette.primary['200']} inset`,
+    backgroundColor: theme.palette.primary['400'],
   },
 
   '&:hover': {

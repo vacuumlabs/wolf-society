@@ -20,7 +20,16 @@ const AllocationInfoStack = ({
   const imageBox = (
     <Box sx={{ position: 'relative' }} width="100%">
       {isHorizontal ? (
-        <Image src={image} alt={text} fill style={{ objectFit: 'contain' }} />
+        <Image
+          src={image}
+          alt={text}
+          style={{
+            objectFit: 'contain',
+            position: 'relative',
+            width: '100%',
+            height: 'auto',
+          }}
+        />
       ) : (
         <Image
           src={image}
@@ -31,9 +40,9 @@ const AllocationInfoStack = ({
     </Box>
   )
   return (
-    <Stack direction={isHorizontal ? 'row' : 'column'}>
+    <Stack direction={isHorizontal ? 'row' : 'column'} gap={5}>
       {displayImageOnTheRight ? <></> : imageBox}
-      <Stack>
+      <Stack justifyContent="center">
         <Stack direction="row">
           <Typography variant="display" color="neutral.main">
             {percentage}

@@ -45,7 +45,10 @@ const QuestionAccordion = ({ question, answer }: QuestionAccordionProps) => {
       <Grid container>
         <Grid item mobile={12} desktopS={5}></Grid>
         <Grid item mobile={12} desktopS={7}>
-          <Typography variant="body2" sx={{ py: { mobile: 5, destkopM: 10 } }}>
+          <Typography
+            variant="body2"
+            sx={{ pt: 5, pb: { mobile: 5, desktopM: 10 } }}
+          >
             {answer}
           </Typography>
         </Grid>
