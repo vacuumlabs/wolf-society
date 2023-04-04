@@ -541,7 +541,7 @@ theme.typography.body2 = {
 }
 
 theme.typography.body2S = {
-  ...theme.typography.body2S,
+  ...theme.typography.body2,
   fontWeight: 400,
   fontSize: theme.typography.body2.fontSize,
   lineHeight: theme.typography.body2.lineHeight,
