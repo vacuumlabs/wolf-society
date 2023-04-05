@@ -1,3 +1,4 @@
+import { SUBPAGES } from '@/consts'
 import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
 import { useLocale } from '@/utils/hooks/useLocale'
 import {
@@ -16,6 +17,7 @@ import Button from '../Button'
 import { Countdown } from '../Countdown'
 
 export type CollectionCardProps = {
+  id: string
   name: string
   imageUrl: string
   description: string
@@ -26,6 +28,7 @@ export type CollectionCardProps = {
 }
 
 const CollectionCard = ({
+  id,
   name,
   imageUrl,
   description,
@@ -41,6 +44,7 @@ const CollectionCard = ({
   const theme = useTheme()
   const displayHorizontally = useMediaQuery(theme.breakpoints.up('tabletM'))
   const nameFormatted = name.replaceAll(' ', '\n')
+  const href = `${SUBPAGES['collections']}#${id}`
 
   useEffect(() => {
     setCountdownOrPieces(
@@ -108,7 +112,7 @@ const CollectionCard = ({
             </Typography>
           </Box>
           <CardActions sx={{ padding: 0 }}>
-            <Button>{translate('showCollection')}</Button>
+            <Button href={href}>{translate('showCollection')}</Button>
           </CardActions>
         </Box>
       </Box>
@@ -141,7 +145,9 @@ const CollectionCard = ({
       </Box>
 
       <CardActions sx={{ padding: 0 }}>
-        <Button sx={{ width: '100%' }}>{translate('showCollection')}</Button>
+        <Button sx={{ width: '100%' }} href={href}>
+          {translate('showCollection')}
+        </Button>
       </CardActions>
     </Card>
   )
