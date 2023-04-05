@@ -3,7 +3,9 @@ import {
   Content,
   ContentTypes,
   getCollections,
+  getNfts,
   getTranslations,
+  NFTData,
   useContentful,
 } from '@/utils/hooks/useContentful'
 import { GetStaticPropsContext } from 'next'
@@ -20,28 +22,36 @@ const COLOR_ORDER: string[] = [
 type Props = {
   translations: Partial<Content>
   collectionsData: CollectionData[] | null
+  nftData: NFTData[] | null
 }
 
-const Collections = ({ collectionsData }: Props) => {
+const Collections = ({ collectionsData, nftData }: Props) => {
   const translate = useContentful(ContentTypes.common)
   return !collectionsData ? (
     <></>
   ) : (
     <Stack mt={10}>
-      {collectionsData.map((collection, index) => (
-        <Collection
-          name={collection.name}
-          subtitle={translate('limitedEdition')}
-          imageUrl={collection.image.fields.file.url}
-          description={collection.description}
-          deadline={
-            collection.deadline ? new Date(collection.deadline) : undefined
-          }
-          numberOfPieces={collection.numberOfPieces}
-          key={collection.name}
-          color={COLOR_ORDER[index % COLOR_ORDER.length]}
-        />
-      ))}
+      {collectionsData.map((collection, index) => {
+        const nftsInThisCollection =
+          nftData?.filter((nft) => nft.collectionId === collection.id) ?? null
+        return (
+          <Collection
+            name={collection.name}
+            nftData={nftsInThisCollection}
+            subtitle={translate('limitedEdition')}
+            artistName={collection.artistName}
+            artistSubtext={collection.artistSubtext}
+            artistImage={collection.artistImage.fields.file.url}
+            description={collection.description}
+            deadline={
+              collection.deadline ? new Date(collection.deadline) : undefined
+            }
+            numberOfPieces={collection.numberOfPieces}
+            key={collection.name}
+            color={COLOR_ORDER[index % COLOR_ORDER.length]}
+          />
+        )
+      })}
     </Stack>
   )
 }
@@ -52,6 +62,7 @@ export async function getStaticProps({ locale }: GetStaticPropsContext) {
     props: {
       translations: await getTranslations(ContentTypes.collectionsPage, locale),
       collectionsData: await getCollections(locale),
+      nftData: await getNfts(locale),
     },
   }
 }

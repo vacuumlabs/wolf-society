@@ -12,6 +12,7 @@ export enum ContentTypes {
   roadmap = 'roadmap',
   questionAndAnswer = 'questionAndAnswer',
   collection = 'collection',
+  nft = 'nft',
 }
 
 export type ProjectData = {
@@ -39,6 +40,18 @@ export type CollectionData = {
   description: string
   deadline: string
   numberOfPieces: number
+  image: Asset
+  artistName: string
+  artistSubtext: string
+  artistImage: Asset
+}
+
+export type NFTData = {
+  id: string
+  collectionId: string
+  name: string
+  priceInEth: number
+  totalSupply: number
   image: Asset
 }
 
@@ -109,6 +122,7 @@ export type Content = {
   [ContentTypes.roadmap]: RoadmapData
   [ContentTypes.questionAndAnswer]: QuestionAndAnswerData
   [ContentTypes.collection]: CollectionData
+  [ContentTypes.nft]: NFTData
 }
 
 /**
@@ -212,6 +226,13 @@ export const getCollections = (locale?: string) =>
     contentType: ContentTypes.collection,
     locale,
     orderBy: 'fields.orderNumber',
+  })
+
+export const getNfts = (locale?: string) =>
+  getArrayOfContent<NFTData>({
+    contentType: ContentTypes.nft,
+    locale,
+    orderBy: 'fields.id',
   })
 
 export const ContentContext = createContext<Content | undefined>(undefined)
