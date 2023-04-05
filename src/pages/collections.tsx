@@ -6,7 +6,11 @@ import {
   getTranslations,
   useContentful,
 } from '@/utils/hooks/useContentful'
-import { GetStaticPropsContext } from 'next'
+import {
+  GetStaticProps,
+  GetStaticPropsContext,
+  InferGetStaticPropsType,
+} from 'next'
 import { Stack } from '@mui/material'
 import Collection from '@/components/collections/Collection'
 
@@ -22,7 +26,9 @@ type Props = {
   collectionsData: CollectionData[] | null
 }
 
-const Collections = ({ collectionsData }: Props) => {
+const Collections = ({
+  collectionsData,
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
   const translate = useContentful(ContentTypes.common)
   return !collectionsData ? (
     <></>
@@ -46,13 +52,16 @@ const Collections = ({ collectionsData }: Props) => {
   )
 }
 
-export async function getStaticProps({ locale }: GetStaticPropsContext) {
+export const getStaticProps: GetStaticProps<Props> = async ({
+  locale,
+}: GetStaticPropsContext) => {
   return {
     // Will be passed to the page component as props
     props: {
       translations: await getTranslations(ContentTypes.collectionsPage, locale),
       collectionsData: await getCollections(locale),
     },
+    revalidate: 60, // In seconds
   }
 }
 

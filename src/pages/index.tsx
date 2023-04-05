@@ -15,7 +15,11 @@ import {
   RoadmapData,
 } from '@/utils/hooks/useContentful'
 import { Stack } from '@mui/material'
-import { GetStaticPropsContext } from 'next'
+import {
+  GetStaticPropsContext,
+  GetStaticProps,
+  InferGetStaticPropsType,
+} from 'next'
 import MakeImpact from '@/components/landing/MakeImpact'
 import Roadmap from '@/components/landing/Roadmap'
 import Questions from '@/components/landing/Questions'
@@ -45,7 +49,7 @@ const Home = ({
   roadmapData,
   questionsAndAnswersData,
   collectionsData,
-}: Props) => {
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
   const manifestRef = useRef(null)
   const formattedPosts = useBlogData(
     { ...blogData, posts: blogData.posts.slice(0, 3) },
@@ -68,9 +72,9 @@ const Home = ({
   )
 }
 
-export async function getStaticProps({
+export const getStaticProps: GetStaticProps<Props> = async ({
   locale,
-}: GetStaticPropsContext): Promise<{ props: Props }> {
+}: GetStaticPropsContext) => {
   return {
     // Will be passed to the page component as props
     props: {
@@ -82,6 +86,7 @@ export async function getStaticProps({
       collectionsData: await getCollections(locale),
       locale,
     },
+    revalidate: 60, // In seconds
   }
 }
 
