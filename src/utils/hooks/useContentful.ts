@@ -111,7 +111,12 @@ export type Content = {
     roadmap: string
     partners: string
   }
-  [ContentTypes.collectionsPage]: {}
+  [ContentTypes.collectionsPage]: {
+    description: string
+    pieces: string
+    available: string
+    aboutArtist: string
+  }
   [ContentTypes.articlesPage]: {
     articles: string
     readMore: string

@@ -1,0 +1,47 @@
+import { Box, Button, Stack, Typography } from '@mui/material'
+
+export interface NFTBuyProps {
+  priceETH: number
+  priceEur: number
+}
+
+export const NFTBuy = ({ priceETH, priceEur }: NFTBuyProps) => {
+  const CircleButton = ({ label }: { label: string }) => (
+    <Button
+      variant="contained"
+      sx={{ width: '45%', aspectRatio: '1/1', borderRadius: '50%' }}
+    >
+      {label}
+    </Button>
+  )
+
+  return (
+    <Stack
+      justifyContent="space-between"
+      sx={{
+        width: { mobile: '100vw', tabletM: '80vw' },
+        backgroundColor: 'neutral.400',
+      }}
+      p={{ mobile: '16px', tabletM: '80px' }}
+      gap={{ mobile: '40px', tabletM: '80px' }}
+    >
+      <Stack gap="8px">
+        <Typography m="auto" variant="display">{`${priceETH} ETH`}</Typography>
+        <Typography
+          m="auto"
+          variant="headline"
+          color="neutral.700"
+        >{`${priceEur} EUR`}</Typography>
+      </Stack>
+      <Stack
+        direction="row"
+        justifyContent="space-between"
+        gap="16px"
+        width="100%"
+      >
+        <CircleButton label="buy with card" />
+        <CircleButton label="buy with crypto" />
+      </Stack>
+    </Stack>
+  )
+}

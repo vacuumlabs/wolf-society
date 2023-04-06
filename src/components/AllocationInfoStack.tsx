@@ -40,7 +40,11 @@ const AllocationInfoStack = ({
     </Box>
   )
   return (
-    <Stack direction={isHorizontal ? 'row' : 'column'} gap={5}>
+    <Stack
+      justifyContent="space-between"
+      direction={isHorizontal ? 'row' : 'column'}
+      height={'100%'}
+    >
       {displayImageOnTheRight ? <></> : imageBox}
       <Stack justifyContent="center">
         <Stack direction="row">
