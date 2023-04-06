@@ -8,6 +8,7 @@ import {
   useMediaQuery,
 } from '@mui/material'
 import { Countdown } from '../Countdown'
+import { VerticalLine } from './NFTVerticalLine'
 
 export interface NFTDescriptionProps {
   name: string
@@ -88,6 +89,7 @@ export const NFTDescription = ({
           <Typography variant="body2">{descriptionText}</Typography>
         </Stack>
       </Stack>
+      <VerticalLine />
     </Stack>
   )
 }

@@ -6,11 +6,7 @@ d.setHours(d.getHours() + 2)
 const desc =
   'Description lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et massa at neque vulputate tempus. Ut ac justo erat. Aliquam et ante massa. Ut consequat, ante non consequat.\n\n\nDescription lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et massa at neque vulputate tempus. Ut ac justo erat. Aliquam et ante massa.  quat, ante non consequat. Description lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et massa at neque vulputate tempus.'
 
-export const MOCKED_NFT_DETAIL: Omit<
-  NFTDetailProps,
-  'isOpenId' | 'setIsOpenId'
-> = {
-  id: 0,
+export const MOCKED_NFT_DETAIL: Omit<NFTDetailProps, 'isOpen' | 'onClose'> = {
   nftDescriptionProps: {
     name: 'NFT 500',
     totalPieces: 1000,

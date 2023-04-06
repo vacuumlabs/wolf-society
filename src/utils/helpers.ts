@@ -1,6 +1,7 @@
 import { SUBPAGES } from '@/consts'
 import { Nft } from 'alchemy-sdk'
 import { Content, ContentTypes } from './hooks/useContentful'
+import { RefObject, useEffect, useMemo, useState } from 'react'
 
 export const compareNfts = (nft1: Nft, nft2: Nft): boolean => {
   return (

@@ -4,8 +4,6 @@ import { Box, Container, Stack, Typography, Link } from '@mui/material'
 import React, { useState } from 'react'
 import AppearingComponent from '../AppearingComponent'
 import Button from '../Button'
-import { NFTDetail } from '../NFTDetail/NFTDetail'
-import { MOCKED_NFT_DETAIL } from '../NFTDetail/mockedDetailData'
 import HeroParallax from '../HeroParallax'
 
 type Props = {
@@ -57,11 +55,6 @@ const Hero = ({ manifestRef }: Props) => {
       <AppearingComponent>
         <HeroParallax />
       </AppearingComponent>
-      <NFTDetail
-        isOpenId={isOpenId}
-        setIsOpenId={setIsOpenId}
-        {...MOCKED_NFT_DETAIL}
-      />
     </Box>
   )
 }
