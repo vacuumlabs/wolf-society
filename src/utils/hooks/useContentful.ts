@@ -19,6 +19,7 @@ export type ProjectData = {
   id: string
   name: string
   image: Asset
+  description: string
 }
 
 export type RoadmapData = {

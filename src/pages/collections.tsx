@@ -8,7 +8,11 @@ import {
   NFTData,
   useContentful,
 } from '@/utils/hooks/useContentful'
-import { GetStaticPropsContext } from 'next'
+import {
+  GetStaticProps,
+  GetStaticPropsContext,
+  InferGetStaticPropsType,
+} from 'next'
 import { Stack } from '@mui/material'
 import Collection from '@/components/collections/Collection'
 
@@ -56,7 +60,9 @@ const Collections = ({ collectionsData, nftData }: Props) => {
   )
 }
 
-export async function getStaticProps({ locale }: GetStaticPropsContext) {
+export const getStaticProps: GetStaticProps<Props> = async ({
+  locale,
+}: GetStaticPropsContext) => {
   return {
     // Will be passed to the page component as props
     props: {
@@ -64,6 +70,7 @@ export async function getStaticProps({ locale }: GetStaticPropsContext) {
       collectionsData: await getCollections(locale),
       nftData: await getNfts(locale),
     },
+    revalidate: 60, // In seconds
   }
 }
 

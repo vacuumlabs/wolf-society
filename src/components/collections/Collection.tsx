@@ -33,6 +33,7 @@ type Props = {
 }
 
 const Collection = ({
+  id,
   name,
   description,
   artistName,
@@ -59,7 +60,7 @@ const Collection = ({
     )
   }, [])
   return (
-    <Box sx={{ bgcolor: color, textAlign: 'center' }}>
+    <Box sx={{ bgcolor: color, textAlign: 'center' }} id={id}>
       <AppearingComponent>
         <Container
           sx={{ position: 'relative', mb: { mobile: 10, [breakpoint]: 20 } }}

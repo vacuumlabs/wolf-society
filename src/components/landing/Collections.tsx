@@ -86,6 +86,7 @@ const Collections = ({ collectionsData }: Props) => {
         >
           {collectionsData.map((collection, index) => (
             <CollectionCard
+              id={collection.id}
               name={collection.name}
               description={collection.description}
               subtitle={translate('limitedEdition')}

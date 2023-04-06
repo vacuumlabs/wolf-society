@@ -1,5 +1,6 @@
 import { Card, Divider, Grid, Stack, Typography } from '@mui/material'
 import WSFSymbol from '../icons/WSFSymbol'
+import MuiMarkdown from 'mui-markdown'
 
 export type RoadmapCardProps = {
   quarter: string
@@ -58,7 +59,7 @@ const RoadmapCard = ({ quarter, year, items, color }: RoadmapCardProps) => {
                 color="neutral.main"
                 py={3}
               >
-                {item}
+                <MuiMarkdown>{item}</MuiMarkdown>
               </Typography>
             ))}
           </Stack>

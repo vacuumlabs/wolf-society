@@ -67,8 +67,8 @@ const Navigation = () => {
             gap={4}
             sx={{
               display: { mobile: 'none', tabletM: 'flex' },
-              width: '100%',
-              position: 'absolute',
+              width: { mobile: 'auto', desktopS: '100%' },
+              position: { mobile: 'relative', desktopS: 'absolute' },
             }}
           >
             {getSubpagesKeys().map((subpageKey) => {
