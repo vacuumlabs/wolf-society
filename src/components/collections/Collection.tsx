@@ -1,4 +1,8 @@
-import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
+import {
+  useContentful,
+  ContentTypes,
+  NFTData,
+} from '@/utils/hooks/useContentful'
 import { useLocale } from '@/utils/hooks/useLocale'
 import {
   Box,
@@ -11,38 +15,35 @@ import { useState, useEffect } from 'react'
 import { ParallaxProvider } from 'react-scroll-parallax'
 import AppearingComponent from '../AppearingComponent'
 import { Countdown } from '../Countdown'
-import { CollectionCardProps } from '../landing/CollectionCard'
 import ScrollingCard from '../ScrollingCard'
 import ArtistCard from './ArtistCard'
-import NftCard, { NftCardProps } from './NftCard'
+import NftCard from './NftCard'
 
-const getMockNft = (index: number): NftCardProps => {
-  return {
-    name: `NFT name ${index}`,
-    imageUrl: `https://picsum.photos/id/${index}/404/404`,
-    priceEth: '0.5 ETH',
-    priceFiat: '750 EUR',
-    minted: 100,
-    supply: 1000,
-  }
+type Props = {
+  name: string
+  description: string
+  artistName: string
+  artistSubtext: string
+  artistImage: string
+  color: string
+  subtitle: string
+  deadline?: Date
+  numberOfPieces?: number
+  nftData: NFTData[] | null
 }
 
-const MockedNfts: NftCardProps[] = [
-  getMockNft(500),
-  getMockNft(501),
-  getMockNft(502),
-]
-
 const Collection = ({
-  id,
   name,
-  imageUrl,
   description,
+  artistName,
+  artistSubtext,
+  artistImage,
   color,
   subtitle,
   deadline,
   numberOfPieces,
-}: CollectionCardProps) => {
+  nftData,
+}: Props) => {
   const [countdownOrPieces, setCountdownOrPieces] = useState<React.ReactNode>()
   const locale = useLocale()
   const translateCommon = useContentful(ContentTypes.common)
@@ -58,7 +59,7 @@ const Collection = ({
     )
   }, [])
   return (
-    <Box sx={{ bgcolor: color, textAlign: 'center' }} id={id}>
+    <Box sx={{ bgcolor: color, textAlign: 'center' }}>
       <AppearingComponent>
         <Container
           sx={{ position: 'relative', mb: { mobile: 10, [breakpoint]: 20 } }}
@@ -100,26 +101,31 @@ const Collection = ({
                 }}
               >
                 <ArtistCard
-                  name="Artist Name"
+                  name={artistName}
                   color={color}
-                  imageUrl="https://picsum.photos/id/259/700/600"
-                  text="Lorem ipsum dolor
-sit amet, consectetur
-adipiscing elit.
-Donec malesuada
-tellus"
+                  imageUrl={artistImage}
+                  text={artistSubtext}
                 />
               </Box>
             </Stack>
-            <Stack spacing={{ mobile: 5, [breakpoint]: 0 }}>
-              {MockedNfts.map((nft, index) => (
-                <Stack width="100%" alignItems="center" key={nft.name}>
-                  <ScrollingCard index={index}>
-                    <NftCard {...nft} />
-                  </ScrollingCard>
-                </Stack>
-              ))}
-            </Stack>
+            {nftData && (
+              <Stack spacing={{ mobile: 5, [breakpoint]: 0 }}>
+                {nftData.map((nft, index) => (
+                  <Stack width="100%" alignItems="center" key={nft.name}>
+                    <ScrollingCard index={index}>
+                      <NftCard
+                        name={nft.name}
+                        imageUrl={nft.image.fields.file.url}
+                        priceEth={nft.priceInEth.toString()}
+                        supply={nft.totalSupply}
+                        minted={100}
+                        priceFiat="750 EUR"
+                      />
+                    </ScrollingCard>
+                  </Stack>
+                ))}
+              </Stack>
+            )}
           </ParallaxProvider>
         </Container>
       </AppearingComponent>
