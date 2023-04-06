@@ -34,6 +34,7 @@ const MockedNfts: NftCardProps[] = [
 ]
 
 const Collection = ({
+  id,
   name,
   imageUrl,
   description,
@@ -57,7 +58,7 @@ const Collection = ({
     )
   }, [])
   return (
-    <Box sx={{ bgcolor: color, textAlign: 'center' }}>
+    <Box sx={{ bgcolor: color, textAlign: 'center' }} id={id}>
       <AppearingComponent>
         <Container
           sx={{ position: 'relative', mb: { mobile: 10, [breakpoint]: 20 } }}

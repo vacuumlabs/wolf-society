@@ -30,6 +30,7 @@ const Collections = ({ collectionsData }: Props) => {
     <Stack mt={10}>
       {collectionsData.map((collection, index) => (
         <Collection
+          id={collection.id}
           name={collection.name}
           subtitle={translate('limitedEdition')}
           imageUrl={collection.image.fields.file.url}
