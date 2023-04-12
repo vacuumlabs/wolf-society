@@ -67,7 +67,7 @@ const ActivityItem = ({
       <Typography variant="display" component="h2">
         {title}
       </Typography>
-      <Typography>{description}</Typography>
+      <Typography variant="body2">{description}</Typography>
       <Box>
         <Button variant="outlined" onClick={toggleDrawer(true)}>
           {translate('readMore')}
