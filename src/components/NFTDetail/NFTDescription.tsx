@@ -31,14 +31,17 @@ export const NFTDescription = ({
   const isMobile = useMediaQuery((theme: Theme) =>
     theme.breakpoints.down('tabletM')
   )
-  const elementWidth = isMobile ? '100%' : '50%'
   return (
     <Stack
-      sx={{ width: '100vw', backgroundColor: 'neutral.400' }}
+      sx={{
+        width: { mobile: '100vw', tabletM: '90vw' },
+        backgroundColor: 'neutral.400',
+        maxWidth: '1920px',
+      }}
       direction={isMobile ? 'column' : 'row'}
     >
       <Box
-        width={elementWidth}
+        width={{ mobile: '100%', tabletM: '55%' }}
         bgcolor="neutral.600"
         alignItems="center"
         display="flex"
@@ -51,7 +54,7 @@ export const NFTDescription = ({
 
       <Stack
         sx={{
-          width: elementWidth,
+          width: { mobile: '100%', tabletM: '45%' },
           padding: { mobile: '16px', tabletM: '80px' },
         }}
         gap={'88px'}
@@ -70,7 +73,7 @@ export const NFTDescription = ({
               </Stack>
             )}
             {deadline && (
-              <Stack>
+              <Stack gap="8px">
                 <Stack direction="row">
                   <Typography
                     variant="caption"

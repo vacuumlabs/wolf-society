@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   Drawer,
+  IconButton,
   Stack,
   Theme,
   Typography,
@@ -19,6 +20,7 @@ import { NFTBuy, NFTBuyProps } from './NFTBuy'
 import { ReactNode, useRef } from 'react'
 import { useInView } from 'framer-motion'
 import { VerticalLine } from './NFTVerticalLine'
+import { NFTAllocation } from './NFTAllocation'
 
 export interface NFTDetailProps {
   isOpen: boolean
@@ -38,7 +40,6 @@ export const NFTDetail = ({
   nftBuyProps,
 }: NFTDetailProps) => {
   const bottomAnchorRef = useRef<HTMLDivElement>(null)
-  const translate = useContentful(ContentTypes.common)
   const isMobile = useMediaQuery((theme: Theme) =>
     theme.breakpoints.down('tabletM')
   )
@@ -48,24 +49,7 @@ export const NFTDetail = ({
     <>
       <NFTDescription {...nftDescriptionProps} />
       <NFTArtist {...nftArtistProps} />
-      <Stack
-        gap={{ mobile: 5, desktopS: 10 }}
-        direction={{ mobile: 'column', tabletM: 'row' }}
-        sx={{ width: '100vw', backgroundColor: 'neutral.400' }}
-        p={{ mobile: '16px', tabletM: '80px' }}
-      >
-        {ALLOCATION_INFO.map((allocation, index) => (
-          <Box py={3} key={`AllocationInfoStack${index}`}>
-            <AllocationInfoStack
-              percentage={allocation.percentage}
-              text={translate(allocation.textKey)}
-              image={allocation.image}
-              isHorizontal={false}
-              imageOnTheRight={index % 2 === 0}
-            />
-          </Box>
-        ))}
-      </Stack>
+      <NFTAllocation />
       <VerticalLine />
       <NFTUsage {...nftUsageProps} />
       <VerticalLine />
@@ -86,27 +70,25 @@ export const NFTDetail = ({
     >
       <Box
         sx={{
-          position: 'sticky',
+          position: { mobile: 'sticky', tabletM: 'absolute' },
           minWidth: '100%',
+          minHeight: '80px',
           top: 0,
           left: 0,
           zIndex: 99,
+          backgroundColor: isMobile ? 'neutral.600' : 'transparent',
         }}
       >
-        <CloseIcon
-          sx={{
-            border: 'solid 3px',
-            position: 'absolute',
-            top: '6px',
-            right: '6px',
-            height: '38px',
-            width: '38px',
-            '&:hover': {
-              cursor: 'pointer',
-            },
-          }}
+        <IconButton
           onClick={onClose}
-        />
+          sx={{
+            position: 'absolute',
+            top: '16px',
+            right: '16px',
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
       </Box>
       {isMobile ? (
         <Stack sx={{ backgroundColor: 'neutral.400', gap: '80px' }}>

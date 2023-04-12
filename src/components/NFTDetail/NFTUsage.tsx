@@ -31,7 +31,7 @@ export const NFTUsage = ({ lists }: NFTUsageProps) => {
   return (
     <Stack
       sx={{
-        width: '100vw',
+        width: { mobile: '100vw', tabletM: '80vw' },
         backgroundColor: 'neutral.400',
         gap: '120px',
       }}

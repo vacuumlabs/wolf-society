@@ -13,6 +13,7 @@ export enum ContentTypes {
   questionAndAnswer = 'questionAndAnswer',
   collection = 'collection',
   nft = 'nft',
+  nftDetail = 'nftDetail',
 }
 
 export type ProjectData = {
@@ -45,6 +46,10 @@ export type CollectionData = {
   artistName: string
   artistSubtext: string
   artistImage: Asset
+}
+
+export type NFTDetail = {
+  buyNftAndSupport: string
 }
 
 export type NFTData = {
@@ -129,6 +134,7 @@ export type Content = {
   [ContentTypes.questionAndAnswer]: QuestionAndAnswerData
   [ContentTypes.collection]: CollectionData
   [ContentTypes.nft]: NFTData
+  [ContentTypes.nftDetail]: NFTDetail
 }
 
 /**

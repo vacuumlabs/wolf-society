@@ -19,7 +19,7 @@ export const NFTBuy = ({ priceETH, priceEur }: NFTBuyProps) => {
     <Stack
       justifyContent="space-between"
       sx={{
-        width: { mobile: '100vw', tabletM: '80vw' },
+        width: { mobile: '100vw', tabletM: '50vw' },
         backgroundColor: 'neutral.400',
       }}
       p={{ mobile: '16px', tabletM: '80px' }}

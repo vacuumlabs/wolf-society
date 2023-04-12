@@ -37,7 +37,10 @@ export const NFTArtist = ({
   return (
     <>
       <Stack
-        sx={{ width: '100vw', backgroundColor: 'neutral.400' }}
+        sx={{
+          width: { mobile: '100w', tabletM: '80vw' },
+          backgroundColor: 'neutral.400',
+        }}
         p={{ mobile: '16px', tabletM: '80px' }}
         gap="40px"
       >
