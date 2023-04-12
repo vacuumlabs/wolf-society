@@ -38,7 +38,7 @@ const Hero = ({ manifestRef }: Props) => {
             }}
           >
             <Typography variant="display" sx={{ fontWeight: 600 }}>
-              {translate('heroTitle')}
+              Testing
             </Typography>
             <Stack direction="column">
               <Typography variant="body1" display="inline">
