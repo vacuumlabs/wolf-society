@@ -41,8 +41,7 @@ const Collections = ({ collectionsData }: Props) => {
           ease: 'none',
           scrollTrigger: {
             trigger: slider.current,
-            scrub: 1,
-            snap: 1 / (panels.length - 1),
+            scrub: 0,
             start: `top+=${pixelsPause} top`,
             end: () => '+=' + window.innerWidth * panels.length,
           },
