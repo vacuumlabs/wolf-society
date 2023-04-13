@@ -1,3 +1,4 @@
+import { ContentTypes, useContentful } from '@/utils/hooks/useContentful'
 import { Box, Button, Stack, Typography } from '@mui/material'
 
 export interface NFTBuyProps {
@@ -6,6 +7,8 @@ export interface NFTBuyProps {
 }
 
 export const NFTBuy = ({ priceETH, priceEur }: NFTBuyProps) => {
+  const translate = useContentful(ContentTypes.nftDetail)
+
   const CircleButton = ({ label }: { label: string }) => (
     <Button
       variant="contained"
@@ -39,8 +42,8 @@ export const NFTBuy = ({ priceETH, priceEur }: NFTBuyProps) => {
         gap="16px"
         width="100%"
       >
-        <CircleButton label="buy with card" />
-        <CircleButton label="buy with crypto" />
+        <CircleButton label={translate('buyWithCard')} />
+        <CircleButton label={translate('buyWithCrypto')} />
       </Stack>
     </Stack>
   )

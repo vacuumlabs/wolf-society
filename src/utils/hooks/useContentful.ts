@@ -48,8 +48,10 @@ export type CollectionData = {
   artistImage: Asset
 }
 
-export type NFTDetail = {
+export type NFTDetailData = {
   buyNftAndSupport: string
+  buyWithCard: string
+  buyWithCrypto: string
 }
 
 export type NFTData = {
@@ -134,7 +136,7 @@ export type Content = {
   [ContentTypes.questionAndAnswer]: QuestionAndAnswerData
   [ContentTypes.collection]: CollectionData
   [ContentTypes.nft]: NFTData
-  [ContentTypes.nftDetail]: NFTDetail
+  [ContentTypes.nftDetail]: NFTDetailData
 }
 
 /**

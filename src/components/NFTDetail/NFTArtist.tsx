@@ -65,7 +65,6 @@ export const NFTArtist = ({
           <Typography variant="body2">{descriptionRight}</Typography>
         </Stack>
       </Stack>
-      <VerticalLine />
     </>
   )
 }

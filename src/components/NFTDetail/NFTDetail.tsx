@@ -10,14 +10,12 @@ import {
   useMediaQuery,
 } from '@mui/material'
 import HorizontalScroll from 'react-scroll-horizontal'
-import AllocationInfoStack from '../AllocationInfoStack'
-import { ContentTypes, useContentful } from '@/utils/hooks/useContentful'
 import { NFTDescription, NFTDescriptionProps } from './NFTDescription'
 import { NFTArtist, NFTArtistProps } from './NFTArtist'
 import CloseIcon from '@mui/icons-material/Close'
 import { NFTUsage, NFTUsageProps } from './NFTUsage'
 import { NFTBuy, NFTBuyProps } from './NFTBuy'
-import { ReactNode, useRef } from 'react'
+import { useRef } from 'react'
 import { useInView } from 'framer-motion'
 import { VerticalLine } from './NFTVerticalLine'
 import { NFTAllocation } from './NFTAllocation'
@@ -48,7 +46,9 @@ export const NFTDetail = ({
   const content = (
     <>
       <NFTDescription {...nftDescriptionProps} />
+      <VerticalLine />
       <NFTArtist {...nftArtistProps} />
+      <VerticalLine />
       <NFTAllocation />
       <VerticalLine />
       <NFTUsage {...nftUsageProps} />

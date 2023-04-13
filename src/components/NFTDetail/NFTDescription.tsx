@@ -92,7 +92,6 @@ export const NFTDescription = ({
           <Typography variant="body2">{descriptionText}</Typography>
         </Stack>
       </Stack>
-      <VerticalLine />
     </Stack>
   )
 }
