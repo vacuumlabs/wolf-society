@@ -14,6 +14,7 @@ export const SUBPAGES: {
   about: '/',
   collections: '/collections',
   blog: '/blog',
+  faq: '/faq',
 }
 
 export const ALLOCATION_INFO: {

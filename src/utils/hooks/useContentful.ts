@@ -70,6 +70,7 @@ export type Content = {
     email: string
     makeImpact: string
     launchApp: string
+    faq: string
   }
   [ContentTypes.common]: {
     secondsShort: string
