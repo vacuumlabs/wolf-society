@@ -31,6 +31,7 @@ import { BlogData, getBlogData } from '@/utils/blog'
 import { useBlogData } from '@/utils/hooks/useBlogData'
 import Partners from '@/components/landing/Partners'
 import Collections from '@/components/landing/Collections'
+import dynamic from 'next/dynamic'
 
 type Props = {
   blogData: BlogData
@@ -41,6 +42,13 @@ type Props = {
   questionsAndAnswersData: QuestionAndAnswerData[] | null
   collectionsData: CollectionData[] | null
 }
+
+const DynamicManifest = dynamic(
+  () => import('../components/landing/Manifest'),
+  {
+    ssr: false,
+  }
+)
 
 const Home = ({
   blogData,
@@ -58,7 +66,7 @@ const Home = ({
   return (
     <Stack>
       <Hero manifestRef={manifestRef} />
-      <Manifest manifestRef={manifestRef} />
+      <DynamicManifest manifestRef={manifestRef} />
       <Projects projectsData={projectsData} />
       <MakeImpact />
       <Activities />

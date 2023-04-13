@@ -611,6 +611,8 @@ const rainbowKitTheme = lightTheme({
   accentColor: theme.palette.primary.main,
 })
 
+if (typeof window === 'undefined') React.useLayoutEffect = () => {}
+
 const App = ({ Component, pageProps }: AppProps) => (
   <WagmiConfig client={wagmiClient}>
     <RainbowKitProvider chains={chains} theme={rainbowKitTheme}>

@@ -1,7 +1,9 @@
 import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
-import { Box, Container, Stack, Typography } from '@mui/material'
+import { Box, Button, Container, Stack, Typography } from '@mui/material'
 import MuiMarkdown from 'mui-markdown'
 import AppearingComponent from '../AppearingComponent'
+import { RandomReveal, useRandomReveal } from 'react-random-reveal'
+import React, { useState } from 'react'
 
 type Props = {
   manifestRef: React.RefObject<HTMLElement>
@@ -9,6 +11,20 @@ type Props = {
 
 const Manifest = ({ manifestRef }: Props) => {
   const translate = useContentful(ContentTypes.landingPage)
+  const [isPlaying, setIsPalying] = useState(false)
+  const characters = useRandomReveal({
+    isPlaying: isPlaying,
+    duration: 1,
+    revealDuration: 1,
+    characters: translate('manifestTitle'),
+  })
+  const text = useRandomReveal({
+    isPlaying: isPlaying,
+    duration: 1,
+    revealDuration: 1,
+    characters: translate('manifestContent'),
+    ignoreCharacterSet: [' '],
+  })
   return (
     <Box
       ref={manifestRef}
@@ -22,7 +38,7 @@ const Manifest = ({ manifestRef }: Props) => {
               color="neutral.main"
               sx={{ textAlign: 'center' }}
             >
-              {translate('manifestTitle')}
+              {characters}
             </Typography>
             <Box>
               <Typography
@@ -30,9 +46,10 @@ const Manifest = ({ manifestRef }: Props) => {
                 color="neutral.main"
                 display="inline"
               >
-                <MuiMarkdown>{translate('manifestContent')}</MuiMarkdown>
+                <MuiMarkdown>{text}</MuiMarkdown>
               </Typography>
             </Box>
+            <Button onClick={() => setIsPalying(true)}>show</Button>
           </Stack>
         </Container>
       </AppearingComponent>

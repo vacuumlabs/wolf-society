@@ -34,6 +34,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-parallax-mouse": "^2.0.1",
+    "react-random-reveal": "1.0.1",
     "react-scroll-parallax": "^3.3.2",
     "typescript": "4.9.5",
     "wagmi": "^0.11.7"
