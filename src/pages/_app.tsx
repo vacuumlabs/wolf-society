@@ -78,6 +78,7 @@ declare module '@mui/material/styles' {
     title: React.CSSProperties
     caption: React.CSSProperties
     body2S: React.CSSProperties
+    body2XS: React.CSSProperties
     label: React.CSSProperties
     handwriting: React.CSSProperties
     handwritingLarge: React.CSSProperties
@@ -90,6 +91,7 @@ declare module '@mui/material/styles' {
     title?: React.CSSProperties
     caption?: React.CSSProperties
     body2S?: React.CSSProperties
+    body2XS?: React.CSSProperties
     label?: React.CSSProperties
     handwriting?: React.CSSProperties
     handwritingLarge?: React.CSSProperties
@@ -131,6 +133,7 @@ declare module '@mui/material/Typography' {
     handwriting: true
     handwritingLarge: true
     body2S: true
+    body2XS: true
     h1: false
     h2: false
     h3: false
@@ -445,6 +448,7 @@ theme.components = {
         body1: 'div',
         body2: 'div',
         body2S: 'div',
+        body2XS: 'div',
       },
     },
   },
@@ -552,6 +556,17 @@ theme.typography.body2S = {
   fontWeight: 400,
   fontSize: theme.typography.body2.fontSize,
   lineHeight: theme.typography.body2.lineHeight,
+}
+
+theme.typography.body2XS = {
+  ...theme.typography.body2,
+  fontWeight: 400,
+  fontSize: '13px',
+  lineHeight: '16px',
+  [theme.breakpoints.up('desktopM')]: {
+    fontSize: '13px',
+    lineHeight: '16px',
+  },
 }
 
 theme.typography.overline = {

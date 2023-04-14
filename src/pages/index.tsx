@@ -22,7 +22,7 @@ import {
 } from 'next'
 import MakeImpact from '@/components/landing/MakeImpact'
 import Roadmap from '@/components/landing/Roadmap'
-import Questions from '@/components/landing/Questions'
+import Questions from '@/components/faq/Questions'
 import Topics from '@/components/landing/Topics'
 import CTA from '@/components/landing/CTA'
 import { useRef } from 'react'
@@ -64,7 +64,6 @@ const Home = ({
       <Activities />
       <Collections collectionsData={collectionsData} />
       <Roadmap roadmapData={roadmapData} />
-      <Questions questionsAndAnswersData={questionsAndAnswersData} />
       <Topics posts={formattedPosts} />
       <Partners />
       <CTA />

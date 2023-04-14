@@ -32,6 +32,7 @@ export type RoadmapData = {
 
 export type QuestionAndAnswerData = {
   id: string
+  orderNumber: number
   question: string
   answer: string
 }
@@ -87,6 +88,7 @@ export type Content = {
     email: string
     makeImpact: string
     launchApp: string
+    faq: string
   }
   [ContentTypes.common]: {
     secondsShort: string
