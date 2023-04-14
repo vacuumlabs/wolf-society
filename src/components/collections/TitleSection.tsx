@@ -7,11 +7,11 @@ export const TitleSection = () => {
   const translateLanding = useContentful(ContentTypes.landingPage)
   return (
     <Stack
-      gap={20}
+      gap={10}
       sx={{
         pt: 10,
         pb: 40,
-        px: 4,
+        px: { mobile: '16px', desktopM: '200px' },
         backgroundColor: 'neutral.400',
         textAlign: 'center',
       }}
