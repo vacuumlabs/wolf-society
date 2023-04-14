@@ -31,6 +31,7 @@ export type RoadmapData = {
 
 export type QuestionAndAnswerData = {
   id: string
+  orderNumber: number
   question: string
   answer: string
 }

@@ -18,7 +18,7 @@ const Questions = ({ questionsAndAnswersData }: Props) => {
     <Box sx={{ bgcolor: 'neutral.400' }}>
       <Stack
         sx={{
-          textAlign: 'center',
+          textAlign: 'left',
           mt: { mobile: 15, desktopM: 20 },
         }}
       >

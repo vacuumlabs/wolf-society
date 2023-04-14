@@ -1,6 +1,6 @@
 import React from 'react'
 import AppearingComponent from '../AppearingComponent'
-import { Container, Stack } from '@mui/material'
+import { Box, Container, Stack } from '@mui/material'
 import { QuestionAndAnswerData } from '@/utils/hooks/useContentful'
 import QuestionAccordion from './QuestionAccordion'
 
@@ -15,15 +15,17 @@ const QuestionGroup = ({ questionsAndAnswersData }: Props) => (
         sx={{ width: '100%', my: { mobile: 10, desktopM: 20 } }}
         spacing={4}
       >
-        <div>
-          {questionsAndAnswersData.map((questionData, index) => (
-            <QuestionAccordion
-              question={questionData.question}
-              answer={questionData.answer}
-              key={`Question${index}`}
-            />
-          ))}
-        </div>
+        <Box>
+          {questionsAndAnswersData
+            .sort((a, b) => a.orderNumber - b.orderNumber)
+            .map((questionData) => (
+              <QuestionAccordion
+                question={questionData.question}
+                answer={questionData.answer}
+                key={questionData.id}
+              />
+            ))}
+        </Box>
       </Stack>
     </Container>
   </AppearingComponent>
