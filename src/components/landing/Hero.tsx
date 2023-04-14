@@ -1,17 +1,7 @@
 import { SUBPAGES } from '@/consts'
 import { ContentTypes, useContentful } from '@/utils/hooks/useContentful'
-import {
-  Box,
-  Container,
-  Stack,
-  Typography,
-  Link,
-  BreakpointOverrides,
-  useMediaQuery,
-  Theme,
-} from '@mui/material'
-
-import React from 'react'
+import { Box, Container, Stack, Typography, Link } from '@mui/material'
+import React, { useState } from 'react'
 import AppearingComponent from '../AppearingComponent'
 import Button from '../Button'
 import HeroParallax from '../HeroParallax'
@@ -22,10 +12,7 @@ type Props = {
 
 const Hero = ({ manifestRef }: Props) => {
   const translate = useContentful(ContentTypes.landingPage)
-  const breakpoint: keyof BreakpointOverrides = 'tabletS'
-  const isMobile = useMediaQuery((theme: Theme) =>
-    theme.breakpoints.down(breakpoint)
-  )
+  const [isOpenId, setIsOpenId] = useState<number | null>(0)
   return (
     <Box sx={{ bgcolor: 'neutral.400' }}>
       <AppearingComponent>
