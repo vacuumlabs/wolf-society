@@ -22,6 +22,7 @@ const QuestionGroup = ({ questionsAndAnswersData }: Props) => (
               <QuestionAccordion
                 question={questionData.question}
                 answer={questionData.answer}
+                id={questionData.id}
                 key={questionData.id}
               />
             ))}
