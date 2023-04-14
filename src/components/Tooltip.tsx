@@ -25,6 +25,8 @@ const Tooltip = styled(
 )(({ theme }) => ({
   [`& .${tooltipClasses.tooltip}`]: {
     backgroundColor: theme.palette.secondary[500],
+    borderRadius: 0,
+    padding: '16px',
     color: theme.palette.neutral[400],
   },
 }))
