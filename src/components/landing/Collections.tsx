@@ -96,6 +96,8 @@ const Collections = ({ collectionsData }: Props) => {
               numberOfPieces={collection.numberOfPieces}
               key={collection.name}
               color={COLOR_ORDER[index % COLOR_ORDER.length]}
+              collectionNumber={index + 1}
+              numberOfCollections={collectionsData.length}
             />
           ))}
         </Box>
