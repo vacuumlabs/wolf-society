@@ -4,6 +4,12 @@ import allocationArtistsImage from 'public/images/allocationArtists.png'
 import allocationDevelopmentImage from 'public/images/allocationDevelopment.png'
 import allocationProjectsImage from 'public/images/allocationProjects.png'
 
+/**
+ * Matches the custom markdown tooltip syntax in the form:
+ * `*inline text*(tooltip text)`
+ */
+export const tooltipCustomMarkdownRegex = /(\*([^*]*)\*\(([^)]*)\))/g
+
 export const ourCollectionsAddresses: string[] = [
   '0x7dfd5e56dd343140b3d0823d55fdfde8203a729f',
 ]

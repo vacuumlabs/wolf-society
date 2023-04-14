@@ -8,13 +8,20 @@ import {
 } from '@mui/material'
 import PlusIcon24 from '../icons/PlusIcon24'
 import PlusIcon32 from '../icons/PlusIcon32'
+import Tooltip from '../Tooltip'
+import TypographyWithTooltips from '../TypographyWithTooltips'
 
 export type QuestionAccordionProps = {
   question: string
   answer: string
+  key: React.Key
 }
 
-const QuestionAccordion = ({ question, answer }: QuestionAccordionProps) => {
+const QuestionAccordion = ({
+  question,
+  answer,
+  key,
+}: QuestionAccordionProps) => {
   const theme = useTheme()
   const displayBiggerIcon = useMediaQuery(theme.breakpoints.up('desktopM'))
   const expandIcon = displayBiggerIcon ? (
@@ -45,12 +52,28 @@ const QuestionAccordion = ({ question, answer }: QuestionAccordionProps) => {
       <Grid container>
         <Grid item mobile={12} desktopS={5}></Grid>
         <Grid item mobile={12} desktopS={7}>
+          {/*
           <Typography
             variant="body2"
             sx={{ pt: 5, pb: { mobile: 5, desktopM: 10 } }}
           >
-            {answer}
+            <span>lorem ipsum </span>
+            <Tooltip
+              title={
+                'Aliquam at tincidunt libero. Nam vulputate mauris ut nulla consectetur, eu vulputate ligula consectetur.'
+              }
+            >
+              <span>dolor</span>
+            </Tooltip>{' '}
+            sit amet
           </Typography>
+         */}
+          <TypographyWithTooltips
+            text={answer}
+            key={key}
+            variant="body2"
+            sx={{ pt: 5, pb: { mobile: 5, desktopM: 10 } }}
+          />
         </Grid>
       </Grid>
     </Accordion>
