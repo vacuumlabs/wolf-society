@@ -25,6 +25,8 @@ export type CollectionCardProps = {
   subtitle: string
   deadline?: Date
   numberOfPieces?: number
+  collectionNumber: number
+  numberOfCollections: number
 }
 
 const CollectionCard = ({
@@ -36,6 +38,8 @@ const CollectionCard = ({
   subtitle,
   deadline,
   numberOfPieces,
+  collectionNumber,
+  numberOfCollections,
 }: CollectionCardProps) => {
   const [countdownOrPieces, setCountdownOrPieces] = useState<React.ReactNode>()
   const translate = useContentful(ContentTypes.landingPage)
@@ -75,6 +79,25 @@ const CollectionCard = ({
         <Box mx="80px" my="170px">
           <CardMedia component="img" image={imageUrl} alt={name} />
         </Box>
+      </Box>
+      <Box
+        sx={{
+          backgroundColor: 'neutral.400',
+          textAlign: 'center',
+          position: 'absolute',
+          left: 'calc(50% - 44px)',
+          top: 'calc(50% - 44px)',
+          width: '88px',
+          height: '88px',
+        }}
+      >
+        <Typography variant="body2" color="neutral.700" mt={'26px'}>{`${
+          collectionNumber < 10 ? '0' + collectionNumber : collectionNumber
+        }/${
+          numberOfCollections < 10
+            ? '0' + numberOfCollections
+            : numberOfCollections
+        }`}</Typography>
       </Box>
       <Box width="50%" sx={{ display: 'flex', flexDirection: 'column' }}>
         <Box

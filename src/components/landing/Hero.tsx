@@ -1,7 +1,7 @@
 import { SUBPAGES } from '@/consts'
 import { ContentTypes, useContentful } from '@/utils/hooks/useContentful'
 import { Box, Container, Stack, Typography, Link } from '@mui/material'
-import React, { useState } from 'react'
+import React from 'react'
 import AppearingComponent from '../AppearingComponent'
 import Button from '../Button'
 import HeroParallax from '../HeroParallax'
@@ -12,7 +12,7 @@ type Props = {
 
 const Hero = ({ manifestRef }: Props) => {
   const translate = useContentful(ContentTypes.landingPage)
-  const [isOpenId, setIsOpenId] = useState<number | null>(0)
+
   return (
     <Box sx={{ bgcolor: 'neutral.400' }}>
       <AppearingComponent>
@@ -20,7 +20,7 @@ const Hero = ({ manifestRef }: Props) => {
           <Stack
             sx={{
               gap: 4,
-              mt: { mobile: 15, desktopM: 20 },
+              mt: { mobile: 15, desktopM: 10 },
               textAlign: 'center',
             }}
           >
@@ -28,10 +28,10 @@ const Hero = ({ manifestRef }: Props) => {
               {translate('heroTitle')}
             </Typography>
             <Stack direction="column">
-              <Typography variant="body1" display="inline">
+              <Typography variant="body2" display="inline">
                 {translate('heroSubtitle')}
               </Typography>
-              <Typography variant="body1" display="inline" color="primary">
+              <Typography variant="body2" display="inline" color="primary">
                 <Link
                   variant="inherit"
                   underline="hover"

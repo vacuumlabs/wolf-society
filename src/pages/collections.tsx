@@ -15,6 +15,7 @@ import {
 } from 'next'
 import { Stack } from '@mui/material'
 import Collection from '@/components/collections/Collection'
+import { TitleSection } from '@/components/collections/TitleSection'
 
 const COLOR_ORDER: string[] = [
   'secondary.main',
@@ -35,6 +36,7 @@ const Collections = ({ collectionsData, nftData }: Props) => {
     <></>
   ) : (
     <Stack mt={10}>
+      <TitleSection />
       {collectionsData.map((collection, index) => {
         const nftsInThisCollection =
           nftData?.filter((nft) => nft.collectionId === collection.id) ?? null

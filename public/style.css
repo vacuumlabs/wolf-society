@@ -6,3 +6,8 @@
 .show {
   opacity: 1;
 }
+
+::selection{
+  color: #2B4B2A;
+  background: #DB372D;
+}

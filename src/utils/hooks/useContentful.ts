@@ -63,6 +63,16 @@ export type NFTData = {
   image: Asset
 }
 
+export type CollectionsPageData = {
+  description: string
+  pieces: string
+  available: string
+  aboutArtist: string
+  artImpactTitle: string
+  artImpactSubtitle: string
+  artImpactHeadline: string
+}
+
 // Content to be injected into every page
 const SHARED_CONTENT: ContentTypes[] = [
   ContentTypes.navbar,
@@ -118,12 +128,7 @@ export type Content = {
     roadmap: string
     partners: string
   }
-  [ContentTypes.collectionsPage]: {
-    description: string
-    pieces: string
-    available: string
-    aboutArtist: string
-  }
+  [ContentTypes.collectionsPage]: CollectionsPageData
   [ContentTypes.articlesPage]: {
     articles: string
     readMore: string
