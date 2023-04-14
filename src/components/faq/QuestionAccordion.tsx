@@ -52,22 +52,6 @@ const QuestionAccordion = ({
       <Grid container>
         <Grid item mobile={12} desktopS={5}></Grid>
         <Grid item mobile={12} desktopS={7}>
-          {/*
-          <Typography
-            variant="body2"
-            sx={{ pt: 5, pb: { mobile: 5, desktopM: 10 } }}
-          >
-            <span>lorem ipsum </span>
-            <Tooltip
-              title={
-                'Aliquam at tincidunt libero. Nam vulputate mauris ut nulla consectetur, eu vulputate ligula consectetur.'
-              }
-            >
-              <span>dolor</span>
-            </Tooltip>{' '}
-            sit amet
-          </Typography>
-         */}
           <TypographyWithTooltips
             text={answer}
             key={key}
