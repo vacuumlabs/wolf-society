@@ -109,8 +109,14 @@ export type Content = {
     heroSubtitle: string
     youAreWolfSociety: string
     makeImpact: string
-    manifestTitle: string
-    manifestContent: string
+    manifestTitle1: string
+    manifestTitle2: string
+    manifestTitle3: string
+    manifestTitle4: string
+    manifestContent1: string
+    manifestContent2: string
+    manifestContent3: string
+    manifestContent4: string
     supportedProjects: string
     allProjects: string
     makeImpactText: string

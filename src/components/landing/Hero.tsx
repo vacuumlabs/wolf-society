@@ -44,11 +44,6 @@ const Hero = ({ manifestRef }: Props) => {
                 </Link>
               </Typography>
             </Stack>
-            <Stack sx={{ alignItems: 'center' }}>
-              <Button href={SUBPAGES['collections']}>
-                {translate('makeImpact')}
-              </Button>
-            </Stack>
           </Stack>
         </Container>
       </AppearingComponent>
