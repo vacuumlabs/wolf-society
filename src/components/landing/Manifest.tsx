@@ -76,76 +76,82 @@ const Manifest = ({ manifestRef }: Props) => {
     return () => ctx.revert()
   })
 
-  console.log(texts)
+  const content = (
+    <>
+      {texts.map((text, index) => (
+        <Box
+          pt={4}
+          key={`ManifestText${index}`}
+          className="manifest-panel"
+          sx={{ width: '100vw' }}
+        >
+          <Container>
+            <Typography
+              variant="caption"
+              color="neutral.main"
+              sx={{ textAlign: 'center', mb: 4 }}
+            >
+              {translate(titles[index])}
+            </Typography>
+            <Typography
+              sx={{ textAlign: 'center' }}
+              color="neutral.main"
+              display="inline"
+            >
+              <MuiMarkdown>{translate(text)}</MuiMarkdown>
+            </Typography>
+
+            {index === texts.length - 1 && (
+              <Stack sx={{ alignItems: 'center', mt: '32px' }}>
+                <Button variant="contained" href={SUBPAGES['collections']}>
+                  {translate('makeImpact')}
+                </Button>
+              </Stack>
+            )}
+          </Container>
+        </Box>
+      ))}
+    </>
+  )
+
   return (
     <Box
       ref={manifestRef}
       sx={{ bgcolor: 'secondary.main', textAlign: 'center' }}
     >
       <AppearingComponent>
-        <Stack>
-          <Box>
-            <Stack
-              ref={component}
-              sx={{
-                overflow: 'hidden',
-              }}
-            >
-              <Box
-                ref={slider}
-                sx={
-                  isMobile
-                    ? {}
-                    : {
-                        pt: '80px',
-                        width: `${100 * texts.length}vw`,
-                        height: `calc(${100 * texts.length}vw + 100vh)`,
-                        display: 'flex',
-                        flexWrap: 'wrap',
-                      }
-                }
-                className="container"
+        {isMobile ? (
+          <>{content.props.children}</>
+        ) : (
+          <Stack>
+            <Box>
+              <Stack
+                ref={component}
+                sx={{
+                  overflow: 'hidden',
+                }}
               >
-                {texts.map((text, index) => (
-                  <Box
-                    pt={4}
-                    key={`ManifestText${index}`}
-                    className="manifest-panel"
-                    sx={{ width: '100vw' }}
-                  >
-                    <Container>
-                      <Typography
-                        variant="caption"
-                        color="neutral.main"
-                        sx={{ textAlign: 'center', mb: 4 }}
-                      >
-                        {translate(titles[index])}
-                      </Typography>
-                      <Typography
-                        sx={{ textAlign: 'center' }}
-                        color="neutral.main"
-                        display="inline"
-                      >
-                        <MuiMarkdown>{translate(text)}</MuiMarkdown>
-                      </Typography>
-
-                      {index === texts.length - 1 && (
-                        <Stack sx={{ alignItems: 'center', mt: '32px' }}>
-                          <Button
-                            variant="contained"
-                            href={SUBPAGES['collections']}
-                          >
-                            {translate('makeImpact')}
-                          </Button>
-                        </Stack>
-                      )}
-                    </Container>
-                  </Box>
-                ))}
-              </Box>
-            </Stack>
-          </Box>
-        </Stack>
+                <Box
+                  ref={slider}
+                  sx={
+                    isMobile
+                      ? {}
+                      : {
+                          pt: '80px',
+                          width: `${100 * texts.length}vw`,
+                          height: `calc(${100 * texts.length}vw + 100vh)`,
+                          display: 'flex',
+                          flexWrap: 'wrap',
+                        }
+                  }
+                  className="container"
+                >
+                  {content.props.children}
+                </Box>
+              </Stack>
+            </Box>
+          </Stack>
+        )}
       </AppearingComponent>
     </Box>
   )
