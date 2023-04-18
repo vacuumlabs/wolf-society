@@ -4,7 +4,7 @@ const nextConfig = {
   transpilePackages: ['gsap'],
   i18n: {
     defaultLocale: 'en-US',
-    locales: ['en-US', 'sk'],
+    locales: ['en-US'],
     localeDetection: true,
   },
 }
