@@ -19,7 +19,7 @@ const Questions = ({ questionsAndAnswersData }: Props) => {
       <Stack
         sx={{
           textAlign: 'left',
-          mt: { mobile: 15, desktopM: 20 },
+          mt: 5,
         }}
       >
         {translate('questions')

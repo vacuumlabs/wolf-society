@@ -23,7 +23,7 @@ const Faq = ({
   questionsAndAnswersData,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
-    <Stack>
+    <Stack mt={10}>
       <Questions questionsAndAnswersData={questionsAndAnswersData} />
       <CTA />
       <Partners />

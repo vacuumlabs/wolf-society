@@ -58,7 +58,7 @@ const Home = ({
     locale
   )
   return (
-    <Stack>
+    <Stack mt={10}>
       <Hero manifestRef={manifestRef} />
       <Manifesto ref={manifestRef} />
       <Projects projectsData={projectsData} />

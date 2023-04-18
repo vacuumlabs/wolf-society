@@ -20,7 +20,7 @@ const Hero = ({ manifestRef }: Props) => {
           <Stack
             sx={{
               gap: 4,
-              mt: { mobile: 15, desktopM: 10 },
+              mt: 5,
               textAlign: 'center',
             }}
           >
