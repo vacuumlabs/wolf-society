@@ -56,14 +56,15 @@ const Manifest = ({ manifestRef }: Props) => {
       <Tabs
         value={activeTab}
         variant="fullWidth"
-        sx={{}}
         TabIndicatorProps={{ sx: { display: 'none' } }}
       >
         {titles.map((title, index) => (
           <Tab
-            wrapped={true}
+            // wrapped
             key={`tab-${index}`}
             sx={{
+              py: 5,
+              root: { width: '100px' },
               '&.Mui-selected': {
                 color: '#1890ff',
               },
@@ -75,6 +76,7 @@ const Manifest = ({ manifestRef }: Props) => {
               <Typography
                 variant="caption"
                 color={activeTab === index ? 'neutral.600' : 'secondary.300'}
+                sx={{ '&:hover': { color: 'neutral.600' } }}
               >
                 {translate(title)}
               </Typography>
@@ -85,7 +87,7 @@ const Manifest = ({ manifestRef }: Props) => {
       </Tabs>
       {texts.map((text, index) =>
         index === activeTab ? (
-          <Box key={index} mt={20}>
+          <Box key={index} mt={10}>
             <AppearingComponent>
               <Typography
                 sx={{ textAlign: 'center' }}
@@ -96,7 +98,7 @@ const Manifest = ({ manifestRef }: Props) => {
               </Typography>
 
               {index === texts.length - 1 && (
-                <Stack sx={{ alignItems: 'center', mt: '32px' }}>
+                <Stack sx={{ alignItems: 'center', mt: 5 }}>
                   <Button variant="contained" href={SUBPAGES['collections']}>
                     {translate('makeImpact')}
                   </Button>
@@ -123,7 +125,8 @@ const Manifest = ({ manifestRef }: Props) => {
 
   return (
     <Box
-      pt={{ mobile: 20, tabletM: 30 }}
+      pt={{ mobile: 13, tabletM: 15 }}
+      pb={{ mobile: 5, tabletM: 20 }}
       ref={manifestRef}
       sx={{ bgcolor: 'secondary.main', textAlign: 'center' }}
     >

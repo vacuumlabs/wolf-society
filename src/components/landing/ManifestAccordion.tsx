@@ -24,7 +24,7 @@ export const ManifestAccordion = ({ title, text }: ManifestAccordionProps) => {
         id={`${title}-header`}
         sx={{
           px: 0,
-          py: 5,
+          py: '24px',
           '& .MuiAccordionSummary-content': {
             m: 0,
             justifyContent: 'center',
@@ -38,7 +38,7 @@ export const ManifestAccordion = ({ title, text }: ManifestAccordionProps) => {
           {title}
         </Typography>
       </AccordionSummary>
-      <Typography variant="body1" color="neutral.600">
+      <Typography variant="body1" color="neutral.600" pb={5} pt="20px">
         {text}
       </Typography>
     </Accordion>
