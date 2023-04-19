@@ -52,7 +52,7 @@ export const ManifestAccordion = ({
           {title}
         </Typography>
       </AccordionSummary>
-      <Typography variant="body1" color="neutral.600" pb={5} pt="20px">
+      <Typography variant="body2S" color="neutral.600" pb={5} pt="20px">
         {text}
       </Typography>
     </Accordion>
