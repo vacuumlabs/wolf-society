@@ -23,14 +23,11 @@ export const ManifestAccordion = ({
       disableGutters
       expanded={expanded}
       onClick={onClick}
-      sx={(theme: Theme) => {
-        console.log(theme.palette.secondary[500])
-        return {
-          bgcolor: 'transparent',
-          boxShadow: 0,
-          borderBottom: `1px solid ${theme.palette.secondary[400]}`,
-        }
-      }}
+      sx={(theme: Theme) => ({
+        bgcolor: 'transparent',
+        boxShadow: 0,
+        borderBottom: `1px solid ${theme.palette.secondary[400]}`,
+      })}
     >
       <AccordionSummary
         expandIcon={expandIcon}
