@@ -13,7 +13,7 @@ import AppearingComponent from '../AppearingComponent'
 import { useState } from 'react'
 import MuiMarkdown from 'mui-markdown'
 import { SUBPAGES } from '@/consts'
-import { ManifestAccordion } from './ManifestAccordion'
+import { ManifestAccordion } from './ManifestoAccordion'
 import Button from '../Button'
 
 type Props = {
@@ -30,7 +30,7 @@ type ManifestContentOptions =
   | 'manifestContent3'
   | 'manifestContent4'
 
-const Manifest = ({ manifestRef }: Props) => {
+const Manifesto = ({ manifestRef }: Props) => {
   const translate = useContentful(ContentTypes.landingPage)
   const titles: ManifestTitleOptions[] = [
     'manifestTitle1',
@@ -50,6 +50,12 @@ const Manifest = ({ manifestRef }: Props) => {
   )
 
   const [activeTab, setActiveTab] = useState<number>(0)
+  const [isExpanded, setIsExpanded] = useState<number | null>(0)
+
+  const handleSetIsExpanded = (id: number) => {
+    if (isExpanded === id) setIsExpanded(null)
+    else setIsExpanded(id)
+  }
 
   const desktopView = (
     <>
@@ -115,6 +121,8 @@ const Manifest = ({ manifestRef }: Props) => {
     <>
       {texts.map((text, index) => (
         <ManifestAccordion
+          expanded={isExpanded === index}
+          onClick={() => handleSetIsExpanded(index)}
           key={index}
           title={translate(titles[index])}
           text={translate(text)}
@@ -134,4 +142,4 @@ const Manifest = ({ manifestRef }: Props) => {
     </Box>
   )
 }
-export default Manifest
+export default Manifesto

@@ -1,21 +1,35 @@
-import { Accordion, AccordionSummary, Typography } from '@mui/material'
+import { Accordion, AccordionSummary, Theme, Typography } from '@mui/material'
 import PlusIcon24 from '../icons/PlusIcon24'
+import { useState } from 'react'
 
 export type ManifestAccordionProps = {
   title: string
   text: string
+  expanded: boolean
+  onClick: () => void
 }
 
-export const ManifestAccordion = ({ title, text }: ManifestAccordionProps) => {
+export const ManifestAccordion = ({
+  title,
+  text,
+  expanded,
+  onClick,
+}: ManifestAccordionProps) => {
   const expandIcon = <PlusIcon24 sx={{ color: 'neutral.600' }} />
+  const isExpanded = useState<number>(0)
 
   return (
     <Accordion
       disableGutters
-      sx={{
-        bgcolor: 'transparent',
-        boxShadow: 0,
-        borderBottom: '1px solid #B0B2A3',
+      expanded={expanded}
+      onClick={onClick}
+      sx={(theme: Theme) => {
+        console.log(theme.palette.secondary[500])
+        return {
+          bgcolor: 'transparent',
+          boxShadow: 0,
+          borderBottom: `1px solid ${theme.palette.secondary[400]}`,
+        }
       }}
     >
       <AccordionSummary

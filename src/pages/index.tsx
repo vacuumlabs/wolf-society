@@ -1,5 +1,5 @@
 import Hero from '@/components/landing/Hero'
-import Manifest from '@/components/landing/Manifest'
+import Manifesto from '@/components/landing/Manifesto'
 import Projects from '@/components/landing/Projects'
 import {
   CollectionData,
@@ -58,7 +58,7 @@ const Home = ({
   return (
     <Stack>
       <Hero manifestRef={manifestRef} />
-      <Manifest manifestRef={manifestRef} />
+      <Manifesto manifestRef={manifestRef} />
       <Projects projectsData={projectsData} />
       <MakeImpact />
       <Activities />
