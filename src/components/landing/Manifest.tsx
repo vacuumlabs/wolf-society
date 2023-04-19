@@ -4,16 +4,17 @@ import {
   Button,
   Container,
   Stack,
+  Tab,
+  Tabs,
   Theme,
   Typography,
   useMediaQuery,
 } from '@mui/material'
-import gsap from 'gsap'
-import ScrollTrigger from 'gsap/dist/ScrollTrigger'
 import AppearingComponent from '../AppearingComponent'
-import { useEffect, useRef } from 'react'
+import { useState } from 'react'
 import MuiMarkdown from 'mui-markdown'
 import { SUBPAGES } from '@/consts'
+import { ManifestAccordion } from './ManifestAccordion'
 
 type Props = {
   manifestRef: React.RefObject<HTMLElement>
@@ -43,73 +44,79 @@ const Manifest = ({ manifestRef }: Props) => {
     'manifestContent3',
     'manifestContent4',
   ]
-  const component = useRef<HTMLDivElement>(null)
-  const slider = useRef<HTMLDivElement>(null)
+
   const isMobile = useMediaQuery((theme: Theme) =>
     theme.breakpoints.down('tabletM')
   )
-  if (!isMobile) gsap.registerPlugin(ScrollTrigger)
 
-  useEffect(() => {
-    if (isMobile) return
-    let ctx = gsap.context(() => {
-      const pixelsPause = 0
-      let panels = gsap.utils.toArray('.manifest-panel')
-      if (panels.length) {
-        gsap.to(panels, {
-          xPercent: -100 * (panels.length - 1),
-          ease: 'none',
-          scrollTrigger: {
-            trigger: slider.current,
-            scrub: 0,
-            start: `top+=${pixelsPause} top`,
-            end: () => '+=' + window.innerWidth * panels.length,
-          },
-        })
-        ScrollTrigger.create({
-          trigger: slider.current,
-          end: () => '+=' + (window.innerWidth * panels.length + pixelsPause),
-          pin: true,
-        })
-      }
-    }, component)
-    return () => ctx.revert()
-  })
+  const [activeTab, setActiveTab] = useState<number>(0)
 
-  const content = (
+  const desktopView = (
+    <>
+      <Tabs
+        value={activeTab}
+        variant="fullWidth"
+        sx={{}}
+        TabIndicatorProps={{ sx: { display: 'none' } }}
+      >
+        {titles.map((title, index) => (
+          <Tab
+            wrapped={true}
+            key={`tab-${index}`}
+            sx={{
+              '&.Mui-selected': {
+                color: '#1890ff',
+              },
+              borderBottom: '3px solid',
+              borderColor:
+                activeTab === index ? 'neutral.600' : 'secondary.300',
+            }}
+            label={
+              <Typography
+                variant="caption"
+                color={activeTab === index ? 'neutral.600' : 'secondary.300'}
+              >
+                {translate(title)}
+              </Typography>
+            }
+            onClick={() => setActiveTab(index)}
+          />
+        ))}
+      </Tabs>
+      {texts.map((text, index) =>
+        index === activeTab ? (
+          <Box key={index} mt={20}>
+            <AppearingComponent>
+              <Typography
+                sx={{ textAlign: 'center' }}
+                color="neutral.main"
+                display="inline"
+              >
+                <MuiMarkdown>{translate(text)}</MuiMarkdown>
+              </Typography>
+
+              {index === texts.length - 1 && (
+                <Stack sx={{ alignItems: 'center', mt: '32px' }}>
+                  <Button variant="contained" href={SUBPAGES['collections']}>
+                    {translate('makeImpact')}
+                  </Button>
+                </Stack>
+              )}
+            </AppearingComponent>
+          </Box>
+        ) : null
+      )}
+    </>
+  )
+
+  const mobileView = (
     <>
       {texts.map((text, index) => (
-        <Box
-          pt={4}
-          key={`ManifestText${index}`}
-          className="manifest-panel"
-          sx={{ width: '100vw' }}
-        >
-          <Container>
-            <Typography
-              variant="caption"
-              color="neutral.main"
-              sx={{ textAlign: 'center', mb: 4 }}
-            >
-              {translate(titles[index])}
-            </Typography>
-            <Typography
-              sx={{ textAlign: 'center' }}
-              color="neutral.main"
-              display="inline"
-            >
-              <MuiMarkdown>{translate(text)}</MuiMarkdown>
-            </Typography>
-
-            {index === texts.length - 1 && (
-              <Stack sx={{ alignItems: 'center', mt: '32px' }}>
-                <Button variant="contained" href={SUBPAGES['collections']}>
-                  {translate('makeImpact')}
-                </Button>
-              </Stack>
-            )}
-          </Container>
-        </Box>
+        <ManifestAccordion
+          key={index}
+          title={translate(titles[index])}
+          text={translate(text)}
+        />
       ))}
     </>
   )
@@ -119,40 +126,7 @@ const Manifest = ({ manifestRef }: Props) => {
       ref={manifestRef}
       sx={{ bgcolor: 'secondary.main', textAlign: 'center' }}
     >
-      <AppearingComponent>
-        {isMobile ? (
-          <>{content.props.children}</>
-        ) : (
-          <Stack>
-            <Box>
-              <Stack
-                ref={component}
-                sx={{
-                  overflow: 'hidden',
-                }}
-              >
-                <Box
-                  ref={slider}
-                  sx={
-                    isMobile
-                      ? {}
-                      : {
-                          pt: '80px',
-                          width: `${100 * texts.length}vw`,
-                          height: `calc(${100 * texts.length}vw + 100vh)`,
-                          display: 'flex',
-                          flexWrap: 'wrap',
-                        }
-                  }
-                  className="container"
-                >
-                  {content.props.children}
-                </Box>
-              </Stack>
-            </Box>
-          </Stack>
-        )}
-      </AppearingComponent>
+      <Container>{isMobile ? mobileView : desktopView}</Container>
     </Box>
   )
 }
