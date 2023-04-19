@@ -11,11 +11,14 @@ const Tooltip = styled(
     <MuiTooltip
       {...props}
       classes={{ popper: className }}
+      leaveDelay={200}
       title={<Typography variant="body2XS">{title}</Typography>}
     >
       <em
         style={{
           color: 'secondary.500',
+          textDecorationLine: 'underline',
+          textDecorationStyle: 'dotted',
         }}
       >
         {children}
