@@ -1,7 +1,6 @@
 import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
 import {
   Box,
-  Button,
   Container,
   Stack,
   Tab,
@@ -15,6 +14,7 @@ import { useState } from 'react'
 import MuiMarkdown from 'mui-markdown'
 import { SUBPAGES } from '@/consts'
 import { ManifestAccordion } from './ManifestAccordion'
+import Button from '../Button'
 
 type Props = {
   manifestRef: React.RefObject<HTMLElement>
@@ -99,7 +99,7 @@ const Manifest = ({ manifestRef }: Props) => {
 
               {index === texts.length - 1 && (
                 <Stack sx={{ alignItems: 'center', mt: 5 }}>
-                  <Button variant="contained" href={SUBPAGES['collections']}>
+                  <Button href={SUBPAGES['collections']}>
                     {translate('makeImpact')}
                   </Button>
                 </Stack>
