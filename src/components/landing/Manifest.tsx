@@ -60,7 +60,7 @@ const Manifest = ({ manifestRef }: Props) => {
       >
         {titles.map((title, index) => (
           <Tab
-            // wrapped
+            wrapped
             key={`tab-${index}`}
             sx={{
               py: 5,
