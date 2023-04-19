@@ -123,6 +123,7 @@ const Manifest = ({ manifestRef }: Props) => {
 
   return (
     <Box
+      pt={{ mobile: 20, tabletM: 30 }}
       ref={manifestRef}
       sx={{ bgcolor: 'secondary.main', textAlign: 'center' }}
     >
