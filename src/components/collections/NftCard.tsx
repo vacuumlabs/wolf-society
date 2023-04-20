@@ -14,6 +14,8 @@ import ArrowRightIcon from '../icons/ArrowRightIcon'
 import { NFTDetail } from '../NFTDetail/NFTDetail'
 import { MOCKED_NFT_DETAIL } from '../NFTDetail/mockedDetailData'
 import { useState } from 'react'
+import { Edge } from './ShareButton'
+import dynamic from 'next/dynamic'
 
 export type NftCardProps = {
   name: string
@@ -24,6 +26,11 @@ export type NftCardProps = {
   supply: number
   artistName: string
 }
+
+const DynamicShareButton = dynamic(
+  () => import('./ShareButton').then((mod) => mod.ShareButton),
+  { ssr: false }
+)
 
 const NftCard = ({
   name,
@@ -81,13 +88,25 @@ const NftCard = ({
                 /{supply} {translate('pieces')}
               </Typography>
             </Box>
+            <DynamicShareButton
+              sx={{
+                position: 'absolute',
+                bottom: 0,
+                right: 0,
+                transform: 'translateY(100%)',
+                zIndex: 1,
+              }}
+              removeEdges={new Set(['r', 't']) as Set<Edge>}
+            />
           </Box>
           <CardContent sx={{ p: 0, transition: 'translate 0.25s' }}>
             <Stack sx={{ p: 4, textAlign: 'start' }} gap={1}>
               <Typography variant="caption" color="secondary">
                 {name}
               </Typography>
-              <Typography variant="body2S">{artistName}</Typography>
+              <Typography variant="body2S">
+                {artistName || 'Artist Name'}
+              </Typography>
               <Stack direction="row" alignItems="center" gap={1}>
                 <Typography variant="caption">{priceEth}</Typography>
                 <Typography variant="body2">{priceFiat}</Typography>

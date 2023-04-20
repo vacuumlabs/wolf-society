@@ -8,7 +8,12 @@ import {
   useMediaQuery,
 } from '@mui/material'
 import { Countdown } from '../Countdown'
-import { VerticalLine } from './NFTVerticalLine'
+import dynamic from 'next/dynamic'
+
+const DynamicShareButton = dynamic(
+  () => import('../collections/ShareButton').then((mod) => mod.ShareButton),
+  { ssr: false }
+)
 
 export interface NFTDescriptionProps {
   name: string
@@ -51,13 +56,12 @@ export const NFTDescription = ({
           <CardMedia component="img" image={imageUrl} alt={name} />
         </Box>
       </Box>
-
       <Stack
         sx={{
           width: { mobile: '100%', tabletM: '45%' },
           padding: { mobile: '16px', tabletM: '80px' },
         }}
-        gap={'88px'}
+        gap={5}
       >
         <Stack gap="32px">
           <Typography variant="headline" fontWeight={600}>
@@ -86,11 +90,9 @@ export const NFTDescription = ({
               </Stack>
             )}
           </Stack>
+          <DynamicShareButton />
         </Stack>
-        <Stack gap="8px">
-          <Typography variant="caption">{translate('description')}</Typography>
-          <Typography variant="body2">{descriptionText}</Typography>
-        </Stack>
+        <Typography variant="body2">{descriptionText}</Typography>
       </Stack>
     </Stack>
   )
