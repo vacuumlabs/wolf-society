@@ -92,7 +92,9 @@ export const NFTDescription = ({
           </Stack>
           <DynamicShareButton />
         </Stack>
-        <Typography variant="body2">{descriptionText}</Typography>
+        <Stack gap="8px">
+          <Typography variant="body2">{descriptionText}</Typography>
+        </Stack>
       </Stack>
     </Stack>
   )
