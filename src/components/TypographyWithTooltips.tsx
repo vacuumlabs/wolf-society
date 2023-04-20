@@ -1,7 +1,27 @@
 import { tooltipCustomMarkdownRegex } from '@/consts'
-import { Typography, TypographyProps } from '@mui/material'
+import { Link, Typography, TypographyProps } from '@mui/material'
 import React from 'react'
 import Tooltip from './Tooltip'
+import { ReactMarkdown } from 'react-markdown/lib/react-markdown'
+import { visit } from 'unist-util-visit' // dep of react-markdown
+
+/**
+ * `react-markdown` trims whitespace on the node by default,
+ *  this remark plugin adds spaces back where necessary.
+ *
+ * @param toFront Add space to front?
+ * @param toBack  Add space to back?
+ * @returns a remark parser plugin
+ */
+const genMarkdownParser = (toFront: boolean, toBack: boolean) => {
+  return () => {
+    return (tree: any) => {
+      visit(tree, 'text', (node) => {
+        node.value = `${toFront ? ' ' : ''}${node.value}${toBack ? ' ' : ''}`
+      })
+    }
+  }
+}
 
 /**
  *
@@ -15,7 +35,15 @@ const parseText = (
 ): React.ReactElement<any, any> | string => {
   const foundTooltipArray = text.match(tooltipCustomMarkdownRegex)
   if (foundTooltipArray == null) {
-    return text
+    return (
+      <ReactMarkdown
+        components={{
+          p: ({ node, ...props }) => <span {...props} />,
+        }}
+      >
+        {text}
+      </ReactMarkdown>
+    )
   }
 
   // Splitting by regex splices the capture groups into the resulting array,
@@ -52,16 +80,48 @@ const parseText = (
     return { content, tooltip }
   })
 
-  const normalTexts = res.map((it, idx) => (
-    <span key={`${key}-plain-${idx}`}>{it}</span>
+  const normalTexts = res.map((content, idx) => (
+    <ReactMarkdown
+      remarkPlugins={[
+        genMarkdownParser(content.startsWith(' '), content.endsWith(' ')),
+      ]}
+      key={`${key}-plain-${idx}`}
+      components={{
+        p: ({ node, ...props }) => <span {...props} />,
+      }}
+    >
+      {content}
+    </ReactMarkdown>
   ))
-  const tooltippedTexts = splitTooltips.map(({ content, tooltip }, idx) => {
-    return (
-      <Tooltip title={tooltip} key={`${key}-tooltip-${idx}`}>
-        <span>{content}</span>
-      </Tooltip>
-    )
-  })
+
+  const tooltippedTexts = splitTooltips.map(({ content, tooltip }, idx) => (
+    <Tooltip
+      title={
+        <ReactMarkdown
+          components={{
+            p: ({ node, ...props }) => <span {...props} />,
+            a: ({ node, ...props }) => (
+              <Link {...props} href={props.href} target={'_blank'} />
+            ),
+          }}
+        >
+          {tooltip}
+        </ReactMarkdown>
+      }
+      key={`${key}-tooltip-${idx}`}
+    >
+      <ReactMarkdown
+        remarkPlugins={[
+          genMarkdownParser(content.startsWith(' '), content.endsWith(' ')),
+        ]}
+        components={{
+          p: ({ node, ...props }) => <span {...props} />,
+        }}
+      >
+        {content}
+      </ReactMarkdown>
+    </Tooltip>
+  ))
 
   let joined: JSX.Element[] = []
   for (

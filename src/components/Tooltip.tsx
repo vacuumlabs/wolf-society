@@ -4,24 +4,48 @@ import {
   tooltipClasses,
   styled,
   Typography,
+  ClickAwayListener,
+  useMediaQuery,
+  Theme,
 } from '@mui/material'
+import { useState } from 'react'
 
 const Tooltip = styled(
-  ({ className, children, title, ...props }: TooltipProps) => (
-    <MuiTooltip
-      {...props}
-      classes={{ popper: className }}
-      title={<Typography variant="body2XS">{title}</Typography>}
-    >
-      <em
-        style={{
-          color: 'secondary.500',
-        }}
-      >
-        {children}
-      </em>
-    </MuiTooltip>
-  )
+  ({ className, children, title, ...props }: TooltipProps) => {
+    const isMobile = useMediaQuery((theme: Theme) =>
+      theme.breakpoints.down('tabletS')
+    )
+    const [tooltipOpen, setTooltipOpen] = useState(false)
+
+    return (
+      <ClickAwayListener onClickAway={() => setTooltipOpen(false)}>
+        <MuiTooltip
+          {...props}
+          classes={{ popper: className }}
+          leaveDelay={200}
+          title={<Typography variant="body2XS">{title}</Typography>}
+          disableFocusListener={isMobile}
+          disableHoverListener={isMobile}
+          disableTouchListener={isMobile}
+          open={isMobile ? tooltipOpen : undefined}
+        >
+          <Typography
+            sx={{
+              color: 'secondary.500',
+              display: 'inline',
+              textDecorationLine: 'underline',
+              textDecorationStyle: 'dotted',
+              fontStyle: 'italic',
+            }}
+            onClick={isMobile ? () => setTooltipOpen(true) : undefined}
+            variant="body2"
+          >
+            {children}
+          </Typography>
+        </MuiTooltip>
+      </ClickAwayListener>
+    )
+  }
 )(({ theme }) => ({
   [`& .${tooltipClasses.tooltip}`]: {
     backgroundColor: theme.palette.secondary[500],
