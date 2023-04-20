@@ -1,5 +1,5 @@
 import Hero from '@/components/landing/Hero'
-import Manifesto from '@/components/landing/Manifesto'
+import TitleSectionText from '@/components/landing/TitleSectionText'
 import Projects from '@/components/landing/Projects'
 import {
   CollectionData,
@@ -13,6 +13,7 @@ import {
   ProjectData,
   QuestionAndAnswerData,
   RoadmapData,
+  useContentful,
 } from '@/utils/hooks/useContentful'
 import { Stack } from '@mui/material'
 import {
@@ -55,10 +56,29 @@ const Home = ({
     { ...blogData, posts: blogData.posts.slice(0, 3) },
     locale
   )
+  const translate = useContentful(ContentTypes.landingPage)
+  const manifestoTitles = [
+    translate('manifestTitle1'),
+    translate('manifestTitle2'),
+    translate('manifestTitle3'),
+    translate('manifestTitle4'),
+  ]
+  const manifestoTexts = [
+    translate('manifestContent1'),
+    translate('manifestContent2'),
+    translate('manifestContent3'),
+    translate('manifestContent4'),
+  ]
   return (
     <Stack>
       <Hero manifestRef={manifestRef} />
-      <Manifesto manifestRef={manifestRef} />
+      <TitleSectionText
+        ref={manifestRef}
+        titles={manifestoTitles}
+        texts={manifestoTexts}
+        isDark
+        showButton
+      />
       <Projects projectsData={projectsData} />
       <MakeImpact />
       <Activities />

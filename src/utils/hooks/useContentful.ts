@@ -70,7 +70,10 @@ export type CollectionsPageData = {
   available: string
   aboutArtist: string
   artImpactTitle: string
-  artImpactSubtitle: string
+  artImpactSubtitle1: string
+  artImpactSubtitle2: string
+  artImpactText1: string
+  artImpactText2: string
   artImpactHeadline: string
 }
 

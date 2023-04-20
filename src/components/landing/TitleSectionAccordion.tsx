@@ -1,21 +1,24 @@
 import { Accordion, AccordionSummary, Theme, Typography } from '@mui/material'
 import PlusIcon24 from '../icons/PlusIcon24'
 import { useState } from 'react'
+import { Colors } from './TitleSectionText'
 
-export type ManifestAccordionProps = {
+export type TitleTextAccordionProps = {
   title: string
   text: string
   expanded: boolean
   onClick: () => void
+  colors: Colors
 }
 
-export const ManifestAccordion = ({
+export const TitleSectionAccordion = ({
   title,
   text,
   expanded,
   onClick,
-}: ManifestAccordionProps) => {
-  const expandIcon = <PlusIcon24 sx={{ color: 'neutral.600' }} />
+  colors,
+}: TitleTextAccordionProps) => {
+  const expandIcon = <PlusIcon24 sx={{ color: colors.main }} />
   const isExpanded = useState<number>(0)
 
   return (
@@ -26,7 +29,11 @@ export const ManifestAccordion = ({
       sx={(theme: Theme) => ({
         bgcolor: 'transparent',
         boxShadow: 0,
-        borderBottom: `1px solid ${theme.palette.secondary[400]}`,
+        borderBottom: `1px solid ${
+          colors.type == 'dark'
+            ? theme.palette.secondary[400]
+            : theme.palette.neutral[400]
+        }`,
       })}
     >
       <AccordionSummary
@@ -45,11 +52,11 @@ export const ManifestAccordion = ({
           },
         }}
       >
-        <Typography variant="caption" color="neutral.600">
+        <Typography variant="caption" color={colors.main}>
           {title}
         </Typography>
       </AccordionSummary>
-      <Typography variant="body2S" color="neutral.600" pb={5} pt="20px">
+      <Typography variant="body2S" color={colors.main} pb={5} pt="20px">
         {text}
       </Typography>
     </Accordion>
