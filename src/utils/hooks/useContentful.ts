@@ -62,6 +62,7 @@ export type NFTData = {
   priceInEth: number
   totalSupply: number
   image: Asset
+  artistName: string
 }
 
 export type CollectionsPageData = {

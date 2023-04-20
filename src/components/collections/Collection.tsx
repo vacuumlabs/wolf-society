@@ -119,6 +119,7 @@ const Collection = ({
                         priceEth={nft.priceInEth.toString()}
                         supply={nft.totalSupply}
                         minted={100}
+                        artistName={nft.artistName}
                         priceFiat="750 EUR"
                       />
                     </ScrollingCard>

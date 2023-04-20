@@ -22,6 +22,7 @@ export type NftCardProps = {
   priceFiat: string
   minted: number
   supply: number
+  artistName: string
 }
 
 const NftCard = ({
@@ -31,6 +32,7 @@ const NftCard = ({
   priceFiat,
   minted,
   supply,
+  artistName,
 }: NftCardProps) => {
   const translate = useContentful(ContentTypes.common)
   const breakpoint: keyof BreakpointOverrides = 'desktopS'
@@ -85,6 +87,7 @@ const NftCard = ({
               <Typography variant="caption" color="secondary">
                 {name}
               </Typography>
+              <Typography variant="body2S">{artistName}</Typography>
               <Stack direction="row" alignItems="center" gap={1}>
                 <Typography variant="caption">{priceEth}</Typography>
                 <Typography variant="body2">{priceFiat}</Typography>
