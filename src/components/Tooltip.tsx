@@ -27,6 +27,7 @@ const Tooltip = styled(
           disableFocusListener={isMobile}
           disableHoverListener={isMobile}
           disableTouchListener={isMobile}
+          open={isMobile ? tooltipOpen : undefined}
         >
           <Typography
             sx={{
@@ -36,7 +37,7 @@ const Tooltip = styled(
               textDecorationStyle: 'dotted',
               fontStyle: 'italic',
             }}
-            onClick={isMobile ? () => setTooltipOpen(true) : () => {}}
+            onClick={isMobile ? () => setTooltipOpen(true) : undefined}
             variant="body2"
           >
             {children}
