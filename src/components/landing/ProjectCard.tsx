@@ -136,7 +136,7 @@ const ProjectCard = ({ name, imageUrl, description }: ProjectCardProps) => {
             />
           </Box>
           <Stack
-            pt={10}
+            pt={{ mobile: 5, tabletS: 10 }}
             pb={{ mobile: 5, tabletS: 10 }}
             px={{ mobile: 3, tabletS: 10 }}
             gap={4}
