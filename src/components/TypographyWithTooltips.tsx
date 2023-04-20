@@ -1,10 +1,9 @@
 import { tooltipCustomMarkdownRegex } from '@/consts'
-import { Typography, TypographyProps } from '@mui/material'
+import { Link, Typography, TypographyProps } from '@mui/material'
 import React from 'react'
 import Tooltip from './Tooltip'
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown'
 import { visit } from 'unist-util-visit' // dep of react-markdown
-import Link from 'next/link'
 
 /**
  * `react-markdown` trims whitespace on the node by default,
@@ -102,16 +101,7 @@ const parseText = (
           components={{
             p: ({ node, ...props }) => <span {...props} />,
             a: ({ node, ...props }) => (
-              <Link
-                {...props}
-                href={props.href || ''}
-                target={'_blank'}
-                style={{
-                  textDecoration: 'underline',
-                  color: 'inherit',
-                  height: 'inherit',
-                }}
-              />
+              <Link {...props} href={props.href} target={'_blank'} />
             ),
           }}
         >
