@@ -155,7 +155,7 @@ const CollectionCard = ({
       <CardContent
         sx={{ bgcolor: `${color}`, p: 5, textAlign: 'start', flexGrow: 1 }}
       >
-        <Stack gap={5}>
+        <Stack gap={5} height="100%" justifyContent="space-between">
           <Stack gap="4px">
             <Typography variant="caption" color="neutral.main">
               {subtitle}
