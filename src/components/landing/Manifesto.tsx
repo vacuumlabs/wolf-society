@@ -8,6 +8,7 @@ type ManifestoProps = {
 
 export const Manifesto = ({ ref }: ManifestoProps) => {
   const translate = useContentful(ContentTypes.landingPage)
+  const breakpoint: keyof BreakpointOverrides = 'tabletM'
   const titles = [
     translate('manifestTitle1'),
     translate('manifestTitle2'),
@@ -22,8 +23,8 @@ export const Manifesto = ({ ref }: ManifestoProps) => {
   ]
   return (
     <Box
-      pt={{ mobile: 10, tabletM: 15 }}
-      pb={{ mobile: 10, tabletM: 20 }}
+      pt={{ mobile: 10, [breakpoint]: 15 }}
+      pb={{ mobile: 10, [breakpoint]: 20 }}
       ref={ref}
       sx={{ backgroundColor: 'secondary.main', textAlign: 'center' }}
     >
