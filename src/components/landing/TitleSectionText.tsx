@@ -17,7 +17,6 @@ import { TitleSectionAccordion } from './TitleSectionAccordion'
 import Button from '../Button'
 
 type Props = {
-  ref?: React.RefObject<HTMLElement>
   titles: string[]
   texts: string[]
   isDark?: boolean
@@ -28,16 +27,9 @@ export type Colors = {
   type: 'dark' | 'light'
   main: string
   secondary: string
-  bgcolor: string
 }
 
-const TitleSectionText = ({
-  ref,
-  titles,
-  texts,
-  isDark,
-  showButton,
-}: Props) => {
+const TitleSectionText = ({ titles, texts, isDark, showButton }: Props) => {
   const translate = useContentful(ContentTypes.landingPage)
 
   const isMobile = useMediaQuery((theme: Theme) =>
@@ -57,13 +49,11 @@ const TitleSectionText = ({
         type: 'dark',
         main: 'neutral.600',
         secondary: 'secondary.300',
-        bgcolor: 'secondary.main',
       }
     : {
         type: 'light',
         main: '#000',
         secondary: 'neutral.600',
-        bgcolor: 'neutral.400',
       }
 
   const desktopView = (
@@ -140,15 +130,6 @@ const TitleSectionText = ({
     </>
   )
 
-  return (
-    <Box
-      pt={{ mobile: 13, tabletM: 15 }}
-      pb={{ mobile: 5, tabletM: 20 }}
-      ref={ref}
-      sx={{ backgroundColor: colors.bgcolor, textAlign: 'center' }}
-    >
-      <Container>{isMobile ? mobileView : desktopView}</Container>
-    </Box>
-  )
+  return <Container>{isMobile ? mobileView : desktopView}</Container>
 }
 export default TitleSectionText

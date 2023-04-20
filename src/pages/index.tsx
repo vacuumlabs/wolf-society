@@ -32,6 +32,7 @@ import { BlogData, getBlogData } from '@/utils/blog'
 import { useBlogData } from '@/utils/hooks/useBlogData'
 import Partners from '@/components/landing/Partners'
 import Collections from '@/components/landing/Collections'
+import { Manifesto } from '@/components/landing/Manifesto'
 
 type Props = {
   blogData: BlogData
@@ -56,29 +57,10 @@ const Home = ({
     { ...blogData, posts: blogData.posts.slice(0, 3) },
     locale
   )
-  const translate = useContentful(ContentTypes.landingPage)
-  const manifestoTitles = [
-    translate('manifestTitle1'),
-    translate('manifestTitle2'),
-    translate('manifestTitle3'),
-    translate('manifestTitle4'),
-  ]
-  const manifestoTexts = [
-    translate('manifestContent1'),
-    translate('manifestContent2'),
-    translate('manifestContent3'),
-    translate('manifestContent4'),
-  ]
   return (
     <Stack>
       <Hero manifestRef={manifestRef} />
-      <TitleSectionText
-        ref={manifestRef}
-        titles={manifestoTitles}
-        texts={manifestoTexts}
-        isDark
-        showButton
-      />
+      <Manifesto ref={manifestRef} />
       <Projects projectsData={projectsData} />
       <MakeImpact />
       <Activities />
