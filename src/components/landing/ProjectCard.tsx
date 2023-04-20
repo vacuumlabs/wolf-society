@@ -12,12 +12,12 @@ import {
   Typography,
   useScrollTrigger,
 } from '@mui/material'
-import { Fragment, useRef, useState } from 'react'
+import { useState } from 'react'
 import Button from '../Button'
 import ArrowRightIcon from '../icons/ArrowRightIcon'
 import CloseIcon from '../icons/CloseIcon'
-import MuiMarkdown from 'mui-markdown'
 import { SUBPAGES } from '@/consts'
+import TypographyWithTooltips from '../TypographyWithTooltips'
 
 export type ProjectCardProps = {
   name: string
@@ -106,6 +106,7 @@ const ProjectCard = ({ name, imageUrl, description }: ProjectCardProps) => {
       >
         <Stack
           direction="column"
+          height="100%"
           sx={{ overflowY: 'auto' }}
           ref={(node) => {
             if (node) {
@@ -143,9 +144,12 @@ const ProjectCard = ({ name, imageUrl, description }: ProjectCardProps) => {
             flexGrow={1}
           >
             <Typography variant="title">{name}</Typography>
-            <Typography variant="body2" flexGrow={1}>
-              {description}
-            </Typography>
+            <TypographyWithTooltips
+              text={description}
+              key={name}
+              variant="body2"
+              flexGrow={1}
+            />
             <Button href={SUBPAGES['collections']}>
               {translateCommon('makeImpactButton')}
             </Button>
