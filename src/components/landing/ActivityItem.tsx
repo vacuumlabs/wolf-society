@@ -124,13 +124,13 @@ const ActivityItem = ({
         })}
       >
         <Stack>
-          <Stack sx={{ alignSelf: 'end' }} p={2}>
+          <Stack sx={{ alignSelf: 'end' }} p={2} position="fixed">
             <IconButton onClick={toggleDrawer(false)}>
               <CloseIcon />
             </IconButton>
           </Stack>
         </Stack>
-        <Stack px={10} pb={10}>
+        <Stack p={10}>
           <Typography variant="caption" pb={3}>
             {title}
           </Typography>
