@@ -73,6 +73,7 @@ export type CollectionsPageData = {
   artImpactTitle: string
   artImpactSubtitle: string
   artImpactHeadline: string
+  getCompleteCollection: string
 }
 
 // Content to be injected into every page

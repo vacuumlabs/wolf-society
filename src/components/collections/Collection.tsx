@@ -18,6 +18,7 @@ import { Countdown } from '../Countdown'
 import ScrollingCard from '../ScrollingCard'
 import ArtistCard from './ArtistCard'
 import NftCard from './NftCard'
+import Button from '../Button'
 
 type Props = {
   name: string
@@ -47,7 +48,14 @@ const Collection = ({
   const [countdownOrPieces, setCountdownOrPieces] = useState<React.ReactNode>()
   const locale = useLocale()
   const translateCommon = useContentful(ContentTypes.common)
+  const translateCollection = useContentful(ContentTypes.collectionsPage)
+
   const breakpoint: keyof BreakpointOverrides = 'tabletM'
+
+  const collectionEthPrice = nftData?.reduce(
+    (acc, nft) => acc + nft.priceInEth,
+    0
+  )
 
   useEffect(() => {
     setCountdownOrPieces(
@@ -84,6 +92,16 @@ const Collection = ({
               <Typography variant="body1" color="neutral.main">
                 {description}
               </Typography>
+              <Button sx={{ height: 'auto !important' }}>
+                <Stack direction="column">
+                  <Typography variant="button">
+                    {translateCollection('getCompleteCollection')}
+                  </Typography>
+                  <Typography variant="button">
+                    {`${collectionEthPrice}ETH`}
+                  </Typography>
+                </Stack>
+              </Button>
             </Stack>
             <Stack
               alignItems="center"
