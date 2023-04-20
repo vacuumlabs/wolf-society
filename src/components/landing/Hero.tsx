@@ -1,9 +1,15 @@
-import { SUBPAGES } from '@/consts'
 import { ContentTypes, useContentful } from '@/utils/hooks/useContentful'
-import { Box, Container, Stack, Typography, Link } from '@mui/material'
+import {
+  Box,
+  Container,
+  Stack,
+  Typography,
+  Link,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material'
 import React from 'react'
 import AppearingComponent from '../AppearingComponent'
-import Button from '../Button'
 import HeroParallax from '../HeroParallax'
 
 type Props = {
@@ -12,6 +18,8 @@ type Props = {
 
 const Hero = ({ manifestRef }: Props) => {
   const translate = useContentful(ContentTypes.landingPage)
+  const theme = useTheme()
+  const displayLineBreak = useMediaQuery(theme.breakpoints.up(528))
 
   return (
     <Box sx={{ bgcolor: 'neutral.400' }}>
@@ -27,23 +35,20 @@ const Hero = ({ manifestRef }: Props) => {
             <Typography variant="display" sx={{ fontWeight: 600 }}>
               {translate('heroTitle')}
             </Typography>
-            <Stack direction="column">
-              <Typography variant="body2" display="inline">
-                {translate('heroSubtitle')}
-              </Typography>
-              <Typography variant="body2" display="inline" color="primary">
-                <Link
-                  variant="inherit"
-                  underline="hover"
-                  sx={{ cursor: 'pointer' }}
-                  onClick={() => {
-                    manifestRef?.current?.scrollIntoView()
-                  }}
-                >
-                  {} {translate('youAreWolfSociety')}
-                </Link>
-              </Typography>
-            </Stack>
+            <Typography variant="body2" display="inline">
+              {translate('heroSubtitle').concat(' ')}
+              <br style={{ display: displayLineBreak ? 'inherit' : 'none' }} />
+              <Link
+                variant="inherit"
+                underline="hover"
+                sx={{ cursor: 'pointer' }}
+                onClick={() => {
+                  manifestRef?.current?.scrollIntoView()
+                }}
+              >
+                {} {translate('youAreWolfSociety')}
+              </Link>
+            </Typography>
           </Stack>
         </Container>
       </AppearingComponent>
