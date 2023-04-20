@@ -13,10 +13,10 @@ export const TitleSection = () => {
   const texts = [translate('artImpactText1'), translate('artImpactText2')]
   return (
     <Stack
-      gap={10}
+      gap={{ mobile: 4, tabletM: 10 }}
       sx={{
-        pt: 10,
-        pb: 40,
+        pt: 5,
+        pb: 17,
         px: { mobile: '16px', desktopM: '200px' },
         backgroundColor: 'neutral.400',
         textAlign: 'center',
