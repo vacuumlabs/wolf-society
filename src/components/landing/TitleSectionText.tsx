@@ -13,37 +13,32 @@ import AppearingComponent from '../AppearingComponent'
 import { useState } from 'react'
 import MuiMarkdown from 'mui-markdown'
 import { SUBPAGES } from '@/consts'
-import { ManifestAccordion } from './ManifestoAccordion'
+import { TitleSectionAccordion } from './TitleSectionAccordion'
 import Button from '../Button'
 
 type Props = {
-  manifestRef: React.RefObject<HTMLElement>
+  ref?: React.RefObject<HTMLElement>
+  titles: string[]
+  texts: string[]
+  isDark?: boolean
+  showButton?: boolean
 }
-type ManifestTitleOptions =
-  | 'manifestTitle1'
-  | 'manifestTitle2'
-  | 'manifestTitle3'
-  | 'manifestTitle4'
-type ManifestContentOptions =
-  | 'manifestContent1'
-  | 'manifestContent2'
-  | 'manifestContent3'
-  | 'manifestContent4'
 
-const Manifesto = ({ manifestRef }: Props) => {
+export type Colors = {
+  type: 'dark' | 'light'
+  main: string
+  secondary: string
+  bgcolor: string
+}
+
+const TitleSectionText = ({
+  ref,
+  titles,
+  texts,
+  isDark,
+  showButton,
+}: Props) => {
   const translate = useContentful(ContentTypes.landingPage)
-  const titles: ManifestTitleOptions[] = [
-    'manifestTitle1',
-    'manifestTitle2',
-    'manifestTitle3',
-    'manifestTitle4',
-  ]
-  const texts: ManifestContentOptions[] = [
-    'manifestContent1',
-    'manifestContent2',
-    'manifestContent3',
-    'manifestContent4',
-  ]
 
   const isMobile = useMediaQuery((theme: Theme) =>
     theme.breakpoints.down('tabletM')
@@ -56,6 +51,20 @@ const Manifesto = ({ manifestRef }: Props) => {
     if (isExpanded === id) setIsExpanded(null)
     else setIsExpanded(id)
   }
+
+  const colors: Colors = isDark
+    ? {
+        type: 'dark',
+        main: 'neutral.600',
+        secondary: 'secondary.300',
+        bgcolor: 'secondary.main',
+      }
+    : {
+        type: 'light',
+        main: '#000',
+        secondary: 'neutral.600',
+        bgcolor: 'neutral.400',
+      }
 
   const desktopView = (
     <>
@@ -75,16 +84,15 @@ const Manifesto = ({ manifestRef }: Props) => {
                 color: '#1890ff',
               },
               borderBottom: '3px solid',
-              borderColor:
-                activeTab === index ? 'neutral.600' : 'secondary.300',
+              borderColor: activeTab === index ? colors.main : colors.secondary,
             }}
             label={
               <Typography
                 variant="caption"
-                color={activeTab === index ? 'neutral.600' : 'secondary.300'}
-                sx={{ '&:hover': { color: 'neutral.600' } }}
+                color={activeTab === index ? colors.main : colors.secondary}
+                sx={{ '&:hover': { color: colors.main } }}
               >
-                {translate(title)}
+                {title}
               </Typography>
             }
             onClick={() => setActiveTab(index)}
@@ -97,13 +105,13 @@ const Manifesto = ({ manifestRef }: Props) => {
             <AppearingComponent>
               <Typography
                 sx={{ textAlign: 'center' }}
-                color="neutral.main"
+                color={colors.main}
                 display="inline"
               >
-                <MuiMarkdown>{translate(text)}</MuiMarkdown>
+                <MuiMarkdown>{text}</MuiMarkdown>
               </Typography>
 
-              {index === texts.length - 1 && (
+              {showButton && index === texts.length - 1 && (
                 <Stack sx={{ alignItems: 'center', mt: 5 }}>
                   <Button href={SUBPAGES['collections']}>
                     {translate('makeImpact')}
@@ -120,12 +128,13 @@ const Manifesto = ({ manifestRef }: Props) => {
   const mobileView = (
     <>
       {texts.map((text, index) => (
-        <ManifestAccordion
+        <TitleSectionAccordion
           expanded={isExpanded === index}
           onClick={() => handleSetIsExpanded(index)}
           key={index}
-          title={translate(titles[index])}
-          text={translate(text)}
+          title={titles[index]}
+          text={text}
+          colors={colors}
         />
       ))}
     </>
@@ -135,11 +144,11 @@ const Manifesto = ({ manifestRef }: Props) => {
     <Box
       pt={{ mobile: 13, tabletM: 15 }}
       pb={{ mobile: 5, tabletM: 20 }}
-      ref={manifestRef}
-      sx={{ bgcolor: 'secondary.main', textAlign: 'center' }}
+      ref={ref}
+      sx={{ backgroundColor: colors.bgcolor, textAlign: 'center' }}
     >
       <Container>{isMobile ? mobileView : desktopView}</Container>
     </Box>
   )
 }
-export default Manifesto
+export default TitleSectionText
