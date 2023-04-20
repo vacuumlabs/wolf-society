@@ -88,6 +88,9 @@ const parseText = (
       key={`${key}-plain-${idx}`}
       components={{
         p: ({ node, ...props }) => <span {...props} />,
+        a: ({ node, ...props }) => (
+          <Link {...props} href={props.href} target={'_blank'} />
+        ),
       }}
     >
       {content}
