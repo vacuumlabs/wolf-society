@@ -7,11 +7,9 @@ import {
   ContentTypes,
   getCollections,
   getProjects,
-  getQuestionsAndAnswers,
   getRoadmap,
   getTranslations,
   ProjectData,
-  QuestionAndAnswerData,
   RoadmapData,
   useContentful,
 } from '@/utils/hooks/useContentful'
@@ -23,7 +21,6 @@ import {
 } from 'next'
 import MakeImpact from '@/components/landing/MakeImpact'
 import Roadmap from '@/components/landing/Roadmap'
-import Questions from '@/components/faq/Questions'
 import Topics from '@/components/landing/Topics'
 import CTA from '@/components/landing/CTA'
 import { useRef } from 'react'
@@ -40,7 +37,6 @@ type Props = {
   locale: string | undefined
   projectsData: ProjectData[] | null
   roadmapData: RoadmapData[] | null
-  questionsAndAnswersData: QuestionAndAnswerData[] | null
   collectionsData: CollectionData[] | null
 }
 
@@ -49,7 +45,6 @@ const Home = ({
   locale,
   projectsData,
   roadmapData,
-  questionsAndAnswersData,
   collectionsData,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const manifestRef = useRef(null)
@@ -83,7 +78,6 @@ export const getStaticProps: GetStaticProps<Props> = async ({
       translations: await getTranslations(ContentTypes.landingPage, locale),
       projectsData: await getProjects(locale),
       roadmapData: await getRoadmap(locale),
-      questionsAndAnswersData: await getQuestionsAndAnswers(locale),
       collectionsData: await getCollections(locale),
       locale,
     },

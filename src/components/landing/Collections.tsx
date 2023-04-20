@@ -40,12 +40,8 @@ const Collections = ({ collectionsData }: Props) => {
             scrub: 0,
             start: `top+=${pixelsPause} top`,
             end: () => '+=' + window.innerWidth * panels.length,
+            pin: true,
           },
-        })
-        ScrollTrigger.create({
-          trigger: slider.current,
-          end: () => '+=' + (window.innerWidth * panels.length + pixelsPause),
-          pin: true,
         })
       }
     }, component)
