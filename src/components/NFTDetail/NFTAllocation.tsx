@@ -18,20 +18,29 @@ export const NFTAllocation = () => {
       <Typography variant="caption">
         {translateNftDetail('buyNftAndSupport')}
       </Typography>
-      <Stack
-        gap={{ mobile: 5, desktopS: 10 }}
-        direction={{ mobile: 'column', tabletM: 'row' }}
-      >
-        {ALLOCATION_INFO.map((allocation, index) => (
-          <Box py={3} key={`AllocationInfoStack${index}`}>
-            <AllocationInfoStack
-              percentage={allocation.percentage}
-              text={translateCommon(allocation.textKey)}
-              image={allocation.image}
-              isHorizontal={false}
-            />
-          </Box>
-        ))}
+      <Stack flexGrow={1} sx={{ overflowY: 'hidden' }}>
+        <Stack
+          gap={{ mobile: 5, desktopS: 10 }}
+          direction={{ mobile: 'column', tabletM: 'row' }}
+          sx={{ overflowY: 'hidden' }}
+          height="100%"
+        >
+          {ALLOCATION_INFO.map((allocation, index) => (
+            <Stack
+              py={3}
+              key={`AllocationInfoStack${index}`}
+              flexGrow={1}
+              maxWidth={{ mobile: '100%', tabletM: 'calc(100vw / 2)' }}
+            >
+              <AllocationInfoStack
+                percentage={allocation.percentage}
+                text={translateCommon(allocation.textKey)}
+                image={allocation.image}
+                isHorizontal={false}
+              />
+            </Stack>
+          ))}
+        </Stack>
       </Stack>
     </Stack>
   )

@@ -18,7 +18,11 @@ const AllocationInfoStack = ({
 }: Props) => {
   const displayImageOnTheRight = !isHorizontal || imageOnTheRight
   const imageBox = (
-    <Box sx={{ position: 'relative' }} width="100%">
+    <Stack
+      sx={{ position: 'relative', overflowY: 'hidden' }}
+      width="100%"
+      justifyContent="center"
+    >
       {isHorizontal ? (
         <Image
           src={image}
@@ -37,16 +41,17 @@ const AllocationInfoStack = ({
           style={{ width: '100%', height: '100%', objectFit: 'contain' }}
         />
       )}
-    </Box>
+    </Stack>
   )
   return (
     <Stack
       justifyContent="space-between"
       direction={isHorizontal ? 'row' : 'column'}
       height={'100%'}
+      gap={isHorizontal ? 5 : { mobile: 3, desktopS: 5 }}
     >
       {displayImageOnTheRight ? <></> : imageBox}
-      <Stack justifyContent="center">
+      <Stack justifyContent="center" width={isHorizontal ? '50%' : 'auto'}>
         <Stack direction="row">
           <Typography variant="display" color="neutral.main">
             {percentage}
