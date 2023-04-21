@@ -1,8 +1,8 @@
 import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
 import { Box, Container, Stack, Typography } from '@mui/material'
-import MuiMarkdown from 'mui-markdown'
 import AppearingComponent from '../AppearingComponent'
 import { HorizontalScrollText } from './HorizontalScrollText'
+import TypographyWithTooltips from '../TypographyWithTooltips'
 
 const MakeImpact = () => {
   const translate = useContentful(ContentTypes.landingPage)
@@ -24,9 +24,12 @@ const MakeImpact = () => {
               {translate('makeImpact')}
             </Typography>
             <Box>
-              <Typography sx={{ textAlign: 'center' }} display="inline">
-                <MuiMarkdown>{translate('makeImpactText')}</MuiMarkdown>
-              </Typography>
+              <TypographyWithTooltips
+                sx={{ textAlign: 'center' }}
+                display="inline"
+                key={'makeImpactText'}
+                text={translate('makeImpactText')}
+              />
             </Box>
           </Stack>
         </Container>
