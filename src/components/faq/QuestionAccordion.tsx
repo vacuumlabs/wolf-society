@@ -24,9 +24,9 @@ const QuestionAccordion = ({
   const theme = useTheme()
   const displayBiggerIcon = useMediaQuery(theme.breakpoints.up('desktopM'))
   const expandIcon = displayBiggerIcon ? (
-    <PlusIcon32 color="black" sx={{ fontSize: 32 }} />
+    <PlusIcon32 color="black" sx={{ fontSize: 32, sl: 48 }} />
   ) : (
-    <PlusIcon24 color="black" />
+    <PlusIcon24 color="black" sx={{ sl: 8 }} />
   )
 
   return (
