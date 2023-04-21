@@ -7,12 +7,12 @@ import {
   Link,
   useMediaQuery,
   useTheme,
-  Button,
 } from '@mui/material'
 import React from 'react'
 import AppearingComponent from '../AppearingComponent'
 import HeroParallax from '../HeroParallax'
 import { SUBPAGES } from '@/consts'
+import Button from '../Button'
 
 type Props = {
   manifestRef: React.RefObject<HTMLElement>
