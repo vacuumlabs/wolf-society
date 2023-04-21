@@ -19,6 +19,7 @@ import ScrollingCard from '../ScrollingCard'
 import ArtistCard from './ArtistCard'
 import NftCard from './NftCard'
 import Button from '../Button'
+import { ArtistCardMobile } from './ArtistCardMobile'
 
 type Props = {
   name: string
@@ -36,9 +37,7 @@ type Props = {
 const Collection = ({
   name,
   description,
-  artistName,
   artistSubtext,
-  artistImage,
   color,
   subtitle,
   deadline,
@@ -57,6 +56,13 @@ const Collection = ({
     0
   )
 
+  const [artistName, setArtistName] = useState<string | undefined>(
+    nftData?.[0]?.artistName
+  )
+  const [artistImage, setArtistImage] = useState<string | undefined>(
+    nftData?.[0]?.artistImage.fields.file.url
+  )
+
   useEffect(() => {
     setCountdownOrPieces(
       deadline ? (
@@ -66,6 +72,12 @@ const Collection = ({
       )
     )
   }, [])
+
+  const handleChangeArtist = (nft: NFTData) => {
+    setArtistName(nft.artistName)
+    setArtistImage(nft.artistImage.fields.file.url)
+  }
+
   return (
     <Box sx={{ bgcolor: color, textAlign: 'center' }}>
       <AppearingComponent>
@@ -106,7 +118,7 @@ const Collection = ({
             <Stack
               alignItems="center"
               sx={{
-                position: { mobile: 'static', desktopM: 'sticky' },
+                position: { mobile: 'static', [breakpoint]: 'sticky' },
                 top: '80px',
                 left: 0,
               }}
@@ -127,9 +139,13 @@ const Collection = ({
               </Box>
             </Stack>
             {nftData && (
-              <Stack spacing={{ mobile: 5, [breakpoint]: 0 }}>
+              <Stack spacing={{ mobile: 10, [breakpoint]: 0 }}>
                 {nftData.map((nft, index) => (
                   <Stack width="100%" alignItems="center" key={nft.name}>
+                    <ArtistCardMobile
+                      artistImage={nft.artistImage.fields.file.url}
+                      artistName={nft.artistName}
+                    />
                     <ScrollingCard index={index}>
                       <NftCard
                         name={nft.name}
@@ -139,6 +155,10 @@ const Collection = ({
                         minted={100}
                         artistName={nft.artistName}
                         priceFiat="750 EUR"
+                        changeArtist={() => {
+                          handleChangeArtist(nft)
+                        }}
+                        isLast={index === nftData.length - 1}
                       />
                     </ScrollingCard>
                   </Stack>

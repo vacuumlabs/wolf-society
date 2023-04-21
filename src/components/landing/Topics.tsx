@@ -21,7 +21,7 @@ type Props = {
 
 const Topics = ({ posts }: Props) => {
   const translate = useContentful(ContentTypes.landingPage)
-  const breakpoint: keyof BreakpointOverrides = 'tabletS'
+  const breakpoint: keyof BreakpointOverrides = 'tabletM'
   return (
     <Box sx={{ bgcolor: 'neutral.400', textAlign: 'center' }}>
       {posts.length > 0 && (
@@ -32,7 +32,7 @@ const Topics = ({ posts }: Props) => {
                 sx={{
                   gap: 4,
                   pt: { mobile: 15, desktopM: 20 },
-                  position: { mobile: 'static', desktopM: 'sticky' },
+                  position: { mobile: 'static', [breakpoint]: 'sticky' },
                   top: 0,
                   left: 0,
                 }}

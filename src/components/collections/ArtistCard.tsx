@@ -12,8 +12,8 @@ import {
 } from '@mui/material'
 
 export type ArtistCardProps = {
-  name: string
-  imageUrl: string
+  name?: string
+  imageUrl?: string
   text: string
   color: string
 }
@@ -22,9 +22,10 @@ const ArtistCard = ({ name, imageUrl, text, color }: ArtistCardProps) => {
   const translate = useContentful(ContentTypes.landingPage)
   const breakpoint: keyof BreakpointOverrides = 'tabletM'
   const isMobile = useMediaQuery((theme: Theme) =>
-    theme.breakpoints.down('tabletS')
+    theme.breakpoints.down(breakpoint)
   )
-  return (
+
+  return isMobile ? null : (
     <Box sx={{ position: 'relative' }}>
       <Card
         sx={{

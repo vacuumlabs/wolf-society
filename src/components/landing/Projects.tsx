@@ -23,7 +23,7 @@ type Props = {
 
 const Projects = ({ projectsData }: Props) => {
   const translate = useContentful(ContentTypes.landingPage)
-  const breakpoint: keyof BreakpointOverrides = 'tabletS'
+  const breakpoint: keyof BreakpointOverrides = 'tabletM'
   return !projectsData ? (
     <></>
   ) : (
@@ -42,7 +42,7 @@ const Projects = ({ projectsData }: Props) => {
               sx={{
                 gap: 4,
                 pt: { mobile: 10, desktopM: 20 },
-                position: { mobile: 'static', desktopM: 'sticky' },
+                position: { mobile: 'static', [breakpoint]: 'sticky' },
                 top: 0,
                 left: 0,
               }}
