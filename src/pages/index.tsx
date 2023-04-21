@@ -29,7 +29,7 @@ import { BlogData, getBlogData } from '@/utils/blog'
 import { useBlogData } from '@/utils/hooks/useBlogData'
 import Partners from '@/components/landing/Partners'
 import Collections from '@/components/landing/Collections'
-import { Manifesto } from '@/components/landing/Manifesto'
+import Manifesto from '@/components/landing/Manifesto'
 
 type Props = {
   blogData: BlogData

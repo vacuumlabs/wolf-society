@@ -1,12 +1,9 @@
-import { Box } from '@mui/material'
+import { Box, BreakpointOverrides } from '@mui/material'
 import TitleSectionText from './TitleSectionText'
 import { ContentTypes, useContentful } from '@/utils/hooks/useContentful'
+import { forwardRef } from 'react'
 
-type ManifestoProps = {
-  ref: React.RefObject<HTMLElement>
-}
-
-export const Manifesto = ({ ref }: ManifestoProps) => {
+const Manifesto = forwardRef<HTMLElement>((_props, ref) => {
   const translate = useContentful(ContentTypes.landingPage)
   const breakpoint: keyof BreakpointOverrides = 'tabletM'
   const titles = [
@@ -31,4 +28,7 @@ export const Manifesto = ({ ref }: ManifestoProps) => {
       <TitleSectionText titles={titles} texts={texts} isDark showButton />
     </Box>
   )
-}
+})
+Manifesto.displayName = 'Manifesto'
+
+export default Manifesto
