@@ -22,8 +22,8 @@ export const Manifesto = ({ ref }: ManifestoProps) => {
   ]
   return (
     <Box
-      pt={{ mobile: 13, tabletM: 15 }}
-      pb={{ mobile: 5, tabletM: 20 }}
+      pt={{ mobile: 10, tabletM: 15 }}
+      pb={{ mobile: 10, tabletM: 20 }}
       ref={ref}
       sx={{ backgroundColor: 'secondary.main', textAlign: 'center' }}
     >
