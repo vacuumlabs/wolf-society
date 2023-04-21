@@ -62,6 +62,7 @@ export type NFTData = {
   priceInEth: number
   totalSupply: number
   image: Asset
+  artistName: string
 }
 
 export type CollectionsPageData = {
@@ -75,6 +76,7 @@ export type CollectionsPageData = {
   artImpactText1: string
   artImpactText2: string
   artImpactHeadline: string
+  getCompleteCollection: string
 }
 
 // Content to be injected into every page
