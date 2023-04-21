@@ -24,9 +24,9 @@ const QuestionAccordion = ({
   const theme = useTheme()
   const displayBiggerIcon = useMediaQuery(theme.breakpoints.up('desktopM'))
   const expandIcon = displayBiggerIcon ? (
-    <PlusIcon32 color="black" sx={{ fontSize: 32, sl: 48 }} />
+    <PlusIcon32 color="black" />
   ) : (
-    <PlusIcon24 color="black" sx={{ sl: 8 }} />
+    <PlusIcon24 color="black" />
   )
 
   return (
@@ -46,7 +46,9 @@ const QuestionAccordion = ({
           },
         }}
       >
-        <Typography>{question}</Typography>
+        <Typography sx={{ pr: { mobile: 8, desktopM: 48 } }}>
+          {question}
+        </Typography>
       </AccordionSummary>
       <Grid container>
         <Grid item mobile={12} desktopS={5}></Grid>
