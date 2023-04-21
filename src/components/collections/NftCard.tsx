@@ -96,7 +96,7 @@ const NftCard = ({
                 transform: 'translateY(100%)',
                 zIndex: 1,
               }}
-              removeEdges={new Set(['r', 't']) as Set<Edge>}
+              removeEdges={new Set<Edge>(['r', 't'])}
             />
           </Box>
           <CardContent sx={{ p: 0, transition: 'translate 0.25s' }}>
@@ -104,9 +104,7 @@ const NftCard = ({
               <Typography variant="caption" color="secondary">
                 {name}
               </Typography>
-              <Typography variant="body2S">
-                {artistName || 'Artist Name'}
-              </Typography>
+              <Typography variant="body2S">{artistName}</Typography>
               <Stack direction="row" alignItems="center" gap={1}>
                 <Typography variant="caption">{priceEth}</Typography>
                 <Typography variant="body2">{priceFiat}</Typography>

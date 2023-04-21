@@ -1,4 +1,3 @@
-import * as React from 'react'
 import ShareIcon from '@mui/icons-material/Share'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
@@ -12,6 +11,7 @@ import {
   Typography,
   useMediaQuery,
 } from '@mui/material'
+import { useEffect, useState } from 'react'
 
 export type Edge = 'r' | 'l' | 't' | 'b'
 type ShareButtonProps = BoxProps & { removeEdges?: Set<Edge> }
@@ -21,6 +21,19 @@ export const ShareButton = ({ removeEdges, ...props }: ShareButtonProps) => {
   const isMobile = useMediaQuery((theme: Theme) =>
     theme.breakpoints.down('tabletS')
   )
+  const [isOpen, setIsOpen] = useState(false)
+
+  useEffect(() => {
+    const handler = () => {
+      setIsOpen(false)
+    }
+    window.addEventListener('scroll', handler)
+    window.addEventListener('wheel', handler)
+    return () => {
+      window.removeEventListener('scroll', handler)
+      window.removeEventListener('wheel', handler)
+    }
+  }, [])
   return (
     <Box {...props}>
       <PopupState variant="popover" popupId="demo-popup-menu">
@@ -28,6 +41,10 @@ export const ShareButton = ({ removeEdges, ...props }: ShareButtonProps) => {
           <>
             <IconButton
               {...bindTrigger(popupState)}
+              onClick={(e) => {
+                bindTrigger(popupState).onClick(e)
+                setIsOpen(true)
+              }}
               sx={{
                 mt: removeEdges?.has('t') ? '-2px' : 0,
                 mr: removeEdges?.has('r') ? '-2px' : 0,
@@ -39,6 +56,11 @@ export const ShareButton = ({ removeEdges, ...props }: ShareButtonProps) => {
             </IconButton>
             <Menu
               {...bindMenu(popupState)}
+              open={isOpen}
+              onClose={() => {
+                setIsOpen(false)
+              }}
+              disableScrollLock={true}
               sx={{
                 '& .MuiPaper-root': {
                   borderRadius: 0,
@@ -56,7 +78,10 @@ export const ShareButton = ({ removeEdges, ...props }: ShareButtonProps) => {
               {socialMedias.map((sm, index) => (
                 <MenuItem
                   key={sm}
-                  onClick={popupState.close}
+                  onClick={() => {
+                    popupState.close()
+                    setIsOpen(false)
+                  }}
                   sx={{
                     mt: index === 0 ? 0 : '1px',
 

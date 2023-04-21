@@ -98,7 +98,7 @@ const Collection = ({
                     {translateCollection('getCompleteCollection')}
                   </Typography>
                   <Typography variant="button">
-                    {`${collectionEthPrice}ETH`}
+                    {`${collectionEthPrice} ETH`}
                   </Typography>
                 </Stack>
               </Button>
