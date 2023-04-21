@@ -13,9 +13,10 @@ import Button from '../Button'
 import ArrowRightIcon from '../icons/ArrowRightIcon'
 import { NFTDetail } from '../NFTDetail/NFTDetail'
 import { MOCKED_NFT_DETAIL } from '../NFTDetail/mockedDetailData'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Edge } from './ShareButton'
 import dynamic from 'next/dynamic'
+import { useInView } from 'framer-motion'
 
 export type NftCardProps = {
   name: string
@@ -25,6 +26,8 @@ export type NftCardProps = {
   minted: number
   supply: number
   artistName: string
+  changeArtist: () => void
+  isLast: boolean
 }
 
 const DynamicShareButton = dynamic(
@@ -40,13 +43,24 @@ const NftCard = ({
   minted,
   supply,
   artistName,
+  changeArtist,
+  isLast,
 }: NftCardProps) => {
   const translate = useContentful(ContentTypes.common)
   const breakpoint: keyof BreakpointOverrides = 'desktopS'
   const [isDetailOpen, setIsDetailOpen] = useState<boolean>(false)
+
+  const containerRef = useRef(null)
+  const isInView = useInView(containerRef)
+
+  useEffect(() => {
+    if (isInView) changeArtist()
+  }, [isInView, changeArtist])
+
   return (
-    <>
+    <Box sx={{ mb: { mobile: '0', tabletM: isLast ? 0 : '130vh' } }}>
       <Card
+        ref={containerRef}
         sx={{
           bgcolor: 'neutral.main',
           width: '100%',
@@ -126,7 +140,7 @@ const NftCard = ({
         onClose={() => setIsDetailOpen(false)}
         {...MOCKED_NFT_DETAIL}
       />
-    </>
+    </Box>
   )
 }
 export default NftCard

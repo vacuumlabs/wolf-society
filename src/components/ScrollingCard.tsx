@@ -10,7 +10,7 @@ const OFFSETS = [8, 0, 6]
 
 const ScrollingCard = ({ index, children }: PropsWithChildren<Props>) => {
   const isMobile = useMediaQuery((theme: Theme) =>
-    theme.breakpoints.down('tabletS')
+    theme.breakpoints.down('tabletM')
   )
   const offset = OFFSETS[index % 3]
   const marginTop =
