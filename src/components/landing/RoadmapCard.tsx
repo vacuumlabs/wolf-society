@@ -1,6 +1,6 @@
 import { Card, Divider, Grid, Stack, Typography } from '@mui/material'
 import WSFSymbol from '../icons/WSFSymbol'
-import MuiMarkdown from 'mui-markdown'
+import TypographyWithTooltips from '../TypographyWithTooltips'
 
 export type RoadmapCardProps = {
   quarter: string
@@ -53,14 +53,13 @@ const RoadmapCard = ({ quarter, year, items, color }: RoadmapCardProps) => {
             }}
           >
             {items.map((item, index) => (
-              <Typography
+              <TypographyWithTooltips
                 key={`${quarter}-${year}-${index}`}
                 variant="body2"
                 color="neutral.main"
                 py={3}
-              >
-                <MuiMarkdown>{item}</MuiMarkdown>
-              </Typography>
+                text={item}
+              />
             ))}
           </Stack>
         </Grid>

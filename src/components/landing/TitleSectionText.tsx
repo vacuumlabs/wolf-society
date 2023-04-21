@@ -11,10 +11,10 @@ import {
 } from '@mui/material'
 import AppearingComponent from '../AppearingComponent'
 import { useState } from 'react'
-import MuiMarkdown from 'mui-markdown'
 import { SUBPAGES } from '@/consts'
 import { TitleSectionAccordion } from './TitleSectionAccordion'
 import Button from '../Button'
+import TypographyWithTooltips from '../TypographyWithTooltips'
 
 type Props = {
   titles: string[]
@@ -93,14 +93,13 @@ const TitleSectionText = ({ titles, texts, isDark, showButton }: Props) => {
         index === activeTab ? (
           <Box key={index} mt={10}>
             <AppearingComponent>
-              <Typography
+              <TypographyWithTooltips
                 sx={{ textAlign: 'center' }}
                 color={colors.main}
                 display="inline"
-              >
-                <MuiMarkdown>{text}</MuiMarkdown>
-              </Typography>
-
+                key={index}
+                text={text}
+              />
               {showButton && index === texts.length - 1 && (
                 <Stack sx={{ alignItems: 'center', mt: 5 }}>
                   <Button href={SUBPAGES['collections']}>

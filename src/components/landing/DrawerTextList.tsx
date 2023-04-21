@@ -1,5 +1,5 @@
 import { List, ListItem, Typography } from '@mui/material'
-import MuiMarkdown from 'mui-markdown'
+import TypographyWithTooltips from '../TypographyWithTooltips'
 
 type DrawerTextListProps = {
   texts: string[]
@@ -8,7 +8,7 @@ type DrawerTextListProps = {
 const DrawerTextList = ({ texts }: DrawerTextListProps) => {
   return (
     <List sx={{ listStyleType: 'square' }}>
-      {texts.map((text) => (
+      {texts.map((text, idx) => (
         <ListItem
           divider
           key={text}
@@ -22,13 +22,12 @@ const DrawerTextList = ({ texts }: DrawerTextListProps) => {
             lineHeight: '0px',
           }}
         >
-          <Typography
+          <TypographyWithTooltips
             variant="body2"
-            component="div"
             sx={{ color: 'black.main' }}
-          >
-            <MuiMarkdown>{text}</MuiMarkdown>
-          </Typography>
+            key={`drawer-text-${idx}`}
+            text={text}
+          />
         </ListItem>
       ))}
     </List>
