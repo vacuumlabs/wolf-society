@@ -39,6 +39,9 @@ const parseText = (
       <ReactMarkdown
         components={{
           p: ({ node, ...props }) => <span {...props} />,
+          a: ({ node, ...props }) => (
+            <Link {...props} href={props.href} target={'_blank'} />
+          ),
         }}
       >
         {text}
