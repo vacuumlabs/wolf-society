@@ -3,7 +3,15 @@ import ShareIcon from '@mui/icons-material/Share'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state'
-import { Box, BoxProps, Button, IconButton, Typography } from '@mui/material'
+import {
+  Box,
+  BoxProps,
+  Button,
+  IconButton,
+  Theme,
+  Typography,
+  useMediaQuery,
+} from '@mui/material'
 import dynamic from 'next/dynamic'
 
 export type Edge = 'r' | 'l' | 't' | 'b'
@@ -11,6 +19,9 @@ type ShareButtonProps = BoxProps & { removeEdges?: Set<Edge> }
 
 export const ShareButton = ({ removeEdges, ...props }: ShareButtonProps) => {
   const socialMedias: string[] = ['twitter', 'facebook', 'messenger', 'e-mail']
+  const isMobile = useMediaQuery((theme: Theme) =>
+    theme.breakpoints.down('tabletS')
+  )
   return (
     <Box {...props}>
       <PopupState variant="popover" popupId="demo-popup-menu">
@@ -38,7 +49,10 @@ export const ShareButton = ({ removeEdges, ...props }: ShareButtonProps) => {
                   p: 0,
                 },
               }}
-              anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+              anchorOrigin={{
+                horizontal: 'right',
+                vertical: isMobile ? 'bottom' : 'top',
+              }}
             >
               {socialMedias.map((sm, index) => (
                 <MenuItem
