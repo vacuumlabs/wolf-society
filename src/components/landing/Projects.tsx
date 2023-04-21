@@ -41,7 +41,7 @@ const Projects = ({ projectsData }: Props) => {
             <Stack
               sx={{
                 gap: 4,
-                pt: { mobile: 15, desktopM: 20 },
+                pt: { mobile: 10, desktopM: 20 },
                 position: { mobile: 'static', desktopM: 'sticky' },
                 top: 0,
                 left: 0,

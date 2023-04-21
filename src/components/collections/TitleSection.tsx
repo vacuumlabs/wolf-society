@@ -24,7 +24,7 @@ export const TitleSection = () => {
     >
       <Typography variant="display">{translate('artImpactTitle')}</Typography>
       <TitleSectionText titles={titles} texts={texts} />
-      <Stack gap={8}>
+      <Stack gap={5}>
         <Typography variant="headline" color="neutral.600">
           {translate('artImpactHeadline')}
         </Typography>
