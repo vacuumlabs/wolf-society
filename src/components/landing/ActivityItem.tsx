@@ -113,31 +113,41 @@ const ActivityItem = ({
         anchor="right"
         open={drawerOpened}
         onClose={toggleDrawer(false)}
-        sx={(theme) => ({
-          '& .MuiPaper-root': {
+        PaperProps={{
+          sx: (theme) => ({
+            overflowY: 'hidden',
+            backgroundColor: theme.palette.neutral[400],
             width: {
               mobile: 'inherit',
               desktopS: '50%',
-              backgroundColor: theme.palette.neutral[400],
             },
-          },
-        })}
+          }),
+        }}
       >
-        <Stack>
-          <Stack sx={{ alignSelf: 'end' }} p={2}>
-            <IconButton onClick={toggleDrawer(false)}>
-              <CloseIcon />
-            </IconButton>
+        <Stack direction="column" sx={{ overflowY: 'auto' }}>
+          <Box
+            position="absolute"
+            left={0}
+            right={0}
+            bgcolor="neutral.400"
+            p={2}
+            zIndex={1}
+          >
+            <Stack justifyContent="end" direction="row">
+              <IconButton onClick={toggleDrawer(false)}>
+                <CloseIcon />
+              </IconButton>
+            </Stack>
+          </Box>
+          <Stack py={10} px={{ mobile: 3, [breakpoint]: 10 }}>
+            <Typography variant="caption" pb={3}>
+              {title}
+            </Typography>
+            <Typography variant="body1" pb={5} pr={4}>
+              {description}
+            </Typography>
+            {drawerContent}
           </Stack>
-        </Stack>
-        <Stack px={10} pb={10}>
-          <Typography variant="caption" pb={3}>
-            {title}
-          </Typography>
-          <Typography variant="body1" pb={5} pr={4}>
-            {description}
-          </Typography>
-          {drawerContent}
         </Stack>
       </Drawer>
     </AppearingComponent>

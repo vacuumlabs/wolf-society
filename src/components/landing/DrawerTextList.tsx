@@ -13,6 +13,8 @@ const DrawerTextList = ({ texts }: DrawerTextListProps) => {
           divider
           key={text}
           sx={{
+            left: '22px',
+            width: 'calc(100% - 22px)',
             display: 'list-item',
             fontSize: '24px',
             color: 'primary.main',

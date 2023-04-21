@@ -10,13 +10,14 @@ import {
   IconButton,
   Stack,
   Typography,
+  useScrollTrigger,
 } from '@mui/material'
-import { Fragment, useState } from 'react'
+import { useState } from 'react'
 import Button from '../Button'
 import ArrowRightIcon from '../icons/ArrowRightIcon'
 import CloseIcon from '../icons/CloseIcon'
-import MuiMarkdown from 'mui-markdown'
 import { SUBPAGES } from '@/consts'
+import TypographyWithTooltips from '../TypographyWithTooltips'
 
 export type ProjectCardProps = {
   name: string
@@ -29,6 +30,11 @@ const ProjectCard = ({ name, imageUrl, description }: ProjectCardProps) => {
   const translate = useContentful(ContentTypes.landingPage)
   const translateCommon = useContentful(ContentTypes.common)
   const breakpoint: keyof BreakpointOverrides = 'desktopS'
+  const [scrollTarget, setScrollTarget] = useState<Node | Window | undefined>()
+  const scrollTrigger = useScrollTrigger({
+    disableHysteresis: true,
+    target: scrollTarget,
+  })
   const toggleDrawer =
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
       if (
@@ -87,40 +93,67 @@ const ProjectCard = ({ name, imageUrl, description }: ProjectCardProps) => {
         anchor="right"
         open={drawerOpened}
         onClose={toggleDrawer(false)}
-        sx={(theme) => ({
-          '& .MuiPaper-root': {
+        PaperProps={{
+          sx: (theme) => ({
+            overflowY: 'hidden',
+            backgroundColor: theme.palette.neutral[400],
             width: {
               mobile: 'inherit',
               desktopS: '50%',
-              backgroundColor: theme.palette.neutral[400],
             },
-          },
-        })}
+          }),
+        }}
       >
-        <Box width="100%" height="400px">
-          <img
-            src={imageUrl}
-            alt={name}
-            width="100%"
-            height="100%"
-            style={{ objectFit: 'cover' }}
-          />
-        </Box>
-        <Stack position="absolute" right="0">
-          <Stack sx={{ alignSelf: 'end' }} p={2}>
-            <IconButton onClick={toggleDrawer(false)}>
-              <CloseIcon />
-            </IconButton>
+        <Stack
+          direction="column"
+          height="100%"
+          sx={{ overflowY: 'auto' }}
+          ref={(node) => {
+            if (node) {
+              setScrollTarget(node)
+            }
+          }}
+        >
+          <Box
+            position="absolute"
+            left={0}
+            right={0}
+            bgcolor={scrollTrigger ? 'neutral.400' : 'transparent'}
+            p={2}
+          >
+            <Stack justifyContent="end" direction="row">
+              <IconButton onClick={toggleDrawer(false)}>
+                <CloseIcon />
+              </IconButton>
+            </Stack>
+          </Box>
+          <Box width="100%" height="400px">
+            <img
+              src={imageUrl}
+              alt={name}
+              width="100%"
+              height="100%"
+              style={{ objectFit: 'cover' }}
+            />
+          </Box>
+          <Stack
+            pt={{ mobile: 5, tabletS: 10 }}
+            pb={{ mobile: 5, tabletS: 10 }}
+            px={{ mobile: 3, tabletS: 10 }}
+            gap={4}
+            flexGrow={1}
+          >
+            <Typography variant="title">{name}</Typography>
+            <TypographyWithTooltips
+              text={description}
+              key={name}
+              variant="body2"
+              flexGrow={1}
+            />
+            <Button href={SUBPAGES['collections']}>
+              {translateCommon('makeImpactButton')}
+            </Button>
           </Stack>
-        </Stack>
-        <Stack p={10} gap={4} flexGrow={1}>
-          <Typography variant="title">{name}</Typography>
-          <Typography variant="body2" flexGrow={1}>
-            {description}
-          </Typography>
-          <Button href={SUBPAGES['collections']}>
-            {translateCommon('makeImpactButton')}
-          </Button>
         </Stack>
       </Drawer>
     </>

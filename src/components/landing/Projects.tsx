@@ -62,7 +62,10 @@ const Projects = ({ projectsData }: Props) => {
                 </Button>
               </Stack>
             </Stack>
-            <Stack spacing={{ mobile: 5, [breakpoint]: 0 }}>
+            <Stack
+              spacing={{ mobile: 5, [breakpoint]: 0 }}
+              mt={{ mobile: 5, tabletS: 0 }}
+            >
               {projectsData.map((project, index) => (
                 <Stack width="100%" alignItems="center" key={project.name}>
                   <ScrollingCard index={index}>

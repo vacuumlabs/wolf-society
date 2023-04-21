@@ -5,7 +5,7 @@ import TitleSectionText from '../landing/TitleSectionText'
 
 export const TitleSection = () => {
   const translate = useContentful(ContentTypes.collectionsPage)
-  const translateLanding = useContentful(ContentTypes.landingPage)
+  const translateCommon = useContentful(ContentTypes.common)
   const titles = [
     translate('artImpactSubtitle1'),
     translate('artImpactSubtitle2'),
@@ -30,7 +30,7 @@ export const TitleSection = () => {
         </Typography>
         <Stack sx={{ alignItems: 'center' }}>
           <Button variant="contained" href={SUBPAGES['collections']}>
-            {translateLanding('makeImpact')}
+            {translateCommon('makeImpactButton')}
           </Button>
         </Stack>
       </Stack>

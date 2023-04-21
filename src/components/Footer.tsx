@@ -42,8 +42,9 @@ const Footer = () => {
           <Grid container spacing={{ mobile: 5, [breakpoint]: 0 }}>
             <Grid item mobile={12} {...{ [breakpoint]: 6 }}>
               <Stack
-                spacing={10}
                 alignItems={{ mobile: 'center', [breakpoint]: 'start' }}
+                justifyContent="space-between"
+                height="100%"
               >
                 <WSLogo color="black" />
                 <Typography

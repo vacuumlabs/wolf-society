@@ -143,9 +143,19 @@ const CollectionCard = ({
   )
 
   const verticalCard = (
-    <Card>
-      <CardContent sx={{ bgcolor: `${color}`, p: 5, textAlign: 'start' }}>
-        <Stack gap={5}>
+    <Card
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        width: '100vw',
+        height: 'calc(100vh - 80px)',
+      }}
+      className="panel"
+    >
+      <CardContent
+        sx={{ bgcolor: `${color}`, p: 5, textAlign: 'start', flexGrow: 1 }}
+      >
+        <Stack gap={5} height="100%" justifyContent="space-between">
           <Stack gap="4px">
             <Typography variant="caption" color="neutral.main">
               {subtitle}
@@ -163,8 +173,19 @@ const CollectionCard = ({
           </Typography>
         </Stack>
       </CardContent>
-      <Box sx={{ p: 5, bgcolor: 'neutral.main' }}>
-        <CardMedia component="img" image={imageUrl} alt={name} />
+      <Box
+        sx={{
+          p: 5,
+          bgcolor: 'neutral.main',
+          maxHeight: 'calc(100vh - 80px - 228px - 48px)',
+        }}
+      >
+        <CardMedia
+          component="img"
+          image={imageUrl}
+          alt={name}
+          sx={{ height: '100%' }}
+        />
       </Box>
 
       <CardActions sx={{ padding: 0 }}>

@@ -1,4 +1,4 @@
-import { Box, Theme, useMediaQuery } from '@mui/material'
+import { Box } from '@mui/material'
 import { Stack } from '@mui/material'
 import gsap from 'gsap'
 import { useEffect, useRef } from 'react'
@@ -23,15 +23,11 @@ type Props = {
 
 const Collections = ({ collectionsData }: Props) => {
   const translate = useContentful(ContentTypes.common)
-  const isMobile = useMediaQuery((theme: Theme) =>
-    theme.breakpoints.down('tabletM')
-  )
   const component = useRef<HTMLDivElement>(null)
   const slider = useRef<HTMLDivElement>(null)
-  if (!isMobile) gsap.registerPlugin(ScrollTrigger)
+  gsap.registerPlugin(ScrollTrigger)
 
   useEffect(() => {
-    if (isMobile) return
     let ctx = gsap.context(() => {
       const pixelsPause = 0
       let panels = gsap.utils.toArray('.panel')
@@ -44,12 +40,8 @@ const Collections = ({ collectionsData }: Props) => {
             scrub: 0,
             start: `top+=${pixelsPause} top`,
             end: () => '+=' + window.innerWidth * panels.length,
+            pin: true,
           },
-        })
-        ScrollTrigger.create({
-          trigger: slider.current,
-          end: () => '+=' + (window.innerWidth * panels.length + pixelsPause),
-          pin: true,
         })
       }
     }, component)
@@ -70,17 +62,13 @@ const Collections = ({ collectionsData }: Props) => {
       >
         <Box
           ref={slider}
-          sx={
-            isMobile
-              ? {}
-              : {
-                  pt: '80px',
-                  width: `${100 * collectionsData.length}vw`,
-                  height: `calc(${100 * collectionsData.length}vw + 100vh)`,
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                }
-          }
+          sx={{
+            pt: '80px',
+            width: `${100 * collectionsData.length}vw`,
+            height: `calc(${100 * collectionsData.length}vw + 100vh)`,
+            display: 'flex',
+            flexWrap: 'wrap',
+          }}
           className="container"
         >
           {collectionsData.map((collection, index) => (
