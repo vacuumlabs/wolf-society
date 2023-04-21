@@ -37,7 +37,7 @@ const QuestionAccordion = ({
         id={`${question}-header`}
         sx={{
           px: 0,
-          py: 5,
+          py: { mobile: 2.5, desktopM: 5 },
           '& 	.MuiAccordionSummary-content': {
             m: 0,
           },
@@ -55,7 +55,10 @@ const QuestionAccordion = ({
             text={answer}
             key={id}
             variant="body2"
-            sx={{ pt: 5, pb: { mobile: 5, desktopM: 10 } }}
+            sx={{
+              pt: { mobile: 2.5, desktopM: 5 },
+              pb: { mobile: 2.5, desktopM: 10 },
+            }}
           />
         </Grid>
       </Grid>
