@@ -12,7 +12,6 @@ import {
   Typography,
   useMediaQuery,
 } from '@mui/material'
-import dynamic from 'next/dynamic'
 
 export type Edge = 'r' | 'l' | 't' | 'b'
 type ShareButtonProps = BoxProps & { removeEdges?: Set<Edge> }
@@ -63,7 +62,7 @@ export const ShareButton = ({ removeEdges, ...props }: ShareButtonProps) => {
 
                     backgroundColor: 'neutral.600',
                     '&:hover': {
-                      backgroundColor: '#000',
+                      backgroundColor: 'black.main',
                       '& .MuiTypography-root': {
                         color: 'neutral.200',
                       },
