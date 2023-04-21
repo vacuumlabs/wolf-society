@@ -26,7 +26,6 @@ const Faq = ({
     <Stack mt={10}>
       <Questions questionsAndAnswersData={questionsAndAnswersData} />
       <CTA />
-      <Partners />
     </Stack>
   )
 }
