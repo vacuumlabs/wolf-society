@@ -7,10 +7,12 @@ import {
   Link,
   useMediaQuery,
   useTheme,
+  Button,
 } from '@mui/material'
 import React from 'react'
 import AppearingComponent from '../AppearingComponent'
 import HeroParallax from '../HeroParallax'
+import { SUBPAGES } from '@/consts'
 
 type Props = {
   manifestRef: React.RefObject<HTMLElement>
@@ -49,6 +51,11 @@ const Hero = ({ manifestRef }: Props) => {
                 {} {translate('youAreWolfSociety')}
               </Link>
             </Typography>
+            <Stack sx={{ alignItems: 'center', mt: 4 }}>
+              <Button variant="contained" href={SUBPAGES['collections']}>
+                {translate('makeImpact')}
+              </Button>
+            </Stack>
           </Stack>
         </Container>
       </AppearingComponent>
