@@ -17,17 +17,17 @@ const Tooltip = styled(
     )
     const [tooltipOpen, setTooltipOpen] = useState(false)
 
-    return (
+    return isMobile ? (
       <ClickAwayListener onClickAway={() => setTooltipOpen(false)}>
         <MuiTooltip
           {...props}
           classes={{ popper: className }}
           leaveDelay={200}
           title={<Typography variant="body2XS">{title}</Typography>}
-          disableFocusListener={isMobile}
-          disableHoverListener={isMobile}
-          disableTouchListener={isMobile}
-          open={isMobile ? tooltipOpen : undefined}
+          open={tooltipOpen}
+          disableFocusListener
+          disableHoverListener
+          disableTouchListener
         >
           <Typography
             sx={{
@@ -37,13 +37,33 @@ const Tooltip = styled(
               textDecorationStyle: 'dotted',
               fontStyle: 'italic',
             }}
-            onClick={isMobile ? () => setTooltipOpen(true) : undefined}
+            onClick={() => setTooltipOpen(true)}
             variant="body2"
           >
             {children}
           </Typography>
         </MuiTooltip>
       </ClickAwayListener>
+    ) : (
+      <MuiTooltip
+        {...props}
+        classes={{ popper: className }}
+        leaveDelay={200}
+        title={<Typography variant="body2XS">{title}</Typography>}
+      >
+        <Typography
+          sx={{
+            color: 'secondary.500',
+            display: 'inline',
+            textDecorationLine: 'underline',
+            textDecorationStyle: 'dotted',
+            fontStyle: 'italic',
+          }}
+          variant="body2"
+        >
+          {children}
+        </Typography>
+      </MuiTooltip>
     )
   }
 )(({ theme }) => ({
