@@ -12,7 +12,14 @@ export const NFTBuy = ({ priceETH, priceEur }: NFTBuyProps) => {
   const CircleButton = ({ label }: { label: string }) => (
     <Button
       variant="contained"
-      sx={{ width: '45%', aspectRatio: '1/1', borderRadius: '50%' }}
+      sx={{
+        backgroundColor: 'primary.500',
+        color: 'neutral.400',
+        width: '45%',
+        aspectRatio: '1/1',
+        borderRadius: '50%',
+        alignContent: 'center',
+      }}
     >
       {label}
     </Button>
@@ -28,8 +35,11 @@ export const NFTBuy = ({ priceETH, priceEur }: NFTBuyProps) => {
       p={{ mobile: '16px', tabletM: '80px' }}
       gap={{ mobile: '40px', tabletM: '80px' }}
     >
-      <Stack gap="8px">
-        <Typography m="auto" variant="display">{`${priceETH} ETH`}</Typography>
+      <Stack gap="8px" alignItems="center">
+        <Typography
+          mt="122px"
+          variant="display"
+        >{`${priceETH} ETH`}</Typography>
         <Typography
           m="auto"
           variant="headline"

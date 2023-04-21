@@ -24,7 +24,7 @@ const QuestionAccordion = ({
   const theme = useTheme()
   const displayBiggerIcon = useMediaQuery(theme.breakpoints.up('desktopM'))
   const expandIcon = displayBiggerIcon ? (
-    <PlusIcon32 color="black" sx={{ fontSize: 32 }} />
+    <PlusIcon32 color="black" />
   ) : (
     <PlusIcon24 color="black" />
   )
@@ -37,7 +37,7 @@ const QuestionAccordion = ({
         id={`${question}-header`}
         sx={{
           px: 0,
-          py: 5,
+          py: { mobile: 2.5, desktopM: 5 },
           '& 	.MuiAccordionSummary-content': {
             m: 0,
           },
@@ -46,7 +46,9 @@ const QuestionAccordion = ({
           },
         }}
       >
-        <Typography>{question}</Typography>
+        <Typography sx={{ pr: { mobile: 8, desktopM: 48 } }}>
+          {question}
+        </Typography>
       </AccordionSummary>
       <Grid container>
         <Grid item mobile={12} desktopS={5}></Grid>
@@ -55,7 +57,10 @@ const QuestionAccordion = ({
             text={answer}
             key={id}
             variant="body2"
-            sx={{ pt: 5, pb: { mobile: 5, desktopM: 10 } }}
+            sx={{
+              pt: { mobile: 2.5, desktopM: 5 },
+              pb: { mobile: 2.5, desktopM: 10 },
+            }}
           />
         </Grid>
       </Grid>
