@@ -154,7 +154,6 @@ const Collection = ({
                         supply={nft.totalSupply}
                         minted={100}
                         artistName={nft.artistName}
-                        priceFiat="750 EUR"
                         changeArtist={() => {
                           handleChangeArtist(nft)
                         }}

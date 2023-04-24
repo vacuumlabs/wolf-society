@@ -22,7 +22,6 @@ export type NftCardProps = {
   name: string
   imageUrl: string
   priceEth: string
-  priceFiat: string
   minted: number
   supply: number
   artistName: string
@@ -39,7 +38,6 @@ const NftCard = ({
   name,
   imageUrl,
   priceEth,
-  priceFiat,
   minted,
   supply,
   artistName,
@@ -121,7 +119,6 @@ const NftCard = ({
               <Typography variant="body2S">{artistName}</Typography>
               <Stack direction="row" alignItems="center" gap={1}>
                 <Typography variant="caption">{priceEth}</Typography>
-                <Typography variant="body2">{priceFiat}</Typography>
               </Stack>
             </Stack>
             <Button

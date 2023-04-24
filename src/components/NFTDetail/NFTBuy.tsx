@@ -35,16 +35,11 @@ export const NFTBuy = ({ priceETH, priceEur }: NFTBuyProps) => {
       p={{ mobile: '16px', tabletM: '80px' }}
       gap={{ mobile: '40px', tabletM: '80px' }}
     >
-      <Stack gap="8px" alignItems="center">
+      <Stack alignItems="center">
         <Typography
           mt="122px"
           variant="display"
         >{`${priceETH} ETH`}</Typography>
-        <Typography
-          m="auto"
-          variant="headline"
-          color="neutral.700"
-        >{`${priceEur} EUR`}</Typography>
       </Stack>
       <Stack
         direction="row"
