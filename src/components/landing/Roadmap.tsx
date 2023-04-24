@@ -3,9 +3,10 @@ import {
   RoadmapData,
   useContentful,
 } from '@/utils/hooks/useContentful'
-import { Box, Container, Stack } from '@mui/material'
+import { Box, Container, Stack, Theme, useMediaQuery } from '@mui/material'
 import { HorizontalScrollText } from './HorizontalScrollText'
 import RoadmapCard, { RoadmapCardProps } from './RoadmapCard'
+import { RoadmapDsektop } from './RoadmapDesktop'
 
 const MockedItem =
   'Launch of the second Wolf Society Collection NFTs lorem ipsum'
@@ -46,9 +47,12 @@ type Props = {
 
 const Roadmap = ({ roadmapData }: Props) => {
   const translate = useContentful(ContentTypes.landingPage)
-  return !roadmapData ? (
-    <></>
-  ) : (
+  const isMobile = useMediaQuery((theme: Theme) =>
+    theme.breakpoints.down('tabletM')
+  )
+  if (!roadmapData) return null
+
+  return (
     <Box sx={{ bgcolor: 'neutral.main', overflowX: 'hidden' }}>
       <HorizontalScrollText
         text={translate('roadmap')}
@@ -57,20 +61,26 @@ const Roadmap = ({ roadmapData }: Props) => {
         color="neutral.400"
       />
       <Container>
-        <Stack
-          sx={{ alignItems: 'center', my: { mobile: 10, desktopM: 20 } }}
-          spacing={{ mobile: 5, desktopM: 10 }}
-        >
-          {roadmapData.map((roadmapItem, index) => (
-            <RoadmapCard
-              key={`${roadmapItem.quarter}-${roadmapItem.year}`}
-              color={COLOR_ORDER[index % COLOR_ORDER.length]}
-              quarter={roadmapItem.quarter}
-              year={roadmapItem.year}
-              items={roadmapItem.items.split('\n')}
-            />
-          ))}
-        </Stack>
+        {isMobile ? (
+          <Stack sx={{ alignItems: 'center', my: 10 }} spacing={5}>
+            {roadmapData.map((roadmapItem, index) => (
+              <RoadmapCard
+                key={`${roadmapItem.quarter}-${roadmapItem.year}`}
+                color={COLOR_ORDER[index % COLOR_ORDER.length]}
+                quarter={roadmapItem.quarter}
+                year={roadmapItem.year}
+                items={roadmapItem.items.split('\n')}
+              />
+            ))}
+          </Stack>
+        ) : (
+          <RoadmapDsektop
+            roadmapData={roadmapData.map((data, idx) => ({
+              color: COLOR_ORDER[idx % COLOR_ORDER.length],
+              ...data,
+            }))}
+          />
+        )}
       </Container>
     </Box>
   )
