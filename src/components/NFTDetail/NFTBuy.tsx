@@ -1,5 +1,6 @@
 import { ContentTypes, useContentful } from '@/utils/hooks/useContentful'
-import { Box, Button, Stack, Typography } from '@mui/material'
+import { Box, Stack, Typography } from '@mui/material'
+import Button from '../Button'
 
 export interface NFTBuyProps {
   priceETH: number
@@ -11,14 +12,11 @@ export const NFTBuy = ({ priceETH, priceEur }: NFTBuyProps) => {
 
   const CircleButton = ({ label }: { label: string }) => (
     <Button
-      variant="contained"
       sx={{
-        backgroundColor: 'primary.500',
-        color: 'neutral.400',
         width: '45%',
+        height: 'auto !important',
         aspectRatio: '1/1',
         borderRadius: '50%',
-        alignContent: 'center',
       }}
     >
       {label}
