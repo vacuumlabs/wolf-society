@@ -118,7 +118,7 @@ const NftCard = ({
               </Typography>
               <Typography variant="body2S">{artistName}</Typography>
               <Stack direction="row" alignItems="center" gap={1}>
-                <Typography variant="caption">{priceEth}</Typography>
+                <Typography variant="caption">{priceEth} ETH</Typography>
               </Stack>
             </Stack>
             <Button
