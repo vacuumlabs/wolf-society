@@ -55,7 +55,6 @@ export const RoadmapDsektop = ({ roadmapData }: RoadmapDesktopProps) => {
                 index === roadmapData.length - 1
                   ? null
                   : `rotate(${ROTATIONS[index % ROTATIONS.length]}deg)`,
-              transition: 'opacity 0.7s ease-out',
               gridColumn: 1,
               gridRow: 1,
               zIndex: roadmapData.length - index,
