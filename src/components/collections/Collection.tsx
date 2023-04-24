@@ -9,7 +9,9 @@ import {
   BreakpointOverrides,
   Container,
   Stack,
+  Theme,
   Typography,
+  useMediaQuery,
 } from '@mui/material'
 import { useState, useEffect } from 'react'
 import { ParallaxProvider } from 'react-scroll-parallax'
@@ -46,6 +48,9 @@ const Collection = ({
   const locale = useLocale()
   const translateCommon = useContentful(ContentTypes.common)
   const translateCollection = useContentful(ContentTypes.collectionsPage)
+  const isMobile = useMediaQuery((theme: Theme) =>
+    theme.breakpoints.down('tabletS')
+  )
 
   const breakpoint: keyof BreakpointOverrides = 'tabletM'
 
@@ -99,7 +104,10 @@ const Collection = ({
               <Typography variant="display" color="neutral.main">
                 {name}
               </Typography>
-              <Typography variant="body1" color="neutral.main">
+              <Typography
+                variant={isMobile ? 'body2' : 'body1'}
+                color="neutral.main"
+              >
                 {description}
               </Typography>
               <Button sx={{ height: 'auto !important' }}>
