@@ -23,7 +23,7 @@ export type NftCardProps = {
   imageUrl: string
   priceEth: string
   minted: number
-  supply: number
+  supply?: number
   artistName: string
   changeArtist: () => void
   isLast: boolean
@@ -97,7 +97,9 @@ const NftCard = ({
                 {minted}
               </Typography>
               <Typography variant="body2" display="inline" color="neutral.700">
-                /{supply} {translate('pieces')}
+                {supply
+                  ? `/${supply} ${translate('pieces')}`
+                  : ` ${translate('minted')}`}
               </Typography>
             </Box>
             <DynamicShareButton
