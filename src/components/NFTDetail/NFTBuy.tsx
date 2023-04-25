@@ -6,7 +6,15 @@ export interface NFTBuyProps {
   priceEur: number
 }
 
-export const NFTBuy = ({ priceETH, priceEur }: NFTBuyProps) => {
+type NFTBuyComponentProps = NFTBuyProps & {
+  buyInView: boolean
+}
+
+export const NFTBuy = ({
+  priceETH,
+  priceEur,
+  buyInView,
+}: NFTBuyComponentProps) => {
   const translate = useContentful(ContentTypes.nftDetail)
 
   const CircleButton = ({ label }: { label: string }) => (
@@ -34,6 +42,7 @@ export const NFTBuy = ({ priceETH, priceEur }: NFTBuyProps) => {
       }}
       p={{ mobile: '16px', tabletM: '80px' }}
       gap={{ mobile: '40px', tabletM: '80px' }}
+      mb={{ mobile: buyInView ? '48px' : 0 }}
     >
       <Stack alignItems="center">
         <Typography

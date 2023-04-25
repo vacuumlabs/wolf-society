@@ -53,7 +53,7 @@ export const NFTDetail = ({
       <VerticalLine />
       <NFTUsage {...nftUsageProps} />
       <VerticalLine />
-      <NFTBuy {...nftBuyProps} />
+      <NFTBuy {...{ ...nftBuyProps, buyInView }} />
     </>
   )
   return (
@@ -128,6 +128,7 @@ export const NFTDetail = ({
       )}
       <Box
         ref={bottomAnchorRef}
+        key={'bottomRef'}
         sx={{ width: '10px', minHeight: '10px', marginTop: '-10px' }}
       ></Box>
     </Drawer>
