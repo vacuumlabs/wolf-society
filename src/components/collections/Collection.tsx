@@ -13,7 +13,7 @@ import {
   Typography,
   useMediaQuery,
 } from '@mui/material'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, forwardRef } from 'react'
 import { ParallaxProvider } from 'react-scroll-parallax'
 import AppearingComponent from '../AppearingComponent'
 import { Countdown } from '../Countdown'
@@ -35,17 +35,18 @@ type Props = {
   nftData: NFTData[] | null
 }
 
-const Collection = ({
-  id,
-  name,
-  description,
-  artistSubtext,
-  color,
-  subtitle,
-  deadline,
-  numberOfPieces,
-  nftData,
-}: Props) => {
+const Collection = forwardRef<HTMLElement, Props>((props, ref) => {
+  const {
+    id,
+    name,
+    description,
+    artistSubtext,
+    color,
+    subtitle,
+    deadline,
+    numberOfPieces,
+    nftData,
+  } = props
   const [countdownOrPieces, setCountdownOrPieces] = useState<React.ReactNode>()
   const locale = useLocale()
   const translateCommon = useContentful(ContentTypes.common)
@@ -84,7 +85,7 @@ const Collection = ({
   }
 
   return (
-    <Box sx={{ bgcolor: color, textAlign: 'center' }} id={id}>
+    <Box sx={{ bgcolor: color, textAlign: 'center' }} id={id} ref={ref}>
       <AppearingComponent>
         <Container
           sx={{ position: 'relative', mb: { mobile: 10, [breakpoint]: 20 } }}
@@ -177,6 +178,7 @@ const Collection = ({
       </AppearingComponent>
     </Box>
   )
-}
+})
+Collection.displayName = 'Collection'
 
 export default Collection
