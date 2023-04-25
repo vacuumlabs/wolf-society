@@ -63,8 +63,8 @@ export const NFTDescription = ({
         }}
         gap={5}
       >
-        <Stack gap="32px">
-          <Typography variant="headline" fontWeight={600}>
+        <Stack gap={isMobile ? 3 : 4} mb={isMobile ? 5 : 0}>
+          <Typography variant="headline" fontWeight={600} mt={isMobile ? 3 : 0}>
             {name}
           </Typography>
           <Stack>
