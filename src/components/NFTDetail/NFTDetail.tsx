@@ -128,7 +128,7 @@ export const NFTDetail = ({
       )}
       <Box
         ref={bottomAnchorRef}
-        key={'bottomRef'}
+        key={'bottomRef'} // DO NOT DELETE THIS KEY! It makes the sticky button disappear on scrolling to this element.
         sx={{ width: '10px', minHeight: '10px', marginTop: '-10px' }}
       ></Box>
     </Drawer>
