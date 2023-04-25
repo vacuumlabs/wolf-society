@@ -41,9 +41,7 @@ const ArtImpact = ({ collectionsData, nftData }: Props) => {
             name={collection.name}
             nftData={nftsInThisCollection}
             subtitle={translate('limitedEdition')}
-            artistName={collection.artistName}
             artistSubtext={collection.artistSubtext}
-            artistImage={collection.artistImage.fields.file.url}
             description={collection.description}
             deadline={
               collection.deadline ? new Date(collection.deadline) : undefined
