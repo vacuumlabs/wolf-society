@@ -56,7 +56,11 @@ const NftCard = ({
   }, [isInView, changeArtist])
 
   return (
-    <Box sx={{ mb: { mobile: '0', tabletM: isLast ? 0 : '130vh' } }}>
+    <Box
+      sx={{
+        mb: { mobile: '0', tabletM: isLast ? 'calc(100vh - 80px)' : '130vh' },
+      }}
+    >
       <Card
         ref={containerRef}
         sx={{
