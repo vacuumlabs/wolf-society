@@ -16,9 +16,9 @@ import CloseIcon from '@mui/icons-material/Close'
 import { NFTUsage, NFTUsageProps } from './NFTUsage'
 import { NFTBuy, NFTBuyProps } from './NFTBuy'
 import { useRef } from 'react'
-import { useInView } from 'framer-motion'
 import { VerticalLine } from './NFTVerticalLine'
 import { NFTAllocation } from './NFTAllocation'
+import { useOnScreen } from '@/utils/hooks/useOnScreen'
 
 export interface NFTDetailProps {
   isOpen: boolean
@@ -41,7 +41,7 @@ export const NFTDetail = ({
   const isMobile = useMediaQuery((theme: Theme) =>
     theme.breakpoints.down('tabletM')
   )
-  const buyInView = useInView(bottomAnchorRef)
+  const buyInView = useOnScreen(bottomAnchorRef)
 
   const content = (
     <>
@@ -128,7 +128,6 @@ export const NFTDetail = ({
       )}
       <Box
         ref={bottomAnchorRef}
-        key={'bottomRef'} // DO NOT DELETE THIS KEY! It makes the sticky button disappear on scrolling to this element.
         sx={{ width: '10px', minHeight: '10px', marginTop: '-10px' }}
       ></Box>
     </Drawer>
