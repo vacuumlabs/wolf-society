@@ -45,7 +45,7 @@ const Hero = ({ manifestRef }: Props) => {
                 underline="hover"
                 sx={{ cursor: 'pointer' }}
                 onClick={() => {
-                  manifestRef?.current?.scrollIntoView()
+                  manifestRef?.current?.scrollIntoView({ behavior: 'smooth' })
                 }}
               >
                 {} {translate('youAreWolfSociety')}
