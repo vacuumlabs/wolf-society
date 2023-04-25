@@ -26,7 +26,7 @@ type Props = {
   nftData: NFTData[] | null
 }
 
-const Collections = ({ collectionsData, nftData }: Props) => {
+const ArtImpact = ({ collectionsData, nftData }: Props) => {
   const translate = useContentful(ContentTypes.common)
   return !collectionsData ? (
     <></>
@@ -75,4 +75,4 @@ export const getStaticProps: GetStaticProps<Props> = async ({
   }
 }
 
-export default Collections
+export default ArtImpact

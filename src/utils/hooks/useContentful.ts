@@ -60,7 +60,7 @@ export type NFTData = {
   collectionId: string
   name: string
   priceInEth: number
-  totalSupply: number
+  totalSupply?: number
   image: Asset
   artistName: string
   artistImage: Asset
@@ -102,6 +102,7 @@ export type Content = {
     hoursShort: string
     daysShort: string
     pieces: string
+    minted: string
     limitedEdition: string
     makeImpactButton: string
     readMore: string
