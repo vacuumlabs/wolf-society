@@ -38,6 +38,7 @@ const ArtImpact = ({ collectionsData, nftData }: Props) => {
           nftData?.filter((nft) => nft.collectionId === collection.id) ?? null
         return (
           <Collection
+            id={collection.id}
             name={collection.name}
             nftData={nftsInThisCollection}
             subtitle={translate('limitedEdition')}
