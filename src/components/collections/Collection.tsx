@@ -24,9 +24,7 @@ import { ArtistCardMobile } from './ArtistCardMobile'
 type Props = {
   name: string
   description: string
-  artistName: string
   artistSubtext: string
-  artistImage: string
   color: string
   subtitle: string
   deadline?: Date
