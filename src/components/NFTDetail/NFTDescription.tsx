@@ -69,7 +69,7 @@ export const NFTDescription = ({
           </Typography>
           <Stack>
             {totalPieces && soldPieces && (
-              <Stack direction="row">
+              <Stack direction="row" mb={1}>
                 <Typography variant="caption" color="neutral.700">{`${translate(
                   'pieces'
                 )}: `}</Typography>
