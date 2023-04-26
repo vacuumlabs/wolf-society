@@ -23,5 +23,4 @@ export const OnScreen = ({setIntersecting, selector }: OnScreenProps) => {
   }, [])
 
   return null
-
 }
