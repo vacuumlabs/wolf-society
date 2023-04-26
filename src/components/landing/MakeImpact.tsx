@@ -3,6 +3,8 @@ import { Box, Container, Stack, Typography } from '@mui/material'
 import AppearingComponent from '../AppearingComponent'
 import { HorizontalScrollText } from './HorizontalScrollText'
 import TypographyWithTooltips from '../TypographyWithTooltips'
+import ScrollingVideo from '../ScrollingVideo'
+import PollutionText from 'public/images/Pollution-text-en-US.png'
 
 const MakeImpact = () => {
   const translate = useContentful(ContentTypes.landingPage)
@@ -11,15 +13,21 @@ const MakeImpact = () => {
     <Box
       sx={{ bgcolor: 'neutral.400', textAlign: 'center', overflowX: 'hidden' }}
     >
-      <HorizontalScrollText
-        text={translate('makeImpact')}
-        numberOfItems={10}
-        offsetStep={10}
-        color={'secondary.500'}
-      />
+      <Box>
+        <ScrollingVideo
+          textImage={PollutionText}
+          id="Deforestation"
+          topColor="secondary.main"
+          bottomColor="neutral.400"
+        />
+      </Box>
       <AppearingComponent>
         <Container>
-          <Stack sx={{ gap: 4, my: { mobile: 10, desktopM: 20 } }}>
+          <Stack
+            sx={{ gap: 4, my: { mobile: 10, desktopM: 20 } }}
+            position="relative"
+            zIndex={10}
+          >
             <Typography variant="caption" sx={{ textAlign: 'center' }}>
               {translate('makeImpact')}
             </Typography>

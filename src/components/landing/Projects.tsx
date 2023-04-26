@@ -32,6 +32,7 @@ const Projects = ({ projectsData }: Props) => {
         bgcolor: 'secondary.main',
         textAlign: 'center',
       }}
+      zIndex={10}
     >
       <AppearingComponent>
         <Container
