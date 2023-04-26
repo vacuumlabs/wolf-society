@@ -15,10 +15,10 @@ import { SUBPAGES } from '@/consts'
 import Button from '../Button'
 
 type Props = {
-  manifestRef: React.RefObject<HTMLElement>
+  manifestoRef: React.RefObject<HTMLElement>
 }
 
-const Hero = ({ manifestRef }: Props) => {
+const Hero = ({ manifestoRef }: Props) => {
   const translate = useContentful(ContentTypes.landingPage)
   const theme = useTheme()
   const displayLineBreak = useMediaQuery(theme.breakpoints.up(528))
@@ -45,7 +45,7 @@ const Hero = ({ manifestRef }: Props) => {
                 underline="hover"
                 sx={{ cursor: 'pointer' }}
                 onClick={() => {
-                  manifestRef?.current?.scrollIntoView({ behavior: 'smooth' })
+                  manifestoRef?.current?.scrollIntoView({ behavior: 'smooth' })
                 }}
               >
                 {} {translate('youAreWolfSociety')}
