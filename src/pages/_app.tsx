@@ -74,6 +74,7 @@ declare module '@mui/material/styles' {
 
   interface TypographyVariants {
     display: React.CSSProperties
+    displayM: React.CSSProperties
     headline: React.CSSProperties
     title: React.CSSProperties
     caption: React.CSSProperties
@@ -87,6 +88,7 @@ declare module '@mui/material/styles' {
   // allow configuration using `createTheme`
   interface TypographyVariantsOptions {
     display?: React.CSSProperties
+    displayM?: React.CSSProperties
     headline?: React.CSSProperties
     title?: React.CSSProperties
     caption?: React.CSSProperties
@@ -126,6 +128,7 @@ declare module '@mui/material/SvgIcon' {
 declare module '@mui/material/Typography' {
   interface TypographyPropsVariantOverrides {
     display: true
+    displayM: true
     headline: true
     title: true
     caption: true
@@ -468,6 +471,12 @@ theme.typography.display = {
     fontSize: '189px',
     lineHeight: '166px',
   },
+}
+
+theme.typography.displayM = {
+  ...theme.typography.display,
+  fontSize: '141px',
+  lineHeight: '128px',
 }
 
 theme.typography.headline = {
