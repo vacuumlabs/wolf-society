@@ -99,8 +99,9 @@ export const NFTDetail = ({
           {content.props.children}
         </HorizontalScroll>
       )}
-      {isMobile && !buyInView && (
+      {isMobile && (
         <Box
+          display={buyInView ? 'none' : 'inherit'}
           sx={{
             position: 'sticky',
             minWidth: '100%',
