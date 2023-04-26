@@ -8,12 +8,14 @@ export interface NFTBuyProps {
 
 type NFTBuyComponentProps = NFTBuyProps & {
   buyInView: boolean
+  className: string
 }
 
 export const NFTBuy = ({
   priceETH,
   priceEur,
   buyInView,
+  className,
 }: NFTBuyComponentProps) => {
   const translate = useContentful(ContentTypes.nftDetail)
 
@@ -43,6 +45,7 @@ export const NFTBuy = ({
       p={{ mobile: '16px', tabletM: '80px' }}
       gap={{ mobile: '40px', tabletM: '80px' }}
       mb={{ mobile: buyInView ? '48px' : 0 }}
+      className={className}
     >
       <Stack alignItems="center">
         <Typography

@@ -15,10 +15,10 @@ import { NFTArtist, NFTArtistProps } from './NFTArtist'
 import CloseIcon from '@mui/icons-material/Close'
 import { NFTUsage, NFTUsageProps } from './NFTUsage'
 import { NFTBuy, NFTBuyProps } from './NFTBuy'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { VerticalLine } from './NFTVerticalLine'
 import { NFTAllocation } from './NFTAllocation'
-import { useOnScreen } from '@/utils/hooks/useOnScreen'
+import { OnScreen } from '@/components/OnScreen'
 
 export interface NFTDetailProps {
   isOpen: boolean
@@ -41,7 +41,7 @@ export const NFTDetail = ({
   const isMobile = useMediaQuery((theme: Theme) =>
     theme.breakpoints.down('tabletM')
   )
-  const buyInView = useOnScreen(bottomAnchorRef)
+  const [buyInView, setBuyInView] = useState(false)
 
   const content = (
     <>
@@ -53,7 +53,7 @@ export const NFTDetail = ({
       <VerticalLine />
       <NFTUsage {...nftUsageProps} />
       <VerticalLine />
-      <NFTBuy {...{ ...nftBuyProps, buyInView }} />
+      <NFTBuy {...{ ...nftBuyProps, buyInView }} className="nftBuy" />
     </>
   )
   return (
@@ -126,6 +126,7 @@ export const NFTDetail = ({
           </Button>
         </Box>
       )}
+      <OnScreen selector=".nftBuy" setIntersecting={setBuyInView} />
       <Box
         ref={bottomAnchorRef}
         sx={{ width: '10px', minHeight: '10px', marginTop: '-10px' }}
