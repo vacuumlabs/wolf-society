@@ -77,6 +77,7 @@ export type CollectionsPageData = {
   artImpactText1: string
   artImpactText2: string
   artImpactHeadline: string
+  viewArtworks: string
   getCompleteCollection: string
 }
 

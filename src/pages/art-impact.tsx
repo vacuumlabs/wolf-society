@@ -12,6 +12,7 @@ import { GetStaticProps, GetStaticPropsContext } from 'next'
 import { Stack } from '@mui/material'
 import Collection from '@/components/collections/Collection'
 import { TitleSection } from '@/components/collections/TitleSection'
+import { useRef } from 'react'
 
 const COLOR_ORDER: string[] = [
   'secondary.main',
@@ -28,16 +29,18 @@ type Props = {
 
 const ArtImpact = ({ collectionsData, nftData }: Props) => {
   const translate = useContentful(ContentTypes.common)
+  const firstCollectionRef = useRef<HTMLDivElement>(null)
   return !collectionsData ? (
     <></>
   ) : (
     <Stack mt={10}>
-      <TitleSection />
+      <TitleSection firstCollection={firstCollectionRef} />
       {collectionsData.map((collection, index) => {
         const nftsInThisCollection =
           nftData?.filter((nft) => nft.collectionId === collection.id) ?? null
         return (
           <Collection
+            id={collection.id}
             name={collection.name}
             nftData={nftsInThisCollection}
             subtitle={translate('limitedEdition')}
@@ -49,6 +52,7 @@ const ArtImpact = ({ collectionsData, nftData }: Props) => {
             numberOfPieces={collection.numberOfPieces}
             key={collection.name}
             color={COLOR_ORDER[index % COLOR_ORDER.length]}
+            ref={index === 0 ? firstCollectionRef : null}
           />
         )
       })}

@@ -56,7 +56,11 @@ const NftCard = ({
   }, [isInView, changeArtist])
 
   return (
-    <Box sx={{ mb: { mobile: '0', tabletM: isLast ? 0 : '130vh' } }}>
+    <Box
+      sx={{
+        mb: { mobile: '0', tabletM: isLast ? 'calc(100vh - 80px)' : '130vh' },
+      }}
+    >
       <Card
         ref={containerRef}
         sx={{
@@ -118,7 +122,7 @@ const NftCard = ({
               <Typography variant="caption" color="secondary">
                 {name}
               </Typography>
-              <Typography variant="body2S">{artistName}</Typography>
+              <Typography variant="body2">{artistName}</Typography>
               <Stack direction="row" alignItems="center" gap={1}>
                 <Typography variant="caption">{priceEth} ETH</Typography>
               </Stack>

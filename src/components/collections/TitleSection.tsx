@@ -1,11 +1,15 @@
 import { SUBPAGES } from '@/consts'
 import { ContentTypes, useContentful } from '@/utils/hooks/useContentful'
-import { Button, Stack, Typography } from '@mui/material'
+import { Stack, Typography } from '@mui/material'
 import TitleSectionText from '../landing/TitleSectionText'
+import Button from '../Button'
 
-export const TitleSection = () => {
+type Props = {
+  firstCollection?: React.RefObject<HTMLElement>
+}
+
+export const TitleSection = ({ firstCollection }: Props) => {
   const translate = useContentful(ContentTypes.collectionsPage)
-  const translateCommon = useContentful(ContentTypes.common)
   const titles = [
     translate('artImpactSubtitle1'),
     translate('artImpactSubtitle2'),
@@ -29,8 +33,12 @@ export const TitleSection = () => {
           {translate('artImpactHeadline')}
         </Typography>
         <Stack sx={{ alignItems: 'center' }}>
-          <Button variant="contained" href={SUBPAGES['collections']}>
-            {translateCommon('makeImpactButton')}
+          <Button
+            onClick={() => {
+              firstCollection?.current?.scrollIntoView({ behavior: 'smooth' })
+            }}
+          >
+            {translate('viewArtworks')}
           </Button>
         </Stack>
       </Stack>

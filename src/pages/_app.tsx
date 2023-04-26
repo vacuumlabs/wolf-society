@@ -556,6 +556,10 @@ theme.typography.body2S = {
   fontWeight: 400,
   fontSize: theme.typography.body2.fontSize,
   lineHeight: theme.typography.body2.lineHeight,
+  [theme.breakpoints.up('desktopM')]: {
+    fontSize: theme.typography.body2.fontSize,
+    lineHeight: theme.typography.body2.lineHeight,
+  },
 }
 
 theme.typography.body2XS = {

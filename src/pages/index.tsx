@@ -47,15 +47,15 @@ const Home = ({
   roadmapData,
   collectionsData,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const manifestRef = useRef(null)
+  const manifestoRef = useRef(null)
   const formattedPosts = useBlogData(
     { ...blogData, posts: blogData.posts.slice(0, 3) },
     locale
   )
   return (
     <Stack mt={10}>
-      <Hero manifestRef={manifestRef} />
-      <Manifesto ref={manifestRef} />
+      <Hero manifestoRef={manifestoRef} />
+      <Manifesto ref={manifestoRef} />
       <Projects projectsData={projectsData} />
       <MakeImpact />
       <Activities />

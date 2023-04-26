@@ -48,7 +48,7 @@ const AllocationInfoStack = ({
       justifyContent="space-between"
       direction={isHorizontal ? 'row' : 'column'}
       height={'100%'}
-      gap={isHorizontal ? 5 : { mobile: 3, desktopS: 5 }}
+      gap={isHorizontal ? 5 : { mobile: 3, desktopS: isHorizontal ? 5 : 10 }}
     >
       {displayImageOnTheRight ? <></> : imageBox}
       <Stack justifyContent="center" width={isHorizontal ? '50%' : 'auto'}>
