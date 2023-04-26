@@ -53,14 +53,7 @@ const AllocationInfoStack = ({
       {displayImageOnTheRight ? <></> : imageBox}
       <Stack justifyContent="center" width={isHorizontal ? '50%' : 'auto'}>
         <Stack direction="row">
-          <Typography
-            variant="display"
-            color="neutral.main"
-            sx={{
-              fontSize: '141px',
-              lineHeight: '128px',
-            }}
-          >
+          <Typography variant="displayM" color="neutral.main">
             {percentage}
           </Typography>
           <Typography
