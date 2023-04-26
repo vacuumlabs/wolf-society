@@ -37,7 +37,7 @@ export const NFTDetail = ({
   nftUsageProps,
   nftBuyProps,
 }: NFTDetailProps) => {
-  const bottomAnchorRef = useRef<HTMLDivElement>(null)
+  const drawerPaperRef = useRef<HTMLDivElement>(null)
   const isMobile = useMediaQuery((theme: Theme) =>
     theme.breakpoints.down('tabletM')
   )
@@ -66,6 +66,9 @@ export const NFTDetail = ({
           width: '100vw',
           overflowX: 'hidden',
         },
+      }}
+      PaperProps={{
+        ref: drawerPaperRef,
       }}
     >
       <Box
@@ -114,7 +117,10 @@ export const NFTDetail = ({
             variant="contained"
             fullWidth={true}
             onClick={() =>
-              bottomAnchorRef?.current?.scrollIntoView({ behavior: 'smooth' })
+              drawerPaperRef.current?.scrollTo({
+                top: drawerPaperRef.current?.scrollHeight,
+                behavior: 'smooth',
+              })
             }
           >
             <Stack direction="row" gap={'1ch'}>
@@ -128,10 +134,6 @@ export const NFTDetail = ({
         </Box>
       )}
       <OnScreen selector=".nftBuy" setIntersecting={setBuyInView} />
-      <Box
-        ref={bottomAnchorRef}
-        sx={{ width: '10px', minHeight: '10px', marginTop: '-10px' }}
-      ></Box>
     </Drawer>
   )
 }
