@@ -6,18 +6,19 @@ const Button = styled(MuiButton)<
     component?: string
     target?: HTMLAttributeAnchorTarget
     iconatend?: number
+    isiconbutton?: number
   }
->(({ theme, iconatend }) => ({
+>(({ theme, iconatend, isiconbutton }) => ({
   backgroundColor: theme.palette.primary.main,
   boxShadow: 'none',
   color: theme.palette.primary.contrastText,
   height: '48px',
-  paddingLeft: '24px',
-  paddingRight: '24px',
+  paddingLeft: isiconbutton ? '20px' : '24px',
+  paddingRight: isiconbutton ? '20px' : '24px',
   [theme.breakpoints.up('desktopM')]: {
     height: '56px',
-    paddingLeft: '32px',
-    paddingRight: '32px',
+    paddingLeft: isiconbutton ? '20px' : '32px',
+    paddingRight: isiconbutton ? '20px' : '32px',
   },
 
   '&:focus': {
