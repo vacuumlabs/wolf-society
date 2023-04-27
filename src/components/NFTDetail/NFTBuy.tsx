@@ -4,7 +4,6 @@ import Button from '../Button'
 
 export interface NFTBuyProps {
   priceETH: number
-  priceEur: number
 }
 
 type NFTBuyComponentProps = NFTBuyProps & {
@@ -14,7 +13,6 @@ type NFTBuyComponentProps = NFTBuyProps & {
 
 export const NFTBuy = ({
   priceETH,
-  priceEur,
   buyInView,
   className,
 }: NFTBuyComponentProps) => {
