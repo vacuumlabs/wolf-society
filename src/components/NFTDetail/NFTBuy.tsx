@@ -37,6 +37,7 @@ export const NFTBuy = ({
     <Stack
       justifyContent="space-between"
       sx={{
+        height: { mobile: 'auto', tabletM: '100vh' },
         width: { mobile: '100vw', tabletM: '50vw' },
         backgroundColor: 'neutral.400',
       }}
