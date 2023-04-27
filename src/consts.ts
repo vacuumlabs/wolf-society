@@ -22,6 +22,7 @@ export const SUBPAGES: {
   collections: '/art-impact',
   blog: '/blog',
   faq: '/faq',
+  account: '/account',
 }
 
 export const ALLOCATION_INFO: {
