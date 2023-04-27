@@ -74,7 +74,7 @@ const ScrollingVideo = ({
           .padStart(LEFT_PADDING_TO, '0')}.jpg`
 
       const images: HTMLImageElement[] = []
-      const airpods = {
+      const canvasObject = {
         frame: 0,
       }
       const textPanel = gsap.utils.toArray('.textPanel')
@@ -88,7 +88,7 @@ const ScrollingVideo = ({
       function render() {
         if (!context || !canvas) return
         context.clearRect(0, 0, canvas.width, canvas.height)
-        context.drawImage(images[airpods.frame], 0, 0)
+        context.drawImage(images[canvasObject.frame], 0, 0)
       }
 
       gsap
@@ -100,7 +100,7 @@ const ScrollingVideo = ({
             end: () => '+=' + window.innerHeight * 2,
           },
         })
-        .to(airpods, {
+        .to(canvasObject, {
           frame: FRAME_COUNT - 1,
           snap: 'frame',
           ease: 'none',
@@ -117,7 +117,7 @@ const ScrollingVideo = ({
             pin: true,
           },
         })
-        .to(airpods, {})
+        .to(canvasObject, {})
         .to(
           textPanel,
           {
