@@ -54,12 +54,6 @@ const Roadmap = ({ roadmapData }: Props) => {
 
   return (
     <Box sx={{ bgcolor: 'neutral.main', overflowX: 'hidden' }}>
-      <HorizontalScrollText
-        text={translate('roadmap')}
-        numberOfItems={10}
-        offsetStep={10}
-        color="neutral.400"
-      />
       <Container>
         {isMobile ? (
           <Stack sx={{ alignItems: 'center', my: 10 }} spacing={5}>

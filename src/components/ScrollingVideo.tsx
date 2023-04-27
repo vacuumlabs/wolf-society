@@ -1,4 +1,4 @@
-import { Box, Theme, useMediaQuery } from '@mui/material'
+import { Box, Stack, Theme, useMediaQuery } from '@mui/material'
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import ScrollingVideoFrameTop from './icons/ScrollingVideoFrameTop'
@@ -7,6 +7,7 @@ import { default as NextImage, StaticImageData } from 'next/image'
 
 type Props = {
   textImage: StaticImageData
+  textImageMobile: StaticImageData
   id: string
   topColor: string
   bottomColor: string
@@ -35,7 +36,13 @@ const MEDIA_DIMENSIONS: Record<Sizes, { w: number; h: number }> = {
 const FRAME_COUNT = 150
 const LEFT_PADDING_TO = 5
 
-const ScrollingVideo = ({ id, textImage, topColor, bottomColor }: Props) => {
+const ScrollingVideo = ({
+  id,
+  textImage,
+  textImageMobile,
+  topColor,
+  bottomColor,
+}: Props) => {
   const component = useRef<HTMLDivElement>(null)
   const slider = useRef<HTMLDivElement>(null)
   const isTablet = useMediaQuery((theme: Theme) =>
@@ -153,18 +160,20 @@ const ScrollingVideo = ({ id, textImage, topColor, bottomColor }: Props) => {
         <Box position="absolute" bottom={0} color={bottomColor} display="flex">
           <ScrollingVideoFrameBottom />
         </Box>
-        <Box
+        <Stack
           width="100%"
           top="calc(50% + 50vh)"
           position="absolute"
           className="textPanel"
+          alignContent="center"
+          flexWrap="wrap"
         >
           <NextImage
-            src={textImage}
+            src={isTablet ? textImage : textImageMobile}
             alt={id}
-            style={{ width: '100%', height: 'auto' }}
+            style={{ width: isTablet ? '50%' : '100%', height: 'auto' }}
           />
-        </Box>
+        </Stack>
       </Box>
     </Box>
   )
