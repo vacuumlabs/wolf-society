@@ -1,10 +1,10 @@
 import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
 import Button from './Button'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
-import { useEffect, useState } from 'react'
 import { useAccount } from 'wagmi'
 import { SUBPAGES } from '@/consts'
 import { useRouter } from 'next/router'
+import { formatAddress } from '@/utils/helpers'
 
 export const LaunchAppButton = () => {
   const router = useRouter()
@@ -52,7 +52,9 @@ export const LaunchAppButton = () => {
             })}
             onClick={connected ? openAccountModal : openConnectModal}
           >
-            {translateNavbar(connected ? 'disconnectWallet' : 'connectWallet')}
+            {connected
+              ? formatAddress(account.address)
+              : translateNavbar('connectWallet')}
           </Button>
         )
       }}
