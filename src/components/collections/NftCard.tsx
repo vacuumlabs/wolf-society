@@ -118,7 +118,7 @@ const NftCard = ({
             </Stack>
             <Stack direction="row" gap="1px">
               <DynamicShareButton
-                variant="orange"
+                variant="primary"
                 sx={{
                   height: '100%',
                   boxShadow: 'none',

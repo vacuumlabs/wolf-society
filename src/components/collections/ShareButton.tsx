@@ -14,11 +14,11 @@ import { useEffect, useState } from 'react'
 import Button from '../Button'
 
 type ShareButtonProps = BoxProps & {
-  variant?: 'orange' | 'transparent'
+  variant?: 'primary' | 'outlined'
 }
 
 export const ShareButton = ({
-  variant = 'transparent',
+  variant = 'outlined',
   ...props
 }: ShareButtonProps) => {
   const socialMedias: string[] = ['twitter', 'facebook', 'messenger', 'e-mail']
@@ -43,7 +43,7 @@ export const ShareButton = ({
       <PopupState variant="popover" popupId="demo-popup-menu">
         {(popupState) => (
           <>
-            {variant === 'transparent' ? (
+            {variant === 'outlined' ? (
               <IconButton
                 {...bindTrigger(popupState)}
                 onClick={(e) => {
