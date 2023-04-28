@@ -1,4 +1,8 @@
-import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
+import {
+  useContentful,
+  ContentTypes,
+  NFTData,
+} from '@/utils/hooks/useContentful'
 import {
   Box,
   BreakpointOverrides,
@@ -18,14 +22,10 @@ import dynamic from 'next/dynamic'
 import { useInView } from 'framer-motion'
 
 export type NftCardProps = {
-  name: string
-  imageUrl: string
-  priceEth: string
   minted: number
-  supply?: number
-  artistName: string
   changeArtist: () => void
   isLast: boolean
+  data: NFTData
 }
 
 const DynamicShareButton = dynamic(
@@ -33,16 +33,8 @@ const DynamicShareButton = dynamic(
   { ssr: false }
 )
 
-const NftCard = ({
-  name,
-  imageUrl,
-  priceEth,
-  minted,
-  supply,
-  artistName,
-  changeArtist,
-  isLast,
-}: NftCardProps) => {
+const NftCard = ({ minted, changeArtist, isLast, data }: NftCardProps) => {
+  const { totalSupply, name, artistName, priceInEth, image, artistImage } = data
   const translate = useContentful(ContentTypes.common)
   const breakpoint: keyof BreakpointOverrides = 'desktopS'
   const [isDetailOpen, setIsDetailOpen] = useState<boolean>(false)
@@ -85,7 +77,7 @@ const NftCard = ({
             <CardMedia
               component="img"
               sx={{ height: '100%' }}
-              image={imageUrl}
+              image={data.image.fields.file.url}
               alt="Project image"
             />
             <Box
@@ -100,8 +92,8 @@ const NftCard = ({
                 {minted}
               </Typography>
               <Typography variant="body2" display="inline" color="neutral.700">
-                {supply
-                  ? `/${supply} ${translate('pieces')}`
+                {totalSupply
+                  ? `/${totalSupply} ${translate('pieces')}`
                   : ` ${translate('minted')}`}
               </Typography>
             </Box>
@@ -113,7 +105,7 @@ const NftCard = ({
               </Typography>
               <Typography variant="body2">{artistName}</Typography>
               <Stack direction="row" alignItems="center" gap={1}>
-                <Typography variant="caption">{priceEth} ETH</Typography>
+                <Typography variant="caption">{priceInEth} ETH</Typography>
               </Stack>
             </Stack>
             <Stack direction="row" gap="1px">
@@ -139,7 +131,27 @@ const NftCard = ({
       <NFTDetail
         isOpen={isDetailOpen}
         onClose={() => setIsDetailOpen(false)}
-        {...MOCKED_NFT_DETAIL}
+        nftArtistProps={{
+          name: artistName,
+          descriptionLeft: data.artistDescLeft,
+          descriptionRight: data.artistDescRight,
+          imageUrl: artistImage.fields.file.url,
+          socialLinks: {
+            twitterURL: data.artistsTwitter,
+            igUrl: data.artistsIG,
+            webUrl: data.artistsWeb,
+          },
+        }}
+        nftDescriptionProps={{
+          name: name,
+          totalPieces: totalSupply,
+          soldPieces: minted,
+          deadline: undefined,
+          descriptionText: data.nftDesc,
+          imageUrl: image.fields.file.url,
+        }}
+        nftUsageProps={MOCKED_NFT_DETAIL.nftUsageProps}
+        nftBuyProps={{ priceETH: priceInEth }}
       />
     </Box>
   )

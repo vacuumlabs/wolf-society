@@ -36,7 +36,7 @@ export const NFTBuy = ({
       justifyContent="space-between"
       sx={{
         height: { mobile: 'auto', tabletM: '100vh' },
-        width: { mobile: '100vw', tabletM: '50vw' },
+        width: { mobile: '100vw', tabletM: 'max-content' },
         backgroundColor: 'neutral.400',
       }}
       p={{ mobile: '16px', tabletM: '80px' }}
