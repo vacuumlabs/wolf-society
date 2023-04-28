@@ -97,7 +97,7 @@ const ScrollingVideo = ({
             trigger: slider.current,
             scrub: true,
             start: `top bottom`,
-            end: () => '+=' + window.innerHeight * 2,
+            end: () => `center center+=${40 + window.innerHeight * -0.5}px`,
           },
         })
         .to(canvasObject, {
