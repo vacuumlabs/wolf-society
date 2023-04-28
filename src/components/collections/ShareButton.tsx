@@ -67,51 +67,62 @@ export const ShareButton = ({
                 <ShareIcon />
               </Button>
             )}
-            <Menu
-              {...bindMenu(popupState)}
-              open={isOpen}
-              onClose={() => {
-                setIsOpen(false)
-              }}
-              disableScrollLock={true}
-              sx={{
-                '& .MuiPaper-root': {
-                  borderRadius: 0,
-                  backgroundColor: 'transparent',
-                },
-                '& .MuiList-root': {
-                  p: 0,
-                },
-              }}
-              anchorOrigin={{
-                horizontal: 'right',
-                vertical: isMobile ? 'bottom' : 'top',
-              }}
-            >
-              {socialMedias.map((sm, index) => (
-                <MenuItem
-                  key={sm}
-                  onClick={(e) => {
-                    popupState.close()
-                    setIsOpen(false)
-                    e.stopPropagation()
-                  }}
-                  sx={{
-                    mt: index === 0 ? 0 : '1px',
+            {popupState.anchorEl && (
+              <Menu
+                {...bindMenu(popupState)}
+                open={isOpen}
+                onClick={(e) => {
+                  e.stopPropagation()
+                }}
+                onClose={(e) => {
+                  setIsOpen(false)
+                }}
+                disableScrollLock={true}
+                sx={{
+                  '& .MuiPaper-root': {
+                    borderRadius: 0,
+                    backgroundColor: 'transparent',
+                  },
+                  '& .MuiList-root': {
+                    p: 0,
+                  },
+                }}
+                anchorOrigin={{
+                  horizontal: 'right',
+                  vertical: isMobile ? 'bottom' : 'top',
+                }}
+              >
+                {socialMedias.map((sm, index) => (
+                  <MenuItem
+                    key={sm}
+                    onClick={(e) => {
+                      popupState.close()
+                      setIsOpen(false)
+                      e.stopPropagation()
+                    }}
+                    sx={{
+                      mt: index === 0 ? 0 : '1px',
 
-                    backgroundColor: 'neutral.600',
-                    '&:hover': {
-                      backgroundColor: 'black.main',
-                      '& .MuiTypography-root': {
-                        color: 'neutral.200',
+                      backgroundColor: 'neutral.600',
+                      '&:hover': {
+                        backgroundColor: 'black.main',
+                        '& .MuiTypography-root': {
+                          color: 'neutral.200',
+                        },
                       },
-                    },
-                  }}
-                >
-                  <Typography variant="button">{sm}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
+                      '&:focus': {
+                        backgroundColor: 'black.main',
+                        '& .MuiTypography-root': {
+                          color: 'neutral.200',
+                        },
+                      },
+                    }}
+                  >
+                    <Typography variant="button">{sm}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            )}
           </>
         )}
       </PopupState>

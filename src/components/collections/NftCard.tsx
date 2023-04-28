@@ -128,7 +128,6 @@ const NftCard = ({
               <Button
                 component="div"
                 sx={{ width: '100%' }}
-                endIcon={<ArrowRightIcon />}
                 onClick={() => setIsDetailOpen(true)}
               >
                 {translate('showDetails')}
