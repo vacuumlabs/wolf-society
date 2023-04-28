@@ -14,7 +14,6 @@ import ArrowRightIcon from '../icons/ArrowRightIcon'
 import { NFTDetail } from '../NFTDetail/NFTDetail'
 import { MOCKED_NFT_DETAIL } from '../NFTDetail/mockedDetailData'
 import { useEffect, useRef, useState } from 'react'
-import { Edge } from './ShareButton'
 import dynamic from 'next/dynamic'
 import { useInView } from 'framer-motion'
 
@@ -79,7 +78,7 @@ const NftCard = ({
       >
         <CardActionArea
           onClick={() => {
-            console.log(`Clicked ${name}`)
+            setIsDetailOpen(true)
           }}
         >
           <Box position="relative">
@@ -106,16 +105,6 @@ const NftCard = ({
                   : ` ${translate('minted')}`}
               </Typography>
             </Box>
-            <DynamicShareButton
-              sx={{
-                position: 'absolute',
-                bottom: 0,
-                right: 0,
-                transform: 'translateY(100%)',
-                zIndex: 1,
-              }}
-              removeEdges={new Set<Edge>(['r', 't'])}
-            />
           </Box>
           <CardContent sx={{ p: 0, transition: 'translate 0.25s' }}>
             <Stack sx={{ p: 4, textAlign: 'start' }} gap={1}>
@@ -127,14 +116,23 @@ const NftCard = ({
                 <Typography variant="caption">{priceEth} ETH</Typography>
               </Stack>
             </Stack>
-            <Button
-              component="div"
-              sx={{ width: '100%' }}
-              endIcon={<ArrowRightIcon />}
-              onClick={() => setIsDetailOpen(true)}
-            >
-              {translate('showDetails')}
-            </Button>
+            <Stack direction="row" gap="1px">
+              <DynamicShareButton
+                variant="primary"
+                sx={{
+                  height: '100%',
+                  boxShadow: 'none',
+                  backgroundColor: 'red',
+                }}
+              />
+              <Button
+                component="div"
+                sx={{ width: '100%' }}
+                onClick={() => setIsDetailOpen(true)}
+              >
+                {translate('showDetails')}
+              </Button>
+            </Stack>
           </CardContent>
         </CardActionArea>
       </Card>
