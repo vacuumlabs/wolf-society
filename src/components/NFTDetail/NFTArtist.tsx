@@ -46,7 +46,7 @@ export const NFTArtist = ({
       >
         <Typography variant="caption">{translate('aboutArtist')}</Typography>
         <Stack direction={isMobile ? 'column' : 'row'} gap="32px">
-          <Box sx={{ width: '250px', height: '250px', margin: margin }}>
+          <Box sx={{ width: '176px', height: '176px', margin: margin }}>
             <CardMedia component="img" image={imageUrl} alt={name} />
           </Box>
           <Stack

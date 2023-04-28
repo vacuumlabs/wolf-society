@@ -1,24 +1,30 @@
 import { ContentTypes, useContentful } from '@/utils/hooks/useContentful'
-import { Box, Button, Stack, Typography } from '@mui/material'
+import { Box, Stack, Typography } from '@mui/material'
+import Button from '../Button'
 
 export interface NFTBuyProps {
   priceETH: number
-  priceEur: number
 }
 
-export const NFTBuy = ({ priceETH, priceEur }: NFTBuyProps) => {
+type NFTBuyComponentProps = NFTBuyProps & {
+  buyInView: boolean
+  className: string
+}
+
+export const NFTBuy = ({
+  priceETH,
+  buyInView,
+  className,
+}: NFTBuyComponentProps) => {
   const translate = useContentful(ContentTypes.nftDetail)
 
   const CircleButton = ({ label }: { label: string }) => (
     <Button
-      variant="contained"
       sx={{
-        backgroundColor: 'primary.500',
-        color: 'neutral.400',
         width: '45%',
+        height: 'auto !important',
         aspectRatio: '1/1',
         borderRadius: '50%',
-        alignContent: 'center',
       }}
     >
       {label}
@@ -29,22 +35,20 @@ export const NFTBuy = ({ priceETH, priceEur }: NFTBuyProps) => {
     <Stack
       justifyContent="space-between"
       sx={{
-        width: { mobile: '100vw', tabletM: '50vw' },
+        height: { mobile: 'auto', tabletM: '100vh' },
+        width: { mobile: '100vw', tabletM: 'max-content' },
         backgroundColor: 'neutral.400',
       }}
       p={{ mobile: '16px', tabletM: '80px' }}
       gap={{ mobile: '40px', tabletM: '80px' }}
+      mb={{ mobile: buyInView ? '48px' : 0 }}
+      className={className}
     >
-      <Stack gap="8px" alignItems="center">
+      <Stack alignItems="center">
         <Typography
           mt="122px"
           variant="display"
         >{`${priceETH} ETH`}</Typography>
-        <Typography
-          m="auto"
-          variant="headline"
-          color="neutral.700"
-        >{`${priceEur} EUR`}</Typography>
       </Stack>
       <Stack
         direction="row"

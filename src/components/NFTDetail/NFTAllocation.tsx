@@ -10,7 +10,6 @@ export const NFTAllocation = () => {
     <Stack
       gap="40px"
       sx={{
-        minWidth: '100vw',
         backgroundColor: 'neutral.400',
         p: { mobile: '16px', tabletM: '80px' },
       }}
@@ -18,7 +17,7 @@ export const NFTAllocation = () => {
       <Typography variant="caption">
         {translateNftDetail('buyNftAndSupport')}
       </Typography>
-      <Stack flexGrow={1} sx={{ overflowY: 'hidden' }}>
+      <Stack sx={{ overflowY: 'hidden' }}>
         <Stack
           gap={{ mobile: 5, desktopS: 10 }}
           direction={{ mobile: 'column', tabletM: 'row' }}
@@ -29,8 +28,7 @@ export const NFTAllocation = () => {
             <Stack
               py={3}
               key={`AllocationInfoStack${index}`}
-              flexGrow={1}
-              maxWidth={{ mobile: '100%', tabletM: 'calc(100vw / 2)' }}
+              width={{ mobile: 'auto', tabletM: '384px' }}
             >
               <AllocationInfoStack
                 percentage={allocation.percentage}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   AppBar,
   Box,
@@ -11,7 +11,11 @@ import {
   Typography,
   useScrollTrigger,
 } from '@mui/material'
-import { ContentTypes, useContentful } from '@/utils/hooks/useContentful'
+import {
+  Content,
+  ContentTypes,
+  useContentful,
+} from '@/utils/hooks/useContentful'
 import MenuIcon from './icons/MenuIcon'
 import { useRouter } from 'next/router'
 import WSLogo from './icons/WSLogo'
@@ -21,11 +25,49 @@ import CloseIcon from './icons/CloseIcon'
 import Button from './Button'
 import { LaunchAppButton } from './LaunchAppButton'
 import WSFSymbol from './icons/WSFSymbol'
+import { useAccount } from 'wagmi'
+
+type NavbarLinkProps = {
+  subpageKey: keyof Partial<Content[ContentTypes.navbar]>
+  href?: string
+  label: string
+}
+
+const NavbarLink = ({ subpageKey, href, label }: NavbarLinkProps) => {
+  const router = useRouter()
+  const isCurrentSubpage = router.pathname === SUBPAGES[subpageKey]
+  const color = isCurrentSubpage ? 'primary' : 'black.main'
+  return (
+    <Typography variant="button" key={subpageKey} color={color}>
+      <Link
+        color="inherit"
+        href={href}
+        underline="hover"
+        sx={(theme) => ({
+          // Button S for M breakpoint
+          [theme.breakpoints.down('desktopL')]: {
+            fontSize: '16px',
+            lineHeight: '24px',
+          },
+          // Button M for L breakpoint
+          [theme.breakpoints.up('desktopL')]: {
+            fontSize: '20px',
+            lineHeight: '24px',
+          },
+        })}
+      >
+        {label}
+      </Link>
+    </Typography>
+  )
+}
 
 const Navigation = () => {
   const [drawerOpened, setDrawerOpened] = useState(false)
   const router = useRouter()
   const trigger = useScrollTrigger({ disableHysteresis: true })
+  const { isConnected } = useAccount()
+  const [showAccountLink, setShowAccountLink] = useState<boolean>(false)
 
   const translate = useContentful(ContentTypes.navbar)
   const toggleDrawer =
@@ -43,6 +85,11 @@ const Navigation = () => {
   const currentPage = getSubpagesKeys().filter(
     (key) => SUBPAGES[key] === router.pathname
   )[0]
+
+  //to prevent hydratation error
+  useEffect(() => {
+    setShowAccountLink(isConnected)
+  }, [isConnected])
 
   return (
     <AppBar
@@ -67,45 +114,47 @@ const Navigation = () => {
             gap={4}
             sx={{
               display: { mobile: 'none', tabletM: 'flex' },
-              width: { mobile: 'auto', desktopS: '100%' },
+              width: { mobile: 'auto', desktopS: 'fit-content' },
               position: { mobile: 'relative', desktopS: 'absolute' },
+              left: { mobile: '0', desktopS: '50%' },
+              transform: { mobile: 'none', desktopS: 'translate(-50%, 0)' },
             }}
           >
-            {getSubpagesKeys().map((subpageKey) => {
-              const isCurrentSubpage = router.pathname === SUBPAGES[subpageKey]
-              const color = isCurrentSubpage ? 'primary' : 'black.main'
-              return (
-                <Typography variant="button" key={subpageKey} color={color}>
-                  <Link
-                    color="inherit"
+            {getSubpagesKeys()
+              .filter((key) => key !== 'account')
+              .map((subpageKey) => {
+                return (
+                  <NavbarLink
+                    key={subpageKey}
+                    subpageKey={subpageKey}
+                    label={translate(subpageKey)}
                     href={SUBPAGES[subpageKey]}
-                    underline="hover"
-                    sx={(theme) => ({
-                      // Button S for M breakpoint
-                      [theme.breakpoints.down('desktopL')]: {
-                        fontSize: '16px',
-                        lineHeight: '24px',
-                      },
-                      // Button M for L breakpoint
-                      [theme.breakpoints.up('desktopL')]: {
-                        fontSize: '20px',
-                        lineHeight: '24px',
-                      },
-                    })}
-                  >
-                    {translate(subpageKey)}
-                  </Link>
-                </Typography>
-              )
-            })}
+                  />
+                )
+              })}
           </Stack>
           <Stack
             direction="row"
+            justifyContent="center"
             gap={2}
             sx={{
               display: { mobile: 'none', tabletM: 'flex' },
             }}
           >
+            {showAccountLink && (
+              <Stack
+                height="fit-content"
+                justifyContent="center"
+                direction="row"
+                my="auto"
+              >
+                <NavbarLink
+                  subpageKey="account"
+                  label={translate('account')}
+                  href={SUBPAGES['account']}
+                />
+              </Stack>
+            )}
             <LaunchAppButton />
             {trigger && (
               <Button
@@ -182,30 +231,34 @@ const Navigation = () => {
             >
               <WSFSymbol />
               <Stack gap={4}>
-                {getSubpagesKeys().map((subpageKey) => {
-                  const isCurrentSubpage =
-                    router.pathname === SUBPAGES[subpageKey]
-                  return (
-                    <Typography
-                      key={subpageKey}
-                      textAlign="center"
-                      variant="display"
-                      component="p"
-                      color="black"
-                      sx={{
-                        textDecoration: isCurrentSubpage ? 'line-through' : '',
-                      }}
-                    >
-                      <Link
-                        href={SUBPAGES[subpageKey]}
-                        underline="hover"
-                        color="inherit"
+                {getSubpagesKeys()
+                  .filter((key) => showAccountLink || key !== 'account')
+                  .map((subpageKey) => {
+                    const isCurrentSubpage =
+                      router.pathname === SUBPAGES[subpageKey]
+                    return (
+                      <Typography
+                        key={subpageKey}
+                        textAlign="center"
+                        variant="display"
+                        component="p"
+                        color="black"
+                        sx={{
+                          textDecoration: isCurrentSubpage
+                            ? 'line-through'
+                            : '',
+                        }}
                       >
-                        {translate(subpageKey)}
-                      </Link>
-                    </Typography>
-                  )
-                })}
+                        <Link
+                          href={SUBPAGES[subpageKey]}
+                          underline="hover"
+                          color="inherit"
+                        >
+                          {translate(subpageKey)}
+                        </Link>
+                      </Typography>
+                    )
+                  })}
               </Stack>
             </Stack>
             <Stack gap={2}>

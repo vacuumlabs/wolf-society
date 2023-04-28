@@ -1,4 +1,3 @@
-import { ALLOCATION_INFO } from '@/consts'
 import {
   Box,
   Button,
@@ -15,10 +14,10 @@ import { NFTArtist, NFTArtistProps } from './NFTArtist'
 import CloseIcon from '@mui/icons-material/Close'
 import { NFTUsage, NFTUsageProps } from './NFTUsage'
 import { NFTBuy, NFTBuyProps } from './NFTBuy'
-import { useRef } from 'react'
-import { useInView } from 'framer-motion'
+import { useRef, useState } from 'react'
 import { VerticalLine } from './NFTVerticalLine'
 import { NFTAllocation } from './NFTAllocation'
+import { OnScreen } from '@/components/OnScreen'
 
 export interface NFTDetailProps {
   isOpen: boolean
@@ -37,11 +36,11 @@ export const NFTDetail = ({
   nftUsageProps,
   nftBuyProps,
 }: NFTDetailProps) => {
-  const bottomAnchorRef = useRef<HTMLDivElement>(null)
+  const drawerPaperRef = useRef<HTMLDivElement>(null)
   const isMobile = useMediaQuery((theme: Theme) =>
     theme.breakpoints.down('tabletM')
   )
-  const buyInView = useInView(bottomAnchorRef)
+  const [buyInView, setBuyInView] = useState(false)
 
   const content = (
     <>
@@ -53,7 +52,7 @@ export const NFTDetail = ({
       <VerticalLine />
       <NFTUsage {...nftUsageProps} />
       <VerticalLine />
-      <NFTBuy {...nftBuyProps} />
+      <NFTBuy {...{ ...nftBuyProps, buyInView }} className="nftBuy" />
     </>
   )
   return (
@@ -66,6 +65,9 @@ export const NFTDetail = ({
           width: '100vw',
           overflowX: 'hidden',
         },
+      }}
+      PaperProps={{
+        ref: drawerPaperRef,
       }}
     >
       <Box
@@ -99,8 +101,9 @@ export const NFTDetail = ({
           {content.props.children}
         </HorizontalScroll>
       )}
-      {isMobile && !buyInView && (
+      {isMobile && (
         <Box
+          display={buyInView ? 'none' : 'inherit'}
           sx={{
             position: 'sticky',
             minWidth: '100%',
@@ -113,23 +116,19 @@ export const NFTDetail = ({
             variant="contained"
             fullWidth={true}
             onClick={() =>
-              bottomAnchorRef?.current?.scrollIntoView({ behavior: 'smooth' })
+              drawerPaperRef.current?.scrollTo({
+                top: drawerPaperRef.current?.scrollHeight,
+                behavior: 'smooth',
+              })
             }
           >
             <Stack direction="row" gap={'1ch'}>
               <Typography variant="button">{`buy nft ${nftBuyProps.priceETH}ETH`}</Typography>
-              <Typography
-                variant="button"
-                sx={{ opacity: 0.5 }}
-              >{`${nftBuyProps.priceEur}EUR`}</Typography>
             </Stack>
           </Button>
         </Box>
       )}
-      <Box
-        ref={bottomAnchorRef}
-        sx={{ width: '10px', minHeight: '10px', marginTop: '-10px' }}
-      ></Box>
+      <OnScreen selector=".nftBuy" setIntersecting={setBuyInView} />
     </Drawer>
   )
 }

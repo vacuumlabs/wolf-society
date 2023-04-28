@@ -60,10 +60,16 @@ export type NFTData = {
   collectionId: string
   name: string
   priceInEth: number
-  totalSupply: number
+  totalSupply?: number
   image: Asset
   artistName: string
   artistImage: Asset
+  artistDescLeft: string
+  artistDescRight: string
+  nftDesc: string
+  artistsTwitter: string
+  artistsIG: string
+  artistsWeb: string
 }
 
 export type CollectionsPageData = {
@@ -77,6 +83,7 @@ export type CollectionsPageData = {
   artImpactText1: string
   artImpactText2: string
   artImpactHeadline: string
+  viewArtworks: string
   getCompleteCollection: string
 }
 
@@ -95,6 +102,7 @@ export type Content = {
     makeImpact: string
     launchApp: string
     faq: string
+    account: string
   }
   [ContentTypes.common]: {
     secondsShort: string
@@ -102,6 +110,7 @@ export type Content = {
     hoursShort: string
     daysShort: string
     pieces: string
+    minted: string
     limitedEdition: string
     makeImpactButton: string
     readMore: string
@@ -109,6 +118,8 @@ export type Content = {
     allocationPart1: string
     allocationPart2: string
     allocationPart3: string
+    connectWallet: string
+    disconnectWallet: string
   }
   [ContentTypes.landingPage]: {
     heroTitle: string

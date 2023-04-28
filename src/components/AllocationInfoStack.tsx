@@ -48,15 +48,21 @@ const AllocationInfoStack = ({
       justifyContent="space-between"
       direction={isHorizontal ? 'row' : 'column'}
       height={'100%'}
-      gap={isHorizontal ? 5 : { mobile: 3, desktopS: 5 }}
+      gap={isHorizontal ? 5 : { mobile: 3, desktopS: isHorizontal ? 5 : 10 }}
     >
       {displayImageOnTheRight ? <></> : imageBox}
       <Stack justifyContent="center" width={isHorizontal ? '50%' : 'auto'}>
         <Stack direction="row">
-          <Typography variant="display" color="neutral.main">
+          <Typography variant="displayM" color="neutral.main">
             {percentage}
           </Typography>
-          <Typography variant="headline" color="neutral.main">
+          <Typography
+            variant="headline"
+            color="neutral.main"
+            sx={{
+              lineHeight: '64px',
+            }}
+          >
             %
           </Typography>
         </Stack>

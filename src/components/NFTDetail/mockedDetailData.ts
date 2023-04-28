@@ -52,6 +52,5 @@ export const MOCKED_NFT_DETAIL: Omit<NFTDetailProps, 'isOpen' | 'onClose'> = {
   },
   nftBuyProps: {
     priceETH: 0.7,
-    priceEur: 750,
   },
 }
