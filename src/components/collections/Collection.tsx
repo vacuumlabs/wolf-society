@@ -157,16 +157,12 @@ const Collection = forwardRef<HTMLElement, Props>((props, ref) => {
                     />
                     <ScrollingCard index={index}>
                       <NftCard
-                        name={nft.name}
-                        imageUrl={nft.image.fields.file.url}
-                        priceEth={nft.priceInEth.toString()}
-                        supply={nft.totalSupply}
                         minted={100}
-                        artistName={nft.artistName}
                         changeArtist={() => {
                           handleChangeArtist(nft)
                         }}
                         isLast={index === nftData.length - 1}
+                        data={nft}
                       />
                     </ScrollingCard>
                   </Stack>
