@@ -97,7 +97,7 @@ const ScrollingVideo = ({
             trigger: slider.current,
             scrub: true,
             start: `top bottom`,
-            end: () => '+=' + window.innerHeight * 2,
+            end: () => `center center+=${40 + window.innerHeight * -0.5}px`,
           },
         })
         .to(canvasObject, {
@@ -139,7 +139,7 @@ const ScrollingVideo = ({
       <Box ref={slider} position="relative">
         <Box
           position="absolute"
-          height="calc(100vh / 2)"
+          height="calc(100vh)"
           width="100%"
           bottom="50%"
           bgcolor={topColor}
@@ -147,7 +147,7 @@ const ScrollingVideo = ({
         />
         <Box
           position="absolute"
-          height="calc(100vh / 2)"
+          height="calc(100vh)"
           width="100%"
           top="50%"
           bgcolor={bottomColor}
