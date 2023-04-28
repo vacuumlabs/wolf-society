@@ -1,4 +1,3 @@
-import { ALLOCATION_INFO } from '@/consts'
 import {
   Box,
   Button,
@@ -125,10 +124,6 @@ export const NFTDetail = ({
           >
             <Stack direction="row" gap={'1ch'}>
               <Typography variant="button">{`buy nft ${nftBuyProps.priceETH}ETH`}</Typography>
-              <Typography
-                variant="button"
-                sx={{ opacity: 0.5 }}
-              >{`${nftBuyProps.priceEur}EUR`}</Typography>
             </Stack>
           </Button>
         </Box>
