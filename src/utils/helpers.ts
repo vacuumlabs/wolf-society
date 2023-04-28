@@ -1,13 +1,17 @@
 import { SUBPAGES } from '@/consts'
 import { Nft } from 'alchemy-sdk'
 import { Content, ContentTypes } from './hooks/useContentful'
-import { RefObject, useEffect, useMemo, useState } from 'react'
 
 export const compareNfts = (nft1: Nft, nft2: Nft): boolean => {
   return (
     nft1.contract.address === nft2.contract.address &&
     nft1.tokenId === nft2.tokenId
   )
+}
+
+export const formatAddress = (address: string) => {
+  if (address.length <= 8) return address
+  return address.slice(0, 4) + '....' + address.slice(address.length - 4)
 }
 
 export const getSubpagesKeys = () => {

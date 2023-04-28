@@ -19,13 +19,13 @@ const Collections = () => {
 
   return (
     <>
-      {wlfSocietyNfts?.map((nft, index) => (
+      {/* {wlfSocietyNfts?.map((nft, index) => (
         <NftCard
           key={index}
           nft={nft}
           owned={ownedNfts.some((ownedNft) => compareNfts(ownedNft, nft))}
         />
-      ))}
+      ))} */}
     </>
   )
 }

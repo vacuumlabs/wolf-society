@@ -96,6 +96,7 @@ export type Content = {
     makeImpact: string
     launchApp: string
     faq: string
+    account: string
   }
   [ContentTypes.common]: {
     secondsShort: string
@@ -111,6 +112,8 @@ export type Content = {
     allocationPart1: string
     allocationPart2: string
     allocationPart3: string
+    connectWallet: string
+    disconnectWallet: string
   }
   [ContentTypes.landingPage]: {
     heroTitle: string
