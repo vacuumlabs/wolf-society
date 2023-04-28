@@ -60,22 +60,28 @@ const Footer = () => {
                 spacing={{ mobile: 3, [breakpoint]: 5 }}
                 alignItems={{ mobile: 'center', [breakpoint]: 'start' }}
               >
-                {getSubpagesKeys().map((subpageKey) => {
-                  const isCurrentSubpage =
-                    router.pathname === SUBPAGES[subpageKey]
-                  const color = isCurrentSubpage ? 'primary' : 'inherit'
-                  return (
-                    <Typography variant="button" key={subpageKey} color={color}>
-                      <Link
-                        color="inherit"
-                        href={SUBPAGES[subpageKey]}
-                        underline="hover"
+                {getSubpagesKeys()
+                  .filter((key) => key !== 'account')
+                  .map((subpageKey) => {
+                    const isCurrentSubpage =
+                      router.pathname === SUBPAGES[subpageKey]
+                    const color = isCurrentSubpage ? 'primary' : 'inherit'
+                    return (
+                      <Typography
+                        variant="button"
+                        key={subpageKey}
+                        color={color}
                       >
-                        {translate(subpageKey)}
-                      </Link>
-                    </Typography>
-                  )
-                })}
+                        <Link
+                          color="inherit"
+                          href={SUBPAGES[subpageKey]}
+                          underline="hover"
+                        >
+                          {translate(subpageKey)}
+                        </Link>
+                      </Typography>
+                    )
+                  })}
               </Stack>
             </Grid>
             <Grid item mobile={12} {...{ [breakpoint]: 3 }}>
