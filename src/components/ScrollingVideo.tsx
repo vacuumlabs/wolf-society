@@ -139,7 +139,7 @@ const ScrollingVideo = ({
       <Box ref={slider} position="relative">
         <Box
           position="absolute"
-          height="calc(100vh / 2)"
+          height="calc(100vh)"
           width="100%"
           bottom="50%"
           bgcolor={topColor}
@@ -147,7 +147,7 @@ const ScrollingVideo = ({
         />
         <Box
           position="absolute"
-          height="calc(100vh / 2)"
+          height="calc(100vh)"
           width="100%"
           top="50%"
           bgcolor={bottomColor}
