@@ -24,8 +24,16 @@ import WSLogo from './icons/WSLogo'
 
 const socials: { text: string; href: string; icon: React.ReactNode }[] = [
   { text: 'discord', href: 'https://discord.gg', icon: <DiscordIcon /> },
-  { text: 'twitter', href: 'https://twitter.com', icon: <TwitterIcon /> },
-  { text: 'medium', href: 'https://medium.com', icon: <MediumIcon /> },
+  {
+    text: 'twitter',
+    href: 'https://twitter.com/WolfSociety_fnd',
+    icon: <TwitterIcon />,
+  },
+  {
+    text: 'medium',
+    href: 'https://medium.com/@WolfSociety',
+    icon: <MediumIcon />,
+  },
 ]
 
 const Footer = () => {
