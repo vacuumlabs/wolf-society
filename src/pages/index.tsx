@@ -81,7 +81,6 @@ const Home = ({
         topColor="neutral.400"
         bottomColor="neutral.main"
       />
-      <div id="roadmap" />
       <Roadmap roadmapData={roadmapData} />
       <ScrollingVideo
         textImage={DeforestationText}

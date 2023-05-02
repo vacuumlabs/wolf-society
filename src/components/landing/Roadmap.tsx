@@ -53,7 +53,7 @@ const Roadmap = ({ roadmapData }: Props) => {
   if (!roadmapData) return null
 
   return (
-    <Box sx={{ bgcolor: 'neutral.main', overflowX: 'hidden' }}>
+    <Box sx={{ bgcolor: 'neutral.main', overflowX: 'hidden' }} id={'roadmap'}>
       <Container>
         {isMobile ? (
           <Stack sx={{ alignItems: 'center', my: 10 }} spacing={5}>
