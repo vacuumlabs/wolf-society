@@ -25,6 +25,15 @@ export const SUBPAGES: {
   account: '/account',
 }
 
+export const SECTIONS = {
+  about: {
+    roadmap: {
+      id: 'roadmap',
+      href: '/#roadmap',
+    },
+  },
+}
+
 export const ALLOCATION_INFO: {
   percentage: string
   textKey: keyof Content[ContentTypes.common]
