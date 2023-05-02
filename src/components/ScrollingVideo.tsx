@@ -33,7 +33,7 @@ const MEDIA_DIMENSIONS: Record<Sizes, { w: number; h: number }> = {
     h: 1800,
   },
 }
-const FRAME_COUNT = 150
+const FRAME_COUNT = 1 // TODO: Temporarily removed for smoothness -- set back to 150 when fixed
 const LEFT_PADDING_TO = 5
 
 const ScrollingVideo = ({
