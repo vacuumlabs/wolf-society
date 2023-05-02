@@ -20,21 +20,12 @@ enum Sizes {
 }
 
 const MEDIA_DIMENSIONS: Record<Sizes, { w: number; h: number }> = {
-  S: {
-    w: 375,
-    h: 812,
-  },
-  M: {
-    w: 1440,
-    h: 900,
-  },
-  L: {
-    w: 2880,
-    h: 1800,
-  },
+  S: { w: 374, h: 812 },
+  M: { w: 960, h: 600 },
+  L: { w: 1440, h: 900 },
 }
-const FRAME_COUNT = 150
-const LEFT_PADDING_TO = 5
+
+const VIDEO_DURATION_SECONDS = 5
 
 const ScrollingVideo = ({
   id,
@@ -54,10 +45,13 @@ const ScrollingVideo = ({
 
   useEffect(() => {
     let ctx = gsap.context(() => {
+      const video = document.getElementById(
+        `${id}-video`
+      ) as HTMLVideoElement | null
       const canvas = document.getElementById(
         `${id}-canvas`
       ) as HTMLCanvasElement | null
-      if (!canvas) return
+      if (!canvas || !video) return
       const context = canvas.getContext('2d')
       if (!context) return
 
@@ -65,31 +59,11 @@ const ScrollingVideo = ({
 
       canvas.width = MEDIA_DIMENSIONS[size].w
       canvas.height = MEDIA_DIMENSIONS[size].h
-      canvas.style.width = '100%'
-      canvas.style.height = '100%'
 
-      const currentFrame = (index: number) =>
-        `/animations/${id}/${size}/${id}_${index
-          .toString()
-          .padStart(LEFT_PADDING_TO, '0')}.jpg`
+      const dimension = MEDIA_DIMENSIONS[size].w
+      video.src = `/animations/${id}${dimension}.mp4`
 
-      const images: HTMLImageElement[] = []
-      const canvasObject = {
-        frame: 0,
-      }
       const textPanel = gsap.utils.toArray('.textPanel')
-
-      for (let i = 0; i < FRAME_COUNT; i++) {
-        const img = new Image()
-        img.src = currentFrame(i)
-        images.push(img)
-      }
-
-      function render() {
-        if (!context || !canvas) return
-        context.clearRect(0, 0, canvas.width, canvas.height)
-        context.drawImage(images[canvasObject.frame], 0, 0)
-      }
 
       gsap
         .timeline({
@@ -98,13 +72,14 @@ const ScrollingVideo = ({
             scrub: true,
             start: `top bottom`,
             end: () => `center center+=${40 + window.innerHeight * -0.5}px`,
+            onUpdate: () => {
+              context.drawImage(video, 0, 0)
+            },
           },
         })
-        .to(canvasObject, {
-          frame: FRAME_COUNT - 1,
-          snap: 'frame',
+        .to(video, {
+          currentTime: VIDEO_DURATION_SECONDS,
           ease: 'none',
-          onUpdate: render, // use animation onUpdate instead of scrollTrigger's onUpdate
         })
 
       gsap
@@ -117,7 +92,7 @@ const ScrollingVideo = ({
             pin: true,
           },
         })
-        .to(canvasObject, {})
+        .to(video, {})
         .to(
           textPanel,
           {
@@ -127,8 +102,6 @@ const ScrollingVideo = ({
           },
           '<'
         )
-
-      images[0].onload = render
     }, component)
 
     return () => ctx.revert()
@@ -156,7 +129,19 @@ const ScrollingVideo = ({
         <Box position="absolute" color={topColor} display="flex">
           <ScrollingVideoFrameTop />
         </Box>
-        <canvas id={`${id}-canvas`} width="100%" height="auto" />
+        <video
+          id={`${id}-video`}
+          className="video"
+          src=""
+          width="100%"
+          height="auto"
+          preload="auto"
+          style={{ display: 'none' }}
+        />
+        <canvas
+          id={`${id}-canvas`}
+          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+        />
         <Box position="absolute" bottom={0} color={bottomColor} display="flex">
           <ScrollingVideoFrameBottom />
         </Box>
