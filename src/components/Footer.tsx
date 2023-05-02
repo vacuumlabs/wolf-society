@@ -22,12 +22,6 @@ import MediumIcon from './icons/MediumIcon'
 import TwitterIcon from './icons/TwitterIcon'
 import WSLogo from './icons/WSLogo'
 
-const socials: { text: string; href: string; icon: React.ReactNode }[] = [
-  { text: 'discord', href: 'https://discord.gg', icon: <DiscordIcon /> },
-  { text: 'twitter', href: 'https://twitter.com', icon: <TwitterIcon /> },
-  { text: 'medium', href: 'https://medium.com', icon: <MediumIcon /> },
-]
-
 const Footer = () => {
   const translate = useContentful(ContentTypes.navbar)
   const router = useRouter()
@@ -35,6 +29,24 @@ const Footer = () => {
   const isMobileHero = useMediaQuery((theme: Theme) =>
     theme.breakpoints.down('tabletS')
   )
+
+  const socials: { text: string; href: string; icon: React.ReactNode }[] = [
+    {
+      text: 'discord',
+      href: translate('discordLink'),
+      icon: <DiscordIcon />,
+    },
+    {
+      text: 'twitter',
+      href: translate('twitterLink'),
+      icon: <TwitterIcon />,
+    },
+    {
+      text: 'medium',
+      href: `https://medium.com/${process.env.NEXT_PUBLIC_MEDIUM_USER}`,
+      icon: <MediumIcon />,
+    },
+  ]
   return (
     <Box sx={{ bgcolor: 'neutral.400' }}>
       <AppearingComponent>

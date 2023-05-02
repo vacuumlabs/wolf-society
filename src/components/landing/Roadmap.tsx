@@ -6,7 +6,8 @@ import {
 import { Box, Container, Stack, Theme, useMediaQuery } from '@mui/material'
 import { HorizontalScrollText } from './HorizontalScrollText'
 import RoadmapCard, { RoadmapCardProps } from './RoadmapCard'
-import { RoadmapDsektop } from './RoadmapDesktop'
+import { RoadmapDesktop } from './RoadmapDesktop'
+import { SECTIONS } from '@/consts'
 
 const MockedItem =
   'Launch of the second Wolf Society Collection NFTs lorem ipsum'
@@ -53,7 +54,10 @@ const Roadmap = ({ roadmapData }: Props) => {
   if (!roadmapData) return null
 
   return (
-    <Box sx={{ bgcolor: 'neutral.main', overflowX: 'hidden' }}>
+    <Box
+      sx={{ bgcolor: 'neutral.main', overflowX: 'hidden' }}
+      id={SECTIONS.about.roadmap.id}
+    >
       <Container>
         {isMobile ? (
           <Stack sx={{ alignItems: 'center', my: 10 }} spacing={5}>
@@ -68,7 +72,7 @@ const Roadmap = ({ roadmapData }: Props) => {
             ))}
           </Stack>
         ) : (
-          <RoadmapDsektop
+          <RoadmapDesktop
             roadmapData={roadmapData.map((data, idx) => ({
               color: COLOR_ORDER[idx % COLOR_ORDER.length],
               ...data,

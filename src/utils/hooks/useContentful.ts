@@ -103,6 +103,8 @@ export type Content = {
     launchApp: string
     faq: string
     account: string
+    discordLink: string
+    twitterLink: string
   }
   [ContentTypes.common]: {
     secondsShort: string
