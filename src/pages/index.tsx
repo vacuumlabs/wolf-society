@@ -30,13 +30,6 @@ import { useBlogData } from '@/utils/hooks/useBlogData'
 import Partners from '@/components/landing/Partners'
 import Collections from '@/components/landing/Collections'
 import Manifesto from '@/components/landing/Manifesto'
-import ScrollingVideo from '@/components/ScrollingVideo'
-import PollutionText from 'public/images/Pollution-text-en-US.png'
-import PollutionTextMobile from 'public/images/Pollution-text-S-en-US.png'
-import GlacierText from 'public/images/Glacier-text-en-US.png'
-import GlacierTextMobile from 'public/images/Glacier-text-S-en-US.png'
-import DeforestationText from 'public/images/Deforestation-text-en-US.png'
-import DeforestationTextMobile from 'public/images/Deforestation-text-S-en-US.png'
 
 type Props = {
   blogData: BlogData
@@ -64,31 +57,10 @@ const Home = ({
       <Hero manifestoRef={manifestoRef} />
       <Manifesto ref={manifestoRef} />
       <Projects projectsData={projectsData} />
-      <ScrollingVideo
-        textImage={PollutionText}
-        textImageMobile={PollutionTextMobile}
-        id="Pollution"
-        topColor="secondary.main"
-        bottomColor="neutral.400"
-      />
       <MakeImpact />
       <Activities />
       <Collections collectionsData={collectionsData} />
-      <ScrollingVideo
-        textImage={GlacierText}
-        textImageMobile={GlacierTextMobile}
-        id="Glacier"
-        topColor="neutral.400"
-        bottomColor="neutral.main"
-      />
       <Roadmap roadmapData={roadmapData} />
-      <ScrollingVideo
-        textImage={DeforestationText}
-        textImageMobile={DeforestationTextMobile}
-        id="Deforestation"
-        topColor="neutral.main"
-        bottomColor="neutral.400"
-      />
       <Topics posts={formattedPosts} />
       <Partners />
       <CTA />
