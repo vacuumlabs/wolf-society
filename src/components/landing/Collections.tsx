@@ -53,7 +53,6 @@ const Collections = ({ collectionsData }: Props) => {
   ) : (
     <Box
       sx={{ bgcolor: 'neutral.400', pb: { mobile: '80px', desktopM: '160px' } }}
-      zIndex={10}
     >
       <Stack
         ref={component}
