@@ -207,7 +207,6 @@ const ScrollingVideo = ({
             zIndex: '-10',
           }}
           autoPlay
-          loop
           muted
           playsInline
         />
