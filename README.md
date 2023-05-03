@@ -1,6 +1,6 @@
 # wolf-society
 
-Website for Wolf Society Foundation.
+Website for Wolf Society Foundation!
 
 ## Getting Started
 
