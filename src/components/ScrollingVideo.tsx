@@ -1,5 +1,5 @@
 import { Box, Stack, Theme, useMediaQuery } from '@mui/material'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import ScrollingVideoFrameTop from './icons/ScrollingVideoFrameTop'
 import ScrollingVideoFrameBottom from './icons/ScrollingVideoFrameBottom'
@@ -34,13 +34,23 @@ const ScrollingVideo = ({
   topColor,
   bottomColor,
 }: Props) => {
+  const [videosRequested, setVideosRequested] = useState<Sizes[]>([])
   const component = useRef<HTMLDivElement>(null)
   const slider = useRef<HTMLDivElement>(null)
-  const isTablet = useMediaQuery((theme: Theme) =>
+  const isTabletSSR = useMediaQuery((theme: Theme) =>
     theme.breakpoints.up('tabletS')
   )
-  const isDesktop = useMediaQuery((theme: Theme) =>
-    theme.breakpoints.up('desktopS')
+  const isTablet = useMediaQuery(
+    (theme: Theme) => theme.breakpoints.up('tabletS'),
+    {
+      noSsr: true,
+    }
+  )
+  const isDesktop = useMediaQuery(
+    (theme: Theme) => theme.breakpoints.up('desktopS'),
+    {
+      noSsr: true,
+    }
   )
 
   useEffect(() => {
@@ -61,9 +71,24 @@ const ScrollingVideo = ({
       canvas.height = MEDIA_DIMENSIONS[size].h
 
       const dimension = MEDIA_DIMENSIONS[size].w
-      video.src = `/animations/${id}${dimension}.mp4`
+      const url = `/animations/${id}${dimension}.mp4`
 
       const textPanel = gsap.utils.toArray('.textPanel')
+
+      if (!videosRequested.includes(size)) {
+        // Preload the video
+        var xhr = new XMLHttpRequest()
+        xhr.open('GET', url, true)
+        xhr.responseType = 'arraybuffer'
+        xhr.onload = function (oEvent) {
+          var blob = new Blob([(oEvent.target as any).response], {
+            type: 'video/mp4',
+          })
+          video.src = URL.createObjectURL(blob)
+        }
+        xhr.send()
+        setVideosRequested(videosRequested.concat([size]))
+      }
 
       gsap
         .timeline({
@@ -105,7 +130,7 @@ const ScrollingVideo = ({
     }, component)
 
     return () => ctx.revert()
-  })
+  }, [isTablet, isDesktop])
 
   return (
     <Box ref={component} position="relative" sx={{ overflowY: 'hidden' }}>
@@ -154,9 +179,9 @@ const ScrollingVideo = ({
           flexWrap="wrap"
         >
           <NextImage
-            src={isTablet ? textImage : textImageMobile}
+            src={isTabletSSR ? textImage : textImageMobile}
             alt={id}
-            style={{ width: isTablet ? '50%' : '100%', height: 'auto' }}
+            style={{ width: isTabletSSR ? '50%' : '100%', height: 'auto' }}
           />
         </Stack>
       </Box>
