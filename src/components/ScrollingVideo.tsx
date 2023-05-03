@@ -27,10 +27,6 @@ const MEDIA_DIMENSIONS: Record<Sizes, { w: number; h: number }> = {
 
 const VIDEO_DURATION_SECONDS = 5
 
-/**
- * This component unfortunately does not work on Firefox Mobile, due to a bug in the browser,
- * that drawing a video on canvas does not work https://bugzilla.mozilla.org/show_bug.cgi?id=1569547
- */
 const ScrollingVideo = ({
   id,
   textImage,
@@ -39,6 +35,7 @@ const ScrollingVideo = ({
   bottomColor,
 }: Props) => {
   const [videosRequested, setVideosRequested] = useState<Sizes[]>([])
+  const [canvasIsBlank, setCanvasIsBlank] = useState(false)
   const component = useRef<HTMLDivElement>(null)
   const slider = useRef<HTMLDivElement>(null)
   const isTabletSSR = useMediaQuery((theme: Theme) =>
@@ -58,6 +55,39 @@ const ScrollingVideo = ({
   )
 
   useEffect(() => {
+    const canvas = document.getElementById(
+      `${id}-canvas`
+    ) as HTMLCanvasElement | null
+    if (!canvas) throw 'Canvas not found!'
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        console.log('isBlank', isCanvasBlank(canvas))
+        setCanvasIsBlank(isCanvasBlank(canvas))
+      },
+      { root: null, rootMargin: '0px', threshold: 0 }
+    )
+
+    if (canvas != null) {
+      observer.observe(canvas)
+    }
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [])
+
+  function isCanvasBlank(canvas: HTMLCanvasElement) {
+    const context = canvas.getContext('2d')
+    return (
+      !context ||
+      !context
+        .getImageData(0, 0, canvas.width, canvas.height)
+        .data.some((channel) => channel !== 0)
+    )
+  }
+
+  useEffect(() => {
     let ctx = gsap.context(() => {
       const video = document.getElementById(
         `${id}-video`
@@ -65,9 +95,10 @@ const ScrollingVideo = ({
       const canvas = document.getElementById(
         `${id}-canvas`
       ) as HTMLCanvasElement | null
-      if (!canvas || !video) return
+      if (!canvas) throw 'Canvas not found!'
+      if (!video) throw 'Video not found!'
       const context = canvas.getContext('2d')
-      if (!context) return
+      if (!context) throw 'Context not found!'
 
       const size: Sizes = isDesktop ? Sizes.L : isTablet ? Sizes.M : Sizes.S
 
@@ -94,7 +125,9 @@ const ScrollingVideo = ({
         setVideosRequested(videosRequested.concat([size]))
       } else {
         video.src = url
+        console.log('setting url')
       }
+      context.drawImage(video, 0, 0)
 
       gsap
         .timeline({
@@ -147,7 +180,7 @@ const ScrollingVideo = ({
           width="100%"
           bottom="50%"
           bgcolor={topColor}
-          zIndex="-1"
+          zIndex="-20"
         />
         <Box
           position="absolute"
@@ -155,7 +188,7 @@ const ScrollingVideo = ({
           width="100%"
           top="50%"
           bgcolor={bottomColor}
-          zIndex="-1"
+          zIndex="-20"
         />
         <Box position="absolute" color={topColor} display="flex">
           <ScrollingVideoFrameTop />
@@ -167,7 +200,12 @@ const ScrollingVideo = ({
           width="100%"
           height="auto"
           preload="auto"
-          style={{ display: 'none' }}
+          style={{
+            display: canvasIsBlank ? 'inherit' : 'none',
+            position: 'absolute',
+            zIndex: '-10',
+          }}
+          playsInline
         />
         <canvas
           id={`${id}-canvas`}
