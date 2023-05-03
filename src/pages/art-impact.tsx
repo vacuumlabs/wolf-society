@@ -3,8 +3,10 @@ import {
   Content,
   ContentTypes,
   getCollections,
+  getNftArtists,
   getNfts,
   getTranslations,
+  NFTArtistData,
   NFTData,
   useContentful,
 } from '@/utils/hooks/useContentful'
@@ -25,9 +27,10 @@ type Props = {
   translations: Partial<Content>
   collectionsData: CollectionData[] | null
   nftData: NFTData[] | null
+  artistData: NFTArtistData[] | null
 }
 
-const ArtImpact = ({ collectionsData, nftData }: Props) => {
+const ArtImpact = ({ collectionsData, nftData, artistData }: Props) => {
   const translate = useContentful(ContentTypes.common)
   const firstCollectionRef = useRef<HTMLDivElement>(null)
   return !collectionsData ? (
@@ -38,6 +41,20 @@ const ArtImpact = ({ collectionsData, nftData }: Props) => {
       {collectionsData.map((collection, index) => {
         const nftsInThisCollection =
           nftData?.filter((nft) => nft.collectionId === collection.id) ?? null
+        const nftsWithArtistData = nftsInThisCollection
+          ?.map((nft): NFTWithArtistData | null => {
+            const artist = artistData?.find(
+              (artist) => artist.id === nft.artistId
+            )
+
+            if (nft == null || artist == null) {
+              return null
+            }
+
+            return { ...nft, ...artist }
+          })
+          .filter((it) => it != null)
+
         return (
           <Collection
             id={collection.id}
@@ -72,6 +89,7 @@ export const getStaticProps: GetStaticProps<Props> = async ({
       },
       collectionsData: await getCollections(locale),
       nftData: await getNfts(locale),
+      artistData: await getNftArtists(locale),
     },
     revalidate: 60, // In seconds
   }

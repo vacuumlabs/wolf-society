@@ -84,6 +84,7 @@ export type NFTData = {
   artistsTwitter: string
   artistsIG: string
   artistsWeb: string
+  artistId: string
 }
 
 export type CollectionsPageData = {
