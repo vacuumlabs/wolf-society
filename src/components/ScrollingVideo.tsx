@@ -58,7 +58,7 @@ const ScrollingVideo = ({
     const canvas = document.getElementById(
       `${id}-canvas`
     ) as HTMLCanvasElement | null
-    if (!canvas) throw 'Canvas not found!'
+    if (!canvas) return
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -95,10 +95,9 @@ const ScrollingVideo = ({
       const canvas = document.getElementById(
         `${id}-canvas`
       ) as HTMLCanvasElement | null
-      if (!canvas) throw 'Canvas not found!'
-      if (!video) throw 'Video not found!'
+      if (!canvas || !video) return
       const context = canvas.getContext('2d')
-      if (!context) throw 'Context not found!'
+      if (!context) return
 
       const size: Sizes = isDesktop ? Sizes.L : isTablet ? Sizes.M : Sizes.S
 
@@ -137,7 +136,6 @@ const ScrollingVideo = ({
             start: `top bottom`,
             end: () => `center center+=${40 + window.innerHeight * -0.5}px`,
             onUpdate: () => {
-              video.pause()
               context.drawImage(video, 0, 0)
             },
           },
@@ -209,6 +207,10 @@ const ScrollingVideo = ({
           autoPlay
           muted
           playsInline
+          onLoadedData={(event) => {
+            console.log('pausing', event.currentTarget)
+            event.currentTarget.pause()
+          }}
         />
         <canvas
           id={`${id}-canvas`}
