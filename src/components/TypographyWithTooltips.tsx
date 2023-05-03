@@ -1,5 +1,6 @@
 import { tooltipCustomMarkdownRegex } from '@/consts'
-import { Link, Typography, TypographyProps } from '@mui/material'
+import { Typography, TypographyProps } from '@mui/material'
+import Link from './Link'
 import React from 'react'
 import Tooltip from './Tooltip'
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown'

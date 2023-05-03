@@ -9,7 +9,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material'
-import Link from 'next/link'
+import Link from '../Link'
 import Button from '../Button'
 import ArrowTurnTopIcon from '../icons/ArrowTurnTopIcon'
 
