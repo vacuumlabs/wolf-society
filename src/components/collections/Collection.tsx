@@ -22,17 +22,17 @@ import ArtistCard from './ArtistCard'
 import NftCard from './NftCard'
 import Button from '../Button'
 import { ArtistCardMobile } from './ArtistCardMobile'
+import type { NFTWithArtistData } from './types'
 
 type Props = {
   id: string
   name: string
   description: string
-  artistSubtext: string
   color: string
   subtitle: string
   deadline?: Date
   numberOfPieces?: number
-  nftData: NFTData[] | null
+  nftData: NFTWithArtistData[] | null
 }
 
 const Collection = forwardRef<HTMLElement, Props>((props, ref) => {
@@ -40,7 +40,6 @@ const Collection = forwardRef<HTMLElement, Props>((props, ref) => {
     id,
     name,
     description,
-    artistSubtext,
     color,
     subtitle,
     deadline,
@@ -69,6 +68,10 @@ const Collection = forwardRef<HTMLElement, Props>((props, ref) => {
     nftData?.[0]?.artistImage.fields.file.url
   )
 
+  const [artistMotto, setArtistMotto] = useState<string | undefined>(
+    nftData?.[0]?.artistMotto
+  )
+
   useEffect(() => {
     setCountdownOrPieces(
       deadline ? (
@@ -79,9 +82,10 @@ const Collection = forwardRef<HTMLElement, Props>((props, ref) => {
     )
   }, [])
 
-  const handleChangeArtist = (nft: NFTData) => {
+  const handleChangeArtist = (nft: NFTWithArtistData) => {
     setArtistName(nft.artistName)
     setArtistImage(nft.artistImage.fields.file.url)
+    setArtistMotto(nft.artistMotto)
   }
 
   return (
@@ -143,7 +147,7 @@ const Collection = forwardRef<HTMLElement, Props>((props, ref) => {
                   name={artistName}
                   color={color}
                   imageUrl={artistImage}
-                  text={artistSubtext}
+                  text={artistMotto}
                 />
               </Box>
             </Stack>

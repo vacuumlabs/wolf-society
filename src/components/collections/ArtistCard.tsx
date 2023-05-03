@@ -14,7 +14,7 @@ import {
 export type ArtistCardProps = {
   name?: string
   imageUrl?: string
-  text: string
+  text?: string
   color: string
 }
 

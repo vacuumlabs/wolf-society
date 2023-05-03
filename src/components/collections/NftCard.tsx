@@ -20,12 +20,13 @@ import { MOCKED_NFT_DETAIL } from '../NFTDetail/mockedDetailData'
 import { useEffect, useRef, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { useInView } from 'framer-motion'
+import type { NFTWithArtistData } from './types'
 
 export type NftCardProps = {
   minted: number
   changeArtist: () => void
   isLast: boolean
-  data: NFTData
+  data: NFTWithArtistData
 }
 
 const DynamicShareButton = dynamic(
@@ -137,9 +138,9 @@ const NftCard = ({ minted, changeArtist, isLast, data }: NftCardProps) => {
           descriptionRight: data.artistDescRight,
           imageUrl: artistImage.fields.file.url,
           socialLinks: {
-            twitterURL: data.artistsTwitter,
-            igUrl: data.artistsIG,
-            webUrl: data.artistsWeb,
+            twitterURL: data.artistTwitter,
+            igUrl: data.artistIG,
+            webUrl: data.artistWeb,
           },
         }}
         nftDescriptionProps={{

@@ -15,6 +15,7 @@ import { Stack } from '@mui/material'
 import Collection from '@/components/collections/Collection'
 import { TitleSection } from '@/components/collections/TitleSection'
 import { useRef } from 'react'
+import { NFTWithArtistData } from '@/components/collections/types'
 
 const COLOR_ORDER: string[] = [
   'secondary.main',
@@ -59,9 +60,8 @@ const ArtImpact = ({ collectionsData, nftData, artistData }: Props) => {
           <Collection
             id={collection.id}
             name={collection.name}
-            nftData={nftsInThisCollection}
+            nftData={nftsWithArtistData as NFTWithArtistData[] | null}
             subtitle={translate('limitedEdition')}
-            artistSubtext={collection.artistSubtext}
             description={collection.description}
             deadline={
               collection.deadline ? new Date(collection.deadline) : undefined
