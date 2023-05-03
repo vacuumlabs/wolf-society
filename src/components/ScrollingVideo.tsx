@@ -233,6 +233,7 @@ const ScrollingVideo = ({
           className="textPanel"
           alignContent="center"
           flexWrap="wrap"
+          px={isTabletSSR ? 0 : 3}
         >
           <NextImage
             src={isTabletSSR ? textImage : textImageMobile}
