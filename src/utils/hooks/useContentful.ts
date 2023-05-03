@@ -14,6 +14,7 @@ export enum ContentTypes {
   collection = 'collection',
   nft = 'nft',
   nftDetail = 'nftDetail',
+  nftArtist = 'nftArtist',
 }
 
 export type ProjectData = {
@@ -53,6 +54,19 @@ export type NFTDetailData = {
   buyNftAndSupport: string
   buyWithCard: string
   buyWithCrypto: string
+}
+
+export type NFTArtistData = {
+  id: string
+  artistName: string
+  artistImage: Asset
+  artistDescLeft: string
+  artistDescRight: string
+  nftDesc: string
+  artistTwitter: string
+  artistIG: string
+  artistWeb: string
+  artistMotto: string
 }
 
 export type NFTData = {
@@ -169,6 +183,7 @@ export type Content = {
   [ContentTypes.collection]: CollectionData
   [ContentTypes.nft]: NFTData
   [ContentTypes.nftDetail]: NFTDetailData
+  [ContentTypes.nftArtist]: NFTArtistData
 }
 
 /**
@@ -279,6 +294,12 @@ export const getNfts = (locale?: string) =>
     contentType: ContentTypes.nft,
     locale,
     orderBy: 'fields.id',
+  })
+
+export const getNftArtists = (locale?: string) =>
+  getArrayOfContent<NFTArtistData>({
+    contentType: ContentTypes.nftArtist,
+    locale,
   })
 
 export const ContentContext = createContext<Content | undefined>(undefined)
