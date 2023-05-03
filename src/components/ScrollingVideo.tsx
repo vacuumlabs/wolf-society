@@ -191,7 +191,7 @@ const ScrollingVideo = ({
           bgcolor={bottomColor}
           zIndex="-20"
         />
-        <Box position="absolute" color={topColor} display="flex">
+        <Box position="absolute" color={topColor} display="flex" width="100%">
           <ScrollingVideoFrameTop />
         </Box>
         <video
@@ -215,7 +215,13 @@ const ScrollingVideo = ({
           id={`${id}-canvas`}
           style={{ width: '100%', height: '100%', objectFit: 'cover' }}
         />
-        <Box position="absolute" bottom={0} color={bottomColor} display="flex">
+        <Box
+          position="absolute"
+          bottom={0}
+          color={bottomColor}
+          display="flex"
+          width="100%"
+        >
           <ScrollingVideoFrameBottom />
         </Box>
         <Stack
