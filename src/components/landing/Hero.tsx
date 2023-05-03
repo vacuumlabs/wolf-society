@@ -4,10 +4,11 @@ import {
   Container,
   Stack,
   Typography,
-  Link,
   useMediaQuery,
   useTheme,
+  Link,
 } from '@mui/material'
+import NextLink from 'next/link'
 import React from 'react'
 import AppearingComponent from '../AppearingComponent'
 import HeroParallax from '../HeroParallax'
@@ -52,9 +53,9 @@ const Hero = ({ manifestoRef }: Props) => {
               </Link>
             </Typography>
             <Stack sx={{ alignItems: 'center', mt: 4 }}>
-              <Button variant="contained" href={SUBPAGES['collections']}>
-                {translate('makeImpact')}
-              </Button>
+              <NextLink href={SUBPAGES['collections'] || ''} passHref>
+                <Button variant="contained">{translate('makeImpact')}</Button>
+              </NextLink>
             </Stack>
           </Stack>
         </Container>

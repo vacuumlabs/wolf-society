@@ -14,6 +14,7 @@ import ScrollingCard from '../ScrollingCard'
 import ArticleCard from '../blog/ArticleCard'
 import { ArticleProps } from '@/pages/blog'
 import AppearingComponent from '../AppearingComponent'
+import Link from 'next/link'
 
 type Props = {
   posts: ArticleProps[]
@@ -43,9 +44,11 @@ const Topics = ({ posts }: Props) => {
                   {translate('articles')}
                 </Typography>
                 <Stack sx={{ alignItems: 'center' }}>
-                  <Button variant="outlined" href={SUBPAGES['blog']}>
-                    {translate('allArticles')}
-                  </Button>
+                  <Link href={SUBPAGES['blog'] || ''} passHref>
+                    <Button variant="outlined">
+                      {translate('allArticles')}
+                    </Button>
+                  </Link>
                 </Stack>
               </Stack>
               <Stack spacing={{ mobile: 5, [breakpoint]: 0 }}>

@@ -18,6 +18,7 @@ import ArrowRightIcon from '../icons/ArrowRightIcon'
 import CloseIcon from '../icons/CloseIcon'
 import { SUBPAGES } from '@/consts'
 import TypographyWithTooltips from '../TypographyWithTooltips'
+import Link from 'next/link'
 
 export type ProjectCardProps = {
   name: string
@@ -150,9 +151,9 @@ const ProjectCard = ({ name, imageUrl, description }: ProjectCardProps) => {
               variant="body2"
               flexGrow={1}
             />
-            <Button href={SUBPAGES['collections']}>
-              {translateCommon('makeImpactButton')}
-            </Button>
+            <Link href={SUBPAGES['collections'] || ''} passHref>
+              <Button>{translateCommon('makeImpactButton')}</Button>
+            </Link>
           </Stack>
         </Stack>
       </Drawer>

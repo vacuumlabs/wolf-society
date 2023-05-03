@@ -15,6 +15,7 @@ import { SUBPAGES } from '@/consts'
 import { TitleSectionAccordion } from './TitleSectionAccordion'
 import Button from '../Button'
 import TypographyWithTooltips from '../TypographyWithTooltips'
+import Link from 'next/link'
 
 type Props = {
   titles: string[]
@@ -101,10 +102,10 @@ const TitleSectionText = ({ titles, texts, isDark, showButton }: Props) => {
                 text={text}
               />
               {showButton && index === texts.length - 1 && (
-                <Stack sx={{ alignItems: 'center', mt: 5 }}>
-                  <Button href={SUBPAGES['collections']}>
-                    {translate('makeImpact')}
-                  </Button>
+                <Stack sx={{ alignItems: 'cepnter', mt: 5 }}>
+                  <Link href={SUBPAGES['collections'] || ''} passHref>
+                    <Button>{translate('makeImpact')}</Button>
+                  </Link>
                 </Stack>
               )}
             </AppearingComponent>
