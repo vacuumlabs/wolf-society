@@ -137,6 +137,7 @@ const ScrollingVideo = ({
             start: `top bottom`,
             end: () => `center center+=${40 + window.innerHeight * -0.5}px`,
             onUpdate: () => {
+              video.pause()
               context.drawImage(video, 0, 0)
             },
           },
@@ -205,6 +206,9 @@ const ScrollingVideo = ({
             position: 'absolute',
             zIndex: '-10',
           }}
+          autoPlay
+          loop
+          muted
           playsInline
         />
         <canvas
