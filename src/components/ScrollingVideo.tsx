@@ -27,6 +27,13 @@ const MEDIA_DIMENSIONS: Record<Sizes, { w: number; h: number }> = {
 
 const VIDEO_DURATION_SECONDS = 5
 
+/**
+ * This component tries to render current frame from <video> to a <canvas>,
+ * because <canvas> yields better graphical results. However, it appears that
+ * mobile Firefox has a bug such that it is impossible to drawImage from a HTMLVideoElement.
+ * Workaround for this is to detect if the canvas is blank, and unhide the <video> element
+ * as a fallback media to show.
+ */
 const ScrollingVideo = ({
   id,
   textImage,
@@ -60,12 +67,8 @@ const ScrollingVideo = ({
     ) as HTMLCanvasElement | null
     if (!canvas) return
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        console.log('isBlank', isCanvasBlank(canvas))
-        setCanvasIsBlank(isCanvasBlank(canvas))
-      },
-      { root: null, rootMargin: '0px', threshold: 0 }
+    const observer = new IntersectionObserver(([entry]) =>
+      setCanvasIsBlank(isCanvasBlank(canvas))
     )
 
     if (canvas != null) {
@@ -124,7 +127,6 @@ const ScrollingVideo = ({
         setVideosRequested(videosRequested.concat([size]))
       } else {
         video.src = url
-        console.log('setting url')
       }
       context.drawImage(video, 0, 0)
 
@@ -204,11 +206,10 @@ const ScrollingVideo = ({
             position: 'absolute',
             zIndex: '-10',
           }}
-          autoPlay
-          muted
-          playsInline
+          autoPlay // This has to be here for iOS
+          muted // This has to be here for iOS
+          playsInline // This has to be here for iOS
           onLoadedData={(event) => {
-            console.log('pausing', event.currentTarget)
             event.currentTarget.pause()
           }}
         />
