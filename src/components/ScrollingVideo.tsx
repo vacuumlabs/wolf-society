@@ -27,6 +27,10 @@ const MEDIA_DIMENSIONS: Record<Sizes, { w: number; h: number }> = {
 
 const VIDEO_DURATION_SECONDS = 5
 
+/**
+ * This component unfortunately does not work on Firefox Mobile, due to a bug in the browser,
+ * that drawing a video on canvas does not work https://bugzilla.mozilla.org/show_bug.cgi?id=1569547
+ */
 const ScrollingVideo = ({
   id,
   textImage,
