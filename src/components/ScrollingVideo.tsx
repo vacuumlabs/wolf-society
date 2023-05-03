@@ -88,6 +88,8 @@ const ScrollingVideo = ({
         }
         xhr.send()
         setVideosRequested(videosRequested.concat([size]))
+      } else {
+        video.src = url
       }
 
       gsap
