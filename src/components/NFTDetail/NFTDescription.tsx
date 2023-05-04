@@ -60,6 +60,7 @@ export const NFTDescription = ({
         sx={{
           width: { mobile: '100%', tabletM: '45%' },
           padding: { mobile: '16px', tabletM: '80px' },
+          overflowY: 'auto',
         }}
         gap={5}
       >
