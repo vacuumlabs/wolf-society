@@ -34,6 +34,7 @@ export const NFTUsage = ({ lists }: NFTUsageProps) => {
         width: { mobile: '100vw', tabletM: '80vw' },
         backgroundColor: 'neutral.400',
         gap: '120px',
+        overflowY: 'auto',
       }}
       p={{ mobile: '16px', tabletM: '80px' }}
       direction={{ mobile: 'column', [breakpoint]: 'row' }}

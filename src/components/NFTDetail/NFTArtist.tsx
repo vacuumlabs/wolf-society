@@ -40,6 +40,7 @@ export const NFTArtist = ({
         sx={{
           width: { mobile: '100w', tabletM: '80vw' },
           backgroundColor: 'neutral.400',
+          overflowY: 'auto',
         }}
         p={{ mobile: '16px', tabletM: '80px' }}
         gap="40px"
