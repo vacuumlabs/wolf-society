@@ -23,7 +23,7 @@ const Topics = ({ posts }: Props) => {
   const translate = useContentful(ContentTypes.landingPage)
   const breakpoint: keyof BreakpointOverrides = 'tabletM'
   return (
-    <Box sx={{ bgcolor: 'neutral.400', textAlign: 'center' }}>
+    <Box sx={{ bgcolor: 'neutral.400', textAlign: 'center' }} zIndex={10}>
       {posts.length > 0 && (
         <AppearingComponent>
           <Container>

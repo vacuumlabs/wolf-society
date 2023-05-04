@@ -27,3 +27,18 @@ pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## Encoding videos for the animations on the About page
+
+You need to [download `ffmpeg`](https://ffmpeg.org/download.html).
+
+Then run:
+
+```
+./ffmpeg -i Deforestation-video.mp4 -vf scale=1440:-1 -c:v libx264 -profile:v baseline -x264opts keyint=3:min-keyint=2 -r 25 -movflags +faststart+rtphint -map 0 -map -0:a out/Deforestation1440.mp4
+```
+
+Controls:
+
+- `scale=1440:-1` - This will produce video 1440px wide
+- `-map 0 -map -0:a` - This removes all audio tracks - `-map 0` selects all streams from the input, and `-map -0:a` deselects all audio streams

@@ -57,6 +57,7 @@ const Roadmap = ({ roadmapData }: Props) => {
     <Box
       sx={{ bgcolor: 'neutral.main', overflowX: 'hidden' }}
       id={SECTIONS.about.roadmap.id}
+      zIndex={10}
     >
       <Container>
         {isMobile ? (

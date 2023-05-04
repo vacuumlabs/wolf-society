@@ -1,5 +1,5 @@
 import { Box, Stack, Theme, useMediaQuery } from '@mui/material'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import ScrollingVideoFrameTop from './icons/ScrollingVideoFrameTop'
 import ScrollingVideoFrameBottom from './icons/ScrollingVideoFrameBottom'
@@ -20,22 +20,20 @@ enum Sizes {
 }
 
 const MEDIA_DIMENSIONS: Record<Sizes, { w: number; h: number }> = {
-  S: {
-    w: 375,
-    h: 812,
-  },
-  M: {
-    w: 1440,
-    h: 900,
-  },
-  L: {
-    w: 2880,
-    h: 1800,
-  },
+  S: { w: 374, h: 812 },
+  M: { w: 960, h: 600 },
+  L: { w: 1440, h: 900 },
 }
-const FRAME_COUNT = 150
-const LEFT_PADDING_TO = 5
 
+const VIDEO_DURATION_SECONDS = 5
+
+/**
+ * This component tries to render current frame from <video> to a <canvas>,
+ * because <canvas> yields better graphical results. However, it appears that
+ * mobile Firefox has a bug such that it is impossible to drawImage from a HTMLVideoElement.
+ * Workaround for this is to detect if the canvas is blank, and unhide the <video> element
+ * as a fallback media to show.
+ */
 const ScrollingVideo = ({
   id,
   textImage,
@@ -43,21 +41,64 @@ const ScrollingVideo = ({
   topColor,
   bottomColor,
 }: Props) => {
+  const [videosRequested, setVideosRequested] = useState<Sizes[]>([])
+  const [canvasIsBlank, setCanvasIsBlank] = useState(false)
   const component = useRef<HTMLDivElement>(null)
   const slider = useRef<HTMLDivElement>(null)
-  const isTablet = useMediaQuery((theme: Theme) =>
+  const isTabletSSR = useMediaQuery((theme: Theme) =>
     theme.breakpoints.up('tabletS')
   )
-  const isDesktop = useMediaQuery((theme: Theme) =>
-    theme.breakpoints.up('desktopS')
+  const isTablet = useMediaQuery(
+    (theme: Theme) => theme.breakpoints.up('tabletS'),
+    {
+      noSsr: true,
+    }
+  )
+  const isDesktop = useMediaQuery(
+    (theme: Theme) => theme.breakpoints.up('desktopS'),
+    {
+      noSsr: true,
+    }
   )
 
   useEffect(() => {
+    const canvas = document.getElementById(
+      `${id}-canvas`
+    ) as HTMLCanvasElement | null
+    if (!canvas) return
+
+    const observer = new IntersectionObserver(([entry]) =>
+      setCanvasIsBlank(isCanvasBlank(canvas))
+    )
+
+    if (canvas != null) {
+      observer.observe(canvas)
+    }
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [])
+
+  function isCanvasBlank(canvas: HTMLCanvasElement) {
+    const context = canvas.getContext('2d')
+    return (
+      !context ||
+      !context
+        .getImageData(0, 0, canvas.width, canvas.height)
+        .data.some((channel) => channel !== 0)
+    )
+  }
+
+  useEffect(() => {
     let ctx = gsap.context(() => {
+      const video = document.getElementById(
+        `${id}-video`
+      ) as HTMLVideoElement | null
       const canvas = document.getElementById(
         `${id}-canvas`
       ) as HTMLCanvasElement | null
-      if (!canvas) return
+      if (!canvas || !video) return
       const context = canvas.getContext('2d')
       if (!context) return
 
@@ -65,31 +106,29 @@ const ScrollingVideo = ({
 
       canvas.width = MEDIA_DIMENSIONS[size].w
       canvas.height = MEDIA_DIMENSIONS[size].h
-      canvas.style.width = '100%'
-      canvas.style.height = '100%'
 
-      const currentFrame = (index: number) =>
-        `/animations/${id}/${size}/${id}_${index
-          .toString()
-          .padStart(LEFT_PADDING_TO, '0')}.jpg`
+      const dimension = MEDIA_DIMENSIONS[size].w
+      const url = `/animations/${id}${dimension}.mp4`
 
-      const images: HTMLImageElement[] = []
-      const canvasObject = {
-        frame: 0,
-      }
       const textPanel = gsap.utils.toArray('.textPanel')
 
-      for (let i = 0; i < FRAME_COUNT; i++) {
-        const img = new Image()
-        img.src = currentFrame(i)
-        images.push(img)
+      if (!videosRequested.includes(size)) {
+        // Preload the video
+        var xhr = new XMLHttpRequest()
+        xhr.open('GET', url, true)
+        xhr.responseType = 'arraybuffer'
+        xhr.onload = function (oEvent) {
+          var blob = new Blob([(oEvent.target as any).response], {
+            type: 'video/mp4',
+          })
+          video.src = URL.createObjectURL(blob)
+        }
+        xhr.send()
+        setVideosRequested(videosRequested.concat([size]))
+      } else {
+        video.src = url
       }
-
-      function render() {
-        if (!context || !canvas) return
-        context.clearRect(0, 0, canvas.width, canvas.height)
-        context.drawImage(images[canvasObject.frame], 0, 0)
-      }
+      context.drawImage(video, 0, 0)
 
       gsap
         .timeline({
@@ -98,13 +137,14 @@ const ScrollingVideo = ({
             scrub: true,
             start: `top bottom`,
             end: () => `center center+=${40 + window.innerHeight * -0.5}px`,
+            onUpdate: () => {
+              context.drawImage(video, 0, 0)
+            },
           },
         })
-        .to(canvasObject, {
-          frame: FRAME_COUNT - 1,
-          snap: 'frame',
+        .to(video, {
+          currentTime: VIDEO_DURATION_SECONDS,
           ease: 'none',
-          onUpdate: render, // use animation onUpdate instead of scrollTrigger's onUpdate
         })
 
       gsap
@@ -117,7 +157,7 @@ const ScrollingVideo = ({
             pin: true,
           },
         })
-        .to(canvasObject, {})
+        .to(video, {})
         .to(
           textPanel,
           {
@@ -127,12 +167,10 @@ const ScrollingVideo = ({
           },
           '<'
         )
-
-      images[0].onload = render
     }, component)
 
     return () => ctx.revert()
-  })
+  }, [isTablet, isDesktop])
 
   return (
     <Box ref={component} position="relative" sx={{ overflowY: 'hidden' }}>
@@ -143,7 +181,7 @@ const ScrollingVideo = ({
           width="100%"
           bottom="50%"
           bgcolor={topColor}
-          zIndex="-1"
+          zIndex="-20"
         />
         <Box
           position="absolute"
@@ -151,13 +189,41 @@ const ScrollingVideo = ({
           width="100%"
           top="50%"
           bgcolor={bottomColor}
-          zIndex="-1"
+          zIndex="-20"
         />
-        <Box position="absolute" color={topColor} display="flex">
+        <Box position="absolute" color={topColor} display="flex" width="100%">
           <ScrollingVideoFrameTop />
         </Box>
-        <canvas id={`${id}-canvas`} width="100%" height="auto" />
-        <Box position="absolute" bottom={0} color={bottomColor} display="flex">
+        <video
+          id={`${id}-video`}
+          className="video"
+          src=""
+          width="100%"
+          height="auto"
+          preload="auto"
+          style={{
+            display: canvasIsBlank ? 'inherit' : 'none',
+            position: 'absolute',
+            zIndex: '-10',
+          }}
+          autoPlay // This has to be here for iOS
+          muted // This has to be here for iOS
+          playsInline // This has to be here for iOS
+          onLoadedData={(event) => {
+            event.currentTarget.pause()
+          }}
+        />
+        <canvas
+          id={`${id}-canvas`}
+          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+        />
+        <Box
+          position="absolute"
+          bottom={0}
+          color={bottomColor}
+          display="flex"
+          width="100%"
+        >
           <ScrollingVideoFrameBottom />
         </Box>
         <Stack
@@ -167,11 +233,12 @@ const ScrollingVideo = ({
           className="textPanel"
           alignContent="center"
           flexWrap="wrap"
+          px={isTabletSSR ? 0 : 3}
         >
           <NextImage
-            src={isTablet ? textImage : textImageMobile}
+            src={isTabletSSR ? textImage : textImageMobile}
             alt={id}
-            style={{ width: isTablet ? '50%' : '100%', height: 'auto' }}
+            style={{ width: isTabletSSR ? '50%' : '100%', height: 'auto' }}
           />
         </Stack>
       </Box>
