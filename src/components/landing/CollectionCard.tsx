@@ -15,6 +15,7 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import { useEffect, useState } from 'react'
 import Button from '../Button'
 import { Countdown } from '../Countdown'
+import Link from 'next/link'
 
 export type CollectionCardProps = {
   id: string
@@ -135,7 +136,9 @@ const CollectionCard = ({
             </Typography>
           </Box>
           <CardActions sx={{ padding: 0 }}>
-            <Button href={href}>{translate('showCollection')}</Button>
+            <Link {...{ href }} passHref>
+              <Button>{translate('showCollection')}</Button>
+            </Link>
           </CardActions>
         </Box>
       </Box>

@@ -5,7 +5,6 @@ import {
   Container,
   Drawer,
   IconButton,
-  Link,
   Stack,
   Toolbar,
   Typography,
@@ -16,6 +15,7 @@ import {
   ContentTypes,
   useContentful,
 } from '@/utils/hooks/useContentful'
+import Link from './Link'
 import MenuIcon from './icons/MenuIcon'
 import { useRouter } from 'next/router'
 import WSLogo from './icons/WSLogo'
@@ -28,7 +28,10 @@ import WSFSymbol from './icons/WSFSymbol'
 import { useAccount } from 'wagmi'
 
 type NavbarLinkProps = {
-  subpageKey: keyof Partial<Content[ContentTypes.navbar]>
+  subpageKey: keyof Pick<
+    Content[ContentTypes.navbar],
+    'about' | 'collections' | 'blog' | 'faq' | 'account'
+  >
   href?: string
   label: string
 }

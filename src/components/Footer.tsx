@@ -7,7 +7,6 @@ import {
   Stack,
   Typography,
   Grid,
-  Link,
   BreakpointOverrides,
   Theme,
   useMediaQuery,
@@ -21,6 +20,7 @@ import DiscordIcon from './icons/DiscordIcon'
 import MediumIcon from './icons/MediumIcon'
 import TwitterIcon from './icons/TwitterIcon'
 import WSLogo from './icons/WSLogo'
+import Link from './Link'
 
 const Footer = () => {
   const translate = useContentful(ContentTypes.navbar)
