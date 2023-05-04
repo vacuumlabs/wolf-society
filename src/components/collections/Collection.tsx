@@ -27,7 +27,6 @@ type Props = {
   id: string
   name: string
   description: string
-  artistSubtext: string
   color: string
   subtitle: string
   deadline?: Date
@@ -40,7 +39,6 @@ const Collection = forwardRef<HTMLElement, Props>((props, ref) => {
     id,
     name,
     description,
-    artistSubtext,
     color,
     subtitle,
     deadline,
@@ -63,10 +61,14 @@ const Collection = forwardRef<HTMLElement, Props>((props, ref) => {
   )
 
   const [artistName, setArtistName] = useState<string | undefined>(
-    nftData?.[0]?.artistName
+    nftData?.[0]?.artist.fields.artistName
   )
   const [artistImage, setArtistImage] = useState<string | undefined>(
-    nftData?.[0]?.artistImage.fields.file.url
+    nftData?.[0]?.artist.fields.artistImage.fields.file.url
+  )
+
+  const [artistMotto, setArtistMotto] = useState<string | undefined>(
+    nftData?.[0]?.artist.fields.artistMotto
   )
 
   useEffect(() => {
@@ -80,8 +82,9 @@ const Collection = forwardRef<HTMLElement, Props>((props, ref) => {
   }, [])
 
   const handleChangeArtist = (nft: NFTData) => {
-    setArtistName(nft.artistName)
-    setArtistImage(nft.artistImage.fields.file.url)
+    setArtistName(nft.artist.fields.artistName)
+    setArtistImage(nft.artist.fields.artistImage.fields.file.url)
+    setArtistMotto(nft.artist.fields.artistMotto)
   }
 
   return (
@@ -143,7 +146,7 @@ const Collection = forwardRef<HTMLElement, Props>((props, ref) => {
                   name={artistName}
                   color={color}
                   imageUrl={artistImage}
-                  text={artistSubtext}
+                  text={artistMotto}
                 />
               </Box>
             </Stack>

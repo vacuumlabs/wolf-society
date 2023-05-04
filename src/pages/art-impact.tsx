@@ -38,13 +38,13 @@ const ArtImpact = ({ collectionsData, nftData }: Props) => {
       {collectionsData.map((collection, index) => {
         const nftsInThisCollection =
           nftData?.filter((nft) => nft.collectionId === collection.id) ?? null
+
         return (
           <Collection
             id={collection.id}
             name={collection.name}
             nftData={nftsInThisCollection}
             subtitle={translate('limitedEdition')}
-            artistSubtext={collection.artistSubtext}
             description={collection.description}
             deadline={
               collection.deadline ? new Date(collection.deadline) : undefined
