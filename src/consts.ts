@@ -16,7 +16,7 @@ export const ourCollectionsAddresses: string[] = [
 ]
 
 export const SUBPAGES: {
-  [key in keyof Partial<Content[ContentTypes.navbar]>]: string
+  [key in keyof Pick<Content[ContentTypes.navbar], 'about' | 'collections' | 'blog' | 'faq' | 'account'>]: string
 } = {
   about: '/',
   collections: '/art-impact',

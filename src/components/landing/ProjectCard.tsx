@@ -151,7 +151,7 @@ const ProjectCard = ({ name, imageUrl, description }: ProjectCardProps) => {
               variant="body2"
               flexGrow={1}
             />
-            <Link href={SUBPAGES['collections'] || ''} passHref>
+            <Link href={SUBPAGES['collections']} passHref>
               <Button>{translateCommon('makeImpactButton')}</Button>
             </Link>
           </Stack>

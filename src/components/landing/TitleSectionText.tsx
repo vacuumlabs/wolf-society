@@ -103,7 +103,7 @@ const TitleSectionText = ({ titles, texts, isDark, showButton }: Props) => {
               />
               {showButton && index === texts.length - 1 && (
                 <Stack sx={{ alignItems: 'cepnter', mt: 5 }}>
-                  <Link href={SUBPAGES['collections'] || ''} passHref>
+                  <Link href={SUBPAGES['collections']} passHref>
                     <Button>{translate('makeImpact')}</Button>
                   </Link>
                 </Stack>

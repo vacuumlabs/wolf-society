@@ -44,7 +44,7 @@ const Topics = ({ posts }: Props) => {
                   {translate('articles')}
                 </Typography>
                 <Stack sx={{ alignItems: 'center' }}>
-                  <Link href={SUBPAGES['blog'] || ''} passHref>
+                  <Link href={SUBPAGES['blog']} passHref>
                     <Button variant="outlined">
                       {translate('allArticles')}
                     </Button>
