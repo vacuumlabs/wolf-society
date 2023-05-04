@@ -20,13 +20,12 @@ import { MOCKED_NFT_DETAIL } from '../NFTDetail/mockedDetailData'
 import { useEffect, useRef, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { useInView } from 'framer-motion'
-import type { NFTWithArtistData } from './types'
 
 export type NftCardProps = {
   minted: number
   changeArtist: () => void
   isLast: boolean
-  data: NFTWithArtistData
+  data: NFTData
 }
 
 const DynamicShareButton = dynamic(
@@ -35,7 +34,7 @@ const DynamicShareButton = dynamic(
 )
 
 const NftCard = ({ minted, changeArtist, isLast, data }: NftCardProps) => {
-  const { totalSupply, name, artistName, priceInEth, image, artistImage } = data
+  const { totalSupply, name, priceInEth, image } = data
   const translate = useContentful(ContentTypes.common)
   const breakpoint: keyof BreakpointOverrides = 'desktopS'
   const [isDetailOpen, setIsDetailOpen] = useState<boolean>(false)
@@ -104,7 +103,9 @@ const NftCard = ({ minted, changeArtist, isLast, data }: NftCardProps) => {
               <Typography variant="caption" color="secondary">
                 {name}
               </Typography>
-              <Typography variant="body2">{artistName}</Typography>
+              <Typography variant="body2">
+                {data.artist.fields.artistName}
+              </Typography>
               <Stack direction="row" alignItems="center" gap={1}>
                 <Typography variant="caption">{priceInEth} ETH</Typography>
               </Stack>
@@ -133,14 +134,14 @@ const NftCard = ({ minted, changeArtist, isLast, data }: NftCardProps) => {
         isOpen={isDetailOpen}
         onClose={() => setIsDetailOpen(false)}
         nftArtistProps={{
-          name: artistName,
+          name: data.artist.fields.artistName,
           descriptionLeft: data.artistDescLeft,
           descriptionRight: data.artistDescRight,
-          imageUrl: artistImage.fields.file.url,
+          imageUrl: data.artist.fields.artistImage.fields.file.url,
           socialLinks: {
-            twitterURL: data.artistTwitter,
-            igUrl: data.artistIG,
-            webUrl: data.artistWeb,
+            twitterURL: data.artist.fields.artistTwitter,
+            igUrl: data.artist.fields.artistIG,
+            webUrl: data.artist.fields.artistWeb,
           },
         }}
         nftDescriptionProps={{

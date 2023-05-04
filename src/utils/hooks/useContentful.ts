@@ -84,7 +84,9 @@ export type NFTData = {
   artistsTwitter: string
   artistsIG: string
   artistsWeb: string
-  artistId: string
+  artist: {
+    fields: NFTArtistData
+  }
 }
 
 export type CollectionsPageData = {
@@ -295,12 +297,6 @@ export const getNfts = (locale?: string) =>
     contentType: ContentTypes.nft,
     locale,
     orderBy: 'fields.id',
-  })
-
-export const getNftArtists = (locale?: string) =>
-  getArrayOfContent<NFTArtistData>({
-    contentType: ContentTypes.nftArtist,
-    locale,
   })
 
 export const ContentContext = createContext<Content | undefined>(undefined)

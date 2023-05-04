@@ -22,7 +22,6 @@ import ArtistCard from './ArtistCard'
 import NftCard from './NftCard'
 import Button from '../Button'
 import { ArtistCardMobile } from './ArtistCardMobile'
-import type { NFTWithArtistData } from './types'
 
 type Props = {
   id: string
@@ -32,7 +31,7 @@ type Props = {
   subtitle: string
   deadline?: Date
   numberOfPieces?: number
-  nftData: NFTWithArtistData[] | null
+  nftData: NFTData[] | null
 }
 
 const Collection = forwardRef<HTMLElement, Props>((props, ref) => {
@@ -62,14 +61,14 @@ const Collection = forwardRef<HTMLElement, Props>((props, ref) => {
   )
 
   const [artistName, setArtistName] = useState<string | undefined>(
-    nftData?.[0]?.artistName
+    nftData?.[0]?.artist.fields.artistName
   )
   const [artistImage, setArtistImage] = useState<string | undefined>(
-    nftData?.[0]?.artistImage.fields.file.url
+    nftData?.[0]?.artist.fields.artistImage.fields.file.url
   )
 
   const [artistMotto, setArtistMotto] = useState<string | undefined>(
-    nftData?.[0]?.artistMotto
+    nftData?.[0]?.artist.fields.artistMotto
   )
 
   useEffect(() => {
@@ -82,10 +81,10 @@ const Collection = forwardRef<HTMLElement, Props>((props, ref) => {
     )
   }, [])
 
-  const handleChangeArtist = (nft: NFTWithArtistData) => {
-    setArtistName(nft.artistName)
-    setArtistImage(nft.artistImage.fields.file.url)
-    setArtistMotto(nft.artistMotto)
+  const handleChangeArtist = (nft: NFTData) => {
+    setArtistName(nft.artist.fields.artistName)
+    setArtistImage(nft.artist.fields.artistImage.fields.file.url)
+    setArtistMotto(nft.artist.fields.artistMotto)
   }
 
   return (

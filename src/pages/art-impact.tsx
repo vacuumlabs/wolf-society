@@ -3,10 +3,8 @@ import {
   Content,
   ContentTypes,
   getCollections,
-  getNftArtists,
   getNfts,
   getTranslations,
-  NFTArtistData,
   NFTData,
   useContentful,
 } from '@/utils/hooks/useContentful'
@@ -15,7 +13,6 @@ import { Stack } from '@mui/material'
 import Collection from '@/components/collections/Collection'
 import { TitleSection } from '@/components/collections/TitleSection'
 import { useRef } from 'react'
-import { NFTWithArtistData } from '@/components/collections/types'
 
 const COLOR_ORDER: string[] = [
   'secondary.main',
@@ -28,10 +25,9 @@ type Props = {
   translations: Partial<Content>
   collectionsData: CollectionData[] | null
   nftData: NFTData[] | null
-  artistData: NFTArtistData[] | null
 }
 
-const ArtImpact = ({ collectionsData, nftData, artistData }: Props) => {
+const ArtImpact = ({ collectionsData, nftData }: Props) => {
   const translate = useContentful(ContentTypes.common)
   const firstCollectionRef = useRef<HTMLDivElement>(null)
   return !collectionsData ? (
@@ -42,25 +38,12 @@ const ArtImpact = ({ collectionsData, nftData, artistData }: Props) => {
       {collectionsData.map((collection, index) => {
         const nftsInThisCollection =
           nftData?.filter((nft) => nft.collectionId === collection.id) ?? null
-        const nftsWithArtistData = nftsInThisCollection
-          ?.map((nft): NFTWithArtistData | null => {
-            const artist = artistData?.find(
-              (artist) => artist.id === nft.artistId
-            )
-
-            if (nft == null || artist == null) {
-              return null
-            }
-
-            return { ...nft, ...artist }
-          })
-          .filter((it) => it != null)
 
         return (
           <Collection
             id={collection.id}
             name={collection.name}
-            nftData={nftsWithArtistData as NFTWithArtistData[] | null}
+            nftData={nftsInThisCollection}
             subtitle={translate('limitedEdition')}
             description={collection.description}
             deadline={
@@ -89,7 +72,6 @@ export const getStaticProps: GetStaticProps<Props> = async ({
       },
       collectionsData: await getCollections(locale),
       nftData: await getNfts(locale),
-      artistData: await getNftArtists(locale),
     },
     revalidate: 60, // In seconds
   }
