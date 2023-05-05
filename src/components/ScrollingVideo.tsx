@@ -27,13 +27,6 @@ const MEDIA_DIMENSIONS: Record<Sizes, { w: number; h: number }> = {
 
 const VIDEO_DURATION_SECONDS = 5
 
-/**
- * This component tries to render current frame from <video> to a <canvas>,
- * because <canvas> yields better graphical results. However, it appears that
- * mobile Firefox has a bug such that it is impossible to drawImage from a HTMLVideoElement.
- * Workaround for this is to detect if the canvas is blank, and unhide the <video> element
- * as a fallback media to show.
- */
 const ScrollingVideo = ({
   id,
   textImage,
@@ -41,8 +34,8 @@ const ScrollingVideo = ({
   topColor,
   bottomColor,
 }: Props) => {
+  const [aspectRatio, setAspectRatio] = useState(1.6)
   const [videosRequested, setVideosRequested] = useState<Sizes[]>([])
-  const [canvasIsBlank, setCanvasIsBlank] = useState(false)
   const component = useRef<HTMLDivElement>(null)
   const slider = useRef<HTMLDivElement>(null)
   const isTabletSSR = useMediaQuery((theme: Theme) =>
@@ -62,50 +55,18 @@ const ScrollingVideo = ({
   )
 
   useEffect(() => {
-    const canvas = document.getElementById(
-      `${id}-canvas`
-    ) as HTMLCanvasElement | null
-    if (!canvas) return
-
-    const observer = new IntersectionObserver(([entry]) =>
-      setCanvasIsBlank(isCanvasBlank(canvas))
-    )
-
-    if (canvas != null) {
-      observer.observe(canvas)
-    }
-
-    return () => {
-      observer.disconnect()
-    }
-  }, [])
-
-  function isCanvasBlank(canvas: HTMLCanvasElement) {
-    const context = canvas.getContext('2d')
-    return (
-      !context ||
-      !context
-        .getImageData(0, 0, canvas.width, canvas.height)
-        .data.some((channel) => channel !== 0)
-    )
-  }
+    const size: Sizes = isDesktop ? Sizes.L : isTablet ? Sizes.M : Sizes.S
+    setAspectRatio(MEDIA_DIMENSIONS[size].w / MEDIA_DIMENSIONS[size].h)
+  }, [isTablet, isDesktop])
 
   useEffect(() => {
     let ctx = gsap.context(() => {
       const video = document.getElementById(
         `${id}-video`
       ) as HTMLVideoElement | null
-      const canvas = document.getElementById(
-        `${id}-canvas`
-      ) as HTMLCanvasElement | null
-      if (!canvas || !video) return
-      const context = canvas.getContext('2d')
-      if (!context) return
+      if (!video) return
 
       const size: Sizes = isDesktop ? Sizes.L : isTablet ? Sizes.M : Sizes.S
-
-      canvas.width = MEDIA_DIMENSIONS[size].w
-      canvas.height = MEDIA_DIMENSIONS[size].h
 
       const dimension = MEDIA_DIMENSIONS[size].w
       const url = `/animations/${id}${dimension}.mp4`
@@ -128,7 +89,6 @@ const ScrollingVideo = ({
       } else {
         video.src = url
       }
-      context.drawImage(video, 0, 0)
 
       gsap
         .timeline({
@@ -137,9 +97,6 @@ const ScrollingVideo = ({
             scrub: true,
             start: `top bottom`,
             end: () => `center center+=${40 + window.innerHeight * -0.5}px`,
-            onUpdate: () => {
-              context.drawImage(video, 0, 0)
-            },
           },
         })
         .to(video, {
@@ -174,7 +131,11 @@ const ScrollingVideo = ({
 
   return (
     <Box ref={component} position="relative" sx={{ overflowY: 'hidden' }}>
-      <Box ref={slider} position="relative">
+      <Box
+        ref={slider}
+        position="relative"
+        style={{ width: '100%', height: 'auto' }}
+      >
         <Box
           position="absolute"
           height="calc(100vh)"
@@ -191,41 +152,44 @@ const ScrollingVideo = ({
           bgcolor={bottomColor}
           zIndex="-20"
         />
-        <Box position="absolute" color={topColor} display="flex" width="100%">
-          <ScrollingVideoFrameTop />
-        </Box>
-        <video
-          id={`${id}-video`}
-          className="video"
-          src=""
-          width="100%"
-          height="auto"
-          preload="auto"
+
+        <div
           style={{
-            display: canvasIsBlank ? 'inherit' : 'none',
-            position: 'absolute',
-            zIndex: '-10',
+            position: 'relative',
+            aspectRatio: aspectRatio,
           }}
-          autoPlay // This has to be here for iOS
-          muted // This has to be here for iOS
-          playsInline // This has to be here for iOS
-          onLoadedData={(event) => {
-            event.currentTarget.pause()
-          }}
-        />
-        <canvas
-          id={`${id}-canvas`}
-          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-        />
-        <Box
-          position="absolute"
-          bottom={0}
-          color={bottomColor}
-          display="flex"
-          width="100%"
         >
-          <ScrollingVideoFrameBottom />
-        </Box>
+          <Box position="absolute" color={topColor} display="flex" width="100%">
+            <ScrollingVideoFrameTop />
+          </Box>
+          <video
+            id={`${id}-video`}
+            className="video"
+            src=""
+            width="100%"
+            height="auto"
+            preload="auto"
+            style={{
+              position: 'absolute',
+              zIndex: '-10',
+            }}
+            autoPlay // This has to be here for iOS
+            muted // This has to be here for iOS
+            playsInline // This has to be here for iOS
+            onLoadedData={(event) => {
+              event.currentTarget.pause()
+            }}
+          ></video>
+          <Box
+            position="absolute"
+            bottom={0}
+            color={bottomColor}
+            display="flex"
+            width="100%"
+          >
+            <ScrollingVideoFrameBottom />
+          </Box>
+        </div>
         <Stack
           width="100%"
           top="calc(50% + 50vh)"
