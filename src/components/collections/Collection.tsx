@@ -45,6 +45,7 @@ const Collection = forwardRef<HTMLElement, Props>((props, ref) => {
     numberOfPieces,
     nftData,
   } = props
+  const [pointerOverNft, setPointerOverNft] = useState(false)
   const [countdownOrPieces, setCountdownOrPieces] = useState<React.ReactNode>()
   const locale = useLocale()
   const translateCommon = useContentful(ContentTypes.common)
@@ -147,6 +148,7 @@ const Collection = forwardRef<HTMLElement, Props>((props, ref) => {
                   color={color}
                   imageUrl={artistImage}
                   text={artistMotto}
+                  translucent={pointerOverNft}
                 />
               </Box>
             </Stack>
@@ -166,6 +168,7 @@ const Collection = forwardRef<HTMLElement, Props>((props, ref) => {
                         }}
                         isLast={index === nftData.length - 1}
                         data={nft}
+                        setPointerOver={setPointerOverNft}
                       />
                     </ScrollingCard>
                   </Stack>
