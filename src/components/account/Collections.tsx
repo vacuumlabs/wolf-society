@@ -9,7 +9,9 @@ import {
 import Button from '../Button'
 import { Countdown } from '../Countdown'
 
-type CollectionsData = CollectionData & { nfts: NFTData[] }
+type CollectionsData = CollectionData & {
+  nfts: (NFTData & { owned: boolean })[]
+}
 
 export type CollectionsProps = {
   collectionsData: CollectionsData[]
@@ -74,14 +76,17 @@ export const Collections = ({ collectionsData }: CollectionsProps) => {
                   display="grid"
                   alignContent="center"
                 >
-                  <img
-                    src={nft.image.fields.file.url}
-                    alt={`${nft.name} NFT image`}
-                    style={{
-                      width: '100%',
-                      height: 'auto',
-                    }}
-                  />
+                  <Stack bgcolor="neutral.600">
+                    <img
+                      src={nft.image.fields.file.url}
+                      alt={`${nft.name} NFT image`}
+                      style={{
+                        width: '100%',
+                        height: 'auto',
+                        opacity: nft.owned ? 1 : 0.2,
+                      }}
+                    />
+                  </Stack>
                 </Grid>
               ))}
             </Grid>

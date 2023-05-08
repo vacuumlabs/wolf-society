@@ -16,6 +16,8 @@ import {
 } from '@/utils/hooks/useContentful'
 import Artworks from './Artworks'
 import Collections from './Collections'
+import { useGetNfts } from '@/utils/hooks/useGetNfts'
+import { useAccount } from 'wagmi'
 
 enum TabIds {
   ARTWORKS,
@@ -46,6 +48,16 @@ export const ArtworksAndCollections = ({ collectionsData, nftData }: Props) => {
   const [activeTab, setActiveTab] = useState<number>(0)
   const breakpoint: keyof BreakpointOverrides = 'tabletM'
 
+  const userAddress = useAccount()
+  const userAllNfts = useGetNfts(userAddress.address)
+
+  const userAllNftsAddresses = userAllNfts?.map((nft) => nft.contract.address)
+
+  // TODO: uncomment this when ready to mint testnet nfts
+  // const userOurNfts = nftData?.filter((nft) =>
+  //   userAllNftsAddresses.includes(nft.address)
+  // )
+  const userOurNfts = nftData
   return (
     <Box sx={{ bgcolor: 'neutral.400' }} pt={{ mobile: 5, [breakpoint]: 10 }}>
       <Container>
@@ -76,7 +88,7 @@ export const ArtworksAndCollections = ({ collectionsData, nftData }: Props) => {
             )
           })}
         </Tabs>
-        {activeTab === TabIds.ARTWORKS && <Artworks nftsData={nftData} />}
+        {activeTab === TabIds.ARTWORKS && <Artworks nftsData={userOurNfts} />}
         {activeTab === TabIds.COLLECTIONS && (
           <Collections
             collectionsData={
@@ -84,9 +96,16 @@ export const ArtworksAndCollections = ({ collectionsData, nftData }: Props) => {
                 return {
                   ...collectionData,
                   nfts:
-                    nftData?.filter(
-                      (nft) => nft.collectionId === collectionData.id
-                    ) ?? [],
+                    nftData
+                      ?.filter((nft) => nft.collectionId === collectionData.id)
+                      .map((nft) => {
+                        return {
+                          ...nft,
+                          // TODO: uncomment this when ready to mint testnet nfts
+                          // owned: userAllNftsAddresses.includes(nft.address),
+                          owned: true,
+                        }
+                      }) ?? [],
                 }
               }) ?? []
             }
