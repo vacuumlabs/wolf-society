@@ -65,7 +65,7 @@ const ArticleCard = ({
             component="img"
             height="240"
             image={thumbnail}
-            alt="hmm"
+            alt="Article image"
             sx={{ zIndex: 10 }}
           />
           <CardContent

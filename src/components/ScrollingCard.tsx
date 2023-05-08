@@ -14,7 +14,7 @@ const ScrollingCard = ({ index, children }: PropsWithChildren<Props>) => {
   )
   const offset = OFFSETS[index % 3]
   const marginTop =
-    index % 3 !== 0 ? -21 : { mobile: 10, desktopS: 20, desktopM: 30 }
+    index % 3 !== 0 ? 0 : { mobile: 10, desktopS: 20, desktopM: 30 }
 
   return isMobile ? (
     <>{children}</>

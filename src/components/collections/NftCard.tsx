@@ -14,7 +14,6 @@ import {
   Typography,
 } from '@mui/material'
 import Button from '../Button'
-import ArrowRightIcon from '../icons/ArrowRightIcon'
 import { NFTDetail } from '../NFTDetail/NFTDetail'
 import { MOCKED_NFT_DETAIL } from '../NFTDetail/mockedDetailData'
 import { useEffect, useRef, useState } from 'react'
@@ -26,6 +25,7 @@ export type NftCardProps = {
   changeArtist: () => void
   isLast: boolean
   data: NFTData
+  setPointerOver: (value: boolean) => void
 }
 
 const DynamicShareButton = dynamic(
@@ -33,7 +33,13 @@ const DynamicShareButton = dynamic(
   { ssr: false }
 )
 
-const NftCard = ({ minted, changeArtist, isLast, data }: NftCardProps) => {
+const NftCard = ({
+  minted,
+  changeArtist,
+  isLast,
+  data,
+  setPointerOver,
+}: NftCardProps) => {
   const { totalSupply, name, priceInEth, image } = data
   const translate = useContentful(ContentTypes.common)
   const breakpoint: keyof BreakpointOverrides = 'desktopS'
@@ -48,6 +54,12 @@ const NftCard = ({ minted, changeArtist, isLast, data }: NftCardProps) => {
 
   return (
     <Box
+      onPointerEnter={() => {
+        setPointerOver(true)
+      }}
+      onPointerLeave={() => {
+        setPointerOver(false)
+      }}
       sx={{
         mb: { mobile: '0', tabletM: isLast ? 'calc(100vh - 80px)' : '130vh' },
       }}

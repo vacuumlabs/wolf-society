@@ -1,6 +1,6 @@
 import RewardCard from '@/components/account/RewardCard'
 import { ContentTypes, getTranslations } from '@/utils/hooks/useContentful'
-import { Stack } from '@mui/material'
+import { Container, Stack } from '@mui/material'
 import { GetStaticProps, GetStaticPropsContext } from 'next'
 import React from 'react'
 
@@ -33,20 +33,23 @@ const mockCardData = [
 
 export const Account = () => {
   return (
-    <Stack
-      pt={15}
-      pb={10}
-      sx={{ alignItems: 'center', backgroundColor: 'neutral.400' }}
-    >
+    <Stack mt={10}>
       <Stack
-        direction={'row'}
-        sx={{ justifyContent: 'center', background: 'inherit' }}
-        width={'100%'}
-        px={10}
+        pt={5}
+        pb={10}
+        sx={{ alignItems: 'center', backgroundColor: 'neutral.400' }}
       >
-        {mockCardData.map((cardData, idx) => {
-          return <RewardCard key={`reward-card-${idx}`} {...cardData} />
-        })}
+        <Container>
+          <Stack
+            direction={'row'}
+            sx={{ justifyContent: 'center', background: 'inherit' }}
+            width={'100%'}
+          >
+            {mockCardData.map((cardData, idx) => {
+              return <RewardCard key={`reward-card-${idx}`} {...cardData} />
+            })}
+          </Stack>
+        </Container>
       </Stack>
     </Stack>
   )

@@ -12,7 +12,7 @@ type RoadmapDesktopProps = {
 export const RoadmapDesktop = ({ roadmapData }: RoadmapDesktopProps) => {
   const [activeTab, setActiveTab] = useState<number>(0)
   return (
-    <Box my={20}>
+    <Box>
       <Tabs
         value={activeTab}
         variant="fullWidth"
