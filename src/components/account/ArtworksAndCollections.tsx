@@ -15,6 +15,7 @@ import {
   NFTData,
 } from '@/utils/hooks/useContentful'
 import Artworks from './Artworks'
+import Collections from './Collections'
 
 enum TabIds {
   ARTWORKS,
@@ -76,6 +77,21 @@ export const ArtworksAndCollections = ({ collectionsData, nftData }: Props) => {
           })}
         </Tabs>
         {activeTab === TabIds.ARTWORKS && <Artworks nftsData={nftData} />}
+        {activeTab === TabIds.COLLECTIONS && (
+          <Collections
+            collectionsData={
+              collectionsData?.map((collectionData) => {
+                return {
+                  ...collectionData,
+                  nfts:
+                    nftData?.filter(
+                      (nft) => nft.collectionId === collectionData.id
+                    ) ?? [],
+                }
+              }) ?? []
+            }
+          />
+        )}
       </Container>
     </Box>
   )
