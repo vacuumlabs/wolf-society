@@ -19,7 +19,7 @@ import AppearingComponent from '../AppearingComponent'
 import { Countdown } from '../Countdown'
 import ScrollingCard from '../ScrollingCard'
 import ArtistCard from './ArtistCard'
-import NftCard from './NftCard'
+import NftCardArtImpact from './NftCardArtImpact'
 import Button from '../Button'
 import { ArtistCardMobile } from './ArtistCardMobile'
 
@@ -161,7 +161,7 @@ const Collection = forwardRef<HTMLElement, Props>((props, ref) => {
                       artistName={nft.artistName}
                     />
                     <ScrollingCard index={index}>
-                      <NftCard
+                      <NftCardArtImpact
                         minted={100}
                         changeArtist={() => {
                           handleChangeArtist(nft)
