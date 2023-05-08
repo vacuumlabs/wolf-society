@@ -8,6 +8,7 @@ export enum ContentTypes {
   landingPage = 'landingPage',
   collectionsPage = 'collectionsPage',
   articlesPage = 'articlesPage',
+  accountPage = 'accountPage',
   project = 'project',
   roadmap = 'roadmap',
   questionAndAnswer = 'questionAndAnswer',
@@ -104,6 +105,17 @@ export type CollectionsPageData = {
   getCompleteCollection: string
 }
 
+export type AccountPageData = {
+  yourContribution: string
+  yourRewards: string
+  gameTokens: string
+  distribute: string
+  claimRewards: string
+  playGame: string
+  artworks: string
+  collections: string
+}
+
 // Content to be injected into every page
 const SHARED_CONTENT: ContentTypes[] = [
   ContentTypes.navbar,
@@ -180,6 +192,7 @@ export type Content = {
     gratefulPart1: string
     gratefulPart2: string
   }
+  [ContentTypes.accountPage]: AccountPageData
   [ContentTypes.project]: ProjectData
   [ContentTypes.roadmap]: RoadmapData
   [ContentTypes.questionAndAnswer]: QuestionAndAnswerData
