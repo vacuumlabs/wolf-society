@@ -43,7 +43,7 @@ const Footer = () => {
     },
     {
       text: 'medium',
-      href: `https://medium.com/${process.env.NEXT_PUBLIC_MEDIUM_USER}`,
+      href: `https://medium.com/@${process.env.NEXT_PUBLIC_MEDIUM_USER}`,
       icon: <MediumIcon />,
     },
   ]
