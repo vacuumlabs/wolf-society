@@ -73,8 +73,8 @@ export type NFTArtistData = {
 export type NFTData = {
   id: string
   collectionId: string
+  tokenId: number
   name: string
-  address: string
   priceInEth: number
   totalSupply?: number
   image: Asset

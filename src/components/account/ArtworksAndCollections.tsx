@@ -49,15 +49,22 @@ export const ArtworksAndCollections = ({ collectionsData, nftData }: Props) => {
   const breakpoint: keyof BreakpointOverrides = 'tabletM'
 
   const userAddress = useAccount()
-  const userAllNfts = useGetNfts(userAddress.address)
+  const userNfts = useGetNfts(userAddress.address)
 
-  const userAllNftsAddresses = userAllNfts?.map((nft) => nft.contract.address)
+  const nftDataWithUserOwnershipInfo =
+    nftData?.map((nft) => {
+      return {
+        ...nft,
+        owned: !!userNfts.find((userNft) => {
+          if (nft.tokenId === undefined) throw `${nft.name} is missing tokenId!`
+          return userNft.tokenId === nft.tokenId.toString()
+        }),
+      }
+    }) ?? []
 
-  // TODO: uncomment this when ready to mint testnet nfts
-  // const userOurNfts = nftData?.filter((nft) =>
-  //   userAllNftsAddresses.includes(nft.address)
-  // ) ?? []
-  const userOurNfts = nftData
+  console.log('userNfts', userNfts)
+  console.log('nftDataWithUserOwnershipInfo', nftDataWithUserOwnershipInfo)
+
   return (
     <Box sx={{ bgcolor: 'neutral.400' }} pt={{ mobile: 5, [breakpoint]: 10 }}>
       <Container>
@@ -88,24 +95,22 @@ export const ArtworksAndCollections = ({ collectionsData, nftData }: Props) => {
             )
           })}
         </Tabs>
-        {activeTab === TabIds.ARTWORKS && <Artworks nftsData={userOurNfts} />}
+        {activeTab === TabIds.ARTWORKS && (
+          <Artworks
+            nftsData={nftDataWithUserOwnershipInfo.filter(
+              (nftDat) => nftDat.owned
+            )}
+          />
+        )}
         {activeTab === TabIds.COLLECTIONS && (
           <Collections
             collectionsData={
               collectionsData?.map((collectionData) => {
                 return {
                   ...collectionData,
-                  nfts:
-                    nftData
-                      ?.filter((nft) => nft.collectionId === collectionData.id)
-                      .map((nft) => {
-                        return {
-                          ...nft,
-                          // TODO: uncomment this when ready to mint testnet nfts
-                          // owned: userAllNftsAddresses.includes(nft.address),
-                          owned: true,
-                        }
-                      }) ?? [],
+                  nfts: nftDataWithUserOwnershipInfo.filter(
+                    (nft) => nft.collectionId === collectionData.id
+                  ),
                 }
               }) ?? []
             }
