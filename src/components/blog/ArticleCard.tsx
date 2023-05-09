@@ -9,7 +9,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material'
-import Link from 'next/link'
+import Link from '../Link'
 import Button from '../Button'
 import ArrowTurnTopIcon from '../icons/ArrowTurnTopIcon'
 
@@ -65,7 +65,7 @@ const ArticleCard = ({
             component="img"
             height="240"
             image={thumbnail}
-            alt="hmm"
+            alt="Article image"
             sx={{ zIndex: 10 }}
           />
           <CardContent

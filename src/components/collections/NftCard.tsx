@@ -14,7 +14,6 @@ import {
   Typography,
 } from '@mui/material'
 import Button from '../Button'
-import ArrowRightIcon from '../icons/ArrowRightIcon'
 import { NFTDetail } from '../NFTDetail/NFTDetail'
 import { MOCKED_NFT_DETAIL } from '../NFTDetail/mockedDetailData'
 import { useEffect, useRef, useState } from 'react'
@@ -26,6 +25,7 @@ export type NftCardProps = {
   changeArtist: () => void
   isLast: boolean
   data: NFTData
+  setPointerOver: (value: boolean) => void
 }
 
 const DynamicShareButton = dynamic(
@@ -33,8 +33,14 @@ const DynamicShareButton = dynamic(
   { ssr: false }
 )
 
-const NftCard = ({ minted, changeArtist, isLast, data }: NftCardProps) => {
-  const { totalSupply, name, artistName, priceInEth, image, artistImage } = data
+const NftCard = ({
+  minted,
+  changeArtist,
+  isLast,
+  data,
+  setPointerOver,
+}: NftCardProps) => {
+  const { totalSupply, name, priceInEth, image } = data
   const translate = useContentful(ContentTypes.common)
   const breakpoint: keyof BreakpointOverrides = 'desktopS'
   const [isDetailOpen, setIsDetailOpen] = useState<boolean>(false)
@@ -48,6 +54,12 @@ const NftCard = ({ minted, changeArtist, isLast, data }: NftCardProps) => {
 
   return (
     <Box
+      onPointerEnter={() => {
+        setPointerOver(true)
+      }}
+      onPointerLeave={() => {
+        setPointerOver(false)
+      }}
       sx={{
         mb: { mobile: '0', tabletM: isLast ? 'calc(100vh - 80px)' : '130vh' },
       }}
@@ -103,7 +115,9 @@ const NftCard = ({ minted, changeArtist, isLast, data }: NftCardProps) => {
               <Typography variant="caption" color="secondary">
                 {name}
               </Typography>
-              <Typography variant="body2">{artistName}</Typography>
+              <Typography variant="body2">
+                {data.artist.fields.artistName}
+              </Typography>
               <Stack direction="row" alignItems="center" gap={1}>
                 <Typography variant="caption">{priceInEth} ETH</Typography>
               </Stack>
@@ -132,14 +146,14 @@ const NftCard = ({ minted, changeArtist, isLast, data }: NftCardProps) => {
         isOpen={isDetailOpen}
         onClose={() => setIsDetailOpen(false)}
         nftArtistProps={{
-          name: artistName,
+          name: data.artist.fields.artistName,
           descriptionLeft: data.artistDescLeft,
           descriptionRight: data.artistDescRight,
-          imageUrl: artistImage.fields.file.url,
+          imageUrl: data.artist.fields.artistImage.fields.file.url,
           socialLinks: {
-            twitterURL: data.artistsTwitter,
-            igUrl: data.artistsIG,
-            webUrl: data.artistsWeb,
+            twitterURL: data.artist.fields.artistTwitter,
+            igUrl: data.artist.fields.artistIG,
+            webUrl: data.artist.fields.artistWeb,
           },
         }}
         nftDescriptionProps={{

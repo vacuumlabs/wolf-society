@@ -15,9 +15,7 @@ export const formatAddress = (address: string) => {
 }
 
 export const getSubpagesKeys = () => {
-  return Object.keys(SUBPAGES) as (keyof Partial<
-    Content[ContentTypes.navbar]
-  >)[]
+  return Object.keys(SUBPAGES) as (keyof typeof SUBPAGES)[]
 }
 
 export const formatDate = (date: string, locale: any) => {

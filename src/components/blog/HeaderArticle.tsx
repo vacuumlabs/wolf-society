@@ -45,6 +45,7 @@ const HeaderArticle = ({ post, image }: Props) => {
                   alt="Header article image"
                   width="100%"
                   height="100%"
+                  style={{ objectFit: 'cover' }}
                 />
               </Grid>
               <Grid item mobile={12} {...{ [breakpoint]: 6 }}>
@@ -116,7 +117,11 @@ const HeaderArticle = ({ post, image }: Props) => {
                   alt="Header article image"
                   width="100%"
                   height="100%"
-                  style={{ position: 'relative', top: '80px' }}
+                  style={{
+                    position: 'relative',
+                    top: '80px',
+                    objectFit: 'cover',
+                  }}
                 />
               </Grid>
             </Grid>

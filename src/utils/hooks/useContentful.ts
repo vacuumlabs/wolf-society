@@ -14,6 +14,7 @@ export enum ContentTypes {
   collection = 'collection',
   nft = 'nft',
   nftDetail = 'nftDetail',
+  nftArtist = 'nftArtist',
 }
 
 export type ProjectData = {
@@ -55,6 +56,19 @@ export type NFTDetailData = {
   buyWithCrypto: string
 }
 
+export type NFTArtistData = {
+  id: string
+  artistName: string
+  artistImage: Asset
+  artistDescLeft: string
+  artistDescRight: string
+  nftDesc: string
+  artistTwitter: string
+  artistIG: string
+  artistWeb: string
+  artistMotto: string
+}
+
 export type NFTData = {
   id: string
   collectionId: string
@@ -70,6 +84,9 @@ export type NFTData = {
   artistsTwitter: string
   artistsIG: string
   artistsWeb: string
+  artist: {
+    fields: NFTArtistData
+  }
 }
 
 export type CollectionsPageData = {
@@ -103,6 +120,8 @@ export type Content = {
     launchApp: string
     faq: string
     account: string
+    discordLink: string
+    twitterLink: string
   }
   [ContentTypes.common]: {
     secondsShort: string
@@ -167,6 +186,7 @@ export type Content = {
   [ContentTypes.collection]: CollectionData
   [ContentTypes.nft]: NFTData
   [ContentTypes.nftDetail]: NFTDetailData
+  [ContentTypes.nftArtist]: NFTArtistData
 }
 
 /**

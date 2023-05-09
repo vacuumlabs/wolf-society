@@ -9,6 +9,14 @@ export const Countdown = ({ deadline }: CountdownProps) => {
   const translate = useContentful(ContentTypes.common)
   const [remaining, setRemaining] = useState('')
 
+  const timeToDisplayText = (time: number, title: string) => {
+    if (time === 0) {
+      return ''
+    }
+
+    return `${time}${title}`
+  }
+
   function diff(a: Date, b: Date) {
     const ms = a.getTime() - b.getTime()
     const s = Math.floor(ms / 1000)
@@ -19,7 +27,18 @@ export const Countdown = ({ deadline }: CountdownProps) => {
     const mx = translate('minutesShort')
     const hx = translate('hoursShort')
     const dx = translate('daysShort')
-    return `${d}${dx} ${h % 24}${hx} ${m % 60}${mx} ${s % 60}${sx}`
+    return (
+      [
+        [d, dx],
+        [h % 24, hx],
+        [m % 60, mx],
+        [s % 60, sx],
+      ] as [number, string][]
+    )
+      .map(([time, title]) => {
+        return timeToDisplayText(time, title)
+      })
+      .join(' ')
   }
 
   useEffect(() => {

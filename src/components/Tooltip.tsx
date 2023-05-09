@@ -23,7 +23,7 @@ const Tooltip = styled(
           {...props}
           classes={{ popper: className }}
           leaveDelay={200}
-          title={<Typography variant="body2XS">{title}</Typography>}
+          title={<Typography variant="body2S">{title}</Typography>}
           open={tooltipOpen}
           disableFocusListener
           disableHoverListener
@@ -49,7 +49,7 @@ const Tooltip = styled(
         {...props}
         classes={{ popper: className }}
         leaveDelay={200}
-        title={<Typography variant="body2XS">{title}</Typography>}
+        title={<Typography variant="body2S">{title}</Typography>}
       >
         <Typography
           sx={{

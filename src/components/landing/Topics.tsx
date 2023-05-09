@@ -14,6 +14,7 @@ import ScrollingCard from '../ScrollingCard'
 import ArticleCard from '../blog/ArticleCard'
 import { ArticleProps } from '@/pages/blog'
 import AppearingComponent from '../AppearingComponent'
+import Link from 'next/link'
 
 type Props = {
   posts: ArticleProps[]
@@ -23,7 +24,7 @@ const Topics = ({ posts }: Props) => {
   const translate = useContentful(ContentTypes.landingPage)
   const breakpoint: keyof BreakpointOverrides = 'tabletM'
   return (
-    <Box sx={{ bgcolor: 'neutral.400', textAlign: 'center' }}>
+    <Box sx={{ bgcolor: 'neutral.400', textAlign: 'center' }} zIndex={10}>
       {posts.length > 0 && (
         <AppearingComponent>
           <Container>
@@ -43,12 +44,17 @@ const Topics = ({ posts }: Props) => {
                   {translate('articles')}
                 </Typography>
                 <Stack sx={{ alignItems: 'center' }}>
-                  <Button variant="outlined" href={SUBPAGES['blog']}>
-                    {translate('allArticles')}
-                  </Button>
+                  <Link href={SUBPAGES['blog']} passHref>
+                    <Button variant="outlined">
+                      {translate('allArticles')}
+                    </Button>
+                  </Link>
                 </Stack>
               </Stack>
-              <Stack spacing={{ mobile: 5, [breakpoint]: 0 }}>
+              <Stack
+                spacing={{ mobile: 5, [breakpoint]: 0 }}
+                mt={{ mobile: 5, [breakpoint]: 0 }}
+              >
                 {posts.map((post, index) => (
                   <Stack width="100%" alignItems="center" key={post.title}>
                     <ScrollingCard index={index}>

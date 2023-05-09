@@ -14,11 +14,18 @@ import {
 export type ArtistCardProps = {
   name?: string
   imageUrl?: string
-  text: string
+  text?: string
   color: string
+  translucent: boolean
 }
 
-const ArtistCard = ({ name, imageUrl, text, color }: ArtistCardProps) => {
+const ArtistCard = ({
+  name,
+  imageUrl,
+  text,
+  color,
+  translucent,
+}: ArtistCardProps) => {
   const translate = useContentful(ContentTypes.landingPage)
   const breakpoint: keyof BreakpointOverrides = 'tabletM'
   const isMobile = useMediaQuery((theme: Theme) =>
@@ -26,7 +33,13 @@ const ArtistCard = ({ name, imageUrl, text, color }: ArtistCardProps) => {
   )
 
   return isMobile ? null : (
-    <Box sx={{ position: 'relative' }}>
+    <Box
+      sx={{
+        position: 'relative',
+        opacity: translucent ? 0.2 : 1,
+        transition: 'opacity 0.25s',
+      }}
+    >
       <Card
         sx={{
           bgcolor: 'neutral.main',
