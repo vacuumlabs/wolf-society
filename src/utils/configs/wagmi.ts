@@ -12,10 +12,7 @@ import {
 import { rainbowMagicConnector } from '../connectors/rainbowMagicConnector'
 
 const { chains, provider, webSocketProvider } = configureChains(
-  [
-    mainnet,
-    ...(process.env.NODE_ENV === 'development' ? [goerli, sepolia] : []),
-  ],
+  [mainnet, ...(process.env.NEXT_PUBLIC_TESTNET === 'true' ? [goerli] : [])],
   [publicProvider()]
 )
 const appName = 'Wolf-society'

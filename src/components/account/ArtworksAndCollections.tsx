@@ -62,9 +62,6 @@ export const ArtworksAndCollections = ({ collectionsData, nftData }: Props) => {
       }
     }) ?? []
 
-  console.log('userNfts', userNfts)
-  console.log('nftDataWithUserOwnershipInfo', nftDataWithUserOwnershipInfo)
-
   return (
     <Box sx={{ bgcolor: 'neutral.400' }} pt={{ mobile: 5, [breakpoint]: 10 }}>
       <Container>
