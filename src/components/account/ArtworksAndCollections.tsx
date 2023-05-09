@@ -56,7 +56,7 @@ export const ArtworksAndCollections = ({ collectionsData, nftData }: Props) => {
   // TODO: uncomment this when ready to mint testnet nfts
   // const userOurNfts = nftData?.filter((nft) =>
   //   userAllNftsAddresses.includes(nft.address)
-  // )
+  // ) ?? []
   const userOurNfts = nftData
   return (
     <Box sx={{ bgcolor: 'neutral.400' }} pt={{ mobile: 5, [breakpoint]: 10 }}>

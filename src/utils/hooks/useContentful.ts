@@ -115,6 +115,7 @@ export type AccountPageData = {
   playGame: string
   artworks: string
   collections: string
+  complete: string
 }
 
 // Content to be injected into every page
