@@ -1,6 +1,7 @@
 import { Asset } from 'contentful'
 import { createContext, useContext } from 'react'
 import contentful from '../configs/contentful'
+import { getNftMintedAmount } from '../helpers'
 
 export enum ContentTypes {
   navbar = 'navbar',
@@ -89,6 +90,7 @@ export type NFTData = {
   artist: {
     fields: NFTArtistData
   }
+  minted: number
 }
 
 export type CollectionsPageData = {
@@ -307,12 +309,19 @@ export const getCollections = (locale?: string) =>
     orderBy: 'fields.orderNumber',
   })
 
-export const getNfts = (locale?: string) =>
-  getArrayOfContent<NFTData>({
+export const getNfts = async (locale?: string) => {
+  const nftsData = await getArrayOfContent<NFTData>({
     contentType: ContentTypes.nft,
     locale,
     orderBy: 'fields.id',
   })
+  if (!nftsData) return nftsData
+  return await Promise.all(
+    nftsData.map(async (nftData) => {
+      return { ...nftData, minted: await getNftMintedAmount(nftData.tokenId) }
+    })
+  )
+}
 
 export const ContentContext = createContext<Content | undefined>(undefined)
 

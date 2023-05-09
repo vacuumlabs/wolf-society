@@ -100,7 +100,7 @@ export const Collections = ({ collectionsData }: CollectionsProps) => {
                     display="grid"
                     alignContent="center"
                   >
-                    <Stack bgcolor="neutral.600">
+                    <Stack bgcolor="neutral.600" position="relative">
                       <img
                         src={nft.image.fields.file.url}
                         alt={`${nft.name} NFT image`}
@@ -110,6 +110,24 @@ export const Collections = ({ collectionsData }: CollectionsProps) => {
                           opacity: nft.owned ? 1 : 0.2,
                         }}
                       />
+                      {nft.totalSupply && !nft.owned && (
+                        <Stack
+                          direction="row"
+                          position="absolute"
+                          bottom={0}
+                          right={0}
+                          px={2}
+                          py={1}
+                          bgcolor="black.main"
+                        >
+                          <Typography variant="body2S" color="neutral.400">
+                            {nft.minted}
+                          </Typography>
+                          <Typography color="neutral.700" variant="body2S">
+                            /{nft.totalSupply}
+                          </Typography>
+                        </Stack>
+                      )}
                     </Stack>
                   </Grid>
                 ))}
