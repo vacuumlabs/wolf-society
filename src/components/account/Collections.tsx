@@ -40,8 +40,7 @@ export const Collections = ({ collectionsData }: CollectionsProps) => {
                     {collectionData.name}
                   </Typography>
                   <Typography variant="body2">
-                    Collect all the artworks in the collection and get an extra
-                    reward of 100 game tokens
+                    {translate('collectQuest')}
                   </Typography>
                 </Stack>
                 <Stack
@@ -61,7 +60,7 @@ export const Collections = ({ collectionsData }: CollectionsProps) => {
                           display: { mobile: 'none', [breakpoint]: 'inherit' },
                         }}
                       >
-                        Unlock extra rewards
+                        {translate('unlockExtraRewards')}
                       </Button>
                       {collectionData.deadline && (
                         <Typography variant="caption">
@@ -77,7 +76,7 @@ export const Collections = ({ collectionsData }: CollectionsProps) => {
                           mb: 3,
                         }}
                       >
-                        Unlock extra rewards
+                        {translate('unlockExtraRewards')}
                       </Button>
                     </>
                   )}

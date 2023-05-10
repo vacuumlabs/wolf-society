@@ -119,6 +119,8 @@ export type AccountPageData = {
   collections: string
   complete: string
   noArtworks: string
+  unlockExtraRewards: string
+  collectQuest: string
 }
 
 // Content to be injected into every page
