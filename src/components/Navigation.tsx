@@ -256,6 +256,7 @@ const Navigation = () => {
                           href={SUBPAGES[subpageKey]}
                           underline="hover"
                           color="inherit"
+                          onClick={toggleDrawer(false)}
                         >
                           {translate(subpageKey)}
                         </Link>
