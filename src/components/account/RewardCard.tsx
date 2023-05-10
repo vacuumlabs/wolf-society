@@ -26,6 +26,7 @@ const RewardCard = ({
       mx={'1px'}
       justifyContent={'center'}
       width={'100%'}
+      minWidth={296}
     >
       <Typography variant="body2">{title}</Typography>
       <Stack direction="row" mt={10}>

@@ -1,4 +1,4 @@
-import { Stack, Container } from '@mui/material'
+import { Stack, Container, Box } from '@mui/material'
 import RewardCard from './RewardCard'
 
 const mockCardData = [
@@ -29,23 +29,39 @@ const mockCardData = [
 ]
 
 export const ContributionAndRewards = () => {
+  const cardStack = (
+    <Stack
+      direction={'row'}
+      width={'100%'}
+      sx={{
+        background: 'inherit',
+      }}
+    >
+      {mockCardData.map((cardData, idx) => {
+        return <RewardCard key={`reward-card-${idx}`} {...cardData} />
+      })}
+    </Stack>
+  )
   return (
     <Stack
       pt={5}
       pb={10}
-      sx={{ alignItems: 'center', backgroundColor: 'neutral.400' }}
+      sx={{
+        alignItems: { mobile: 'inherit', desktopS: 'center' },
+        backgroundColor: 'neutral.400',
+      }}
     >
-      <Container>
-        <Stack
-          direction={'row'}
-          sx={{ justifyContent: 'center', background: 'inherit' }}
-          width={'100%'}
-        >
-          {mockCardData.map((cardData, idx) => {
-            return <RewardCard key={`reward-card-${idx}`} {...cardData} />
-          })}
-        </Stack>
+      <Container sx={{ display: { mobile: 'none', desktopS: 'inherit' } }}>
+        {cardStack}
       </Container>
+      <Stack
+        sx={{
+          display: { mobile: 'inherit', desktopS: 'none' },
+          overflowX: 'auto',
+        }}
+      >
+        {cardStack}
+      </Stack>
     </Stack>
   )
 }
