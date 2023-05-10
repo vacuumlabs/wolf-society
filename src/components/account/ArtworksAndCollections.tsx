@@ -40,10 +40,13 @@ const tabData: {
 
 type Props = {
   collectionsData: CollectionData[] | null
-  nftData: NFTData[] | null
+  nftsData: NFTData[] | null
 }
 
-export const ArtworksAndCollections = ({ collectionsData, nftData }: Props) => {
+export const ArtworksAndCollections = ({
+  collectionsData,
+  nftsData,
+}: Props) => {
   const translate = useContentful(ContentTypes.accountPage)
   const [activeTab, setActiveTab] = useState<number>(0)
   const breakpoint: keyof BreakpointOverrides = 'tabletM'
@@ -51,13 +54,12 @@ export const ArtworksAndCollections = ({ collectionsData, nftData }: Props) => {
   const userAddress = useAccount()
   const userNfts = useGetNfts(userAddress.address)
 
-  const nftDataWithUserOwnershipInfo =
-    nftData?.map((nft) => {
+  const nftsDataWithUserOwnershipInfo =
+    nftsData?.map((nft) => {
       return {
         ...nft,
         owned: !!userNfts.find((userNft) => {
-          if (nft.tokenId === undefined) throw `${nft.name} is missing tokenId!`
-          return userNft.tokenId === nft.tokenId.toString()
+          return userNft.tokenId === nft.tokenId?.toString()
         }),
       }
     }) ?? []
@@ -94,8 +96,8 @@ export const ArtworksAndCollections = ({ collectionsData, nftData }: Props) => {
         </Tabs>
         {activeTab === TabIds.ARTWORKS && (
           <Artworks
-            nftsData={nftDataWithUserOwnershipInfo.filter(
-              (nftDat) => nftDat.owned
+            nftsData={nftsDataWithUserOwnershipInfo.filter(
+              (nftData) => nftData.owned
             )}
           />
         )}
@@ -105,7 +107,7 @@ export const ArtworksAndCollections = ({ collectionsData, nftData }: Props) => {
               collectionsData?.map((collectionData) => {
                 return {
                   ...collectionData,
-                  nfts: nftDataWithUserOwnershipInfo.filter(
+                  nfts: nftsDataWithUserOwnershipInfo.filter(
                     (nft) => nft.collectionId === collectionData.id
                   ),
                 }

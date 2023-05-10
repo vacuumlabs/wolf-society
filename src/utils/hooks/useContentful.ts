@@ -74,7 +74,7 @@ export type NFTArtistData = {
 export type NFTData = {
   id: string
   collectionId: string
-  tokenId: number
+  tokenId?: number
   name: string
   priceInEth: number
   totalSupply?: number
@@ -319,7 +319,10 @@ export const getNfts = async (locale?: string) => {
   if (!nftsData) return nftsData
   return await Promise.all(
     nftsData.map(async (nftData) => {
-      return { ...nftData, minted: await getNftMintedAmount(nftData.tokenId) }
+      return {
+        ...nftData,
+        minted: nftData.tokenId ? await getNftMintedAmount(nftData.tokenId) : 0,
+      }
     })
   )
 }

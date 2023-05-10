@@ -25,7 +25,7 @@ export const Account = ({ collectionsData, nftData }: Props) => {
       <ContributionAndRewards />
       <ArtworksAndCollections
         collectionsData={collectionsData}
-        nftData={nftData}
+        nftsData={nftData}
       />
     </Stack>
   )
