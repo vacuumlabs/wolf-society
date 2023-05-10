@@ -162,7 +162,7 @@ const Collection = forwardRef<HTMLElement, Props>((props, ref) => {
                     />
                     <ScrollingCard index={index}>
                       <NftCardArtImpact
-                        minted={100}
+                        minted={nft.minted}
                         changeArtist={() => {
                           handleChangeArtist(nft)
                         }}
