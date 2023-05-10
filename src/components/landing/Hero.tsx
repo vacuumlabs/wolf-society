@@ -53,8 +53,12 @@ const Hero = ({ manifestoRef }: Props) => {
               </Link>
             </Typography>
             <Stack sx={{ alignItems: 'center', mt: 4 }}>
-              <NextLink href={SUBPAGES['collections']} passHref>
-                <Button variant="contained">{translate('makeImpact')}</Button>
+              <NextLink
+                href={SUBPAGES['collections']}
+                passHref
+                style={{ lineHeight: 0 }}
+              >
+                <Button>{translate('makeImpact')}</Button>
               </NextLink>
             </Stack>
           </Stack>
