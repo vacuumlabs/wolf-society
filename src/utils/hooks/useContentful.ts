@@ -118,6 +118,7 @@ export type AccountPageData = {
   artworks: string
   collections: string
   complete: string
+  noArtworks: string
 }
 
 // Content to be injected into every page
