@@ -26,6 +26,7 @@ import Button from './Button'
 import { LaunchAppButton } from './LaunchAppButton'
 import WSFSymbol from './icons/WSFSymbol'
 import { useAccount } from 'wagmi'
+import NextLink from 'next/link'
 
 type NavbarLinkProps = {
   subpageKey: keyof Pick<
@@ -160,24 +161,29 @@ const Navigation = () => {
             )}
             <LaunchAppButton />
             {trigger && (
-              <Button
-                style={{ height: '48px', padding: '12px 24px' }}
+              <NextLink
                 href={SUBPAGES['collections']}
-                sx={(theme) => ({
-                  // Button S for M breakpoint
-                  [theme.breakpoints.down('desktopL')]: {
-                    fontSize: '16px',
-                    lineHeight: '24px',
-                  },
-                  // Button M for L breakpoint
-                  [theme.breakpoints.up('desktopL')]: {
-                    fontSize: '20px',
-                    lineHeight: '24px',
-                  },
-                })}
+                passHref
+                style={{ lineHeight: 0 }}
               >
-                {translate('makeImpact')}
-              </Button>
+                <Button
+                  style={{ height: '48px', padding: '12px 24px' }}
+                  sx={(theme) => ({
+                    // Button S for M breakpoint
+                    [theme.breakpoints.down('desktopL')]: {
+                      fontSize: '16px',
+                      lineHeight: '24px',
+                    },
+                    // Button M for L breakpoint
+                    [theme.breakpoints.up('desktopL')]: {
+                      fontSize: '20px',
+                      lineHeight: '24px',
+                    },
+                  })}
+                >
+                  {translate('makeImpact')}
+                </Button>
+              </NextLink>
             )}
           </Stack>
           <Stack
@@ -256,6 +262,7 @@ const Navigation = () => {
                           href={SUBPAGES[subpageKey]}
                           underline="hover"
                           color="inherit"
+                          onClick={toggleDrawer(false)}
                         >
                           {translate(subpageKey)}
                         </Link>
@@ -266,9 +273,14 @@ const Navigation = () => {
             </Stack>
             <Stack gap={2}>
               <LaunchAppButton />
-              <Button href={SUBPAGES['collections']}>
-                {translate('makeImpact')}
-              </Button>
+              <NextLink
+                href={SUBPAGES['collections']}
+                passHref
+                style={{ lineHeight: 0 }}
+                onClick={toggleDrawer(false)}
+              >
+                <Button fullWidth>{translate('makeImpact')}</Button>
+              </NextLink>
             </Stack>
           </Stack>
         </Container>
