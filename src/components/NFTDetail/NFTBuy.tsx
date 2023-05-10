@@ -115,15 +115,12 @@ export const NFTBuy = ({ nft, buyInView, className }: NFTBuyComponentProps) => {
         backgroundColor: 'neutral.400',
       }}
       p={{ mobile: '16px', tabletM: '80px' }}
-      gap={{ mobile: '40px', tabletM: '80px' }}
+      gap={{ mobile: '40px', tabletM: '0' }}
       mb={{ mobile: buyInView ? '48px' : 0 }}
       className={className}
     >
-      <Stack alignItems="center">
-        <Typography
-          mt="122px"
-          variant="display"
-        >{`${priceInEth} ETH`}</Typography>
+      <Stack alignItems="center" flexGrow={1} justifyContent="center">
+        <Typography variant="display">{`${priceInEth} ETH`}</Typography>
       </Stack>
       <Stack
         direction="row"
