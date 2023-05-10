@@ -15,7 +15,7 @@ import CloseIcon from '@mui/icons-material/Close'
 import { NFTUsage, NFTUsageProps } from './NFTUsage'
 import { NFTBuy, NFTBuyProps } from './NFTBuy'
 import { useRef, useState } from 'react'
-import { VerticalLine } from './NFTVerticalLine'
+import { NFTDividerLine } from './NFTDividerLine'
 import { NFTAllocation } from './NFTAllocation'
 import { OnScreen } from '@/components/OnScreen'
 
@@ -45,13 +45,13 @@ export const NFTDetail = ({
   const content = (
     <>
       <NFTDescription {...nftDescriptionProps} />
-      <VerticalLine />
+      <NFTDividerLine />
       <NFTArtist {...nftArtistProps} />
-      <VerticalLine />
+      <NFTDividerLine />
       <NFTAllocation />
-      <VerticalLine />
+      <NFTDividerLine />
       <NFTUsage {...nftUsageProps} />
-      <VerticalLine />
+      {!isMobile && <NFTDividerLine />}
       <NFTBuy {...{ ...nftBuyProps, buyInView }} className="nftBuy" />
     </>
   )
@@ -93,9 +93,7 @@ export const NFTDetail = ({
         </IconButton>
       </Box>
       {isMobile ? (
-        <Stack sx={{ backgroundColor: 'neutral.400', gap: '80px' }}>
-          {content}
-        </Stack>
+        <Stack sx={{ backgroundColor: 'neutral.400' }}>{content}</Stack>
       ) : (
         <HorizontalScroll reverseScroll={true}>
           {content.props.children}

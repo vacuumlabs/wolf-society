@@ -1,5 +1,14 @@
-import { Box, Stack, Theme, Typography, useMediaQuery } from '@mui/material'
+import {
+  Box,
+  BreakpointOverrides,
+  Stack,
+  Theme,
+  Typography,
+  useMediaQuery,
+} from '@mui/material'
 import DrawerTextList from '../landing/DrawerTextList'
+import { Fragment } from 'react'
+import { NFTDividerLine } from './NFTDividerLine'
 
 export interface NFTUsageProps {
   lists: ListProps[]
@@ -12,14 +21,14 @@ interface ListProps {
 }
 
 export const NFTUsage = ({ lists }: NFTUsageProps) => {
-  const breakpoint = 'tabletM'
+  const breakpoint: keyof BreakpointOverrides = 'tabletM'
   const List = ({ caption, description, texts }: ListProps) => {
     return (
       <Stack width={{ mobile: '100%', [breakpoint]: '50%' }}>
-        <Typography variant="caption" mb="8px">
+        <Typography variant="caption" mb={1}>
           {caption}
         </Typography>
-        <Typography variant="body2" mb="40px">
+        <Typography variant="body2" mb={{ mobile: -1, [breakpoint]: 1 }}>
           {description}
         </Typography>
         <Box pl="24px">
@@ -31,12 +40,13 @@ export const NFTUsage = ({ lists }: NFTUsageProps) => {
   return (
     <Stack
       sx={{
-        width: { mobile: '100vw', tabletM: '80vw' },
+        width: { mobile: '100vw', [breakpoint]: '80vw' },
         backgroundColor: 'neutral.400',
-        gap: '120px',
+        gap: { mobile: 5, [breakpoint]: 17 },
         overflowY: 'auto',
+        paddingY: { mobile: 5, [breakpoint]: 10 },
+        paddingX: { mobile: 2, [breakpoint]: 10 },
       }}
-      p={{ mobile: '16px', tabletM: '80px' }}
       direction={{ mobile: 'column', [breakpoint]: 'row' }}
     >
       {lists.map((list, index) => (

@@ -3,7 +3,13 @@ import {
   NFTData,
   useContentful,
 } from '@/utils/hooks/useContentful'
-import { Box, ButtonProps, Stack, Typography } from '@mui/material'
+import {
+  Box,
+  ButtonProps,
+  BreakpointOverrides,
+  Stack,
+  Typography,
+} from '@mui/material'
 import { useAccount } from 'wagmi'
 import Button from '../Button'
 import {
@@ -63,6 +69,7 @@ type NFTBuyComponentProps = NFTBuyProps & {
 export const NFTBuy = ({ nft, buyInView, className }: NFTBuyComponentProps) => {
   const translate = useContentful(ContentTypes.nftDetail)
   const { priceInEth, manifoldLink, instanceId } = nft
+  const breakpoint: keyof BreakpointOverrides = 'tabletM'
 
   const { address, connector } = useAccount()
   const isUserWalletMagic = connector != null && connector.id === 'magic'
@@ -110,13 +117,15 @@ export const NFTBuy = ({ nft, buyInView, className }: NFTBuyComponentProps) => {
     <Stack
       justifyContent="space-between"
       sx={{
-        height: { mobile: 'auto', tabletM: '100vh' },
-        width: { mobile: '100vw', tabletM: 'max-content' },
+        height: { mobile: 'auto', [breakpoint]: '100vh' },
+        width: { mobile: '100vw', [breakpoint]: 'max-content' },
         backgroundColor: 'neutral.400',
+        paddingTop: { mobile: 5, [breakpoint]: 10 },
+        paddingBottom: { mobile: 0, [breakpoint]: 10 },
+        paddingX: { mobile: 2, [breakpoint]: 10 },
       }}
-      p={{ mobile: '16px', tabletM: '80px' }}
-      gap={{ mobile: '40px', tabletM: '0' }}
-      mb={{ mobile: buyInView ? '48px' : 0 }}
+      gap={{ mobile: 5, [breakpoint]: '0' }}
+      mb={{ mobile: buyInView ? 6 : 0 }}
       className={className}
     >
       <Stack alignItems="center" flexGrow={1} justifyContent="center">
@@ -125,7 +134,7 @@ export const NFTBuy = ({ nft, buyInView, className }: NFTBuyComponentProps) => {
       <Stack
         direction="row"
         justifyContent="space-between"
-        gap="16px"
+        gap={2}
         width="100%"
       >
         <CircleButton

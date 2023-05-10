@@ -1,17 +1,20 @@
 import { ALLOCATION_INFO } from '@/consts'
-import { Box, Stack, Typography } from '@mui/material'
+import { Box, BreakpointOverrides, Stack, Typography } from '@mui/material'
 import AllocationInfoStack from '../AllocationInfoStack'
 import { ContentTypes, useContentful } from '@/utils/hooks/useContentful'
 
 export const NFTAllocation = () => {
   const translateCommon = useContentful(ContentTypes.common)
   const translateNftDetail = useContentful(ContentTypes.nftDetail)
+  const breakpoint: keyof BreakpointOverrides = 'tabletM'
   return (
     <Stack
       gap="40px"
       sx={{
         backgroundColor: 'neutral.400',
-        p: { mobile: '16px', tabletM: '80px' },
+        paddingTop: { mobile: 5, [breakpoint]: 10 },
+        paddingX: { mobile: 2, [breakpoint]: 10 },
+        paddingBottom: { mobile: 2, [breakpoint]: 10 },
       }}
     >
       <Typography variant="caption">
@@ -20,7 +23,7 @@ export const NFTAllocation = () => {
       <Stack sx={{ overflowY: 'hidden' }}>
         <Stack
           gap={{ mobile: 5, desktopS: 10 }}
-          direction={{ mobile: 'column', tabletM: 'row' }}
+          direction={{ mobile: 'column', [breakpoint]: 'row' }}
           sx={{ overflowY: 'hidden' }}
           height="100%"
         >
@@ -28,7 +31,7 @@ export const NFTAllocation = () => {
             <Stack
               py={3}
               key={`AllocationInfoStack${index}`}
-              width={{ mobile: 'auto', tabletM: '384px' }}
+              width={{ mobile: 'auto', [breakpoint]: '384px' }}
             >
               <AllocationInfoStack
                 percentage={allocation.percentage}

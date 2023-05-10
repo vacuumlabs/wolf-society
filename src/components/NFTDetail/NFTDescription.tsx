@@ -52,20 +52,21 @@ export const NFTDescription = ({
         display="flex"
         justifyContent="center"
       >
-        <Box mx={{ mobile: '16px', tabletM: '80px' }}>
+        <Box mx={{ mobile: 2, tabletM: 10 }} mb={{ mobile: 2, tabletM: 0 }}>
           <CardMedia component="img" image={imageUrl} alt={name} />
         </Box>
       </Box>
       <Stack
         sx={{
           width: { mobile: '100%', tabletM: '45%' },
-          padding: { mobile: '16px', tabletM: '80px' },
+          paddingY: { mobile: 5, tabletM: 10 },
+          paddingX: { mobile: 2, tabletM: 10 },
           overflowY: 'auto',
         }}
         gap={5}
       >
-        <Stack gap={isMobile ? 3 : 4} mb={isMobile ? 5 : 0}>
-          <Typography variant="headline" fontWeight={600} mt={isMobile ? 3 : 0}>
+        <Stack gap={isMobile ? 3 : 4}>
+          <Typography variant="headline" fontWeight={600}>
             {name}
           </Typography>
           <Stack>
@@ -78,7 +79,7 @@ export const NFTDescription = ({
               </Stack>
             )}
             {deadline && (
-              <Stack gap="8px">
+              <Stack gap={1}>
                 <Stack direction="row">
                   <Typography
                     variant="caption"
@@ -93,7 +94,7 @@ export const NFTDescription = ({
           </Stack>
           <DynamicShareButton />
         </Stack>
-        <Stack gap="8px">
+        <Stack gap={1}>
           <Typography variant="body2">{descriptionText}</Typography>
         </Stack>
       </Stack>

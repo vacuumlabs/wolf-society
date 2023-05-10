@@ -1,6 +1,7 @@
 import { ContentTypes, useContentful } from '@/utils/hooks/useContentful'
 import {
   Box,
+  BreakpointOverrides,
   CardMedia,
   Stack,
   Theme,
@@ -11,7 +12,7 @@ import {
   NFTArtistSocialMedias,
   NFTArtistSocialMediasProps,
 } from './NFTArtistSocialMedias'
-import { VerticalLine } from './NFTVerticalLine'
+import { NFTDividerLine } from './NFTDividerLine'
 
 export interface NFTArtistProps {
   name: string
@@ -29,8 +30,9 @@ export const NFTArtist = ({
   descriptionRight,
 }: NFTArtistProps) => {
   const translate = useContentful(ContentTypes.collectionsPage)
+  const breakpoint: keyof BreakpointOverrides = 'tabletM'
   const isMobile = useMediaQuery((theme: Theme) =>
-    theme.breakpoints.down('tabletM')
+    theme.breakpoints.down(breakpoint)
   )
   const margin = isMobile ? 'auto' : 0
 
@@ -41,19 +43,23 @@ export const NFTArtist = ({
           width: { mobile: '100w', tabletM: '80vw' },
           backgroundColor: 'neutral.400',
           overflowY: 'auto',
+          paddingY: { mobile: 5, [breakpoint]: 10 },
+          paddingX: { mobile: 2, [breakpoint]: 10 },
+          gap: { mobile: 3, [breakpoint]: 5 },
         }}
-        p={{ mobile: '16px', tabletM: '80px' }}
-        gap="40px"
       >
         <Typography variant="caption">{translate('aboutArtist')}</Typography>
-        <Stack direction={isMobile ? 'column' : 'row'} gap="32px">
+        <Stack
+          direction={isMobile ? 'column' : 'row'}
+          gap={{ mobile: 3, [breakpoint]: 4 }}
+        >
           <Box sx={{ width: '176px', height: '176px', margin: margin }}>
             <CardMedia component="img" image={imageUrl} alt={name} />
           </Box>
           <Stack
             justifyContent="space-between"
             m={margin}
-            gap={isMobile ? '24px' : 0}
+            gap={isMobile ? 3 : 0}
           >
             <Typography variant="headline" m={margin}>
               {name}
