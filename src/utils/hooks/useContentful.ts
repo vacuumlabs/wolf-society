@@ -1,6 +1,7 @@
 import { Asset } from 'contentful'
 import { createContext, useContext } from 'react'
 import contentful from '../configs/contentful'
+import { getNftMintedAmount } from '../helpers'
 
 export enum ContentTypes {
   navbar = 'navbar',
@@ -8,6 +9,7 @@ export enum ContentTypes {
   landingPage = 'landingPage',
   collectionsPage = 'collectionsPage',
   articlesPage = 'articlesPage',
+  accountPage = 'accountPage',
   project = 'project',
   roadmap = 'roadmap',
   questionAndAnswer = 'questionAndAnswer',
@@ -72,6 +74,10 @@ export type NFTArtistData = {
 export type NFTData = {
   id: string
   collectionId: string
+  collection: {
+    fields: CollectionData
+  }
+  tokenId?: number
   name: string
   priceInEth: number
   totalSupply?: number
@@ -87,6 +93,7 @@ export type NFTData = {
   artist: {
     fields: NFTArtistData
   }
+  minted: number
 }
 
 export type CollectionsPageData = {
@@ -102,6 +109,21 @@ export type CollectionsPageData = {
   artImpactHeadline: string
   viewArtworks: string
   getCompleteCollection: string
+}
+
+export type AccountPageData = {
+  yourContribution: string
+  yourRewards: string
+  gameTokens: string
+  distribute: string
+  claimRewards: string
+  playGame: string
+  artworks: string
+  collections: string
+  complete: string
+  noArtworks: string
+  unlockExtraRewards: string
+  collectQuest: string
 }
 
 // Content to be injected into every page
@@ -180,6 +202,7 @@ export type Content = {
     gratefulPart1: string
     gratefulPart2: string
   }
+  [ContentTypes.accountPage]: AccountPageData
   [ContentTypes.project]: ProjectData
   [ContentTypes.roadmap]: RoadmapData
   [ContentTypes.questionAndAnswer]: QuestionAndAnswerData
@@ -292,12 +315,22 @@ export const getCollections = (locale?: string) =>
     orderBy: 'fields.orderNumber',
   })
 
-export const getNfts = (locale?: string) =>
-  getArrayOfContent<NFTData>({
+export const getNfts = async (locale?: string) => {
+  const nftsData = await getArrayOfContent<NFTData>({
     contentType: ContentTypes.nft,
     locale,
     orderBy: 'fields.id',
   })
+  if (!nftsData) return nftsData
+  return await Promise.all(
+    nftsData.map(async (nftData) => {
+      return {
+        ...nftData,
+        minted: nftData.tokenId ? await getNftMintedAmount(nftData.tokenId) : 0,
+      }
+    })
+  )
+}
 
 export const ContentContext = createContext<Content | undefined>(undefined)
 

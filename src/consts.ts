@@ -11,12 +11,13 @@ import allocationProjectsImage from 'public/images/allocationProjects.png'
 export const tooltipCustomMarkdownRegex =
   /(\*([^*]*)\*\(((?:[^()]*|\((?:[^()]*|\([^()]*\))*\))*)\))/g
 
-export const ourCollectionsAddresses: string[] = [
-  '0x7dfd5e56dd343140b3d0823d55fdfde8203a729f',
-]
+export const nftSmartContractAddress = '0x6c5a72a30ab18A013307A514133144bBcac1f61d'
 
 export const SUBPAGES: {
-  [key in keyof Pick<Content[ContentTypes.navbar], 'about' | 'collections' | 'blog' | 'faq' | 'account'>]: string
+  [key in keyof Pick<
+    Content[ContentTypes.navbar],
+    'about' | 'collections' | 'blog' | 'faq' | 'account'
+  >]: string
 } = {
   about: '/',
   collections: '/art-impact',

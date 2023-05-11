@@ -1,5 +1,5 @@
 import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 interface CountdownProps {
   deadline: Date
@@ -8,6 +8,7 @@ interface CountdownProps {
 export const Countdown = ({ deadline }: CountdownProps) => {
   const translate = useContentful(ContentTypes.common)
   const [remaining, setRemaining] = useState('')
+  const timeoutRef = useRef<NodeJS.Timeout>()
 
   const timeToDisplayText = (time: number, title: string) => {
     if (time === 0) {
@@ -42,15 +43,16 @@ export const Countdown = ({ deadline }: CountdownProps) => {
   }
 
   useEffect(() => {
-    const timer = setInterval(() => {
+    const refreshCountdown = () => {
       if (deadline.getTime() > new Date().getTime()) {
         setRemaining(diff(deadline, new Date()))
+        timeoutRef.current = setTimeout(refreshCountdown, 1000)
       } else {
         setRemaining('')
-        clearInterval(timer)
       }
-    }, 1000)
-    return () => clearInterval(timer)
+    }
+    refreshCountdown()
+    return () => clearTimeout(timeoutRef.current)
   }, [deadline])
   return <> {remaining} </>
 }

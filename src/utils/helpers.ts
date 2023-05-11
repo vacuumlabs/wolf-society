@@ -1,6 +1,8 @@
-import { SUBPAGES } from '@/consts'
+import { SUBPAGES, nftSmartContractAddress } from '@/consts'
 import { Nft } from 'alchemy-sdk'
-import { Content, ContentTypes } from './hooks/useContentful'
+import ERC1155ABI from '@/abi/ERC1155'
+import { BigNumber, ethers } from 'ethers'
+import { alchemy } from './configs/alchemy'
 
 export const compareNfts = (nft1: Nft, nft2: Nft): boolean => {
   return (
@@ -29,4 +31,16 @@ export const formatCategories = (categories: string[]) => {
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(' ')
   )
+}
+
+export const getNftMintedAmount = async (tokenId: number) => {
+  const response = await alchemy.core.call({
+    to: nftSmartContractAddress,
+    data: new ethers.utils.Interface(ERC1155ABI).encodeFunctionData(
+      'totalSupply',
+      [tokenId]
+    ),
+  })
+  // response is string but in a hex format of a BigNumber
+  return BigNumber.from(response).toNumber()
 }
