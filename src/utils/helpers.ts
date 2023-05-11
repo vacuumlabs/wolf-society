@@ -41,5 +41,6 @@ export const getNftMintedAmount = async (tokenId: number) => {
       [tokenId]
     ),
   })
+  // response is string but in a hex format of a BigNumber
   return BigNumber.from(response).toNumber()
 }
