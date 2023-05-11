@@ -72,19 +72,18 @@ export const NFTDescription = ({
           <Stack gap={1}>
             {totalPieces !== undefined && soldPieces !== undefined && (
               <Stack direction="row">
-                <Typography variant="caption" color="neutral.700">{`${translate(
-                  'pieces'
-                )}: `}</Typography>
-                <Typography variant="caption">{`${soldPieces}/${totalPieces}`}</Typography>
+                <Typography variant="caption" color="neutral.700">
+                  {`${translate('pieces')}:`}&nbsp;
+                </Typography>
+                <Typography variant="caption">{` ${soldPieces}/${totalPieces}`}</Typography>
               </Stack>
             )}
             {deadline && (
               <Stack gap={1}>
                 <Stack direction="row">
-                  <Typography
-                    variant="caption"
-                    color="neutral.700"
-                  >{`${translate('available')}: `}</Typography>
+                  <Typography variant="caption" color="neutral.700">
+                    {`${translate('available')}:`}&nbsp;
+                  </Typography>
                   <Typography variant="caption">
                     <Countdown deadline={deadline} />
                   </Typography>
