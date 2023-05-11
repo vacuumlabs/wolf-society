@@ -59,9 +59,7 @@ const AllocationInfoStack = ({
           <Typography
             variant="headlineS"
             color="neutral.main"
-            sx={{
-              lineHeight: '64px',
-            }}
+            sx={{ pt: '20px' }}
           >
             %
           </Typography>
