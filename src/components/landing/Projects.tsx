@@ -65,7 +65,7 @@ const Projects = ({ projectsData }: Props) => {
             </Stack>
             <Stack
               spacing={{ mobile: 5, [breakpoint]: 0 }}
-              mt={{ mobile: 5, tabletS: 0 }}
+              mt={{ mobile: 5, [breakpoint]: 0 }}
             >
               {projectsData.map((project, index) => (
                 <Stack width="100%" alignItems="center" key={project.name}>
