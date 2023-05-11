@@ -17,7 +17,7 @@ export const Artworks = ({ nftsData }: ArtworksProps) => {
     <Grid container spacing={{ mobile: 2, [breakpoint]: 4 }}>
       {nftsData.map((nft) => (
         <Grid item mobile={12} tabletM={6} desktopS={4} key={nft.name}>
-          <NftCard data={nft} />
+          <NftCard data={nft} displayCollection />
         </Grid>
       ))}
     </Grid>

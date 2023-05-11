@@ -23,6 +23,7 @@ export type NftCardProps = {
   minted?: number
   data: NFTData
   displayPrice?: boolean
+  displayCollection?: boolean
 }
 
 const DynamicShareButton = dynamic(
@@ -30,7 +31,12 @@ const DynamicShareButton = dynamic(
   { ssr: false }
 )
 
-const NftCard = ({ minted, data, displayPrice }: NftCardProps) => {
+const NftCard = ({
+  minted,
+  data,
+  displayPrice,
+  displayCollection,
+}: NftCardProps) => {
   const { totalSupply, name, priceInEth, image } = data
   const translate = useContentful(ContentTypes.common)
   const breakpoint: keyof BreakpointOverrides = 'desktopS'
@@ -98,14 +104,21 @@ const NftCard = ({ minted, data, displayPrice }: NftCardProps) => {
               <Typography variant="caption" color="secondary">
                 {name}
               </Typography>
-              <Typography variant="body2">
-                {data.artist.fields.artistName}
-              </Typography>
-              {displayPrice && (
-                <Stack direction="row" alignItems="center" gap={1}>
-                  <Typography variant="caption">{priceInEth} ETH</Typography>
-                </Stack>
-              )}
+              <Stack direction="row" justifyContent="space-between">
+                {displayCollection && (
+                  <Typography variant="body2">
+                    {data.collection.fields.name}
+                  </Typography>
+                )}
+                <Typography variant="body2">
+                  {data.artist.fields.artistName}
+                </Typography>
+                {displayPrice && (
+                  <Stack direction="row" alignItems="center" gap={1}>
+                    <Typography variant="caption">{priceInEth} ETH</Typography>
+                  </Stack>
+                )}
+              </Stack>
             </Stack>
             <Stack direction="row" gap="1px">
               <DynamicShareButton
