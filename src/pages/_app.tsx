@@ -76,6 +76,7 @@ declare module '@mui/material/styles' {
     display: React.CSSProperties
     displayM: React.CSSProperties
     headline: React.CSSProperties
+    headlineS: React.CSSProperties
     title: React.CSSProperties
     caption: React.CSSProperties
     body2S: React.CSSProperties
@@ -90,6 +91,7 @@ declare module '@mui/material/styles' {
     display?: React.CSSProperties
     displayM?: React.CSSProperties
     headline?: React.CSSProperties
+    headlineS?: React.CSSProperties
     title?: React.CSSProperties
     caption?: React.CSSProperties
     body2S?: React.CSSProperties
@@ -130,6 +132,7 @@ declare module '@mui/material/Typography' {
     display: true
     displayM: true
     headline: true
+    headlineS: true
     title: true
     caption: true
     label: true
@@ -443,6 +446,7 @@ theme.components = {
         // Map the new variant to render a <h1> by default
         display: 'h1',
         headline: 'h2',
+        headlineS: 'h2',
         title: 'h3',
         caption: 'h4',
         label: 'h5',
@@ -512,6 +516,20 @@ theme.typography.headline = {
   [theme.breakpoints.up('desktopL')]: {
     fontSize: '100px',
     lineHeight: '96px',
+  },
+}
+
+theme.typography.headlineS = {
+  ...theme.typography.headline,
+  fontSize: theme.typography.headline.fontSize,
+  lineHeight: theme.typography.headline.lineHeight,
+  [theme.breakpoints.up('desktopM')]: {
+    fontSize: theme.typography.headline.fontSize,
+    lineHeight: theme.typography.headline.lineHeight,
+  },
+  [theme.breakpoints.up('desktopL')]: {
+    fontSize: theme.typography.headline.fontSize,
+    lineHeight: theme.typography.headline.lineHeight,
   },
 }
 

@@ -57,7 +57,7 @@ const AllocationInfoStack = ({
             {percentage}
           </Typography>
           <Typography
-            variant="headline"
+            variant="headlineS"
             color="neutral.main"
             sx={{
               lineHeight: '64px',
