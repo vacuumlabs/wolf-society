@@ -1,6 +1,22 @@
 import { ContentTypes, useContentful } from '@/utils/hooks/useContentful'
-import { Box, Stack, Typography } from '@mui/material'
+import { Box, ButtonProps, Stack, Typography } from '@mui/material'
+import { useAccount } from 'wagmi'
 import Button from '../Button'
+
+const CircleButton = ({ label, onClick, ...props }: { label: string } & ButtonProps) => (
+  <Button
+    sx={{
+      width: '45%',
+      height: 'auto !important',
+      aspectRatio: '1/1',
+      borderRadius: '50%',
+    }}
+    onClick={onClick}
+    {...props}
+  >
+    {label}
+  </Button>
+)
 
 export interface NFTBuyProps {
   priceETH: number
@@ -18,18 +34,8 @@ export const NFTBuy = ({
 }: NFTBuyComponentProps) => {
   const translate = useContentful(ContentTypes.nftDetail)
 
-  const CircleButton = ({ label }: { label: string }) => (
-    <Button
-      sx={{
-        width: '45%',
-        height: 'auto !important',
-        aspectRatio: '1/1',
-        borderRadius: '50%',
-      }}
-    >
-      {label}
-    </Button>
-  )
+  const { connector } = useAccount()
+  const isUserWalletMagic = connector != null && connector.id === 'magic'
 
   return (
     <Stack
@@ -56,8 +62,8 @@ export const NFTBuy = ({
         gap="16px"
         width="100%"
       >
-        <CircleButton label={translate('buyWithCard')} />
-        <CircleButton label={translate('buyWithCrypto')} />
+        <CircleButton label={translate('buyWithCard')} disabled={!isUserWalletMagic} />
+        <CircleButton label={translate('buyWithCrypto')} disabled={isUserWalletMagic} />
       </Stack>
     </Stack>
   )
