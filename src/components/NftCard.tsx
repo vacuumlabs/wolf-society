@@ -145,8 +145,8 @@ const NftCard = ({
         onClose={() => setIsDetailOpen(false)}
         nftArtistProps={{
           name: data.artist.fields.artistName,
-          descriptionLeft: data.artistDescLeft,
-          descriptionRight: data.artistDescRight,
+          descriptionLeft: data.artist.fields.artistDescLeft,
+          descriptionRight: data.artist.fields.artistDescRight,
           imageUrl: data.artist.fields.artistImage.fields.file.url,
           socialLinks: {
             twitterURL: data.artist.fields.artistTwitter,

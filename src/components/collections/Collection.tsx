@@ -157,8 +157,10 @@ const Collection = forwardRef<HTMLElement, Props>((props, ref) => {
                 {nftData.map((nft, index) => (
                   <Stack width="100%" alignItems="center" key={nft.name}>
                     <ArtistCardMobile
-                      artistImage={nft.artistImage.fields.file.url}
-                      artistName={nft.artistName}
+                      artistImage={
+                        nft.artist.fields.artistImage.fields.file.url
+                      }
+                      artistName={nft.artist.fields.artistName}
                     />
                     <ScrollingCard index={index}>
                       <NftCardArtImpact

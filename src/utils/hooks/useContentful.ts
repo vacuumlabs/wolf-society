@@ -82,14 +82,7 @@ export type NFTData = {
   priceInEth: number
   totalSupply?: number
   image: Asset
-  artistName: string
-  artistImage: Asset
-  artistDescLeft: string
-  artistDescRight: string
   nftDesc: string
-  artistsTwitter: string
-  artistsIG: string
-  artistsWeb: string
   artist: {
     fields: NFTArtistData
   }
