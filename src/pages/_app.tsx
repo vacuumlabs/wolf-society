@@ -475,8 +475,28 @@ theme.typography.display = {
 
 theme.typography.displayM = {
   ...theme.typography.display,
-  fontSize: '141px',
-  lineHeight: '128px',
+  fontSize: (
+    (theme.typography.display as any)[
+      theme.breakpoints.up('desktopM')
+    ] as React.CSSProperties
+  ).fontSize,
+  lineHeight: (
+    (theme.typography.display as any)[
+      theme.breakpoints.up('desktopM')
+    ] as React.CSSProperties
+  ).lineHeight,
+  [theme.breakpoints.up('desktopL')]: {
+    fontSize: (
+      (theme.typography.display as any)[
+        theme.breakpoints.up('desktopM')
+      ] as React.CSSProperties
+    ).fontSize,
+    lineHeight: (
+      (theme.typography.display as any)[
+        theme.breakpoints.up('desktopM')
+      ] as React.CSSProperties
+    ).lineHeight,
+  },
 }
 
 theme.typography.headline = {
