@@ -10,7 +10,7 @@ import {
   useContentful,
 } from '@/utils/hooks/useContentful'
 
-const COLOR_ORDER: string[] = [
+export const COLLECTIONS_COLOR_ORDER: string[] = [
   'common.blue',
   'secondary.main',
   'common.brown',
@@ -84,7 +84,9 @@ const Collections = ({ collectionsData }: Props) => {
               }
               numberOfPieces={collection.numberOfPieces}
               key={collection.name}
-              color={COLOR_ORDER[index % COLOR_ORDER.length]}
+              color={
+                COLLECTIONS_COLOR_ORDER[index % COLLECTIONS_COLOR_ORDER.length]
+              }
               collectionNumber={index + 1}
               numberOfCollections={collectionsData.length}
             />

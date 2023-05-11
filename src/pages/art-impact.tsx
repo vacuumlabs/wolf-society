@@ -13,13 +13,7 @@ import { Stack } from '@mui/material'
 import Collection from '@/components/collections/Collection'
 import { TitleSection } from '@/components/collections/TitleSection'
 import { useRef } from 'react'
-
-const COLOR_ORDER: string[] = [
-  'secondary.main',
-  'common.blue',
-  'common.brown',
-  'black.main',
-]
+import { COLLECTIONS_COLOR_ORDER } from '@/components/landing/Collections'
 
 type Props = {
   translations: Partial<Content>
@@ -51,7 +45,9 @@ const ArtImpact = ({ collectionsData, nftData }: Props) => {
             }
             numberOfPieces={collection.numberOfPieces}
             key={collection.name}
-            color={COLOR_ORDER[index % COLOR_ORDER.length]}
+            color={
+              COLLECTIONS_COLOR_ORDER[index % COLLECTIONS_COLOR_ORDER.length]
+            }
             ref={index === 0 ? firstCollectionRef : null}
           />
         )
