@@ -69,9 +69,9 @@ export const NFTDescription = ({
           <Typography variant="headline" fontWeight={600}>
             {name}
           </Typography>
-          <Stack>
+          <Stack gap={1}>
             {totalPieces !== undefined && soldPieces !== undefined && (
-              <Stack direction="row" mb={1}>
+              <Stack direction="row">
                 <Typography variant="caption" color="neutral.700">{`${translate(
                   'pieces'
                 )}: `}</Typography>

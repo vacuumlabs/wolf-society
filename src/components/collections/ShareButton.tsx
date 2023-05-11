@@ -39,7 +39,7 @@ export const ShareButton = ({
     }
   }, [])
   return (
-    <Box {...props}>
+    <Box {...props} display="flex">
       <PopupState variant="popover" popupId="demo-popup-menu">
         {(popupState) => (
           <>

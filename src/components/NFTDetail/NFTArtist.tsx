@@ -53,7 +53,7 @@ export const NFTArtist = ({
           direction={isMobile ? 'column' : 'row'}
           gap={{ mobile: 3, [breakpoint]: 4 }}
         >
-          <Box sx={{ width: '176px', height: '176px', margin: margin }}>
+          <Box sx={{ width: '168px', height: '168px', margin: margin }}>
             <CardMedia component="img" image={imageUrl} alt={name} />
           </Box>
           <Stack
