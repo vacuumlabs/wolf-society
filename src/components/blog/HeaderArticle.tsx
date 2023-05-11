@@ -135,6 +135,7 @@ const HeaderArticle = ({ post, image }: Props) => {
               container
               pt={{ mobile: 2, [breakpoint]: 5 }}
               sx={{ rotate: '-0.52deg' }}
+              spacing={0}
             >
               <Grid
                 item

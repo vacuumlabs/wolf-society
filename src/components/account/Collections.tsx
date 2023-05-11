@@ -84,12 +84,7 @@ export const Collections = ({ collectionsData }: CollectionsProps) => {
               </Stack>
             </Grid>
             <Grid item mobile={12} {...{ [breakpoint]: 6 }}>
-              <Grid
-                container
-                height="100%"
-                rowSpacing={{ mobile: 2, [breakpoint]: 0 }}
-                columnSpacing={{ mobile: 2, [breakpoint]: 4 }}
-              >
+              <Grid container height="100%">
                 {collectionData.nfts.map((nft) => (
                   <Grid
                     item

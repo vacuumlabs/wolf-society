@@ -28,7 +28,7 @@ const Articles = ({ posts }: TBlog) => {
           <Stack spacing={5}>
             <Typography variant="title">{translate('articles')}</Typography>
             <Box>
-              <Grid container rowGap={3}>
+              <Grid container>
                 {posts.map((post) => (
                   <Grid
                     item
