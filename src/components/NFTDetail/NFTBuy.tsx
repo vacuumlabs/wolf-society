@@ -10,7 +10,9 @@ const CircleButton = ({ label, onClick, ...props }: { label: string } & ButtonPr
       height: 'auto !important',
       aspectRatio: '1/1',
       borderRadius: '50%',
+      textAlign: 'center'
     }}
+    target={'_blank'}
     onClick={onClick}
     {...props}
   >
@@ -20,6 +22,7 @@ const CircleButton = ({ label, onClick, ...props }: { label: string } & ButtonPr
 
 export interface NFTBuyProps {
   priceETH: number
+  manifoldLink: string
 }
 
 type NFTBuyComponentProps = NFTBuyProps & {
@@ -29,6 +32,7 @@ type NFTBuyComponentProps = NFTBuyProps & {
 
 export const NFTBuy = ({
   priceETH,
+  manifoldLink,
   buyInView,
   className,
 }: NFTBuyComponentProps) => {
@@ -63,7 +67,7 @@ export const NFTBuy = ({
         width="100%"
       >
         <CircleButton label={translate('buyWithCard')} disabled={!isUserWalletMagic} />
-        <CircleButton label={translate('buyWithCrypto')} disabled={isUserWalletMagic} />
+        <CircleButton label={translate('buyWithCrypto')} href={manifoldLink} variant="contained" disabled={isUserWalletMagic} />
       </Stack>
     </Stack>
   )
