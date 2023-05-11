@@ -20,7 +20,7 @@ const AllocationInfoStack = ({
   const imageBox = (
     <Stack
       sx={{ position: 'relative', overflowY: 'hidden' }}
-      width="100%"
+      width={isHorizontal ? '50%' : '100%'}
       justifyContent="center"
     >
       {isHorizontal ? (
