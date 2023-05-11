@@ -52,7 +52,7 @@ const Hero = ({ manifestoRef }: Props) => {
                 {} {translate('youAreWolfSociety')}
               </Link>
             </Typography>
-            <Stack sx={{ alignItems: 'center', mt: 4 }}>
+            <Stack sx={{ alignItems: 'center' }}>
               <NextLink
                 href={SUBPAGES['collections']}
                 passHref
