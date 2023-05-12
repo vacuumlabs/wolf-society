@@ -57,6 +57,7 @@ export type NFTDetailData = {
   buyWithCard: string
   buyWithCrypto: string
   shareOnTwitter: string
+  buyNft: string
 }
 
 export type NFTArtistData = {

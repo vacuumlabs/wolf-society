@@ -18,6 +18,7 @@ import { useRef, useState } from 'react'
 import { NFTDividerLine } from './NFTDividerLine'
 import { NFTAllocation } from './NFTAllocation'
 import { OnScreen } from '@/components/OnScreen'
+import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
 
 export interface NFTDetailProps {
   isOpen: boolean
@@ -36,6 +37,7 @@ export const NFTDetail = ({
   nftUsageProps,
   nftBuyProps,
 }: NFTDetailProps) => {
+  const translate = useContentful(ContentTypes.nftDetail)
   const drawerPaperRef = useRef<HTMLDivElement>(null)
   const isMobile = useMediaQuery((theme: Theme) =>
     theme.breakpoints.down('tabletM')
@@ -99,7 +101,7 @@ export const NFTDetail = ({
           {content.props.children}
         </HorizontalScroll>
       )}
-      {isMobile && (
+      {isMobile && nftBuyProps.buttonsMode === 'buy' && (
         <Box
           display={buyInView ? 'none' : 'inherit'}
           sx={{
@@ -121,7 +123,9 @@ export const NFTDetail = ({
             }
           >
             <Stack direction="row" gap={'1ch'}>
-              <Typography variant="button">{`buy nft ${nftBuyProps.priceETH}ETH`}</Typography>
+              <Typography variant="button">{`${translate('buyNft')} ${
+                nftBuyProps.priceETH
+              } ETH`}</Typography>
             </Stack>
           </Button>
         </Box>
