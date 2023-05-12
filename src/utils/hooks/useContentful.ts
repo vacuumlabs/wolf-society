@@ -58,6 +58,10 @@ export type NFTDetailData = {
   buyWithCrypto: string
   shareOnTwitter: string
   buyNft: string
+  beatTheDrumTitle: string
+  beatTheDrumSubtitle: string
+  breadAndButterTitle: string
+  breadAndButterSubtitle: string
 }
 
 export type NFTArtistData = {
@@ -88,6 +92,8 @@ export type NFTData = {
   artist: {
     fields: NFTArtistData
   }
+  beatTheDrumList: string
+  breadAndButterList: string
   minted: number
   manifoldLink: string
   instanceId: number

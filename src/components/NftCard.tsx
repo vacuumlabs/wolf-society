@@ -15,7 +15,6 @@ import {
 } from '@mui/material'
 import Button from './Button'
 import { NFTDetail } from './NFTDetail/NFTDetail'
-import { MOCKED_NFT_DETAIL } from './NFTDetail/mockedDetailData'
 import { useState } from 'react'
 import dynamic from 'next/dynamic'
 import { ButtonsMode } from './NFTDetail/NFTBuy'
@@ -42,6 +41,7 @@ const NftCard = ({
 }: NftCardProps) => {
   const { totalSupply, name, priceInEth, image } = data
   const translate = useContentful(ContentTypes.common)
+  const translateNftDetail = useContentful(ContentTypes.nftDetail)
   const breakpoint: keyof BreakpointOverrides = 'desktopS'
   const [isDetailOpen, setIsDetailOpen] = useState<boolean>(false)
 
@@ -167,7 +167,20 @@ const NftCard = ({
           descriptionText: data.nftDesc,
           imageUrl: image.fields.file.url,
         }}
-        nftUsageProps={MOCKED_NFT_DETAIL.nftUsageProps}
+        nftUsageProps={{
+          lists: [
+            {
+              caption: translateNftDetail('beatTheDrumTitle'),
+              description: translateNftDetail('beatTheDrumSubtitle'),
+              texts: data.beatTheDrumList.split('\n'),
+            },
+            {
+              caption: translateNftDetail('breadAndButterTitle'),
+              description: translateNftDetail('breadAndButterSubtitle'),
+              texts: data.breadAndButterList.split('\n'),
+            },
+          ],
+        }}
         nftBuyProps={{ nft: data, buttonsMode: detailButtonsMode }}
       />
     </>
