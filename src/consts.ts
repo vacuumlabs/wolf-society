@@ -13,6 +13,8 @@ export const tooltipCustomMarkdownRegex =
 
 export const nftSmartContractAddress = '0x6c5a72a30ab18A013307A514133144bBcac1f61d'
 
+export const lazyPayableClaimContractAddress  = process.env.NEXT_PUBLIC_TESTNET ? '0x73CA7420625d312d1792Cea60Ced7B35D009322c' : '0x'
+
 export const SUBPAGES: {
   [key in keyof Pick<
     Content[ContentTypes.navbar],
