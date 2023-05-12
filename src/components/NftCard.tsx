@@ -18,12 +18,14 @@ import { NFTDetail } from './NFTDetail/NFTDetail'
 import { MOCKED_NFT_DETAIL } from './NFTDetail/mockedDetailData'
 import { useState } from 'react'
 import dynamic from 'next/dynamic'
+import { ButtonsMode } from './NFTDetail/NFTBuy'
 
 export type NftCardProps = {
   minted?: number
   data: NFTData
   displayPrice?: boolean
   displayCollection?: boolean
+  detailButtonsMode?: ButtonsMode
 }
 
 const DynamicShareButton = dynamic(
@@ -36,6 +38,7 @@ const NftCard = ({
   data,
   displayPrice,
   displayCollection,
+  detailButtonsMode = 'buy',
 }: NftCardProps) => {
   const { totalSupply, name, priceInEth, image } = data
   const translate = useContentful(ContentTypes.common)
@@ -165,7 +168,7 @@ const NftCard = ({
           imageUrl: image.fields.file.url,
         }}
         nftUsageProps={MOCKED_NFT_DETAIL.nftUsageProps}
-        nftBuyProps={{ nft: data }}
+        nftBuyProps={{ nft: data, buttonsMode: detailButtonsMode }}
       />
     </>
   )

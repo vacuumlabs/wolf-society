@@ -57,8 +57,10 @@ const buyNft = async (
     | WriteContractPreparedArgs<k | readonly unknown[], string>
 ) => writeContract(config)
 
+export type ButtonsMode = 'buy' | 'shareTwitter'
 export interface NFTBuyProps {
   nft: NFTData
+  buttonsMode: ButtonsMode
 }
 
 type NFTBuyComponentProps = NFTBuyProps & {
@@ -66,7 +68,12 @@ type NFTBuyComponentProps = NFTBuyProps & {
   className: string
 }
 
-export const NFTBuy = ({ nft, buyInView, className }: NFTBuyComponentProps) => {
+export const NFTBuy = ({
+  nft,
+  buttonsMode,
+  buyInView,
+  className,
+}: NFTBuyComponentProps) => {
   const translate = useContentful(ContentTypes.nftDetail)
   const { priceInEth, manifoldLink, instanceId } = nft
   const breakpoint: keyof BreakpointOverrides = 'tabletM'
@@ -133,22 +140,29 @@ export const NFTBuy = ({ nft, buyInView, className }: NFTBuyComponentProps) => {
       </Stack>
       <Stack
         direction="row"
-        justifyContent="space-between"
+        justifyContent={buttonsMode === 'buy' ? 'space-between' : 'center'}
         gap={2}
         width="100%"
       >
-        <CircleButton
-          label={translate('buyWithCard')}
-          disabled={!isUserWalletMagic}
-          onClick={() =>
-            mintConfig != null ? buyNft(mintConfig) : console.log(txError)
-          }
-        />
-        <CircleButton
-          label={translate('buyWithCrypto')}
-          href={manifoldLink}
-          disabled={isUserWalletMagic}
-        />
+        {buttonsMode === 'buy' && (
+          <>
+            <CircleButton
+              label={translate('buyWithCard')}
+              disabled={!isUserWalletMagic}
+              onClick={() =>
+                mintConfig != null ? buyNft(mintConfig) : console.log(txError)
+              }
+            />
+            <CircleButton
+              label={translate('buyWithCrypto')}
+              href={manifoldLink}
+              disabled={isUserWalletMagic}
+            />
+          </>
+        )}
+        {buttonsMode === 'shareTwitter' && (
+          <CircleButton label={translate('shareOnTwitter')} />
+        )}
       </Stack>
     </Stack>
   )
