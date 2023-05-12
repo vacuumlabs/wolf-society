@@ -22,6 +22,7 @@ import ArtistCard from './ArtistCard'
 import NftCardArtImpact from './NftCardArtImpact'
 import Button from '../Button'
 import { ArtistCardMobile } from './ArtistCardMobile'
+import { BigNumber, ethers } from 'ethers'
 
 type Props = {
   id: string
@@ -56,9 +57,11 @@ const Collection = forwardRef<HTMLElement, Props>((props, ref) => {
 
   const breakpoint: keyof BreakpointOverrides = 'tabletM'
 
-  const collectionEthPrice = nftData?.reduce(
-    (acc, nft) => acc + nft.priceInEth,
-    0
+  const collectionEthPrice = ethers.utils.formatEther(
+    nftData?.reduce(
+      (acc, nft) => acc.add(ethers.utils.parseEther(nft.priceInEth.toString())),
+      BigNumber.from(0)
+    ) ?? 0
   )
 
   const [artistName, setArtistName] = useState<string | undefined>(
