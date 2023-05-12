@@ -13,6 +13,7 @@ import {
   NFTArtistSocialMediasProps,
 } from './NFTArtistSocialMedias'
 import { NFTDividerLine } from './NFTDividerLine'
+import TypographyWithTooltips from '../TypographyWithTooltips'
 
 export interface NFTArtistProps {
   name: string
@@ -68,8 +69,16 @@ export const NFTArtist = ({
           </Stack>
         </Stack>
         <Stack direction={isMobile ? 'column' : 'row'} gap="32px">
-          <Typography variant="body2">{descriptionLeft}</Typography>
-          <Typography variant="body2">{descriptionRight}</Typography>
+          <TypographyWithTooltips
+            variant="body2"
+            text={descriptionLeft}
+            key={`${name} description left`}
+          />
+          <TypographyWithTooltips
+            variant="body2"
+            text={descriptionRight}
+            key={`${name} description right`}
+          />
         </Stack>
       </Stack>
     </>

@@ -9,6 +9,7 @@ import {
 } from '@mui/material'
 import { Countdown } from '../Countdown'
 import dynamic from 'next/dynamic'
+import TypographyWithTooltips from '../TypographyWithTooltips'
 
 const DynamicShareButton = dynamic(
   () => import('../collections/ShareButton').then((mod) => mod.ShareButton),
@@ -94,7 +95,11 @@ export const NFTDescription = ({
           <DynamicShareButton />
         </Stack>
         <Stack gap={1}>
-          <Typography variant="body2">{descriptionText}</Typography>
+          <TypographyWithTooltips
+            variant="body2"
+            text={descriptionText}
+            key={`${name} description`}
+          ></TypographyWithTooltips>
         </Stack>
       </Stack>
     </Stack>

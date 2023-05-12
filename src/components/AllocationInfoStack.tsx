@@ -1,5 +1,6 @@
 import { Box, Stack, Typography } from '@mui/material'
 import Image, { StaticImageData } from 'next/image'
+import TypographyWithTooltips from './TypographyWithTooltips'
 
 type Props = {
   percentage: string
@@ -64,7 +65,11 @@ const AllocationInfoStack = ({
             %
           </Typography>
         </Stack>
-        <Typography variant="body2">{text}</Typography>
+        <TypographyWithTooltips
+          variant="body2"
+          text={text}
+          key={`allocation-${text}`}
+        />
       </Stack>
       {displayImageOnTheRight ? imageBox : <></>}
     </Stack>
