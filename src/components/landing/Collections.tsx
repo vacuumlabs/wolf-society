@@ -9,13 +9,7 @@ import {
   ContentTypes,
   useContentful,
 } from '@/utils/hooks/useContentful'
-
-export const COLLECTIONS_COLOR_ORDER: string[] = [
-  'common.blue',
-  'secondary.main',
-  'common.brown',
-  'black.main',
-]
+import { COLLECTIONS_COLOR_ORDER } from '@/consts'
 
 type Props = {
   collectionsData: CollectionData[] | null

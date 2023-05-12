@@ -13,7 +13,7 @@ import { Stack } from '@mui/material'
 import Collection from '@/components/collections/Collection'
 import { TitleSection } from '@/components/collections/TitleSection'
 import { useRef } from 'react'
-import { COLLECTIONS_COLOR_ORDER } from '@/components/landing/Collections'
+import { COLLECTIONS_COLOR_ORDER } from '@/consts'
 
 type Props = {
   translations: Partial<Content>
