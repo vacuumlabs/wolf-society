@@ -44,8 +44,8 @@ export type CollectionData = {
   id: string
   name: string
   description: string
-  deadline: string
-  numberOfPieces: number
+  deadline?: string
+  numberOfPieces?: number
   image: Asset
   artistName: string
   artistSubtext: string

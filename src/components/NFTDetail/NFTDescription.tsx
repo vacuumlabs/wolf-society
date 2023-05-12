@@ -78,7 +78,7 @@ export const NFTDescription = ({
                 <Typography variant="caption">{` ${soldPieces}/${totalPieces}`}</Typography>
               </Stack>
             )}
-            {deadline && (
+            {deadline !== undefined && (
               <Stack gap={1}>
                 <Stack direction="row">
                   <Typography variant="caption" color="neutral.700">

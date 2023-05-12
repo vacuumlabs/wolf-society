@@ -80,7 +80,9 @@ const Collections = ({ collectionsData }: Props) => {
               subtitle={translate('limitedEdition')}
               imageUrl={collection.image.fields.file.url}
               deadline={
-                collection.deadline ? new Date(collection.deadline) : undefined
+                collection.deadline !== undefined
+                  ? new Date(collection.deadline)
+                  : undefined
               }
               numberOfPieces={collection.numberOfPieces}
               key={collection.name}

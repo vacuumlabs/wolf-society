@@ -62,7 +62,7 @@ export const Collections = ({ collectionsData }: CollectionsProps) => {
                       >
                         {translate('unlockExtraRewards')}
                       </Button>
-                      {collectionData.deadline && (
+                      {collectionData.deadline !== undefined && (
                         <Typography variant="caption">
                           <Countdown
                             deadline={new Date(collectionData.deadline)}

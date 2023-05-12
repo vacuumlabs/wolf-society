@@ -161,9 +161,10 @@ const NftCard = ({
           name: name,
           totalPieces: totalSupply,
           soldPieces: minted,
-          deadline: data.collection.fields.deadline
-            ? new Date(data.collection.fields.deadline)
-            : undefined,
+          deadline:
+            data.collection.fields.deadline !== undefined
+              ? new Date(data.collection.fields.deadline)
+              : undefined,
           descriptionText: data.nftDesc,
           imageUrl: image.fields.file.url,
         }}

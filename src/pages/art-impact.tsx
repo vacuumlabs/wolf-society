@@ -41,7 +41,9 @@ const ArtImpact = ({ collectionsData, nftData }: Props) => {
             subtitle={translate('limitedEdition')}
             description={collection.description}
             deadline={
-              collection.deadline ? new Date(collection.deadline) : undefined
+              collection.deadline !== undefined
+                ? new Date(collection.deadline)
+                : undefined
             }
             numberOfPieces={collection.numberOfPieces}
             key={collection.name}

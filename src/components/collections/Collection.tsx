@@ -77,7 +77,7 @@ const Collection = forwardRef<HTMLElement, Props>((props, ref) => {
 
   useEffect(() => {
     setCountdownOrPieces(
-      deadline ? (
+      deadline !== undefined ? (
         <Countdown deadline={deadline} />
       ) : (
         `${numberOfPieces?.toLocaleString(locale)} ${translateCommon('pieces')}`
