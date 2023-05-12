@@ -20,23 +20,25 @@ interface ListProps {
   texts: string[]
 }
 
+const breakpoint: keyof BreakpointOverrides = 'tabletM'
+
+const List = ({ caption, description, texts }: ListProps) => {
+  return (
+    <Stack width={{ mobile: '100%', [breakpoint]: '50%' }}>
+      <Typography variant="caption" mb={1}>
+        {caption}
+      </Typography>
+      <Typography variant="body2" mb={{ mobile: -1, [breakpoint]: 1 }}>
+        {description}
+      </Typography>
+      <Box pl="24px">
+        <DrawerTextList texts={texts.filter((it) => it.length > 0)} />
+      </Box>
+    </Stack>
+  )
+}
+
 export const NFTUsage = ({ lists }: NFTUsageProps) => {
-  const breakpoint: keyof BreakpointOverrides = 'tabletM'
-  const List = ({ caption, description, texts }: ListProps) => {
-    return (
-      <Stack width={{ mobile: '100%', [breakpoint]: '50%' }}>
-        <Typography variant="caption" mb={1}>
-          {caption}
-        </Typography>
-        <Typography variant="body2" mb={{ mobile: -1, [breakpoint]: 1 }}>
-          {description}
-        </Typography>
-        <Box pl="24px">
-          <DrawerTextList texts={texts} />
-        </Box>
-      </Stack>
-    )
-  }
   return (
     <Stack
       sx={{
