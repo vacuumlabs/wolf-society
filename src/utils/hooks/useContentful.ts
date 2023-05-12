@@ -95,6 +95,7 @@ export type NFTData = {
   }
   minted: number
   manifoldLink: string
+  instanceId: number
 }
 
 export type CollectionsPageData = {

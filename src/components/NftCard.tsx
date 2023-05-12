@@ -37,7 +37,7 @@ const NftCard = ({
   displayPrice,
   displayCollection,
 }: NftCardProps) => {
-  const { totalSupply, name, priceInEth, image, manifoldLink } = data
+  const { totalSupply, name, priceInEth, image } = data
   const translate = useContentful(ContentTypes.common)
   const breakpoint: keyof BreakpointOverrides = 'desktopS'
   const [isDetailOpen, setIsDetailOpen] = useState<boolean>(false)
@@ -163,7 +163,7 @@ const NftCard = ({
           imageUrl: image.fields.file.url,
         }}
         nftUsageProps={MOCKED_NFT_DETAIL.nftUsageProps}
-        nftBuyProps={{ priceETH: priceInEth, manifoldLink }}
+        nftBuyProps={{ nft: data }}
       />
     </>
   )
