@@ -3,7 +3,13 @@ import {
   NFTData,
   useContentful,
 } from '@/utils/hooks/useContentful'
-import { Box, ButtonProps, Stack, Typography } from '@mui/material'
+import {
+  Box,
+  ButtonProps,
+  BreakpointOverrides,
+  Stack,
+  Typography,
+} from '@mui/material'
 import { useAccount } from 'wagmi'
 import Button from '../Button'
 import {
@@ -51,8 +57,10 @@ const buyNft = async (
     | WriteContractPreparedArgs<k | readonly unknown[], string>
 ) => writeContract(config)
 
+export type ButtonsMode = 'buy' | 'shareTwitter'
 export interface NFTBuyProps {
   nft: NFTData
+  buttonsMode: ButtonsMode
 }
 
 type NFTBuyComponentProps = NFTBuyProps & {
@@ -60,9 +68,15 @@ type NFTBuyComponentProps = NFTBuyProps & {
   className: string
 }
 
-export const NFTBuy = ({ nft, buyInView, className }: NFTBuyComponentProps) => {
+export const NFTBuy = ({
+  nft,
+  buttonsMode,
+  buyInView,
+  className,
+}: NFTBuyComponentProps) => {
   const translate = useContentful(ContentTypes.nftDetail)
   const { priceInEth, manifoldLink, instanceId } = nft
+  const breakpoint: keyof BreakpointOverrides = 'tabletM'
 
   const { address, connector } = useAccount()
   const isUserWalletMagic = connector != null && connector.id === 'magic'
@@ -110,39 +124,45 @@ export const NFTBuy = ({ nft, buyInView, className }: NFTBuyComponentProps) => {
     <Stack
       justifyContent="space-between"
       sx={{
-        height: { mobile: 'auto', tabletM: '100vh' },
-        width: { mobile: '100vw', tabletM: 'max-content' },
+        height: { mobile: 'auto', [breakpoint]: '100vh' },
+        width: { mobile: '100vw', [breakpoint]: 'max-content' },
         backgroundColor: 'neutral.400',
+        paddingTop: { mobile: 5, [breakpoint]: 10 },
+        paddingBottom: { mobile: 0, [breakpoint]: 10 },
+        paddingX: { mobile: 2, [breakpoint]: 10 },
       }}
-      p={{ mobile: '16px', tabletM: '80px' }}
-      gap={{ mobile: '40px', tabletM: '80px' }}
-      mb={{ mobile: buyInView ? '48px' : 0 }}
+      gap={{ mobile: 5, [breakpoint]: '0' }}
+      mb={{ mobile: buyInView ? 6 : 0 }}
       className={className}
     >
-      <Stack alignItems="center">
-        <Typography
-          mt="122px"
-          variant="display"
-        >{`${priceInEth} ETH`}</Typography>
+      <Stack alignItems="center" flexGrow={1} justifyContent="center">
+        <Typography variant="display">{`${priceInEth} ETH`}</Typography>
       </Stack>
       <Stack
         direction="row"
-        justifyContent="space-between"
-        gap="16px"
+        justifyContent={buttonsMode === 'buy' ? 'space-between' : 'center'}
+        gap={2}
         width="100%"
       >
-        <CircleButton
-          label={translate('buyWithCard')}
-          disabled={!isUserWalletMagic}
-          onClick={() =>
-            mintConfig != null ? buyNft(mintConfig) : console.log(txError)
-          }
-        />
-        <CircleButton
-          label={translate('buyWithCrypto')}
-          href={manifoldLink}
-          disabled={isUserWalletMagic}
-        />
+        {buttonsMode === 'buy' && (
+          <>
+            <CircleButton
+              label={translate('buyWithCard')}
+              disabled={!isUserWalletMagic}
+              onClick={() =>
+                mintConfig != null ? buyNft(mintConfig) : console.log(txError)
+              }
+            />
+            <CircleButton
+              label={translate('buyWithCrypto')}
+              href={manifoldLink}
+              disabled={isUserWalletMagic}
+            />
+          </>
+        )}
+        {buttonsMode === 'shareTwitter' && (
+          <CircleButton label={translate('shareOnTwitter')} />
+        )}
       </Stack>
     </Stack>
   )

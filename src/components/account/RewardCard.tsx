@@ -29,9 +29,16 @@ const RewardCard = ({
       minWidth={296}
     >
       <Typography variant="body2">{title}</Typography>
-      <Stack direction="row" mt={10}>
+      <Stack direction="row" mt={10} gap="4px">
         <Typography variant="headline">{amount}</Typography>
-        {isEthAmount && <Typography variant="caption">{'ETH'}</Typography>}
+        {isEthAmount && (
+          <Typography
+            variant="caption"
+            sx={{ pt: { mobile: '3px', desktopM: '9px', desktopL: '15px' } }}
+          >
+            {'ETH'}
+          </Typography>
+        )}
       </Stack>
       <Box mt={8}>
         <Button

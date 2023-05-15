@@ -62,7 +62,7 @@ export const Collections = ({ collectionsData }: CollectionsProps) => {
                       >
                         {translate('unlockExtraRewards')}
                       </Button>
-                      {collectionData.deadline && (
+                      {collectionData.deadline !== undefined && (
                         <Typography variant="caption">
                           <Countdown
                             deadline={new Date(collectionData.deadline)}
@@ -84,12 +84,7 @@ export const Collections = ({ collectionsData }: CollectionsProps) => {
               </Stack>
             </Grid>
             <Grid item mobile={12} {...{ [breakpoint]: 6 }}>
-              <Grid
-                container
-                height="100%"
-                rowSpacing={{ mobile: 2, [breakpoint]: 0 }}
-                columnSpacing={{ mobile: 2, [breakpoint]: 4 }}
-              >
+              <Grid container height="100%">
                 {collectionData.nfts.map((nft) => (
                   <Grid
                     item

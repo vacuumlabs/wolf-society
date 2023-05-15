@@ -22,6 +22,7 @@ import ArtistCard from './ArtistCard'
 import NftCardArtImpact from './NftCardArtImpact'
 import Button from '../Button'
 import { ArtistCardMobile } from './ArtistCardMobile'
+import { BigNumber, ethers } from 'ethers'
 
 type Props = {
   id: string
@@ -56,9 +57,11 @@ const Collection = forwardRef<HTMLElement, Props>((props, ref) => {
 
   const breakpoint: keyof BreakpointOverrides = 'tabletM'
 
-  const collectionEthPrice = nftData?.reduce(
-    (acc, nft) => acc + nft.priceInEth,
-    0
+  const collectionEthPrice = ethers.utils.formatEther(
+    nftData?.reduce(
+      (acc, nft) => acc.add(ethers.utils.parseEther(nft.priceInEth.toString())),
+      BigNumber.from(0)
+    ) ?? 0
   )
 
   const [artistName, setArtistName] = useState<string | undefined>(
@@ -74,7 +77,7 @@ const Collection = forwardRef<HTMLElement, Props>((props, ref) => {
 
   useEffect(() => {
     setCountdownOrPieces(
-      deadline ? (
+      deadline !== undefined ? (
         <Countdown deadline={deadline} />
       ) : (
         `${numberOfPieces?.toLocaleString(locale)} ${translateCommon('pieces')}`
@@ -157,8 +160,10 @@ const Collection = forwardRef<HTMLElement, Props>((props, ref) => {
                 {nftData.map((nft, index) => (
                   <Stack width="100%" alignItems="center" key={nft.name}>
                     <ArtistCardMobile
-                      artistImage={nft.artistImage.fields.file.url}
-                      artistName={nft.artistName}
+                      artistImage={
+                        nft.artist.fields.artistImage.fields.file.url
+                      }
+                      artistName={nft.artist.fields.artistName}
                     />
                     <ScrollingCard index={index}>
                       <NftCardArtImpact

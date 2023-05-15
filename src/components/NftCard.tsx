@@ -15,15 +15,16 @@ import {
 } from '@mui/material'
 import Button from './Button'
 import { NFTDetail } from './NFTDetail/NFTDetail'
-import { MOCKED_NFT_DETAIL } from './NFTDetail/mockedDetailData'
 import { useState } from 'react'
 import dynamic from 'next/dynamic'
+import { ButtonsMode } from './NFTDetail/NFTBuy'
 
 export type NftCardProps = {
   minted?: number
   data: NFTData
   displayPrice?: boolean
   displayCollection?: boolean
+  detailButtonsMode?: ButtonsMode
 }
 
 const DynamicShareButton = dynamic(
@@ -36,9 +37,11 @@ const NftCard = ({
   data,
   displayPrice,
   displayCollection,
+  detailButtonsMode = 'buy',
 }: NftCardProps) => {
   const { totalSupply, name, priceInEth, image } = data
   const translate = useContentful(ContentTypes.common)
+  const translateNftDetail = useContentful(ContentTypes.nftDetail)
   const breakpoint: keyof BreakpointOverrides = 'desktopS'
   const [isDetailOpen, setIsDetailOpen] = useState<boolean>(false)
 
@@ -145,8 +148,8 @@ const NftCard = ({
         onClose={() => setIsDetailOpen(false)}
         nftArtistProps={{
           name: data.artist.fields.artistName,
-          descriptionLeft: data.artistDescLeft,
-          descriptionRight: data.artistDescRight,
+          descriptionLeft: data.artist.fields.artistDescLeft,
+          descriptionRight: data.artist.fields.artistDescRight,
           imageUrl: data.artist.fields.artistImage.fields.file.url,
           socialLinks: {
             twitterURL: data.artist.fields.artistTwitter,
@@ -158,12 +161,28 @@ const NftCard = ({
           name: name,
           totalPieces: totalSupply,
           soldPieces: minted,
-          deadline: undefined,
+          deadline:
+            data.collection.fields.deadline !== undefined
+              ? new Date(data.collection.fields.deadline)
+              : undefined,
           descriptionText: data.nftDesc,
           imageUrl: image.fields.file.url,
         }}
-        nftUsageProps={MOCKED_NFT_DETAIL.nftUsageProps}
-        nftBuyProps={{ nft: data }}
+        nftUsageProps={{
+          lists: [
+            {
+              caption: translateNftDetail('beatTheDrumTitle'),
+              description: translateNftDetail('beatTheDrumSubtitle'),
+              texts: data.beatTheDrumList.split('\n'),
+            },
+            {
+              caption: translateNftDetail('breadAndButterTitle'),
+              description: translateNftDetail('breadAndButterSubtitle'),
+              texts: data.breadAndButterList.split('\n'),
+            },
+          ],
+        }}
+        nftBuyProps={{ nft: data, buttonsMode: detailButtonsMode }}
       />
     </>
   )

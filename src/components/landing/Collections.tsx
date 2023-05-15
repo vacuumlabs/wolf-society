@@ -9,13 +9,7 @@ import {
   ContentTypes,
   useContentful,
 } from '@/utils/hooks/useContentful'
-
-const COLOR_ORDER: string[] = [
-  'common.blue',
-  'secondary.main',
-  'common.brown',
-  'black.main',
-]
+import { COLLECTIONS_COLOR_ORDER } from '@/consts'
 
 type Props = {
   collectionsData: CollectionData[] | null
@@ -80,11 +74,15 @@ const Collections = ({ collectionsData }: Props) => {
               subtitle={translate('limitedEdition')}
               imageUrl={collection.image.fields.file.url}
               deadline={
-                collection.deadline ? new Date(collection.deadline) : undefined
+                collection.deadline !== undefined
+                  ? new Date(collection.deadline)
+                  : undefined
               }
               numberOfPieces={collection.numberOfPieces}
               key={collection.name}
-              color={COLOR_ORDER[index % COLOR_ORDER.length]}
+              color={
+                COLLECTIONS_COLOR_ORDER[index % COLLECTIONS_COLOR_ORDER.length]
+              }
               collectionNumber={index + 1}
               numberOfCollections={collectionsData.length}
             />

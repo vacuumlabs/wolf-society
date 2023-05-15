@@ -1,5 +1,6 @@
 import { Box, Stack, Typography } from '@mui/material'
 import Image, { StaticImageData } from 'next/image'
+import TypographyWithTooltips from './TypographyWithTooltips'
 
 type Props = {
   percentage: string
@@ -20,7 +21,7 @@ const AllocationInfoStack = ({
   const imageBox = (
     <Stack
       sx={{ position: 'relative', overflowY: 'hidden' }}
-      width="100%"
+      width={isHorizontal ? '50%' : '100%'}
       justifyContent="center"
     >
       {isHorizontal ? (
@@ -57,16 +58,18 @@ const AllocationInfoStack = ({
             {percentage}
           </Typography>
           <Typography
-            variant="headline"
+            variant="headlineS"
             color="neutral.main"
-            sx={{
-              lineHeight: '64px',
-            }}
+            sx={{ pt: '20px' }}
           >
             %
           </Typography>
         </Stack>
-        <Typography variant="body2">{text}</Typography>
+        <TypographyWithTooltips
+          variant="body2"
+          text={text}
+          key={`allocation-${text}`}
+        />
       </Stack>
       {displayImageOnTheRight ? imageBox : <></>}
     </Stack>

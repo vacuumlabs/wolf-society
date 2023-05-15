@@ -9,6 +9,7 @@ import {
 } from '@mui/material'
 import { Countdown } from '../Countdown'
 import dynamic from 'next/dynamic'
+import TypographyWithTooltips from '../TypographyWithTooltips'
 
 const DynamicShareButton = dynamic(
   () => import('../collections/ShareButton').then((mod) => mod.ShareButton),
@@ -52,38 +53,38 @@ export const NFTDescription = ({
         display="flex"
         justifyContent="center"
       >
-        <Box mx={{ mobile: '16px', tabletM: '80px' }}>
+        <Box mx={{ mobile: 2, tabletM: 10 }} mb={{ mobile: 2, tabletM: 0 }}>
           <CardMedia component="img" image={imageUrl} alt={name} />
         </Box>
       </Box>
       <Stack
         sx={{
           width: { mobile: '100%', tabletM: '45%' },
-          padding: { mobile: '16px', tabletM: '80px' },
+          paddingY: { mobile: 5, tabletM: 10 },
+          paddingX: { mobile: 2, tabletM: 10 },
           overflowY: 'auto',
         }}
         gap={5}
       >
-        <Stack gap={isMobile ? 3 : 4} mb={isMobile ? 5 : 0}>
-          <Typography variant="headline" fontWeight={600} mt={isMobile ? 3 : 0}>
+        <Stack gap={isMobile ? 3 : 4}>
+          <Typography variant="headline" fontWeight={600}>
             {name}
           </Typography>
-          <Stack>
-            {totalPieces && soldPieces && (
-              <Stack direction="row" mb={1}>
-                <Typography variant="caption" color="neutral.700">{`${translate(
-                  'pieces'
-                )}: `}</Typography>
-                <Typography variant="caption">{`${soldPieces}/${totalPieces}`}</Typography>
+          <Stack gap={1}>
+            {totalPieces !== undefined && soldPieces !== undefined && (
+              <Stack direction="row">
+                <Typography variant="caption" color="neutral.700">
+                  {`${translate('pieces')}:`}&nbsp;
+                </Typography>
+                <Typography variant="caption">{` ${soldPieces}/${totalPieces}`}</Typography>
               </Stack>
             )}
-            {deadline && (
-              <Stack gap="8px">
+            {deadline !== undefined && (
+              <Stack gap={1}>
                 <Stack direction="row">
-                  <Typography
-                    variant="caption"
-                    color="neutral.700"
-                  >{`${translate('available')}: `}</Typography>
+                  <Typography variant="caption" color="neutral.700">
+                    {`${translate('available')}:`}&nbsp;
+                  </Typography>
                   <Typography variant="caption">
                     <Countdown deadline={deadline} />
                   </Typography>
@@ -93,8 +94,12 @@ export const NFTDescription = ({
           </Stack>
           <DynamicShareButton />
         </Stack>
-        <Stack gap="8px">
-          <Typography variant="body2">{descriptionText}</Typography>
+        <Stack gap={1}>
+          <TypographyWithTooltips
+            variant="body2"
+            text={descriptionText}
+            key={`${name} description`}
+          ></TypographyWithTooltips>
         </Stack>
       </Stack>
     </Stack>

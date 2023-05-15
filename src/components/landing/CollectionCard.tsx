@@ -53,7 +53,7 @@ const CollectionCard = ({
 
   useEffect(() => {
     setCountdownOrPieces(
-      deadline ? (
+      deadline !== undefined ? (
         <Countdown deadline={deadline} />
       ) : (
         `${numberOfPieces?.toLocaleString(locale)} ${translateCommon('pieces')}`
