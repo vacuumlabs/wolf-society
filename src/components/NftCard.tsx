@@ -163,7 +163,7 @@ const NftCard = ({
           imageUrl: image.fields.file.url,
         }}
         nftUsageProps={MOCKED_NFT_DETAIL.nftUsageProps}
-        nftBuyProps={{ priceETH: priceInEth }}
+        nftBuyProps={{ nft: data }}
       />
     </>
   )

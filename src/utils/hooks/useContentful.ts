@@ -94,6 +94,8 @@ export type NFTData = {
     fields: NFTArtistData
   }
   minted: number
+  manifoldLink: string
+  instanceId: number
 }
 
 export type CollectionsPageData = {
