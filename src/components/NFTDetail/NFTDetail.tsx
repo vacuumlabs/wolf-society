@@ -124,7 +124,7 @@ export const NFTDetail = ({
           >
             <Stack direction="row" gap={'1ch'}>
               <Typography variant="button">{`${translate('buyNft')} ${
-                nftBuyProps.priceETH
+                nftBuyProps.nft.priceInEth
               } ETH`}</Typography>
             </Stack>
           </Button>
