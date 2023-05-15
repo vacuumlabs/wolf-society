@@ -133,7 +133,7 @@ export const NFTBuy = ({ nft, buyInView, className }: NFTBuyComponentProps) => {
       >
         <CircleButton
           label={translate('buyWithCard')}
-          disabled={false /*!isUserWalletMagic*/} // Disabled for debugging -- allows minting via SC with all wallets
+          disabled={!isUserWalletMagic}
           onClick={() =>
             mintConfig != null ? buyNft(mintConfig) : console.log(txError)
           }
@@ -141,7 +141,6 @@ export const NFTBuy = ({ nft, buyInView, className }: NFTBuyComponentProps) => {
         <CircleButton
           label={translate('buyWithCrypto')}
           href={manifoldLink}
-          variant="contained"
           disabled={isUserWalletMagic}
         />
       </Stack>
