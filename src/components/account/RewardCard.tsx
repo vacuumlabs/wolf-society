@@ -4,7 +4,7 @@ import Button from '../Button'
 
 type RewardCardProps = {
   title: string
-  amount: string
+  amount: string | null
   isEthAmount: boolean
   buttonText: string
   buttonAction: () => void
@@ -30,7 +30,9 @@ const RewardCard = ({
     >
       <Typography variant="body2">{title}</Typography>
       <Stack direction="row" mt={10} gap="4px">
-        <Typography variant="headline">{amount}</Typography>
+        <Typography variant="headline">
+          {amount !== null ? amount : '...'}
+        </Typography>
         {isEthAmount && (
           <Typography
             variant="caption"
