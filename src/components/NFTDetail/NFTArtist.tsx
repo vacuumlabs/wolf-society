@@ -73,11 +73,13 @@ export const NFTArtist = ({
             variant="body2"
             text={descriptionLeft}
             key={`${name} description left`}
+            sx={{ width: { mobile: 'auto', [breakpoint]: '50%' } }}
           />
           <TypographyWithTooltips
             variant="body2"
             text={descriptionRight}
             key={`${name} description right`}
+            sx={{ width: { mobile: 'auto', [breakpoint]: '50%' } }}
           />
         </Stack>
       </Stack>
