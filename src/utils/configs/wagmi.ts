@@ -1,5 +1,5 @@
-import { configureChains, createClient, mainnet, goerli } from 'wagmi'
-import { sepolia } from 'wagmi/chains'
+import { configureChains, createConfig, mainnet } from 'wagmi'
+import { goerli } from 'wagmi/chains'
 import { connectorsForWallets } from '@rainbow-me/rainbowkit'
 import { publicProvider } from 'wagmi/providers/public'
 import {
@@ -11,7 +11,7 @@ import {
 } from '@rainbow-me/rainbowkit/wallets'
 import { rainbowMagicConnector } from '../connectors/rainbowMagicConnector'
 
-const { chains, provider, webSocketProvider } = configureChains(
+const { chains, publicClient, webSocketPublicClient } = configureChains(
   [mainnet, ...(process.env.NEXT_PUBLIC_TESTNET === 'true' ? [goerli] : [])],
   [publicProvider()]
 )
@@ -19,23 +19,26 @@ const appName = 'Wolf-society'
 const params = { appName, chains }
 const connectors = connectorsForWallets([
   {
-    groupName: 'Recommended',
+    groupName: 'Log in with Social Media',
+    wallets: [rainbowMagicConnector(params)],
+  },
+  {
+    groupName: 'Web3',
     wallets: [
       metaMaskWallet(params),
       rainbowWallet(params),
       walletConnectWallet(params),
       coinbaseWallet(params),
-      rainbowMagicConnector(params),
       injectedWallet(params),
     ],
   },
 ])
 
-const wagmiClient = createClient({
+const wagmiConfig = createConfig({
   autoConnect: true,
   connectors,
-  provider,
-  webSocketProvider,
+  publicClient,
+  webSocketPublicClient,
 })
 
-export { chains, wagmiClient }
+export { chains, wagmiConfig }

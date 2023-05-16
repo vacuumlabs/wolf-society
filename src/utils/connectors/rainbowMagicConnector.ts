@@ -1,5 +1,5 @@
 import { MagicConnectConnector } from '@everipedia/wagmi-magic-connector'
-import { Connector, goerli, mainnet } from 'wagmi'
+import { goerli, mainnet } from 'wagmi/chains'
 
 export const rainbowMagicConnector = ({ chains, appName }: any) => ({
   id: 'magic',
@@ -25,7 +25,7 @@ export const rainbowMagicConnector = ({ chains, appName }: any) => ({
           },
         },
       },
-    }) as unknown as Connector<any, any, any>
+    })
     return {
       connector,
     }

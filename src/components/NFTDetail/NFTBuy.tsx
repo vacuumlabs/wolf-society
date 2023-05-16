@@ -4,31 +4,22 @@ import {
   useContentful,
 } from '@/utils/hooks/useContentful'
 import {
-  Box,
   ButtonProps,
   BreakpointOverrides,
   Stack,
   Typography,
+  Box,
 } from '@mui/material'
-import { useAccount } from 'wagmi'
+import { useAccount, useWalletClient } from 'wagmi'
 import Button from '../Button'
-import {
-  WriteContractPreparedArgs,
-  WriteContractUnpreparedArgs,
-  PrepareWriteContractResult,
-  prepareWriteContract,
-  writeContract,
-} from '@wagmi/core'
 import {
   lazyPayableClaimContractAddress,
   manifoldTxFee,
   nftSmartContractAddress,
 } from '@/consts'
 import { LazyPayableClaimAbi } from '@/abi/LazyPayableClaim'
-import { k } from 'abitype/dist/abi-78346466'
-import { BigNumber } from 'alchemy-sdk'
-import { useEffect, useState } from 'react'
-import { parseEther } from 'ethers/lib/utils.js'
+import { useConnectModal } from '@rainbow-me/rainbowkit'
+import { encodeFunctionData, parseEther } from 'viem'
 
 const CircleButton = ({
   label,
@@ -47,15 +38,15 @@ const CircleButton = ({
     onClick={onClick}
     {...props}
   >
-    {label}
+    <Stack alignItems="center">
+      {label.split('\\n').map((lab) => (
+        <Box key={lab} width="max-content">
+          {lab}
+        </Box>
+      ))}
+    </Stack>
   </Button>
 )
-
-const buyNft = async (
-  config:
-    | WriteContractUnpreparedArgs<k | readonly unknown[], string>
-    | WriteContractPreparedArgs<k | readonly unknown[], string>
-) => writeContract(config)
 
 export type ButtonsMode = 'buy' | 'shareTwitter'
 export interface NFTBuyProps {
@@ -78,47 +69,31 @@ export const NFTBuy = ({
   const { priceInEth, manifoldLink, instanceId } = nft
   const breakpoint: keyof BreakpointOverrides = 'tabletM'
 
+  const { openConnectModal } = useConnectModal()
   const { address, connector } = useAccount()
+  const { data: walletClient, isLoading: isWalletClientLoading } =
+    useWalletClient()
   const isUserWalletMagic = connector != null && connector.id === 'magic'
 
-  const [txError, setTxError] = useState<unknown | undefined>(undefined)
-  const [mintConfig, setMintConfig] = useState<
-    PrepareWriteContractResult<any, any, any> | undefined
-  >(undefined)
-  useEffect(() => {
-    const prepareMintConfig = async () => {
-      if (address == null) {
-        setMintConfig(undefined)
-        return
+  const buyNft = async () => {
+    if (!walletClient || !address) {
+      if (openConnectModal != undefined) {
+        openConnectModal()
       }
-
-      let config = undefined
-      try {
-        config = await prepareWriteContract({
-          overrides: {
-            value: BigNumber.from(manifoldTxFee).add(
-              parseEther(priceInEth.toString())
-            ),
-          },
-          address: lazyPayableClaimContractAddress,
-          abi: LazyPayableClaimAbi,
-          functionName: 'mint',
-          args: [
-            nftSmartContractAddress,
-            BigNumber.from(instanceId),
-            0,
-            [],
-            address,
-          ],
-        })
-      } catch (error) {
-        setTxError(error)
-      }
-
-      setMintConfig(config)
+      return
     }
-    prepareMintConfig()
-  }, [address, instanceId, mintConfig, priceInEth])
+    const encodedData = encodeFunctionData({
+      abi: LazyPayableClaimAbi,
+      functionName: 'mint',
+      args: [nftSmartContractAddress, BigInt(instanceId), 0, [], address],
+    })
+
+    const txResponse = await walletClient.sendTransaction({
+      to: lazyPayableClaimContractAddress,
+      data: encodedData,
+      value: BigInt(manifoldTxFee) + parseEther(`${priceInEth}`),
+    })
+  }
 
   return (
     <Stack
@@ -148,10 +123,8 @@ export const NFTBuy = ({
           <>
             <CircleButton
               label={translate('buyWithCard')}
-              disabled={!isUserWalletMagic}
-              onClick={() =>
-                mintConfig != null ? buyNft(mintConfig) : console.log(txError)
-              }
+              disabled={!isUserWalletMagic && !isWalletClientLoading}
+              onClick={() => buyNft()}
             />
             <CircleButton
               label={translate('buyWithCrypto')}
