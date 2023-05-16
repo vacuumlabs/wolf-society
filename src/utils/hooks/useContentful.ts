@@ -70,11 +70,16 @@ export type NFTArtistData = {
   artistImage: Asset
   artistDescLeft: string
   artistDescRight: string
-  nftDesc: string
-  artistTwitter: string
-  artistIG: string
-  artistWeb: string
   artistMotto: string
+  artistTwitter: string
+  artistInstagram: string
+  artistWeb: string
+  artistFacebook: string
+  artistLinkedIn: string
+  artistDiscord: string
+  artistYoutube: string
+  artistEmail: string
+  artistLinktree: string
 }
 
 export type NFTData = {

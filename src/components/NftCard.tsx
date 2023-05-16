@@ -152,9 +152,15 @@ const NftCard = ({
           descriptionRight: data.artist.fields.artistDescRight,
           imageUrl: data.artist.fields.artistImage.fields.file.url,
           socialLinks: {
-            twitterURL: data.artist.fields.artistTwitter,
-            igUrl: data.artist.fields.artistIG,
+            twitterUrl: data.artist.fields.artistTwitter,
+            instagramUrl: data.artist.fields.artistInstagram,
             webUrl: data.artist.fields.artistWeb,
+            facebookUrl: data.artist.fields.artistFacebook,
+            discordUrl: data.artist.fields.artistDiscord,
+            linkedInUrl: data.artist.fields.artistLinkedIn,
+            youtubeUrl: data.artist.fields.artistYoutube,
+            email: data.artist.fields.artistEmail,
+            linktreeUrl: data.artist.fields.artistLinktree,
           },
         }}
         nftDescriptionProps={{
