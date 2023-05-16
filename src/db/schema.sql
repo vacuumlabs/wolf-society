@@ -33,6 +33,7 @@ CREATE TABLE IF NOT EXISTS completed_task (
 CREATE TABLE IF NOT EXISTS completed_collection (
   collection_id INTEGER,
   completed_by VARCHAR(42),
+  completed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
   PRIMARY KEY(collection_id, completed_by),
   FOREIGN KEY(collection_id) REFERENCES collection(id),
@@ -57,7 +58,7 @@ BEGIN
 END;
 $t$ LANGUAGE PLPGSQL;
 
-CREATE OR REPLACE TRIGGER award_token_trigger
+CREATE OR REPLACE TRIGGER award_points_trigger
 AFTER INSERT 
 ON completed_collection
 FOR EACH ROW
