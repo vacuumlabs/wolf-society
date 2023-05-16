@@ -8,6 +8,7 @@ import {
   BreakpointOverrides,
   Stack,
   Typography,
+  Box,
 } from '@mui/material'
 import { useAccount, useWalletClient } from 'wagmi'
 import Button from '../Button'
@@ -37,7 +38,13 @@ const CircleButton = ({
     onClick={onClick}
     {...props}
   >
-    {label}
+    <Stack alignItems="center">
+      {label.split('\\n').map((lab) => (
+        <Box key={lab} width="max-content">
+          {lab}
+        </Box>
+      ))}
+    </Stack>
   </Button>
 )
 
