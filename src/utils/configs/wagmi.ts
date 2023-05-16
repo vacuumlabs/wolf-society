@@ -19,7 +19,7 @@ const appName = 'Wolf-society'
 const params = { appName, chains }
 const connectors = connectorsForWallets([
   {
-    groupName: 'Web2 socials login',
+    groupName: 'Log in with Social Media',
     wallets: [rainbowMagicConnector(params)],
   },
   {
