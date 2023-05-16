@@ -2,7 +2,7 @@ import type { AppProps } from 'next/app'
 import { lightTheme, RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import React from 'react'
 import { WagmiConfig } from 'wagmi'
-import { wagmiClient, chains } from '@/utils/configs/wagmi'
+import { wagmiConfig, chains } from '@/utils/configs/wagmi'
 import '@rainbow-me/rainbowkit/styles.css'
 import {
   createTheme,
@@ -678,7 +678,7 @@ const rainbowKitTheme = lightTheme({
 })
 
 const App = ({ Component, pageProps }: AppProps) => (
-  <WagmiConfig client={wagmiClient}>
+  <WagmiConfig config={wagmiConfig}>
     <RainbowKitProvider chains={chains} theme={rainbowKitTheme}>
       <title>Wolf Society</title>
       <ThemeProvider theme={theme}>
