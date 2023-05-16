@@ -140,10 +140,12 @@ const Collection = forwardRef<HTMLElement, Props>((props, ref) => {
               }}
             >
               <Box
-                width={{
-                  mobile: '100%',
+                width="100%"
+                position="relative"
+                maxWidth={{
+                  mobile: 'auto',
                   [breakpoint]: '50%',
-                  position: 'relative',
+                  desktopS: '622px',
                 }}
               >
                 <ArtistCard
