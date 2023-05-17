@@ -9,7 +9,7 @@ import {
   useMediaQuery,
 } from '@mui/material'
 import HorizontalScroll from 'react-scroll-horizontal'
-import { NFTDescription, NFTDescriptionProps } from './NFTDescription'
+import { NFTDescription } from './NFTDescription'
 import { NFTArtist, NFTArtistProps } from './NFTArtist'
 import CloseIcon from '@mui/icons-material/Close'
 import { NFTUsage, NFTUsageProps } from './NFTUsage'
@@ -18,12 +18,16 @@ import { useRef, useState } from 'react'
 import { NFTDividerLine } from './NFTDividerLine'
 import { NFTAllocation } from './NFTAllocation'
 import { OnScreen } from '@/components/OnScreen'
-import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
+import {
+  useContentful,
+  ContentTypes,
+  NFTData,
+} from '@/utils/hooks/useContentful'
 
 export interface NFTDetailProps {
   isOpen: boolean
   onClose: () => void
-  nftDescriptionProps: NFTDescriptionProps
+  nftData: NFTData
   nftArtistProps: NFTArtistProps
   nftUsageProps: NFTUsageProps
   nftBuyProps: NFTBuyProps
@@ -32,7 +36,7 @@ export interface NFTDetailProps {
 export const NFTDetail = ({
   isOpen,
   onClose,
-  nftDescriptionProps,
+  nftData,
   nftArtistProps,
   nftUsageProps,
   nftBuyProps,
@@ -46,7 +50,7 @@ export const NFTDetail = ({
 
   const content = (
     <>
-      <NFTDescription {...nftDescriptionProps} />
+      <NFTDescription nftData={nftData} />
       <NFTDividerLine />
       <NFTArtist {...nftArtistProps} />
       <NFTDividerLine />

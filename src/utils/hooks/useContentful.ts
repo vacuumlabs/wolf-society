@@ -106,7 +106,6 @@ export type NFTData = {
 export type CollectionsPageData = {
   description: string
   pieces: string
-  available: string
   aboutArtist: string
   artImpactTitle: string
   artImpactSubtitle1: string
@@ -160,6 +159,7 @@ export type Content = {
     pieces: string
     minted: string
     limitedEdition: string
+    timeLeft: string
     makeImpactButton: string
     readMore: string
     showDetails: string
