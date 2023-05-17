@@ -1,15 +1,13 @@
-import { NFTData } from '@/utils/hooks/useContentful'
 import { Box } from '@mui/material'
 import { useEffect, useRef } from 'react'
 import dynamic from 'next/dynamic'
 import { useInView } from 'framer-motion'
-import NftCard from '../NftCard'
+import NftCard, { NftCardProps } from '../NftCard'
 
 export type NftCardArtImpactProps = {
-  minted: number
   changeArtist: () => void
   isLast: boolean
-  data: NFTData
+  nftCardProps: NftCardProps
   setPointerOver: (value: boolean) => void
 }
 
@@ -19,10 +17,9 @@ const DynamicShareButton = dynamic(
 )
 
 const NftCardArtImpact = ({
-  minted,
   changeArtist,
   isLast,
-  data,
+  nftCardProps,
   setPointerOver,
 }: NftCardArtImpactProps) => {
   const containerRef = useRef(null)
@@ -45,7 +42,7 @@ const NftCardArtImpact = ({
         mb: { mobile: '0', tabletM: isLast ? 'calc(100vh - 80px)' : '130vh' },
       }}
     >
-      <NftCard minted={minted} data={data} displayPrice />
+      <NftCard {...nftCardProps} displayPrice />
     </Box>
   )
 }

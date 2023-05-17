@@ -169,12 +169,14 @@ const Collection = forwardRef<HTMLElement, Props>((props, ref) => {
                     />
                     <ScrollingCard index={index}>
                       <NftCardArtImpact
-                        minted={nft.minted}
+                        nftCardProps={{
+                          minted: nft.minted,
+                          data: nft,
+                        }}
                         changeArtist={() => {
                           handleChangeArtist(nft)
                         }}
                         isLast={index === nftData.length - 1}
-                        data={nft}
                         setPointerOver={setPointerOverNft}
                       />
                     </ScrollingCard>

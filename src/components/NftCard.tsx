@@ -15,9 +15,10 @@ import {
 } from '@mui/material'
 import Button from './Button'
 import { NFTDetail } from './NFTDetail/NFTDetail'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { ButtonsMode } from './NFTDetail/NFTBuy'
+import { useRouter } from 'next/router'
 
 export type NftCardProps = {
   minted?: number
@@ -44,6 +45,40 @@ const NftCard = ({
   const translateNftDetail = useContentful(ContentTypes.nftDetail)
   const breakpoint: keyof BreakpointOverrides = 'desktopS'
   const [isDetailOpen, setIsDetailOpen] = useState<boolean>(false)
+  const router = useRouter()
+
+  function openNFTDetail() {
+    router.replace(
+      {
+        query: { ...router.query, nft: data.id },
+      },
+      undefined,
+      {
+        shallow: true,
+      }
+    )
+  }
+
+  function closeNFTDetail() {
+    setIsDetailOpen(false)
+    const newQuery = { ...router.query }
+    delete newQuery.nft
+    router.replace(
+      {
+        query: newQuery,
+      },
+      undefined,
+      {
+        shallow: true,
+      }
+    )
+  }
+
+  useEffect(() => {
+    if (router.query.nft === data.id) {
+      setIsDetailOpen(true)
+    }
+  }, [router.query.nft])
 
   return (
     <>
@@ -64,7 +99,7 @@ const NftCard = ({
       >
         <CardActionArea
           onClick={() => {
-            setIsDetailOpen(true)
+            openNFTDetail()
           }}
         >
           <Box position="relative">
@@ -135,7 +170,7 @@ const NftCard = ({
               <Button
                 component="div"
                 sx={{ width: '100%' }}
-                onClick={() => setIsDetailOpen(true)}
+                onClick={() => openNFTDetail()}
               >
                 {translate('showDetails')}
               </Button>
@@ -145,7 +180,7 @@ const NftCard = ({
       </Card>
       <NFTDetail
         isOpen={isDetailOpen}
-        onClose={() => setIsDetailOpen(false)}
+        onClose={() => closeNFTDetail()}
         nftArtistProps={{
           name: data.artist.fields.artistName,
           descriptionLeft: data.artist.fields.artistDescLeft,
