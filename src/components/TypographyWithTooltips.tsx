@@ -163,7 +163,21 @@ const TypographyWithTooltips = ({
   ...props
 }: TypographyWithTooltipsProps) => {
   const Content = parseText(text, props.key)
-  return <Typography {...props}>{Content}</Typography>
+  return (
+    <Typography
+      {...{
+        ...props,
+        sx: {
+          ...props.sx,
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '1rem',
+        },
+      }}
+    >
+      {Content}
+    </Typography>
+  )
 }
 
 export default TypographyWithTooltips

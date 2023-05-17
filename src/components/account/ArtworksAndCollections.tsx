@@ -108,7 +108,7 @@ export const ArtworksAndCollections = ({
                 return {
                   ...collectionData,
                   nfts: nftsDataWithUserOwnershipInfo.filter(
-                    (nft) => nft.collectionId === collectionData.id
+                    (nft) => nft.collection.fields.id === collectionData.id
                   ),
                 }
               }) ?? []

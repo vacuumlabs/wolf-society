@@ -182,7 +182,7 @@ const ScrollingVideo = ({
           ></video>
           <Box
             position="absolute"
-            bottom={0}
+            bottom={-1}
             color={bottomColor}
             display="flex"
             width="100%"
