@@ -20,6 +20,7 @@ import {
 import { LazyPayableClaimAbi } from '@/abi/LazyPayableClaim'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { encodeFunctionData, parseEther } from 'viem'
+import { NFTParameters } from './NFTParameters'
 
 const CircleButton = ({
   label,
@@ -105,12 +106,19 @@ export const NFTBuy = ({
         paddingTop: { mobile: 5, [breakpoint]: 10 },
         paddingBottom: { mobile: 0, [breakpoint]: 10 },
         paddingX: { mobile: 2, [breakpoint]: 10 },
+        overflowY: 'auto',
       }}
       gap={{ mobile: 5, [breakpoint]: '0' }}
       mb={{ mobile: buyInView ? 6 : 0 }}
       className={className}
     >
-      <Stack alignItems="center" flexGrow={1} justifyContent="center">
+      <Stack
+        alignItems="center"
+        flexGrow={1}
+        gap={{ mobile: 5, [breakpoint]: 10 }}
+        pb={{ mobile: 0, [breakpoint]: 5 }}
+      >
+        <NFTParameters nftData={nft} alignCenter />
         <Typography variant="display">{`${priceInEth} ETH`}</Typography>
       </Stack>
       <Stack

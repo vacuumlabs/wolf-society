@@ -9,7 +9,7 @@ import {
   useMediaQuery,
 } from '@mui/material'
 import HorizontalScroll from 'react-scroll-horizontal'
-import { NFTDescription, NFTDescriptionProps } from './NFTDescription'
+import { NFTDescription } from './NFTDescription'
 import { NFTArtist, NFTArtistProps } from './NFTArtist'
 import CloseIcon from '@mui/icons-material/Close'
 import { NFTUsage, NFTUsageProps } from './NFTUsage'
@@ -18,12 +18,16 @@ import { useRef, useState } from 'react'
 import { NFTDividerLine } from './NFTDividerLine'
 import { NFTAllocation } from './NFTAllocation'
 import { OnScreen } from '@/components/OnScreen'
-import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
+import {
+  useContentful,
+  ContentTypes,
+  NFTData,
+} from '@/utils/hooks/useContentful'
 
 export interface NFTDetailProps {
   isOpen: boolean
   onClose: () => void
-  nftDescriptionProps: NFTDescriptionProps
+  nftData: NFTData
   nftArtistProps: NFTArtistProps
   nftUsageProps: NFTUsageProps
   nftBuyProps: NFTBuyProps
@@ -32,7 +36,7 @@ export interface NFTDetailProps {
 export const NFTDetail = ({
   isOpen,
   onClose,
-  nftDescriptionProps,
+  nftData,
   nftArtistProps,
   nftUsageProps,
   nftBuyProps,
@@ -43,10 +47,11 @@ export const NFTDetail = ({
     theme.breakpoints.down('tabletM')
   )
   const [buyInView, setBuyInView] = useState(false)
+  const [scrollAnimValue, setScrollAnimValue] = useState(0)
 
   const content = (
     <>
-      <NFTDescription {...nftDescriptionProps} />
+      <NFTDescription nftData={nftData} />
       <NFTDividerLine />
       <NFTArtist {...nftArtistProps} />
       <NFTDividerLine />
@@ -97,30 +102,54 @@ export const NFTDetail = ({
       {isMobile ? (
         <Stack sx={{ backgroundColor: 'neutral.400' }}>{content}</Stack>
       ) : (
-        <HorizontalScroll reverseScroll={true}>
+        <HorizontalScroll reverseScroll={true} animValues={scrollAnimValue}>
           {content.props.children}
         </HorizontalScroll>
       )}
-      {isMobile && nftBuyProps.buttonsMode === 'buy' && (
+      {nftBuyProps.buttonsMode === 'buy' && (
         <Box
           display={buyInView ? 'none' : 'inherit'}
           sx={{
-            position: 'sticky',
-            minWidth: '100%',
+            position: isMobile ? 'sticky' : 'fixed',
+            minWidth: isMobile ? '100%' : 0,
             bottom: 0,
-            left: 0,
+            left: isMobile ? 0 : undefined,
+            right: isMobile ? undefined : 0,
+            m: isMobile ? 0 : 2,
             zIndex: 99,
           }}
         >
           <Button
             variant="contained"
-            fullWidth={true}
-            onClick={() =>
-              drawerPaperRef.current?.scrollTo({
-                top: drawerPaperRef.current?.scrollHeight,
-                behavior: 'smooth',
-              })
-            }
+            fullWidth={isMobile}
+            onClick={() => {
+              if (isMobile) {
+                drawerPaperRef.current?.scrollTo({
+                  top: drawerPaperRef.current?.scrollHeight,
+                  behavior: 'smooth',
+                })
+              } else {
+                const scrollDiv =
+                  document.getElementsByClassName('scroll-horizontal')[0]
+                    .children[0]
+
+                const scrollDivTransformX = new WebKitCSSMatrix(
+                  window
+                    .getComputedStyle(scrollDiv)
+                    .getPropertyValue('transform')
+                ).m41
+
+                const scrollAmount =
+                  -scrollDiv.clientWidth -
+                  scrollDivTransformX +
+                  window.innerWidth
+                setScrollAnimValue(
+                  scrollAnimValue === scrollAmount
+                    ? scrollAmount - 1
+                    : scrollAmount
+                )
+              }
+            }}
           >
             <Stack direction="row" gap={'1ch'}>
               <Typography variant="button">{`${translate('buyNft')} ${

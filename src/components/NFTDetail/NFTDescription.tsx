@@ -1,4 +1,4 @@
-import { ContentTypes, useContentful } from '@/utils/hooks/useContentful'
+import { NFTData } from '@/utils/hooks/useContentful'
 import {
   Box,
   CardMedia,
@@ -7,9 +7,9 @@ import {
   Typography,
   useMediaQuery,
 } from '@mui/material'
-import { Countdown } from '../Countdown'
 import dynamic from 'next/dynamic'
 import TypographyWithTooltips from '../TypographyWithTooltips'
+import { NFTParameters } from './NFTParameters'
 
 const DynamicShareButton = dynamic(
   () => import('../collections/ShareButton').then((mod) => mod.ShareButton),
@@ -17,23 +17,10 @@ const DynamicShareButton = dynamic(
 )
 
 export interface NFTDescriptionProps {
-  name: string
-  deadline: Date | undefined
-  totalPieces: number | undefined
-  soldPieces: number | undefined
-  descriptionText: string
-  imageUrl: string
+  nftData: NFTData
 }
 
-export const NFTDescription = ({
-  name,
-  totalPieces,
-  soldPieces,
-  deadline,
-  descriptionText,
-  imageUrl,
-}: NFTDescriptionProps) => {
-  const translate = useContentful(ContentTypes.collectionsPage)
+export const NFTDescription = ({ nftData }: NFTDescriptionProps) => {
   const isMobile = useMediaQuery((theme: Theme) =>
     theme.breakpoints.down('tabletM')
   )
@@ -54,7 +41,11 @@ export const NFTDescription = ({
         justifyContent="center"
       >
         <Box mx={{ mobile: 2, tabletM: 10 }} mb={{ mobile: 2, tabletM: 0 }}>
-          <CardMedia component="img" image={imageUrl} alt={name} />
+          <CardMedia
+            component="img"
+            image={nftData.image.fields.file.url}
+            alt={nftData.name}
+          />
         </Box>
       </Box>
       <Stack
@@ -68,37 +59,16 @@ export const NFTDescription = ({
       >
         <Stack gap={isMobile ? 3 : 4}>
           <Typography variant="headline" fontWeight={600}>
-            {name}
+            {nftData.name}
           </Typography>
-          <Stack gap={1}>
-            {totalPieces !== undefined && soldPieces !== undefined && (
-              <Stack direction="row">
-                <Typography variant="caption" color="neutral.700">
-                  {`${translate('pieces')}:`}&nbsp;
-                </Typography>
-                <Typography variant="caption">{` ${soldPieces}/${totalPieces}`}</Typography>
-              </Stack>
-            )}
-            {deadline !== undefined && (
-              <Stack gap={1}>
-                <Stack direction="row">
-                  <Typography variant="caption" color="neutral.700">
-                    {`${translate('available')}:`}&nbsp;
-                  </Typography>
-                  <Typography variant="caption">
-                    <Countdown deadline={deadline} />
-                  </Typography>
-                </Stack>
-              </Stack>
-            )}
-          </Stack>
+          <NFTParameters nftData={nftData} />
           <DynamicShareButton />
         </Stack>
         <Stack gap={1}>
           <TypographyWithTooltips
             variant="body2"
-            text={descriptionText}
-            key={`${name} description`}
+            text={nftData.nftDesc}
+            key={`${nftData.name} description`}
           ></TypographyWithTooltips>
         </Stack>
       </Stack>

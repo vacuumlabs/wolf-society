@@ -163,17 +163,7 @@ const NftCard = ({
             linktreeUrl: data.artist.fields.artistLinktree,
           },
         }}
-        nftDescriptionProps={{
-          name: name,
-          totalPieces: totalSupply,
-          soldPieces: minted,
-          deadline:
-            data.collection.fields.deadline !== undefined
-              ? new Date(data.collection.fields.deadline)
-              : undefined,
-          descriptionText: data.nftDesc,
-          imageUrl: image.fields.file.url,
-        }}
+        nftData={data}
         nftUsageProps={{
           lists: [
             {
