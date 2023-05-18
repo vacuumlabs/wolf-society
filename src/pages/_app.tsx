@@ -4,12 +4,7 @@ import React from 'react'
 import { WagmiConfig } from 'wagmi'
 import { wagmiConfig, chains } from '@/utils/configs/wagmi'
 import '@rainbow-me/rainbowkit/styles.css'
-import {
-  createTheme,
-  CssBaseline,
-  PaletteColorOptions,
-  ThemeProvider,
-} from '@mui/material'
+import { createTheme, CssBaseline, ThemeProvider } from '@mui/material'
 import Navigation from '@/components/Navigation'
 import { ContentContext } from '@/utils/hooks/useContentful'
 import localFont from 'next/font/local'
@@ -17,6 +12,8 @@ import Footer from '@/components/Footer'
 import { Reenie_Beanie } from 'next/font/google'
 import { LocaleContext } from '@/utils/hooks/useLocale'
 import 'public/style.scss'
+import { SnackbarProvider } from 'notistack'
+import Snackbar from '@/components/Snackbar'
 
 declare module '@mui/material/styles' {
   interface BreakpointOverrides {
@@ -685,9 +682,24 @@ const App = ({ Component, pageProps }: AppProps) => (
         <CssBaseline />
         <ContentContext.Provider value={pageProps?.translations}>
           <LocaleContext.Provider value={pageProps?.locale}>
-            <Navigation />
-            <Component {...pageProps} />
-            <Footer />
+            <SnackbarProvider
+              Components={{
+                success: Snackbar,
+                error: Snackbar,
+                default: Snackbar,
+                warning: Snackbar,
+                info: Snackbar,
+              }}
+              TransitionProps={{ direction: 'up' }}
+              autoHideDuration={5000}
+              classes={{
+                containerRoot: 'snackbarContainerRoot',
+              }}
+            >
+              <Navigation />
+              <Component {...pageProps} />
+              <Footer />
+            </SnackbarProvider>
           </LocaleContext.Provider>
         </ContentContext.Provider>
       </ThemeProvider>

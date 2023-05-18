@@ -4,11 +4,13 @@ import React, { useState } from 'react'
 import AppearingComponent from '../AppearingComponent'
 import Button from '../Button'
 import TextField from '../TextField'
+import { useSnackbar } from 'notistack'
 
 const Newsletter = () => {
   const translate = useContentful(ContentTypes.landingPage)
   const breakpoint: keyof BreakpointOverrides = 'desktopS'
   const [inputValue, setInputValue] = useState('')
+  const { enqueueSnackbar } = useSnackbar()
 
   async function subscribeNewsletter() {
     const response = await fetch(`/api/newsletter`, {
@@ -17,7 +19,18 @@ const Newsletter = () => {
         email: inputValue,
       }),
     })
-    console.log(response.status, await response.json())
+    enqueueSnackbar(
+      translate(
+        response.status === 200
+          ? 'newsletterSubscriptionSuccess'
+          : response.status === 409
+          ? 'newsletterSubscriptionConflict'
+          : 'newsletterSubscriptionError'
+      ),
+      {
+        variant: response.status === 200 ? 'success' : 'error',
+      }
+    )
   }
   return (
     <Box sx={{ bgcolor: 'neutral.400' }}>

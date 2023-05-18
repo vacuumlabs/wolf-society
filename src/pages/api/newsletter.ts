@@ -25,6 +25,6 @@ export default async function handler(
         errorMessage = 'E-mail already registered!'
         break
     }
-    res.status(500).json({ error: errorMessage })
+    res.status(err.code).json({ error: errorMessage })
   }
 }

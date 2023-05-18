@@ -203,6 +203,9 @@ export type Content = {
     newsletterText: string
     newsletterInputLabel: string
     newsletterButton: string
+    newsletterSubscriptionSuccess: string
+    newsletterSubscriptionError: string
+    newsletterSubscriptionConflict: string
   }
   [ContentTypes.collectionsPage]: CollectionsPageData
   [ContentTypes.articlesPage]: {
