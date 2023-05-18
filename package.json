@@ -16,6 +16,7 @@
     "@emotion/server": "^11.10.0",
     "@emotion/styled": "^11.10.6",
     "@everipedia/wagmi-magic-connector": "^1.0.2",
+    "@hubspot/api-client": "^8.9.0",
     "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.11.11",
     "@rainbow-me/rainbowkit": "^1.0.0",
