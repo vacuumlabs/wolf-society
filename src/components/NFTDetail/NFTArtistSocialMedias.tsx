@@ -80,6 +80,7 @@ export const NFTArtistSocialMedias = ({
         return (
           socialMediaComponentData.value && (
             <IconButton
+              key={`social-media-${index}`}
               onClick={() => window.open(href, '_blank')}
               sx={{
                 marginLeft: index > 0 ? '-1px' : 0,
