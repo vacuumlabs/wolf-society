@@ -32,6 +32,9 @@ const ArtistCard = ({
     theme.breakpoints.down(breakpoint)
   )
 
+  const lastName = name?.substring(name?.lastIndexOf(' '))
+  const firstName = name?.substring(0, name?.lastIndexOf(' '))
+
   return isMobile ? null : (
     <Box
       sx={{
@@ -44,35 +47,55 @@ const ArtistCard = ({
         sx={{
           bgcolor: 'neutral.main',
           width: '100%',
+          '&.MuiPaper-root': {
+            maxHeight: 'calc(100vh - 80px)',
+          },
         }}
       >
-        <CardMedia
-          component="img"
-          image={imageUrl}
-          sx={{ width: '100%', height: '100%', maxHeight: '622px' }}
-          alt="Project image"
-        />
-        <CardContent sx={{ p: 0 }}>
-          <Typography
-            variant="headline"
-            color={color}
+        <Box
+          sx={{
+            maxHeight: {
+              desktopS: 'calc(100vh - 80px - 152px)',
+              desktopM: 'calc(100vh - 80px - 248px)',
+              desktopL: 'calc(100vh - 80px - 312px)',
+            },
+            overflow: 'hidden',
+          }}
+        >
+          <CardMedia
+            component="img"
+            image={imageUrl}
             sx={{
-              p: 4,
-              pt: { mobile: 8, [breakpoint]: 11 },
-              textAlign: 'start',
-              width: '50%',
+              width: '100%',
+              height: '100%',
             }}
-          >
-            {name}
-          </Typography>
-        </CardContent>
+            alt="Project image"
+          />
+        </Box>
+        <Typography
+          variant="headline"
+          color={color}
+          sx={{
+            p: 4,
+            pt: { mobile: 8, [breakpoint]: 11 },
+            textAlign: 'start',
+          }}
+        >
+          {firstName}
+          <br />
+          {lastName}
+        </Typography>
       </Card>
       <Typography
         variant="handwritingLarge"
         sx={{
           position: { mobile: 'relative', [breakpoint]: 'absolute' },
           top: '50%',
-          maxWidth: { mobile: '100%', [breakpoint]: '416px' },
+          maxWidth: {
+            mobile: '100%',
+            [breakpoint]: '416px',
+            desktopM: '446px',
+          },
           transform: {
             mobile: 'rotate(-3.66deg)',
             [breakpoint]: 'translate(-50%, 0%) rotate(-3.66deg)',

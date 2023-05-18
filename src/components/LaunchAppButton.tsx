@@ -5,10 +5,14 @@ import { useAccount } from 'wagmi'
 import { SUBPAGES } from '@/consts'
 import { useRouter } from 'next/router'
 import { formatAddress } from '@/utils/helpers'
+import { useMagic } from '@/utils/hooks/useMagic'
 
 export const LaunchAppButton = () => {
   const router = useRouter()
   const translateNavbar = useContentful(ContentTypes.common)
+  const magic = useMagic()
+  const { connector } = useAccount()
+  const isUserWalletMagic = connector != null && connector.id === 'magic'
   useAccount({
     onConnect({ isReconnected }) {
       if (SUBPAGES.account && !isReconnected) {
@@ -50,7 +54,22 @@ export const LaunchAppButton = () => {
                 lineHeight: '24px',
               },
             })}
-            onClick={connected ? openAccountModal : openConnectModal}
+            onClick={
+              connected
+                ? isUserWalletMagic
+                  ? async () => {
+                      try {
+                        // This throws an error if user has logged out of Magic Wallet,
+                        // but that fact seemingly cannot be observed by wagmi hooks, connected === true.
+                        // So we try to show Magic UI and if that fails, we show Rainbowkit UI
+                        await magic?.wallet?.showUI()
+                      } catch (error) {
+                        openAccountModal()
+                      }
+                    }
+                  : openAccountModal
+                : openConnectModal
+            }
           >
             {connected
               ? formatAddress(account.address)

@@ -11,12 +11,29 @@ import allocationProjectsImage from 'public/images/allocationProjects.png'
 export const tooltipCustomMarkdownRegex =
   /(\*([^*]*)\*\(((?:[^()]*|\((?:[^()]*|\([^()]*\))*\))*)\))/g
 
-export const ourCollectionsAddresses: string[] = [
-  '0x7dfd5e56dd343140b3d0823d55fdfde8203a729f',
+export const nftSmartContractAddress =
+  '0x6c5a72a30ab18A013307A514133144bBcac1f61d'
+
+export const COLLECTIONS_COLOR_ORDER: string[] = [
+  'common.blue',
+  'secondary.main',
+  'common.brown',
+  'black.main',
 ]
 
+export const lazyPayableClaimContractAddress = process.env.NEXT_PUBLIC_TESTNET
+  ? '0x73CA7420625d312d1792Cea60Ced7B35D009322c'
+  : '0x'
+
+export const manifoldTxFee = 500000000000000
+
+export const nullAddress = '0x0000000000000000000000000000000000000000'
+
 export const SUBPAGES: {
-  [key in keyof Pick<Content[ContentTypes.navbar], 'about' | 'collections' | 'blog' | 'faq' | 'account'>]: string
+  [key in keyof Pick<
+    Content[ContentTypes.navbar],
+    'about' | 'collections' | 'blog' | 'faq' | 'account'
+  >]: string
 } = {
   about: '/',
   collections: '/art-impact',

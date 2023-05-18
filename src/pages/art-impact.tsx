@@ -13,13 +13,7 @@ import { Stack } from '@mui/material'
 import Collection from '@/components/collections/Collection'
 import { TitleSection } from '@/components/collections/TitleSection'
 import { useRef } from 'react'
-
-const COLOR_ORDER: string[] = [
-  'secondary.main',
-  'common.blue',
-  'common.brown',
-  'black.main',
-]
+import { COLLECTIONS_COLOR_ORDER } from '@/consts'
 
 type Props = {
   translations: Partial<Content>
@@ -37,7 +31,9 @@ const ArtImpact = ({ collectionsData, nftData }: Props) => {
       <TitleSection firstCollection={firstCollectionRef} />
       {collectionsData.map((collection, index) => {
         const nftsInThisCollection =
-          nftData?.filter((nft) => nft.collectionId === collection.id) ?? null
+          nftData?.filter(
+            (nft) => nft.collection.fields.id === collection.id
+          ) ?? null
 
         return (
           <Collection
@@ -47,11 +43,15 @@ const ArtImpact = ({ collectionsData, nftData }: Props) => {
             subtitle={translate('limitedEdition')}
             description={collection.description}
             deadline={
-              collection.deadline ? new Date(collection.deadline) : undefined
+              collection.deadline !== undefined
+                ? new Date(collection.deadline)
+                : undefined
             }
             numberOfPieces={collection.numberOfPieces}
             key={collection.name}
-            color={COLOR_ORDER[index % COLOR_ORDER.length]}
+            color={
+              COLLECTIONS_COLOR_ORDER[index % COLLECTIONS_COLOR_ORDER.length]
+            }
             ref={index === 0 ? firstCollectionRef : null}
           />
         )

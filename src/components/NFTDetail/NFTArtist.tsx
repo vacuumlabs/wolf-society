@@ -1,6 +1,7 @@
 import { ContentTypes, useContentful } from '@/utils/hooks/useContentful'
 import {
   Box,
+  BreakpointOverrides,
   CardMedia,
   Stack,
   Theme,
@@ -11,7 +12,8 @@ import {
   NFTArtistSocialMedias,
   NFTArtistSocialMediasProps,
 } from './NFTArtistSocialMedias'
-import { VerticalLine } from './NFTVerticalLine'
+import { NFTDividerLine } from './NFTDividerLine'
+import TypographyWithTooltips from '../TypographyWithTooltips'
 
 export interface NFTArtistProps {
   name: string
@@ -29,8 +31,9 @@ export const NFTArtist = ({
   descriptionRight,
 }: NFTArtistProps) => {
   const translate = useContentful(ContentTypes.collectionsPage)
+  const breakpoint: keyof BreakpointOverrides = 'tabletM'
   const isMobile = useMediaQuery((theme: Theme) =>
-    theme.breakpoints.down('tabletM')
+    theme.breakpoints.down(breakpoint)
   )
   const margin = isMobile ? 'auto' : 0
 
@@ -41,19 +44,23 @@ export const NFTArtist = ({
           width: { mobile: '100w', tabletM: '80vw' },
           backgroundColor: 'neutral.400',
           overflowY: 'auto',
+          paddingY: { mobile: 5, [breakpoint]: 10 },
+          paddingX: { mobile: 2, [breakpoint]: 10 },
+          gap: { mobile: 3, [breakpoint]: 5 },
         }}
-        p={{ mobile: '16px', tabletM: '80px' }}
-        gap="40px"
       >
         <Typography variant="caption">{translate('aboutArtist')}</Typography>
-        <Stack direction={isMobile ? 'column' : 'row'} gap="32px">
-          <Box sx={{ width: '176px', height: '176px', margin: margin }}>
+        <Stack
+          direction={isMobile ? 'column' : 'row'}
+          gap={{ mobile: 3, [breakpoint]: 4 }}
+        >
+          <Box sx={{ width: '168px', height: '168px', margin: margin }}>
             <CardMedia component="img" image={imageUrl} alt={name} />
           </Box>
           <Stack
             justifyContent="space-between"
             m={margin}
-            gap={isMobile ? '24px' : 0}
+            gap={isMobile ? 3 : 0}
           >
             <Typography variant="headline" m={margin}>
               {name}
@@ -62,8 +69,18 @@ export const NFTArtist = ({
           </Stack>
         </Stack>
         <Stack direction={isMobile ? 'column' : 'row'} gap="32px">
-          <Typography variant="body2">{descriptionLeft}</Typography>
-          <Typography variant="body2">{descriptionRight}</Typography>
+          <TypographyWithTooltips
+            variant="body2"
+            text={descriptionLeft}
+            key={`${name} description left`}
+            sx={{ width: { mobile: 'auto', [breakpoint]: '50%' } }}
+          />
+          <TypographyWithTooltips
+            variant="body2"
+            text={descriptionRight}
+            key={`${name} description right`}
+            sx={{ width: { mobile: 'auto', [breakpoint]: '50%' } }}
+          />
         </Stack>
       </Stack>
     </>

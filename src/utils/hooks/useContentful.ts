@@ -1,6 +1,7 @@
 import { Asset } from 'contentful'
 import { createContext, useContext } from 'react'
 import contentful from '../configs/contentful'
+import { getNftMintedAmount } from '../helpers'
 
 export enum ContentTypes {
   navbar = 'navbar',
@@ -8,6 +9,7 @@ export enum ContentTypes {
   landingPage = 'landingPage',
   collectionsPage = 'collectionsPage',
   articlesPage = 'articlesPage',
+  accountPage = 'accountPage',
   project = 'project',
   roadmap = 'roadmap',
   questionAndAnswer = 'questionAndAnswer',
@@ -42,8 +44,8 @@ export type CollectionData = {
   id: string
   name: string
   description: string
-  deadline: string
-  numberOfPieces: number
+  deadline?: string
+  numberOfPieces?: number
   image: Asset
   artistName: string
   artistSubtext: string
@@ -54,6 +56,12 @@ export type NFTDetailData = {
   buyNftAndSupport: string
   buyWithCard: string
   buyWithCrypto: string
+  shareOnTwitter: string
+  buyNft: string
+  beatTheDrumTitle: string
+  beatTheDrumSubtitle: string
+  breadAndButterTitle: string
+  breadAndButterSubtitle: string
 }
 
 export type NFTArtistData = {
@@ -62,37 +70,42 @@ export type NFTArtistData = {
   artistImage: Asset
   artistDescLeft: string
   artistDescRight: string
-  nftDesc: string
-  artistTwitter: string
-  artistIG: string
-  artistWeb: string
   artistMotto: string
+  artistTwitter: string
+  artistInstagram: string
+  artistWeb: string
+  artistFacebook: string
+  artistLinkedIn: string
+  artistDiscord: string
+  artistYoutube: string
+  artistEmail: string
+  artistLinktree: string
 }
 
 export type NFTData = {
   id: string
-  collectionId: string
+  collection: {
+    fields: CollectionData
+  }
+  tokenId?: number
   name: string
   priceInEth: number
   totalSupply?: number
   image: Asset
-  artistName: string
-  artistImage: Asset
-  artistDescLeft: string
-  artistDescRight: string
   nftDesc: string
-  artistsTwitter: string
-  artistsIG: string
-  artistsWeb: string
   artist: {
     fields: NFTArtistData
   }
+  beatTheDrumList: string
+  breadAndButterList: string
+  minted: number
+  manifoldLink: string
+  instanceId: number
 }
 
 export type CollectionsPageData = {
   description: string
   pieces: string
-  available: string
   aboutArtist: string
   artImpactTitle: string
   artImpactSubtitle1: string
@@ -102,6 +115,21 @@ export type CollectionsPageData = {
   artImpactHeadline: string
   viewArtworks: string
   getCompleteCollection: string
+}
+
+export type AccountPageData = {
+  yourContribution: string
+  yourRewards: string
+  gameTokens: string
+  distribute: string
+  claimRewards: string
+  playGame: string
+  artworks: string
+  collections: string
+  complete: string
+  noArtworks: string
+  unlockExtraRewards: string
+  collectQuest: string
 }
 
 // Content to be injected into every page
@@ -131,6 +159,7 @@ export type Content = {
     pieces: string
     minted: string
     limitedEdition: string
+    timeLeft: string
     makeImpactButton: string
     readMore: string
     showDetails: string
@@ -180,6 +209,7 @@ export type Content = {
     gratefulPart1: string
     gratefulPart2: string
   }
+  [ContentTypes.accountPage]: AccountPageData
   [ContentTypes.project]: ProjectData
   [ContentTypes.roadmap]: RoadmapData
   [ContentTypes.questionAndAnswer]: QuestionAndAnswerData
@@ -292,12 +322,22 @@ export const getCollections = (locale?: string) =>
     orderBy: 'fields.orderNumber',
   })
 
-export const getNfts = (locale?: string) =>
-  getArrayOfContent<NFTData>({
+export const getNfts = async (locale?: string) => {
+  const nftsData = await getArrayOfContent<NFTData>({
     contentType: ContentTypes.nft,
     locale,
     orderBy: 'fields.id',
   })
+  if (!nftsData) return nftsData
+  return await Promise.all(
+    nftsData.map(async (nftData) => {
+      return {
+        ...nftData,
+        minted: nftData.tokenId ? await getNftMintedAmount(nftData.tokenId) : 0,
+      }
+    })
+  )
+}
 
 export const ContentContext = createContext<Content | undefined>(undefined)
 

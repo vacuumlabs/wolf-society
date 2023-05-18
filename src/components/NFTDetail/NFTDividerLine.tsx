@@ -1,10 +1,12 @@
-import { Box, Theme, useMediaQuery } from '@mui/material'
+import { Box, Divider, Theme, useMediaQuery } from '@mui/material'
 
-export const VerticalLine = () => {
+export const NFTDividerLine = () => {
   const isMobile = useMediaQuery((theme: Theme) =>
     theme.breakpoints.down('tabletM')
   )
-  return isMobile ? null : (
+  return isMobile ? (
+    <Divider sx={{ mx: 2, borderColor: 'neutral.main' }} />
+  ) : (
     <Box
       sx={{
         pl: '-1px',

@@ -2,7 +2,7 @@ import type { AppProps } from 'next/app'
 import { lightTheme, RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import React from 'react'
 import { WagmiConfig } from 'wagmi'
-import { wagmiClient, chains } from '@/utils/configs/wagmi'
+import { wagmiConfig, chains } from '@/utils/configs/wagmi'
 import '@rainbow-me/rainbowkit/styles.css'
 import {
   createTheme,
@@ -76,6 +76,7 @@ declare module '@mui/material/styles' {
     display: React.CSSProperties
     displayM: React.CSSProperties
     headline: React.CSSProperties
+    headlineS: React.CSSProperties
     title: React.CSSProperties
     caption: React.CSSProperties
     body2S: React.CSSProperties
@@ -90,6 +91,7 @@ declare module '@mui/material/styles' {
     display?: React.CSSProperties
     displayM?: React.CSSProperties
     headline?: React.CSSProperties
+    headlineS?: React.CSSProperties
     title?: React.CSSProperties
     caption?: React.CSSProperties
     body2S?: React.CSSProperties
@@ -130,6 +132,7 @@ declare module '@mui/material/Typography' {
     display: true
     displayM: true
     headline: true
+    headlineS: true
     title: true
     caption: true
     label: true
@@ -429,7 +432,7 @@ theme.components = {
   },
   MuiGrid: {
     defaultProps: {
-      columnSpacing: { mobile: 2, desktopS: 3, desktopM: 4, desktopL: 5 },
+      spacing: { mobile: 2, desktopS: 3, desktopM: 4, desktopL: 5 },
     },
   },
   MuiLink: {
@@ -443,6 +446,7 @@ theme.components = {
         // Map the new variant to render a <h1> by default
         display: 'h1',
         headline: 'h2',
+        headlineS: 'h2',
         title: 'h3',
         caption: 'h4',
         label: 'h5',
@@ -475,8 +479,28 @@ theme.typography.display = {
 
 theme.typography.displayM = {
   ...theme.typography.display,
-  fontSize: '141px',
-  lineHeight: '128px',
+  fontSize: (
+    (theme.typography.display as any)[
+      theme.breakpoints.up('desktopM')
+    ] as React.CSSProperties
+  ).fontSize,
+  lineHeight: (
+    (theme.typography.display as any)[
+      theme.breakpoints.up('desktopM')
+    ] as React.CSSProperties
+  ).lineHeight,
+  [theme.breakpoints.up('desktopL')]: {
+    fontSize: (
+      (theme.typography.display as any)[
+        theme.breakpoints.up('desktopM')
+      ] as React.CSSProperties
+    ).fontSize,
+    lineHeight: (
+      (theme.typography.display as any)[
+        theme.breakpoints.up('desktopM')
+      ] as React.CSSProperties
+    ).lineHeight,
+  },
 }
 
 theme.typography.headline = {
@@ -492,6 +516,20 @@ theme.typography.headline = {
   [theme.breakpoints.up('desktopL')]: {
     fontSize: '100px',
     lineHeight: '96px',
+  },
+}
+
+theme.typography.headlineS = {
+  ...theme.typography.headline,
+  fontSize: theme.typography.headline.fontSize,
+  lineHeight: theme.typography.headline.lineHeight,
+  [theme.breakpoints.up('desktopM')]: {
+    fontSize: theme.typography.headline.fontSize,
+    lineHeight: theme.typography.headline.lineHeight,
+  },
+  [theme.breakpoints.up('desktopL')]: {
+    fontSize: theme.typography.headline.fontSize,
+    lineHeight: theme.typography.headline.lineHeight,
   },
 }
 
@@ -640,7 +678,7 @@ const rainbowKitTheme = lightTheme({
 })
 
 const App = ({ Component, pageProps }: AppProps) => (
-  <WagmiConfig client={wagmiClient}>
+  <WagmiConfig config={wagmiConfig}>
     <RainbowKitProvider chains={chains} theme={rainbowKitTheme}>
       <title>Wolf Society</title>
       <ThemeProvider theme={theme}>

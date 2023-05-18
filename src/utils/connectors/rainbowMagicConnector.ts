@@ -1,5 +1,5 @@
 import { MagicConnectConnector } from '@everipedia/wagmi-magic-connector'
-import { Connector, goerli, mainnet } from 'wagmi'
+import { goerli, mainnet } from 'wagmi/chains'
 
 export const rainbowMagicConnector = ({ chains, appName }: any) => ({
   id: 'magic',
@@ -15,15 +15,17 @@ export const rainbowMagicConnector = ({ chains, appName }: any) => ({
         magicSdkConfiguration: {
           network: {
             chainId:
-              process.env.NODE_ENV === 'development' ? goerli.id : mainnet.id,
+              process.env.NEXT_PUBLIC_TESTNET === 'true'
+                ? goerli.id
+                : mainnet.id,
             rpcUrl:
-              process.env.NODE_ENV === 'development'
+              process.env.NEXT_PUBLIC_TESTNET === 'true'
                 ? goerli.rpcUrls.default.http[0]
                 : mainnet.rpcUrls.default.http[0],
           },
         },
       },
-    }) as unknown as Connector<any, any, any>
+    })
     return {
       connector,
     }
