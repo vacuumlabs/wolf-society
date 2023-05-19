@@ -11,10 +11,12 @@ import {
   manifoldTxFee,
   nullAddress,
 } from '@/consts'
+import { useGetGameTokens } from '@/utils/hooks/useGetGameTokens'
 
 export const ContributionAndRewards = () => {
   const translate = useContentful(ContentTypes.accountPage)
   const { address } = useAccount()
+  const gameTokens = useGetGameTokens()
   const [userContribution, setUserContribution] = useState<string | null>(null)
   useEffect(() => {
     const getUserContribution = async () => {
@@ -82,7 +84,7 @@ export const ContributionAndRewards = () => {
     },
     {
       title: translate('gameTokens'),
-      amount: '0',
+      amount: `${gameTokens ?? '...'}`,
       isEthAmount: false,
       buttonText: translate('playGame'),
       buttonAction: () => {},

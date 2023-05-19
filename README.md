@@ -44,19 +44,19 @@ Controls:
 - `-map 0 -map -0:a` - This removes all audio tracks - `-map 0` selects all streams from the input, and `-map -0:a` deselects all audio streams
 
 # Backend - Vercel Postgres
-- currently *not* SOC2 Type 2 compliant, however Vercel is reputable and we assume they'll achieve it in the future.
+
+- currently _not_ SOC2 Type 2 compliant, however Vercel is reputable and we assume they'll achieve it in the future.
 - Postgres 15
 - 0.25 logical CPUs
 - cold starts after 5 min inactivity for <= 5s
 - 1 db deploy region and Serverless and Edge function compatibility.
-    - After creating a database, we cannot change its region.
-    - relatively limited regions: 3 us, 1 eu, 1 ap (singapore).
-- compatible with ORMs
-    - Hoever: Prisma does not currently support connections with Edge Functions except with the Prisma Data Proxy. 
-    - Should probablhy use Kysely (Vercel recommendation)
+  - After creating a database, we cannot change its region.
+  - relatively limited regions: 3 us, 1 eu, 1 ap (singapore).
+- compatible with ORMs: we use [Kysely](https://github.com/kysely-org/kysely)
+
 
 ## Authentication
+
 - User signs payload using Metamask (blockchain communication)
 - BE verifies the signature using user's public key contained in the payload
 - Specific payload content etc. TBD in the near future
-
