@@ -77,7 +77,7 @@ export const NFTBuy = ({
   const isUserWalletMagic = connector != null && connector.id === 'magic'
 
   const buyNft = async () => {
-    if (!walletClient || !address) {
+    if (!walletClient || !address || instanceId == null) {
       if (openConnectModal != undefined) {
         openConnectModal()
       }
@@ -131,13 +131,17 @@ export const NFTBuy = ({
           <>
             <CircleButton
               label={translate('buyWithCard')}
-              disabled={!isUserWalletMagic && !isWalletClientLoading}
+              disabled={
+                !isUserWalletMagic ||
+                isWalletClientLoading ||
+                instanceId == null
+              }
               onClick={() => buyNft()}
             />
             <CircleButton
               label={translate('buyWithCrypto')}
               href={manifoldLink}
-              disabled={isUserWalletMagic}
+              disabled={manifoldLink == null || isUserWalletMagic}
             />
           </>
         )}
