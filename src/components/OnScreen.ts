@@ -5,11 +5,12 @@ type OnScreenProps = {
   selector: string
 }
 
-export const OnScreen = ({setIntersecting, selector }: OnScreenProps) => {
+export const OnScreen = ({ setIntersecting, selector }: OnScreenProps) => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => setIntersecting(entry.isIntersecting),
-      { root: null, rootMargin: '0px', threshold: 0 })
+      { root: null, rootMargin: '0px', threshold: 0 }
+    )
 
     const element = document.querySelector(selector)
 
