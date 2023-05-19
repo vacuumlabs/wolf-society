@@ -46,6 +46,7 @@ const Snackbar = forwardRef<HTMLDivElement, CustomContentProps>(
             <Typography
               variant="body2S"
               color={VariantTextColors[props.variant]}
+              sx={{ wordBreak: 'break-word' }}
             >
               {props.message}
             </Typography>

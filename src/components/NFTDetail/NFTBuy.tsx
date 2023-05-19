@@ -13,6 +13,7 @@ import {
 import { useAccount, useWalletClient } from 'wagmi'
 import Button from '../Button'
 import {
+  MAGIC_WALLET_USER_REJECTED_ACTION_MESSAGE,
   lazyPayableClaimContractAddress,
   manifoldTxFee,
   nftSmartContractAddress,
@@ -21,6 +22,7 @@ import { LazyPayableClaimAbi } from '@/abi/LazyPayableClaim'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { encodeFunctionData, parseEther } from 'viem'
 import { NFTParameters } from './NFTParameters'
+import { useSnackbar } from 'notistack'
 
 const CircleButton = ({
   label,
@@ -74,6 +76,7 @@ export const NFTBuy = ({
   const { address, connector } = useAccount()
   const { data: walletClient, isLoading: isWalletClientLoading } =
     useWalletClient()
+  const { enqueueSnackbar } = useSnackbar()
   const isUserWalletMagic = connector != null && connector.id === 'magic'
 
   const buyNft = async () => {
@@ -89,11 +92,23 @@ export const NFTBuy = ({
       args: [nftSmartContractAddress, BigInt(instanceId), 0, [], address],
     })
 
-    const txResponse = await walletClient.sendTransaction({
-      to: lazyPayableClaimContractAddress,
-      data: encodedData,
-      value: BigInt(manifoldTxFee) + parseEther(`${priceInEth}`),
-    })
+    try {
+      const txResponse = await walletClient.sendTransaction({
+        to: lazyPayableClaimContractAddress,
+        data: encodedData,
+        value: BigInt(manifoldTxFee) + parseEther(`${priceInEth}`),
+      })
+    } catch (err: any) {
+      if (
+        err.cause?.cause?.rawMessage ===
+        MAGIC_WALLET_USER_REJECTED_ACTION_MESSAGE
+      ) {
+        return
+      } else {
+        enqueueSnackbar(err.message, { variant: 'error' })
+        console.error(err)
+      }
+    }
   }
 
   return (
