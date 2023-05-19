@@ -99,8 +99,8 @@ export type NFTData = {
   beatTheDrumList: string
   breadAndButterList: string
   minted: number
-  manifoldLink: string
-  instanceId: number
+  manifoldLink?: string
+  instanceId?: number
 }
 
 export type CollectionsPageData = {
