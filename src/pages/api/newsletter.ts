@@ -11,7 +11,7 @@ export default async function handler(
   res: NextApiResponse<ResponseData>
 ) {
   if (req.method !== 'POST')
-    res.status(400).json({ message: 'Invalid request method!' })
+    res.status(405).json({ message: 'Invalid request method!' })
   try {
     const hubspotClient = new Client({
       accessToken: process.env.HUBSPOT_ACCESS_TOKEN,
