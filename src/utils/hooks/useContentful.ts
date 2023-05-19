@@ -197,6 +197,12 @@ export type Content = {
     allArticles: string
     roadmap: string
     partners: string
+    newsletterText: string
+    newsletterInputLabel: string
+    newsletterButton: string
+    newsletterSubscriptionSuccess: string
+    newsletterSubscriptionError: string
+    newsletterSubscriptionConflict: string
   }
   [ContentTypes.collectionsPage]: CollectionsPageData
   [ContentTypes.articlesPage]: {

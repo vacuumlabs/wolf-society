@@ -7,6 +7,15 @@
   opacity: 1;
 }
 
+.snackbarContainerRoot {
+  left: 0 !important;
+  bottom: 0 !important;
+}
+
+.notistack-CollapseWrapper {
+  padding: 0 !important;
+}
+
 ::selection {
   color: #2b4b2a;
   background: #db372d;

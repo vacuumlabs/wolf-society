@@ -37,6 +37,7 @@ import GlacierText from 'public/images/Glacier-text-en-US.png'
 import GlacierTextMobile from 'public/images/Glacier-text-S-en-US.png'
 import DeforestationText from 'public/images/Deforestation-text-en-US.png'
 import DeforestationTextMobile from 'public/images/Deforestation-text-S-en-US.png'
+import Newsletter from '@/components/landing/Newsletter'
 
 type Props = {
   blogData: BlogData
@@ -92,6 +93,7 @@ const Home = ({
       <Topics posts={formattedPosts} />
       <Partners />
       <CTA />
+      <Newsletter />
     </Stack>
   )
 }
