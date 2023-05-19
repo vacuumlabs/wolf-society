@@ -32,13 +32,13 @@ export default async function handler(
 
   const user = await db
     .selectFrom('app_user')
-    .select(['eth_address', 'reward_points'])
+    .select(['reward_points'])
     .where('app_user.eth_address', '=', eth_address)
     .executeTakeFirst()
 
   return user != null
     ? res.json({
-        address: user.eth_address,
+        address: eth_address,
         points: user.reward_points,
       })
     : res.json({

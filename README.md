@@ -52,9 +52,8 @@ Controls:
 - 1 db deploy region and Serverless and Edge function compatibility.
   - After creating a database, we cannot change its region.
   - relatively limited regions: 3 us, 1 eu, 1 ap (singapore).
-- compatible with ORMs
-  - Hoever: Prisma does not currently support connections with Edge Functions except with the Prisma Data Proxy.
-  - Should probablhy use Kysely (Vercel recommendation)
+- compatible with ORMs: we use [Kysely](https://github.com/kysely-org/kysely)
+
 
 ## Authentication
 

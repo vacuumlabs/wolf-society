@@ -6,7 +6,6 @@ export const useGetGameTokens = () => {
   const { address } = useAccount()
 
   useEffect(() => {
-    console.log('effect fired with', address)
     const fetchBalance = async (address: string) => {
       const res = await fetch(`/api/user/${address}`)
       const { points } = await res.json()
