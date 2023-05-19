@@ -47,9 +47,6 @@ export type CollectionData = {
   deadline?: string
   numberOfPieces?: number
   image: Asset
-  artistName: string
-  artistSubtext: string
-  artistImage: Asset
 }
 
 export type NFTDetailData = {
