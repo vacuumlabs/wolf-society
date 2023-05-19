@@ -1,4 +1,3 @@
-import { NFTData } from '@/utils/hooks/useContentful'
 import {
   Box,
   CardMedia,
@@ -10,6 +9,7 @@ import {
 import dynamic from 'next/dynamic'
 import TypographyWithTooltips from '../TypographyWithTooltips'
 import { NFTParameters } from './NFTParameters'
+import { NFTDataExtended } from '@/utils/hooks/useGetNftDataExtended'
 
 const DynamicShareButton = dynamic(
   () => import('../collections/ShareButton').then((mod) => mod.ShareButton),
@@ -17,7 +17,7 @@ const DynamicShareButton = dynamic(
 )
 
 export interface NFTDescriptionProps {
-  nftData: NFTData
+  nftData: NFTDataExtended
 }
 
 export const NFTDescription = ({ nftData }: NFTDescriptionProps) => {

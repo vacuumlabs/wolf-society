@@ -1,13 +1,10 @@
 import { Stack, Typography } from '@mui/material'
 import { Countdown } from '../Countdown'
-import {
-  useContentful,
-  ContentTypes,
-  NFTData,
-} from '@/utils/hooks/useContentful'
+import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
+import { NFTDataExtended } from '@/utils/hooks/useGetNftDataExtended'
 
 type Props = {
-  nftData: NFTData
+  nftData: NFTDataExtended
   alignCenter?: boolean
 }
 
@@ -29,7 +26,7 @@ export const NFTParameters = ({ nftData, alignCenter }: Props) => {
           <Typography variant="caption">{`/${totalSupply}`}</Typography>
         )}
       </Stack>
-      {deadline !== undefined && (
+      {deadline !== undefined && !nftData.owned && (
         <Stack direction="row">
           <Typography variant="caption" color="neutral.700">
             {`${translateCommon('timeLeft')}:`}&nbsp;
