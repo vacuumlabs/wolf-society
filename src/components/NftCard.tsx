@@ -1,8 +1,4 @@
-import {
-  useContentful,
-  ContentTypes,
-  NFTData,
-} from '@/utils/hooks/useContentful'
+import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
 import {
   Box,
   BreakpointOverrides,
@@ -17,15 +13,14 @@ import Button from './Button'
 import { NFTDetail } from './NFTDetail/NFTDetail'
 import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
-import { ButtonsMode } from './NFTDetail/NFTBuy'
 import { useRouter } from 'next/router'
+import { NFTDataExtended } from '@/utils/hooks/useGetNftDataExtended'
 
 export type NftCardProps = {
   minted?: number
-  data: NFTData
+  nftData: NFTDataExtended
   displayPrice?: boolean
   displayCollection?: boolean
-  detailButtonsMode?: ButtonsMode
 }
 
 const DynamicShareButton = dynamic(
@@ -35,12 +30,11 @@ const DynamicShareButton = dynamic(
 
 const NftCard = ({
   minted,
-  data,
+  nftData,
   displayPrice,
   displayCollection,
-  detailButtonsMode = 'buy',
 }: NftCardProps) => {
-  const { totalSupply, name, priceInEth, image } = data
+  const { totalSupply, name, priceInEth, image } = nftData
   const translate = useContentful(ContentTypes.common)
   const translateNftDetail = useContentful(ContentTypes.nftDetail)
   const breakpoint: keyof BreakpointOverrides = 'desktopS'
@@ -50,7 +44,7 @@ const NftCard = ({
   function openNFTDetail() {
     router.replace(
       {
-        query: { ...router.query, nft: data.id },
+        query: { ...router.query, nft: nftData.id },
       },
       undefined,
       {
@@ -75,7 +69,7 @@ const NftCard = ({
   }
 
   useEffect(() => {
-    if (router.query.nft === data.id) {
+    if (router.query.nft === nftData.id) {
       setIsDetailOpen(true)
     }
   }, [router.query.nft])
@@ -106,7 +100,7 @@ const NftCard = ({
             <CardMedia
               component="img"
               sx={{ height: '100%' }}
-              image={data.image.fields.file.url}
+              image={nftData.image.fields.file.url}
               alt="Project image"
             />
             {minted !== undefined && (
@@ -145,11 +139,11 @@ const NftCard = ({
               <Stack direction="row" justifyContent="space-between">
                 {displayCollection && (
                   <Typography variant="body2">
-                    {data.collection.fields.name}
+                    {nftData.collection.fields.name}
                   </Typography>
                 )}
                 <Typography variant="body2">
-                  {data.artist.fields.artistName}
+                  {nftData.artist.fields.artistName}
                 </Typography>
                 {displayPrice && (
                   <Stack direction="row" alignItems="center" gap={1}>
@@ -182,38 +176,37 @@ const NftCard = ({
         isOpen={isDetailOpen}
         onClose={() => closeNFTDetail()}
         nftArtistProps={{
-          name: data.artist.fields.artistName,
-          descriptionLeft: data.artist.fields.artistDescLeft,
-          descriptionRight: data.artist.fields.artistDescRight,
-          imageUrl: data.artist.fields.artistImage.fields.file.url,
+          name: nftData.artist.fields.artistName,
+          descriptionLeft: nftData.artist.fields.artistDescLeft,
+          descriptionRight: nftData.artist.fields.artistDescRight,
+          imageUrl: nftData.artist.fields.artistImage.fields.file.url,
           socialLinks: {
-            twitterUrl: data.artist.fields.artistTwitter,
-            instagramUrl: data.artist.fields.artistInstagram,
-            webUrl: data.artist.fields.artistWeb,
-            facebookUrl: data.artist.fields.artistFacebook,
-            discordUrl: data.artist.fields.artistDiscord,
-            linkedInUrl: data.artist.fields.artistLinkedIn,
-            youtubeUrl: data.artist.fields.artistYoutube,
-            email: data.artist.fields.artistEmail,
-            linktreeUrl: data.artist.fields.artistLinktree,
+            twitterUrl: nftData.artist.fields.artistTwitter,
+            instagramUrl: nftData.artist.fields.artistInstagram,
+            webUrl: nftData.artist.fields.artistWeb,
+            facebookUrl: nftData.artist.fields.artistFacebook,
+            discordUrl: nftData.artist.fields.artistDiscord,
+            linkedInUrl: nftData.artist.fields.artistLinkedIn,
+            youtubeUrl: nftData.artist.fields.artistYoutube,
+            email: nftData.artist.fields.artistEmail,
+            linktreeUrl: nftData.artist.fields.artistLinktree,
           },
         }}
-        nftData={data}
+        nftData={nftData}
         nftUsageProps={{
           lists: [
             {
               caption: translateNftDetail('beatTheDrumTitle'),
               description: translateNftDetail('beatTheDrumSubtitle'),
-              texts: data.beatTheDrumList.split('\n'),
+              texts: nftData.beatTheDrumList.split('\n'),
             },
             {
               caption: translateNftDetail('breadAndButterTitle'),
               description: translateNftDetail('breadAndButterSubtitle'),
-              texts: data.breadAndButterList.split('\n'),
+              texts: nftData.breadAndButterList.split('\n'),
             },
           ],
         }}
-        nftBuyProps={{ nft: data, buttonsMode: detailButtonsMode }}
       />
     </>
   )

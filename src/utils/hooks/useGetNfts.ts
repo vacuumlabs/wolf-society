@@ -16,7 +16,11 @@ export const useGetNfts = (address: string | undefined): Nft[] => {
         ).ownedNfts
       )
     }
-    if (address) fetchNfts(address)
+    if (address) {
+      fetchNfts(address)
+    } else {
+      setNfts([])
+    }
   }, [address])
 
   return nfts

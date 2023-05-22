@@ -1,8 +1,4 @@
-import {
-  ContentTypes,
-  NFTData,
-  useContentful,
-} from '@/utils/hooks/useContentful'
+import { ContentTypes, useContentful } from '@/utils/hooks/useContentful'
 import {
   ButtonProps,
   BreakpointOverrides,
@@ -23,6 +19,7 @@ import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { encodeFunctionData, parseEther } from 'viem'
 import { NFTParameters } from './NFTParameters'
 import { useSnackbar } from 'notistack'
+import { NFTDataExtended } from '@/utils/hooks/useGetNftDataExtended'
 
 const CircleButton = ({
   label,
@@ -51,25 +48,19 @@ const CircleButton = ({
   </Button>
 )
 
-export type ButtonsMode = 'buy' | 'shareTwitter'
-export interface NFTBuyProps {
-  nft: NFTData
-  buttonsMode: ButtonsMode
-}
-
-type NFTBuyComponentProps = NFTBuyProps & {
+type NFTBuyComponentProps = {
+  nftData: NFTDataExtended
   buyInView: boolean
   className: string
 }
 
 export const NFTBuy = ({
-  nft,
-  buttonsMode,
+  nftData,
   buyInView,
   className,
 }: NFTBuyComponentProps) => {
   const translate = useContentful(ContentTypes.nftDetail)
-  const { priceInEth, manifoldLink, instanceId } = nft
+  const { priceInEth, manifoldLink, instanceId } = nftData
   const breakpoint: keyof BreakpointOverrides = 'tabletM'
 
   const { openConnectModal } = useConnectModal()
@@ -133,16 +124,16 @@ export const NFTBuy = ({
         gap={{ mobile: 5, [breakpoint]: 10 }}
         pb={{ mobile: 0, [breakpoint]: 5 }}
       >
-        <NFTParameters nftData={nft} alignCenter />
+        <NFTParameters nftData={nftData} alignCenter />
         <Typography variant="display">{`${priceInEth} ETH`}</Typography>
       </Stack>
       <Stack
         direction="row"
-        justifyContent={buttonsMode === 'buy' ? 'space-between' : 'center'}
+        justifyContent={!nftData.owned ? 'space-between' : 'center'}
         gap={2}
         width="100%"
       >
-        {buttonsMode === 'buy' && (
+        {!nftData.owned ? (
           <>
             <CircleButton
               label={translate('buyWithCard')}
@@ -159,8 +150,7 @@ export const NFTBuy = ({
               disabled={manifoldLink == null || isUserWalletMagic}
             />
           </>
-        )}
-        {buttonsMode === 'shareTwitter' && (
+        ) : (
           <CircleButton label={translate('shareOnTwitter')} />
         )}
       </Stack>

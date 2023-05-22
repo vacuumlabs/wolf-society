@@ -16,8 +16,7 @@ import {
 } from '@/utils/hooks/useContentful'
 import Artworks from './Artworks'
 import Collections from './Collections'
-import { useGetNfts } from '@/utils/hooks/useGetNfts'
-import { useAccount } from 'wagmi'
+import { useGetNftDataExtended } from '@/utils/hooks/useGetNftDataExtended'
 
 enum TabIds {
   ARTWORKS,
@@ -51,18 +50,7 @@ export const ArtworksAndCollections = ({
   const [activeTab, setActiveTab] = useState<number>(0)
   const breakpoint: keyof BreakpointOverrides = 'tabletM'
 
-  const userAddress = useAccount()
-  const userNfts = useGetNfts(userAddress.address)
-
-  const nftsDataWithUserOwnershipInfo =
-    nftsData?.map((nft) => {
-      return {
-        ...nft,
-        owned: !!userNfts.find((userNft) => {
-          return userNft.tokenId === nft.tokenId?.toString()
-        }),
-      }
-    }) ?? []
+  const nftsDataExtended = useGetNftDataExtended(nftsData)
 
   return (
     <Box sx={{ bgcolor: 'neutral.400' }} pt={{ mobile: 5, [breakpoint]: 10 }}>
@@ -96,9 +84,7 @@ export const ArtworksAndCollections = ({
         </Tabs>
         {activeTab === TabIds.ARTWORKS && (
           <Artworks
-            nftsData={nftsDataWithUserOwnershipInfo.filter(
-              (nftData) => nftData.owned
-            )}
+            nftsData={nftsDataExtended.filter((nftData) => nftData.owned)}
           />
         )}
         {activeTab === TabIds.COLLECTIONS && (
@@ -107,7 +93,7 @@ export const ArtworksAndCollections = ({
               collectionsData?.map((collectionData) => {
                 return {
                   ...collectionData,
-                  nfts: nftsDataWithUserOwnershipInfo.filter(
+                  nfts: nftsDataExtended.filter(
                     (nft) => nft.collection.fields.id === collectionData.id
                   ),
                 }
