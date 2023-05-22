@@ -32,6 +32,8 @@ export const nullAddress = '0x0000000000000000000000000000000000000000'
 export const MAGIC_WALLET_USER_REJECTED_ACTION_MESSAGE =
   'User rejected the action'
 
+export const WEBPAGE_DOMAIN = 'https://wolfsociety.org'
+
 export const SUBPAGES: {
   [key in keyof Pick<
     Content[ContentTypes.navbar],

@@ -2,26 +2,29 @@ import ShareIcon from '@mui/icons-material/Share'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state'
-import {
-  Box,
-  BoxProps,
-  IconButton,
-  Theme,
-  Typography,
-  useMediaQuery,
-} from '@mui/material'
+import { Box, BoxProps, Theme, Typography, useMediaQuery } from '@mui/material'
 import { useEffect, useState } from 'react'
 import Button from '../Button'
+import {
+  ShareableContent,
+  SocialMedia,
+  shareContentOnSocialMedia,
+  socialMediaListData,
+} from '@/utils/sharing'
+import IconButton from '../IconButton'
 
 type ShareButtonProps = BoxProps & {
+  shareableContent: ShareableContent
   variant?: 'primary' | 'outlined'
+  color?: 'neutral' | 'black'
 }
 
 export const ShareButton = ({
   variant = 'outlined',
+  color = 'black',
+  shareableContent,
   ...props
 }: ShareButtonProps) => {
-  const socialMedias: string[] = ['twitter', 'facebook', 'messenger', 'e-mail']
   const isMobile = useMediaQuery((theme: Theme) =>
     theme.breakpoints.down('tabletS')
   )
@@ -45,6 +48,7 @@ export const ShareButton = ({
           <>
             {variant === 'outlined' ? (
               <IconButton
+                color={color}
                 {...bindTrigger(popupState)}
                 onClick={(e) => {
                   bindTrigger(popupState).onClick(e)
@@ -92,35 +96,41 @@ export const ShareButton = ({
                   vertical: isMobile ? 'bottom' : 'top',
                 }}
               >
-                {socialMedias.map((sm, index) => (
-                  <MenuItem
-                    key={sm}
-                    onClick={(e) => {
-                      popupState.close()
-                      setIsOpen(false)
-                      e.stopPropagation()
-                    }}
-                    sx={{
-                      mt: index === 0 ? 0 : '1px',
+                {Object.keys(socialMediaListData).map(
+                  (socialMediaKey, index) => (
+                    <MenuItem
+                      key={socialMediaKey}
+                      onClick={(e) => {
+                        popupState.close()
+                        setIsOpen(false)
+                        shareContentOnSocialMedia(
+                          shareableContent,
+                          socialMediaKey as SocialMedia
+                        )
+                        e.stopPropagation()
+                      }}
+                      sx={{
+                        mt: index === 0 ? 0 : '1px',
 
-                      backgroundColor: 'neutral.600',
-                      '&:hover': {
-                        backgroundColor: 'black.main',
-                        '& .MuiTypography-root': {
-                          color: 'neutral.200',
+                        backgroundColor: 'neutral.600',
+                        '&:hover': {
+                          backgroundColor: 'black.main',
+                          '& .MuiTypography-root': {
+                            color: 'neutral.200',
+                          },
                         },
-                      },
-                      '&:focus': {
-                        backgroundColor: 'black.main',
-                        '& .MuiTypography-root': {
-                          color: 'neutral.200',
+                        '&:focus': {
+                          backgroundColor: 'black.main',
+                          '& .MuiTypography-root': {
+                            color: 'neutral.200',
+                          },
                         },
-                      },
-                    }}
-                  >
-                    <Typography variant="button">{sm}</Typography>
-                  </MenuItem>
-                ))}
+                      }}
+                    >
+                      <Typography variant="button">{socialMediaKey}</Typography>
+                    </MenuItem>
+                  )
+                )}
               </Menu>
             )}
           </>

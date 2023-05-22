@@ -15,6 +15,7 @@ import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { NFTDataExtended } from '@/utils/hooks/useGetNftDataExtended'
+import { getNftShareableContent } from '@/utils/sharing'
 
 export type NftCardProps = {
   minted?: number
@@ -160,6 +161,10 @@ const NftCard = ({
                   boxShadow: 'none',
                   backgroundColor: 'red',
                 }}
+                shareableContent={getNftShareableContent(
+                  translate('nftShareText'),
+                  nftData
+                )}
               />
               <Button
                 component="div"

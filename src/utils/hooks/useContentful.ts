@@ -59,6 +59,7 @@ export type NFTDetailData = {
   beatTheDrumSubtitle: string
   breadAndButterTitle: string
   breadAndButterSubtitle: string
+  shareYourImpact: string
 }
 
 export type NFTArtistData = {
@@ -165,6 +166,8 @@ export type Content = {
     allocationPart3: string
     connectWallet: string
     disconnectWallet: string
+    nftShareText: string
+    collectionShareText: string
   }
   [ContentTypes.landingPage]: {
     heroTitle: string
