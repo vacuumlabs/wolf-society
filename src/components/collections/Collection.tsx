@@ -24,6 +24,8 @@ import Button from '../Button'
 import { ArtistCardMobile } from './ArtistCardMobile'
 import { BigNumber, ethers } from 'ethers'
 import { NFTDataExtended } from '@/utils/hooks/useGetNftDataExtended'
+import dynamic from 'next/dynamic'
+import { getCollectionShareableContent } from '@/utils/sharing'
 
 type Props = {
   id: string
@@ -35,6 +37,11 @@ type Props = {
   numberOfPieces?: number
   nftData: NFTDataExtended[]
 }
+
+const DynamicShareButton = dynamic(
+  () => import('./ShareButton').then((mod) => mod.ShareButton),
+  { ssr: false }
+)
 
 const Collection = forwardRef<HTMLElement, Props>((props, ref) => {
   const {
@@ -115,6 +122,14 @@ const Collection = forwardRef<HTMLElement, Props>((props, ref) => {
               <Typography variant="display" color="neutral.main">
                 {name}
               </Typography>
+              <DynamicShareButton
+                color="neutral"
+                shareableContent={getCollectionShareableContent(
+                  translateCommon('collectionShareText'),
+                  name,
+                  id
+                )}
+              />
               <Typography
                 variant={isMobile ? 'body2' : 'body1'}
                 color="neutral.main"
