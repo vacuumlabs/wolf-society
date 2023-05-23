@@ -14,6 +14,7 @@ import {
   Content,
   CollectionData,
   NFTData,
+  TaskData,
 } from '@/utils/hooks/useContentful'
 import Artworks from './Artworks'
 import Collections from './Collections'
@@ -21,6 +22,7 @@ import { useGetNftDataExtended } from '@/utils/hooks/useGetNftDataExtended'
 import NextLink from 'next/link'
 import { SUBPAGES } from '@/consts'
 import Button from '../Button'
+import { useGetTasksDataExtended } from '@/utils/hooks/useGetTasksDataExtended'
 
 enum TabIds {
   ARTWORKS,
@@ -44,11 +46,13 @@ const tabData: {
 type Props = {
   collectionsData: CollectionData[] | null
   nftsData: NFTData[] | null
+  tasksData: TaskData[] | null
 }
 
 export const ArtworksAndCollections = ({
   collectionsData,
   nftsData,
+  tasksData,
 }: Props) => {
   const translate = useContentful(ContentTypes.accountPage)
   const translateCommon = useContentful(ContentTypes.common)
@@ -56,6 +60,7 @@ export const ArtworksAndCollections = ({
   const breakpoint: keyof BreakpointOverrides = 'tabletM'
 
   const nftsDataExtended = useGetNftDataExtended(nftsData)
+  const tasksDataExtended = useGetTasksDataExtended(tasksData)
   const ownedNfts = nftsDataExtended.filter((nftData) => nftData.owned)
 
   return ownedNfts.length > 0 ? (
@@ -93,11 +98,23 @@ export const ArtworksAndCollections = ({
           <Collections
             collectionsData={
               collectionsData?.map((collectionData) => {
+                const collectionNfts = nftsDataExtended.filter(
+                  (nft) => nft.collection.fields.id === collectionData.id
+                )
                 return {
                   ...collectionData,
-                  nfts: nftsDataExtended.filter(
-                    (nft) => nft.collection.fields.id === collectionData.id
-                  ),
+                  nfts: collectionNfts,
+                  tasks:
+                    tasksDataExtended?.filter((taskData) => {
+                      const taskNft = taskData.nftOrCollection
+                      return (
+                        taskNft == null ||
+                        taskNft.fields.id === collectionData.id ||
+                        collectionNfts.some(
+                          (nft) => nft.id === taskNft.fields.id
+                        )
+                      )
+                    }) ?? [],
                 }
               }) ?? []
             }

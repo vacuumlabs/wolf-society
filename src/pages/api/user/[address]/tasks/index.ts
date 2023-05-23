@@ -1,13 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { db } from '../../../../../database'
 import { sql } from 'kysely'
+import { TaskDB } from '@/types'
 
 type SuccessData = {
-  tasks: {
-    id: number
-    isCompleted: boolean
-    rewardAmount: number
-  }[]
+  tasks: TaskDB[]
 }
 
 type ErrorData = {
@@ -21,17 +18,10 @@ export default async function handler(
   res: NextApiResponse<ResponseData>
 ) {
   const eth_address = req.query.address
-  const task_group_name = req.query.group
 
   if (typeof eth_address !== 'string') {
     return res.status(400).json({
       message: 'No ETH address provided.',
-    })
-  }
-
-  if (typeof task_group_name !== 'string') {
-    return res.status(400).json({
-      message: 'No task group provided.',
     })
   }
 
@@ -46,10 +36,9 @@ export default async function handler(
     .leftJoin('completed_task as ct', (join) =>
       join
         .onRef('t.id', '=', 'ct.task_id')
-        .on('t.task_group_name', '=', 'ct.task_group_name')
+        .onRef('t.task_group_name', '=', 'ct.task_group_name')
         .on('ct.completed_by', '=', eth_address)
     )
-    .where('t.task_group_name', '=', task_group_name)
     .select([
       't.task_group_name',
       't.id',
