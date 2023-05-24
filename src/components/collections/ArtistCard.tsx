@@ -1,15 +1,13 @@
-import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
 import {
   BreakpointOverrides,
   Card,
-  CardActionArea,
   CardMedia,
-  CardContent,
   Typography,
   Box,
   Theme,
   useMediaQuery,
 } from '@mui/material'
+import { useEffect, useRef, useState } from 'react'
 
 export type ArtistCardProps = {
   name?: string
@@ -26,14 +24,19 @@ const ArtistCard = ({
   color,
   translucent,
 }: ArtistCardProps) => {
-  const translate = useContentful(ContentTypes.landingPage)
+  const nameRef = useRef<HTMLElement>(null)
   const breakpoint: keyof BreakpointOverrides = 'tabletM'
   const isMobile = useMediaQuery((theme: Theme) =>
     theme.breakpoints.down(breakpoint)
   )
+  const [nameHeight, setNameHeight] = useState(0)
 
   const lastName = name?.substring(name?.lastIndexOf(' '))
   const firstName = name?.substring(0, name?.lastIndexOf(' '))
+
+  useEffect(() => {
+    setNameHeight(nameRef.current?.clientHeight ?? 0)
+  }, [name, nameRef])
 
   return isMobile ? null : (
     <Box
@@ -54,11 +57,6 @@ const ArtistCard = ({
       >
         <Box
           sx={{
-            maxHeight: {
-              desktopS: 'calc(100vh - 80px - 152px)',
-              desktopM: 'calc(100vh - 80px - 248px)',
-              desktopL: 'calc(100vh - 80px - 312px)',
-            },
             overflow: 'hidden',
           }}
         >
@@ -69,10 +67,14 @@ const ArtistCard = ({
               width: '100%',
               height: '100%',
             }}
+            style={{
+              maxHeight: `calc(100vh - 80px - ${nameHeight}px)`,
+            }}
             alt="Artist image"
           />
         </Box>
         <Typography
+          ref={nameRef}
           variant="headline"
           color={color}
           sx={{
@@ -82,7 +84,7 @@ const ArtistCard = ({
           }}
         >
           {firstName}
-          <br />
+          {firstName && firstName.length > 0 && <br />}
           {lastName}
         </Typography>
       </Card>
