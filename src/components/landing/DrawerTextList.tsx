@@ -18,7 +18,7 @@ const DrawerTextList = ({ texts }: DrawerTextListProps) => {
     <List
       sx={{
         listStyleType: 'square',
-        position: { mobile: 'static', [breakpoint]: 'relative' },
+        position: { mobile: 'inherit', [breakpoint]: 'relative' },
       }}
     >
       {texts.map((text, idx) => (
