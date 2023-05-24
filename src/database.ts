@@ -3,8 +3,8 @@ import { ColumnType, Generated } from 'kysely'
 
 interface AppUserTable {
   eth_address: string
-  reward_points: Generated<ColumnType<number, number, never>>
-  created_at: Generated<ColumnType<Date, never, never>>
+  reward_points: Generated<number>
+  created_at: ColumnType<Date, never, never>
 }
 
 interface TaskGroupTable {
@@ -21,7 +21,7 @@ interface CompletedTaskTable {
   task_group_name: string
   task_id: number
   completed_by: string
-  completed_at: Generated<ColumnType<Date, never, never>>
+  completed_at: ColumnType<Date, never, never>
 }
 
 export interface Database {
