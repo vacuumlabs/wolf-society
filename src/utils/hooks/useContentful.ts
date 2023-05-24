@@ -332,7 +332,7 @@ export const getNfts = async (locale?: string) => {
   const nftsData = await getArrayOfContent<NFTData>({
     contentType: ContentTypes.nft,
     locale,
-    orderBy: 'fields.id',
+    orderBy: 'fields.orderNumber',
   })
   if (!nftsData) return nftsData
   return await Promise.all(
