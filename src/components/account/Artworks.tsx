@@ -10,7 +10,7 @@ export type ArtworksProps = {
 export const Artworks = ({ nftsData }: ArtworksProps) => {
   const breakpoint: keyof BreakpointOverrides = 'tabletM'
   const translate = useContentful(ContentTypes.accountPage)
-  return nftsData.length > 0 ? (
+  return (
     <Grid container>
       {nftsData.map((nft) => (
         <Grid item mobile={12} tabletM={6} desktopS={4} key={nft.name}>
@@ -18,12 +18,6 @@ export const Artworks = ({ nftsData }: ArtworksProps) => {
         </Grid>
       ))}
     </Grid>
-  ) : (
-    <Stack alignItems="center">
-      <Typography variant="body2" textAlign="center" maxWidth={344}>
-        {translate('noArtworks')}
-      </Typography>
-    </Stack>
   )
 }
 
