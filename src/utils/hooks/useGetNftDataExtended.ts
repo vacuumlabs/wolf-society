@@ -9,7 +9,9 @@ export const useGetNftDataExtended = (
   nftsData: NFTData[] | null
 ): NFTDataExtended[] => {
   const [nftsDataExtended, setNftsDataExtended] = useState<NFTDataExtended[]>(
-    []
+    nftsData?.map((nftData) => {
+      return { ...nftData, owned: false }
+    }) ?? []
   )
   const userAccount = useAccount()
   const userNfts = useGetNfts(userAccount.address)

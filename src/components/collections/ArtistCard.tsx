@@ -69,7 +69,7 @@ const ArtistCard = ({
               width: '100%',
               height: '100%',
             }}
-            alt="Project image"
+            alt="Artist image"
           />
         </Box>
         <Typography
