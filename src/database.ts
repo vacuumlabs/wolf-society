@@ -3,7 +3,7 @@ import { ColumnType, Generated } from 'kysely'
 
 interface AppUserTable {
   eth_address: string
-  reward_points: number
+  reward_points: Generated<ColumnType<number, number, never>>
   created_at: Generated<ColumnType<Date, never, never>>
 }
 
@@ -35,3 +35,5 @@ export interface Database {
  * DO NOT IMPORT IN CLIENT FACING CODE!
  */
 export const db = createKysely<Database>()
+
+export const POSTGRES_KEY_ALREADY_EXISTS_ERROR_CODE = '23505'
