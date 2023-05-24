@@ -1,18 +1,16 @@
-import {
-  ContentTypes,
-  NFTData,
-  useContentful,
-} from '@/utils/hooks/useContentful'
+import { ContentTypes, useContentful } from '@/utils/hooks/useContentful'
 import {
   ButtonProps,
   BreakpointOverrides,
   Stack,
   Typography,
   Box,
+  IconButton,
 } from '@mui/material'
 import { useAccount, useWalletClient } from 'wagmi'
 import Button from '../Button'
 import {
+  MAGIC_WALLET_USER_REJECTED_ACTION_MESSAGE,
   lazyPayableClaimContractAddress,
   manifoldTxFee,
   nftSmartContractAddress,
@@ -21,6 +19,14 @@ import { LazyPayableClaimAbi } from '@/abi/LazyPayableClaim'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { encodeFunctionData, parseEther } from 'viem'
 import { NFTParameters } from './NFTParameters'
+import { useSnackbar } from 'notistack'
+import { NFTDataExtended } from '@/utils/hooks/useGetNftDataExtended'
+import {
+  SocialMedia,
+  getNftShareableContent,
+  socialMediaListData,
+  shareContentOnSocialMedia,
+} from '@/utils/sharing'
 
 const CircleButton = ({
   label,
@@ -49,35 +55,31 @@ const CircleButton = ({
   </Button>
 )
 
-export type ButtonsMode = 'buy' | 'shareTwitter'
-export interface NFTBuyProps {
-  nft: NFTData
-  buttonsMode: ButtonsMode
-}
-
-type NFTBuyComponentProps = NFTBuyProps & {
+type NFTBuyComponentProps = {
+  nftData: NFTDataExtended
   buyInView: boolean
   className: string
 }
 
 export const NFTBuy = ({
-  nft,
-  buttonsMode,
+  nftData,
   buyInView,
   className,
 }: NFTBuyComponentProps) => {
   const translate = useContentful(ContentTypes.nftDetail)
-  const { priceInEth, manifoldLink, instanceId } = nft
+  const translateCommon = useContentful(ContentTypes.common)
+  const { priceInEth, manifoldLink, instanceId } = nftData
   const breakpoint: keyof BreakpointOverrides = 'tabletM'
 
   const { openConnectModal } = useConnectModal()
   const { address, connector } = useAccount()
   const { data: walletClient, isLoading: isWalletClientLoading } =
     useWalletClient()
+  const { enqueueSnackbar } = useSnackbar()
   const isUserWalletMagic = connector != null && connector.id === 'magic'
 
   const buyNft = async () => {
-    if (!walletClient || !address) {
+    if (!walletClient || !address || instanceId == null) {
       if (openConnectModal != undefined) {
         openConnectModal()
       }
@@ -89,11 +91,23 @@ export const NFTBuy = ({
       args: [nftSmartContractAddress, BigInt(instanceId), 0, [], address],
     })
 
-    const txResponse = await walletClient.sendTransaction({
-      to: lazyPayableClaimContractAddress,
-      data: encodedData,
-      value: BigInt(manifoldTxFee) + parseEther(`${priceInEth}`),
-    })
+    try {
+      const txResponse = await walletClient.sendTransaction({
+        to: lazyPayableClaimContractAddress,
+        data: encodedData,
+        value: BigInt(manifoldTxFee) + parseEther(`${priceInEth}`),
+      })
+    } catch (err: any) {
+      if (
+        err.cause?.cause?.rawMessage ===
+        MAGIC_WALLET_USER_REJECTED_ACTION_MESSAGE
+      ) {
+        return
+      } else {
+        enqueueSnackbar(err.message, { variant: 'error' })
+        console.error(err)
+      }
+    }
   }
 
   return (
@@ -112,39 +126,75 @@ export const NFTBuy = ({
       mb={{ mobile: buyInView ? 6 : 0 }}
       className={className}
     >
+      <NFTParameters nftData={nftData} alignCenter />
       <Stack
         alignItems="center"
+        justifyContent="center"
         flexGrow={1}
         gap={{ mobile: 5, [breakpoint]: 10 }}
-        pb={{ mobile: 0, [breakpoint]: 5 }}
       >
-        <NFTParameters nftData={nft} alignCenter />
         <Typography variant="display">{`${priceInEth} ETH`}</Typography>
+        {nftData.owned && (
+          <Stack gap={3} alignItems="center">
+            <Typography variant="caption" color="neutral.700">
+              {translate('shareYourImpact')}
+            </Typography>
+            <Stack direction="row">
+              {Object.keys(socialMediaListData).map((key, index) => {
+                return (
+                  <IconButton
+                    key={`social-media-${index}`}
+                    onClick={() =>
+                      shareContentOnSocialMedia(
+                        getNftShareableContent(
+                          translateCommon('nftShareText'),
+                          nftData
+                        ),
+                        key as SocialMedia
+                      )
+                    }
+                    sx={{
+                      marginLeft: index > 0 ? '-1px' : 0,
+                      marginRight:
+                        index < Object.keys(socialMediaListData).length - 1
+                          ? '-1px'
+                          : 0,
+                    }}
+                  >
+                    {socialMediaListData[key as SocialMedia]?.icon}
+                  </IconButton>
+                )
+              })}
+            </Stack>
+          </Stack>
+        )}
       </Stack>
-      <Stack
-        direction="row"
-        justifyContent={buttonsMode === 'buy' ? 'space-between' : 'center'}
-        gap={2}
-        width="100%"
-      >
-        {buttonsMode === 'buy' && (
+      {!nftData.owned && (
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          gap={2}
+          width="100%"
+          pt={{ mobile: 0, [breakpoint]: 5 }}
+        >
           <>
             <CircleButton
               label={translate('buyWithCard')}
-              disabled={!isUserWalletMagic && !isWalletClientLoading}
+              disabled={
+                !isUserWalletMagic ||
+                isWalletClientLoading ||
+                instanceId == null
+              }
               onClick={() => buyNft()}
             />
             <CircleButton
               label={translate('buyWithCrypto')}
               href={manifoldLink}
-              disabled={isUserWalletMagic}
+              disabled={manifoldLink == null || isUserWalletMagic}
             />
           </>
-        )}
-        {buttonsMode === 'shareTwitter' && (
-          <CircleButton label={translate('shareOnTwitter')} />
-        )}
-      </Stack>
+        </Stack>
+      )}
     </Stack>
   )
 }

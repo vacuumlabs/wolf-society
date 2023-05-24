@@ -1,4 +1,3 @@
-import { NFTData } from '@/utils/hooks/useContentful'
 import {
   Box,
   CardMedia,
@@ -10,6 +9,9 @@ import {
 import dynamic from 'next/dynamic'
 import TypographyWithTooltips from '../TypographyWithTooltips'
 import { NFTParameters } from './NFTParameters'
+import { NFTDataExtended } from '@/utils/hooks/useGetNftDataExtended'
+import { getNftShareableContent } from '@/utils/sharing'
+import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
 
 const DynamicShareButton = dynamic(
   () => import('../collections/ShareButton').then((mod) => mod.ShareButton),
@@ -17,10 +19,11 @@ const DynamicShareButton = dynamic(
 )
 
 export interface NFTDescriptionProps {
-  nftData: NFTData
+  nftData: NFTDataExtended
 }
 
 export const NFTDescription = ({ nftData }: NFTDescriptionProps) => {
+  const translate = useContentful(ContentTypes.common)
   const isMobile = useMediaQuery((theme: Theme) =>
     theme.breakpoints.down('tabletM')
   )
@@ -62,7 +65,12 @@ export const NFTDescription = ({ nftData }: NFTDescriptionProps) => {
             {nftData.name}
           </Typography>
           <NFTParameters nftData={nftData} />
-          <DynamicShareButton />
+          <DynamicShareButton
+            shareableContent={getNftShareableContent(
+              translate('nftShareText'),
+              nftData
+            )}
+          />
         </Stack>
         <Stack gap={1}>
           <TypographyWithTooltips

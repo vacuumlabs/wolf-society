@@ -23,6 +23,9 @@ import NftCardArtImpact from './NftCardArtImpact'
 import Button from '../Button'
 import { ArtistCardMobile } from './ArtistCardMobile'
 import { BigNumber, ethers } from 'ethers'
+import { NFTDataExtended } from '@/utils/hooks/useGetNftDataExtended'
+import dynamic from 'next/dynamic'
+import { getCollectionShareableContent } from '@/utils/sharing'
 
 type Props = {
   id: string
@@ -32,8 +35,13 @@ type Props = {
   subtitle: string
   deadline?: Date
   numberOfPieces?: number
-  nftData: NFTData[] | null
+  nftData: NFTDataExtended[]
 }
+
+const DynamicShareButton = dynamic(
+  () => import('./ShareButton').then((mod) => mod.ShareButton),
+  { ssr: false }
+)
 
 const Collection = forwardRef<HTMLElement, Props>((props, ref) => {
   const {
@@ -58,21 +66,21 @@ const Collection = forwardRef<HTMLElement, Props>((props, ref) => {
   const breakpoint: keyof BreakpointOverrides = 'tabletM'
 
   const collectionEthPrice = ethers.utils.formatEther(
-    nftData?.reduce(
+    nftData.reduce(
       (acc, nft) => acc.add(ethers.utils.parseEther(nft.priceInEth.toString())),
       BigNumber.from(0)
     ) ?? 0
   )
 
   const [artistName, setArtistName] = useState<string | undefined>(
-    nftData?.[0]?.artist.fields.artistName
+    nftData[0]?.artist.fields.artistName
   )
   const [artistImage, setArtistImage] = useState<string | undefined>(
-    nftData?.[0]?.artist.fields.artistImage.fields.file.url
+    nftData[0]?.artist.fields.artistImage.fields.file.url
   )
 
   const [artistMotto, setArtistMotto] = useState<string | undefined>(
-    nftData?.[0]?.artist.fields.artistMotto
+    nftData[0]?.artist.fields.artistMotto
   )
 
   useEffect(() => {
@@ -114,6 +122,14 @@ const Collection = forwardRef<HTMLElement, Props>((props, ref) => {
               <Typography variant="display" color="neutral.main">
                 {name}
               </Typography>
+              <DynamicShareButton
+                color="neutral"
+                shareableContent={getCollectionShareableContent(
+                  translateCommon('collectionShareText'),
+                  name,
+                  id
+                )}
+              />
               <Typography
                 variant={isMobile ? 'body2' : 'body1'}
                 color="neutral.main"
@@ -157,33 +173,30 @@ const Collection = forwardRef<HTMLElement, Props>((props, ref) => {
                 />
               </Box>
             </Stack>
-            {nftData && (
-              <Stack spacing={{ mobile: 10, [breakpoint]: 0 }}>
-                {nftData.map((nft, index) => (
-                  <Stack width="100%" alignItems="center" key={nft.name}>
-                    <ArtistCardMobile
-                      artistImage={
-                        nft.artist.fields.artistImage.fields.file.url
-                      }
-                      artistName={nft.artist.fields.artistName}
+
+            <Stack spacing={{ mobile: 10, [breakpoint]: 0 }}>
+              {nftData.map((nft, index) => (
+                <Stack width="100%" alignItems="center" key={nft.name}>
+                  <ArtistCardMobile
+                    artistImage={nft.artist.fields.artistImage.fields.file.url}
+                    artistName={nft.artist.fields.artistName}
+                  />
+                  <ScrollingCard index={index}>
+                    <NftCardArtImpact
+                      nftCardProps={{
+                        minted: nft.minted,
+                        nftData: nft,
+                      }}
+                      changeArtist={() => {
+                        handleChangeArtist(nft)
+                      }}
+                      isLast={index === nftData.length - 1}
+                      setPointerOver={setPointerOverNft}
                     />
-                    <ScrollingCard index={index}>
-                      <NftCardArtImpact
-                        nftCardProps={{
-                          minted: nft.minted,
-                          data: nft,
-                        }}
-                        changeArtist={() => {
-                          handleChangeArtist(nft)
-                        }}
-                        isLast={index === nftData.length - 1}
-                        setPointerOver={setPointerOverNft}
-                      />
-                    </ScrollingCard>
-                  </Stack>
-                ))}
-              </Stack>
-            )}
+                  </ScrollingCard>
+                </Stack>
+              ))}
+            </Stack>
           </ParallaxProvider>
         </Container>
       </AppearingComponent>

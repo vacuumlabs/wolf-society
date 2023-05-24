@@ -25,8 +25,7 @@ CREATE TABLE IF NOT EXISTS completed_task (
   completed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
   PRIMARY KEY(task_group_name, task_id, completed_by),
-  FOREIGN KEY(task_group_name) REFERENCES task_group(name)
-  FOREIGN KEY(task_id) REFERENCES task(id),
+  FOREIGN KEY(task_id, task_group_name) REFERENCES task(id, task_group_name),
   FOREIGN KEY(completed_by) REFERENCES app_user(eth_address)
 );
 

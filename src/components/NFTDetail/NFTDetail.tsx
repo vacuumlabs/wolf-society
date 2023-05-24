@@ -13,7 +13,7 @@ import { NFTDescription } from './NFTDescription'
 import { NFTArtist, NFTArtistProps } from './NFTArtist'
 import CloseIcon from '@mui/icons-material/Close'
 import { NFTUsage, NFTUsageProps } from './NFTUsage'
-import { NFTBuy, NFTBuyProps } from './NFTBuy'
+import { NFTBuy } from './NFTBuy'
 import { useRef, useState } from 'react'
 import { NFTDividerLine } from './NFTDividerLine'
 import { NFTAllocation } from './NFTAllocation'
@@ -23,14 +23,14 @@ import {
   ContentTypes,
   NFTData,
 } from '@/utils/hooks/useContentful'
+import { NFTDataExtended } from '@/utils/hooks/useGetNftDataExtended'
 
 export interface NFTDetailProps {
   isOpen: boolean
   onClose: () => void
-  nftData: NFTData
+  nftData: NFTDataExtended
   nftArtistProps: NFTArtistProps
   nftUsageProps: NFTUsageProps
-  nftBuyProps: NFTBuyProps
 }
 
 export const NFTDetail = ({
@@ -39,7 +39,6 @@ export const NFTDetail = ({
   nftData,
   nftArtistProps,
   nftUsageProps,
-  nftBuyProps,
 }: NFTDetailProps) => {
   const translate = useContentful(ContentTypes.nftDetail)
   const drawerPaperRef = useRef<HTMLDivElement>(null)
@@ -59,7 +58,7 @@ export const NFTDetail = ({
       <NFTDividerLine />
       <NFTUsage {...nftUsageProps} />
       {!isMobile && <NFTDividerLine />}
-      <NFTBuy {...{ ...nftBuyProps, buyInView }} className="nftBuy" />
+      <NFTBuy nftData={nftData} buyInView={buyInView} className="nftBuy" />
     </>
   )
   return (
@@ -106,7 +105,7 @@ export const NFTDetail = ({
           {content.props.children}
         </HorizontalScroll>
       )}
-      {nftBuyProps.buttonsMode === 'buy' && (
+      {!nftData.owned && (
         <Box
           display={buyInView ? 'none' : 'inherit'}
           sx={{
@@ -153,7 +152,7 @@ export const NFTDetail = ({
           >
             <Stack direction="row" gap={'1ch'}>
               <Typography variant="button">{`${translate('buyNft')} ${
-                nftBuyProps.nft.priceInEth
+                nftData.priceInEth
               } ETH`}</Typography>
             </Stack>
           </Button>

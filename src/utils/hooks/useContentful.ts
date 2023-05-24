@@ -47,9 +47,6 @@ export type CollectionData = {
   deadline?: string
   numberOfPieces?: number
   image: Asset
-  artistName: string
-  artistSubtext: string
-  artistImage: Asset
 }
 
 export type NFTDetailData = {
@@ -62,6 +59,7 @@ export type NFTDetailData = {
   beatTheDrumSubtitle: string
   breadAndButterTitle: string
   breadAndButterSubtitle: string
+  shareYourImpact: string
 }
 
 export type NFTArtistData = {
@@ -99,8 +97,8 @@ export type NFTData = {
   beatTheDrumList: string
   breadAndButterList: string
   minted: number
-  manifoldLink: string
-  instanceId: number
+  manifoldLink?: string
+  instanceId?: number
 }
 
 export type CollectionsPageData = {
@@ -168,6 +166,8 @@ export type Content = {
     allocationPart3: string
     connectWallet: string
     disconnectWallet: string
+    nftShareText: string
+    collectionShareText: string
   }
   [ContentTypes.landingPage]: {
     heroTitle: string
@@ -200,6 +200,12 @@ export type Content = {
     allArticles: string
     roadmap: string
     partners: string
+    newsletterText: string
+    newsletterInputLabel: string
+    newsletterButton: string
+    newsletterSubscriptionSuccess: string
+    newsletterSubscriptionError: string
+    newsletterSubscriptionConflict: string
   }
   [ContentTypes.collectionsPage]: CollectionsPageData
   [ContentTypes.articlesPage]: {
@@ -326,7 +332,7 @@ export const getNfts = async (locale?: string) => {
   const nftsData = await getArrayOfContent<NFTData>({
     contentType: ContentTypes.nft,
     locale,
-    orderBy: 'fields.id',
+    orderBy: 'fields.orderNumber',
   })
   if (!nftsData) return nftsData
   return await Promise.all(
