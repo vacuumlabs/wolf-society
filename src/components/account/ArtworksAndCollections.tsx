@@ -18,6 +18,9 @@ import {
 import Artworks from './Artworks'
 import Collections from './Collections'
 import { useGetNftDataExtended } from '@/utils/hooks/useGetNftDataExtended'
+import NextLink from 'next/link'
+import { SUBPAGES } from '@/consts'
+import Button from '../Button'
 
 enum TabIds {
   ARTWORKS,
@@ -48,6 +51,7 @@ export const ArtworksAndCollections = ({
   nftsData,
 }: Props) => {
   const translate = useContentful(ContentTypes.accountPage)
+  const translateCommon = useContentful(ContentTypes.common)
   const [activeTab, setActiveTab] = useState<number>(0)
   const breakpoint: keyof BreakpointOverrides = 'tabletM'
 
@@ -104,10 +108,17 @@ export const ArtworksAndCollections = ({
   ) : (
     <Box sx={{ bgcolor: 'neutral.400' }} py={{ mobile: 10, [breakpoint]: 20 }}>
       <Container>
-        <Stack alignItems="center">
+        <Stack alignItems="center" gap={3}>
           <Typography variant="body2" textAlign="center" maxWidth={344}>
             {translate('noArtworks')}
           </Typography>
+          <NextLink
+            href={SUBPAGES['collections']}
+            passHref
+            style={{ lineHeight: 0 }}
+          >
+            <Button>{translateCommon('makeImpactButton')}</Button>
+          </NextLink>
         </Stack>
       </Container>
     </Box>
