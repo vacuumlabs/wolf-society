@@ -13,6 +13,7 @@ import {
 } from '@mui/material'
 import Button from '../Button'
 import { Countdown } from '../Countdown'
+import NftCard from '../NftCard'
 
 type CollectionsData = CollectionData & {
   nfts: (NFTData & { owned: boolean })[]
@@ -95,14 +96,12 @@ export const Collections = ({ collectionsData }: CollectionsProps) => {
                     alignContent="center"
                   >
                     <Stack bgcolor="neutral.600" position="relative">
-                      <img
-                        src={nft.image.fields.file.url}
-                        alt={`${nft.name} NFT image`}
-                        style={{
-                          width: '100%',
-                          height: 'auto',
-                          opacity: nft.owned ? 1 : 0.2,
-                        }}
+                      <NftCard
+                        compact
+                        indicateOwnership
+                        hideMintedIfOwned
+                        nftData={nft}
+                        minted={nft.totalSupply ? nft.minted : undefined}
                       />
                       {nft.totalSupply && !nft.owned && (
                         <Stack

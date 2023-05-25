@@ -38,7 +38,11 @@ const Activities = () => {
       imageElemnt: <HaveFunImage />,
       mobileImage: haveFunMobileImage,
       drawerContent: (
-        <DrawerTextList texts={translate('haveFunDrawerContent').split('\n')} />
+        <Box position="relative">
+          <DrawerTextList
+            texts={translate('haveFunDrawerContent').split('\n')}
+          />
+        </Box>
       ),
     },
     {
@@ -47,9 +51,11 @@ const Activities = () => {
       imageElemnt: <BreadAndButterImage />,
       mobileImage: breadAndButterMobileImage,
       drawerContent: (
-        <DrawerTextList
-          texts={translate('breadAndButterDrawerContent').split('\n')}
-        />
+        <Box position="relative">
+          <DrawerTextList
+            texts={translate('breadAndButterDrawerContent').split('\n')}
+          />
+        </Box>
       ),
     },
   ]
