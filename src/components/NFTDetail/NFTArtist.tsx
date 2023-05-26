@@ -12,7 +12,6 @@ import {
   NFTArtistSocialMedias,
   NFTArtistSocialMediasProps,
 } from './NFTArtistSocialMedias'
-import { NFTDividerLine } from './NFTDividerLine'
 import TypographyWithTooltips from '../TypographyWithTooltips'
 
 export interface NFTArtistProps {
@@ -20,7 +19,7 @@ export interface NFTArtistProps {
   imageUrl: string
   socialLinks: NFTArtistSocialMediasProps
   descriptionLeft: string
-  descriptionRight: string
+  descriptionRight?: string
 }
 
 export const NFTArtist = ({
@@ -41,7 +40,9 @@ export const NFTArtist = ({
     <>
       <Stack
         sx={{
-          width: { mobile: '100w', tabletM: '80vw' },
+          width: {
+            tabletM: '80vw',
+          },
           backgroundColor: 'neutral.400',
           overflowY: 'auto',
           paddingY: { mobile: 5, [breakpoint]: 10 },
@@ -73,14 +74,16 @@ export const NFTArtist = ({
             variant="body2"
             text={descriptionLeft}
             key={`${name} description left`}
-            sx={{ width: { mobile: 'auto', [breakpoint]: '50%' } }}
+            sx={{ width: '100%' }}
           />
-          <TypographyWithTooltips
-            variant="body2"
-            text={descriptionRight}
-            key={`${name} description right`}
-            sx={{ width: { mobile: 'auto', [breakpoint]: '50%' } }}
-          />
+          {descriptionRight && (
+            <TypographyWithTooltips
+              variant="body2"
+              text={descriptionRight}
+              key={`${name} description right`}
+              sx={{ width: '100%' }}
+            />
+          )}
         </Stack>
       </Stack>
     </>
