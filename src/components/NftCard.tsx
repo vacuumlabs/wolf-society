@@ -9,13 +9,13 @@ import {
   Stack,
   Typography,
 } from '@mui/material'
-import Button from './Button'
 import { NFTDetail } from './NFTDetail/NFTDetail'
 import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { NFTDataExtended } from '@/utils/hooks/useGetNftDataExtended'
 import { getNftShareableContent } from '@/utils/sharing'
+import FakeButton from '@/components/CardButton'
 
 export type NftCardProps = {
   minted?: number
@@ -28,7 +28,7 @@ export type NftCardProps = {
 }
 
 const DynamicShareButton = dynamic(
-  () => import('./collections/ShareButton').then((mod) => mod.ShareButton),
+  () => import('./collections/FakeShareButton').then((mod) => mod.ShareButton),
   { ssr: false }
 )
 
@@ -61,7 +61,6 @@ const NftCard = ({
   }
 
   function closeNFTDetail() {
-    setIsDetailOpen(false)
     const newQuery = { ...router.query }
     delete newQuery.nft
     router.replace(
@@ -86,7 +85,9 @@ const NftCard = ({
       <Card
         sx={{
           bgcolor: 'neutral.main',
+          transition: '250ms',
           width: '100%',
+          height: '100%',
           '& .MuiCardContent-root': {
             mobile: {},
             [breakpoint]: { translate: '0 48px' },
@@ -95,6 +96,7 @@ const NftCard = ({
           '&:hover .MuiCardContent-root': {
             mobile: {},
             [breakpoint]: { translate: '0 0' },
+            desktopM: { translate: '0 0' },
           },
         }}
       >
@@ -102,6 +104,7 @@ const NftCard = ({
           onClick={() => {
             openNFTDetail()
           }}
+          sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
         >
           <Box position="relative">
             <CardMedia
@@ -142,7 +145,14 @@ const NftCard = ({
             )}
           </Box>
           {!compact && (
-            <CardContent sx={{ p: 0, transition: 'translate 0.25s' }}>
+            <CardContent sx={{ 
+              p: 0, 
+              transition: 'translate 0.25s',
+              flexGrow: 1,
+              width: '100%',
+              display: { mobile: 'flex', [breakpoint]: 'block' },
+              flexDirection: 'column',
+              }}>
               <Stack sx={{ p: 4, textAlign: 'start' }} gap={1}>
                 <Typography variant="caption" color="secondary">
                   {name}
@@ -178,13 +188,11 @@ const NftCard = ({
                     nftData
                   )}
                 />
-                <Button
-                  component="div"
-                  sx={{ width: '100%' }}
-                  onClick={() => openNFTDetail()}
-                >
+              <FakeButton>
+                <Typography variant='button'>
                   {translate('showDetails')}
-                </Button>
+                </Typography>
+              </FakeButton>
               </Stack>
             </CardContent>
           )}
