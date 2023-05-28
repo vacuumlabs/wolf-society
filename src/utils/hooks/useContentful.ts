@@ -67,7 +67,7 @@ export type NFTArtistData = {
   artistName: string
   artistImage: Asset
   artistDescLeft: string
-  artistDescRight: string
+  artistDescRight?: string
   artistMotto: string
   artistTwitter: string
   artistInstagram: string

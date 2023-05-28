@@ -66,6 +66,26 @@ const NavbarLink = ({ subpageKey, href, label }: NavbarLinkProps) => {
   )
 }
 
+const NavbarLinksStack = () => {
+  const translate = useContentful(ContentTypes.navbar)
+  return (
+    <Stack direction="row" justifyContent="center" gap={4}>
+      {getSubpagesKeys()
+        .filter((key) => key !== 'account')
+        .map((subpageKey) => {
+          return (
+            <NavbarLink
+              key={subpageKey}
+              subpageKey={subpageKey}
+              label={translate(subpageKey)}
+              href={SUBPAGES[subpageKey]}
+            />
+          )
+        })}
+    </Stack>
+  )
+}
+
 const Navigation = () => {
   const [drawerOpened, setDrawerOpened] = useState(false)
   const router = useRouter()
@@ -109,40 +129,39 @@ const Navigation = () => {
         <Toolbar
           sx={{ p: 0, justifyContent: 'space-between', minHeight: '48px' }}
         >
-          <Link href="/" display="flex">
-            <WSLogo color="black" />
-          </Link>
           <Stack
             direction="row"
-            justifyContent="center"
-            gap={4}
+            alignItems="center"
+            gap={{ tabletM: 1.5, desktopS: 3 }}
+          >
+            <Link href="/" display="flex">
+              <WSLogo color="black" />
+            </Link>
+            <Box
+              sx={{
+                display: { mobile: 'none', desktopS: 'flex', desktopM: 'none' },
+              }}
+            >
+              <NavbarLinksStack />
+            </Box>
+          </Stack>
+          <Box
             sx={{
-              display: { mobile: 'none', tabletM: 'flex' },
-              width: { mobile: 'auto', desktopS: 'fit-content' },
-              position: { mobile: 'relative', desktopS: 'absolute' },
-              left: { mobile: '0', desktopS: '50%' },
-              transform: { mobile: 'none', desktopS: 'translate(-50%, 0)' },
+              display: { mobile: 'none', desktopM: 'flex' },
+              width: 'fit-content',
+              position: 'absolute',
+              left: '50%',
+              transform: 'translate(-50%, 0)',
             }}
           >
-            {getSubpagesKeys()
-              .filter((key) => key !== 'account')
-              .map((subpageKey) => {
-                return (
-                  <NavbarLink
-                    key={subpageKey}
-                    subpageKey={subpageKey}
-                    label={translate(subpageKey)}
-                    href={SUBPAGES[subpageKey]}
-                  />
-                )
-              })}
-          </Stack>
+            <NavbarLinksStack />
+          </Box>
           <Stack
             direction="row"
             justifyContent="center"
             gap={2}
             sx={{
-              display: { mobile: 'none', tabletM: 'flex' },
+              display: { mobile: 'none', desktopS: 'flex' },
             }}
           >
             {showAccountLink && (
@@ -160,7 +179,7 @@ const Navigation = () => {
               </Stack>
             )}
             <LaunchAppButton />
-            {trigger && (
+            {trigger && !isConnected && (
               <NextLink
                 href={SUBPAGES['collections']}
                 passHref
@@ -193,7 +212,7 @@ const Navigation = () => {
             sx={{
               flexGrow: 1,
               justifyContent: 'end',
-              display: { mobile: 'flex', tabletM: 'none' },
+              display: { mobile: 'flex', desktopS: 'none' },
             }}
           >
             <Typography variant="button">{translate(currentPage)}</Typography>
