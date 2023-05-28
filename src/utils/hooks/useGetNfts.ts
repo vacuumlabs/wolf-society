@@ -1,9 +1,11 @@
-import { nftSmartContractAddress } from '@/consts'
 import { Nft } from 'alchemy-sdk'
 import { useEffect, useState } from 'react'
 import { alchemy } from '../configs/alchemy'
 
-export const useGetNfts = (address: string | undefined): Nft[] => {
+export const useGetNfts = (
+  userAddress: string | undefined,
+  nftsAddresses: string[]
+): Nft[] => {
   const [nfts, setNfts] = useState<Nft[]>([])
 
   useEffect(() => {
@@ -11,17 +13,17 @@ export const useGetNfts = (address: string | undefined): Nft[] => {
       setNfts(
         (
           await alchemy.nft.getNftsForOwner(address, {
-            contractAddresses: [nftSmartContractAddress],
+            contractAddresses: nftsAddresses,
           })
         ).ownedNfts
       )
     }
-    if (address) {
-      fetchNfts(address)
+    if (userAddress) {
+      fetchNfts(userAddress)
     } else {
       setNfts([])
     }
-  }, [address])
+  }, [userAddress, JSON.stringify(nftsAddresses)])
 
   return nfts
 }

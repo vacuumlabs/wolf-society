@@ -2,7 +2,7 @@ import { Asset } from 'contentful'
 import { createContext, useContext } from 'react'
 import contentful from '../configs/contentful'
 import { getNftMintedAmount } from '../helpers'
-import { nftTestnetSmartContractAddress } from '@/consts'
+import { nftTestnetInstanceId, nftTestnetSmartContractAddress } from '@/consts'
 
 export enum ContentTypes {
   navbar = 'navbar',
@@ -87,7 +87,6 @@ export type NFTData = {
   collection: {
     fields: CollectionData
   }
-  tokenId?: number
   name: string
   priceInEth: number
   totalSupply?: number
@@ -99,7 +98,7 @@ export type NFTData = {
   beatTheDrumList: string
   breadAndButterList: string
   minted: number
-  tokenAddress?: string
+  tokenAddress?: `0x${string}`
   manifoldLink?: string
   instanceId?: number
 }
@@ -358,6 +357,17 @@ export const getCollections = (locale?: string) =>
     orderBy: 'fields.orderNumber',
   })
 
+// For testing purposes, use testnet contract address for all NFTs
+const changeNftPropertiesIfTestnet = (nftData: NFTData) => {
+  return process.env.NEXT_PUBLIC_TESTNET === 'true'
+    ? {
+        ...nftData,
+        tokenAddress: nftTestnetSmartContractAddress,
+        instanceId: nftTestnetInstanceId,
+      }
+    : nftData
+}
+
 export const getNfts = async (locale?: string) => {
   const nftsData = await getArrayOfContent<NFTData>({
     contentType: ContentTypes.nft,
@@ -366,15 +376,14 @@ export const getNfts = async (locale?: string) => {
   })
   if (!nftsData) return nftsData
   return await Promise.all(
-    nftsData.map(async (nftData) => {
+    nftsData.map(async (nftDataFromCMS) => {
+      const nftData = changeNftPropertiesIfTestnet(nftDataFromCMS)
       return {
         ...nftData,
-        minted: nftData.tokenId ? await getNftMintedAmount(nftData.tokenId) : 0,
-        tokenAddress:
-          // For testing purposes, use testnet contract address for all NFTs
-          process.env.NEXT_PUBLIC_TESTNET === 'true'
-            ? nftTestnetSmartContractAddress
-            : nftData.tokenAddress,
+        minted:
+          nftData.tokenAddress && nftData.instanceId
+            ? await getNftMintedAmount(nftData.tokenAddress, nftData.instanceId)
+            : 0,
       }
     })
   )

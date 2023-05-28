@@ -16,7 +16,10 @@ export const useGetNftDataWithOwnership = (
     }) ?? []
   )
   const userAccount = useAccount()
-  const userNfts = useGetNfts(userAccount.address)
+  const nftsAddresses = (nftsData
+    ?.map((nftData) => nftData.tokenAddress)
+    ?.filter((address) => address != null) ?? []) as `0x${string}`[]
+  const userNfts = useGetNfts(userAccount.address, nftsAddresses)
 
   useEffect(() => {
     setNftsDataWithOwnership(
@@ -24,7 +27,7 @@ export const useGetNftDataWithOwnership = (
         return {
           ...nft,
           owned: !!userNfts.find((userNft) => {
-            return userNft.tokenId === nft.tokenId?.toString()
+            return userNft.contract.address === nft.tokenAddress
           }),
         }
       }) ?? []

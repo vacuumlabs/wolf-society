@@ -12,7 +12,9 @@ export const tooltipCustomMarkdownRegex =
   /(\*([^*]*)\*\(((?:[^()]*|\((?:[^()]*|\([^()]*\))*\))*)\))/g
 
 export const nftTestnetSmartContractAddress =
-  '0x6c5a72a30ab18A013307A514133144bBcac1f61d'
+  '0x81a1419049a6731ab52505da86cf077d850b3fee'
+
+export const nftTestnetInstanceId = 1049684612
 
 export const nftSmartContractAddress =
   '0x6c5a72a30ab18A013307A514133144bBcac1f61d'
@@ -24,9 +26,9 @@ export const COLLECTIONS_COLOR_ORDER: string[] = [
   'black.main',
 ]
 
-export const lazyPayableClaimContractAddress = process.env.NEXT_PUBLIC_TESTNET
-  ? '0x73CA7420625d312d1792Cea60Ced7B35D009322c'
-  : '0x'
+// Address is the same for Mainnet as for Goerli
+export const lazyPayableClaimContractAddress =
+  '0x074eaee8fc3e4e2b361762253f83d9a94aec6fd4'
 
 export const manifoldTxFee = 500000000000000
 

@@ -1,15 +1,8 @@
-import { SUBPAGES, nftSmartContractAddress } from '@/consts'
+import { SUBPAGES, lazyPayableClaimContractAddress } from '@/consts'
 import { Nft } from 'alchemy-sdk'
-import ERC1155ABI from '@/abi/ERC1155'
-import { BigNumber, ethers } from 'ethers'
+import { ethers } from 'ethers'
 import { alchemy } from './configs/alchemy'
-
-export const compareNfts = (nft1: Nft, nft2: Nft): boolean => {
-  return (
-    nft1.contract.address === nft2.contract.address &&
-    nft1.tokenId === nft2.tokenId
-  )
-}
+import { ERC721LazyPayableClaimAbi } from '@/abi/ERC721LazyPayableClaim'
 
 export const formatAddress = (address: string) => {
   if (address.length <= 8) return address
@@ -33,14 +26,23 @@ export const formatCategories = (categories: string[]) => {
   )
 }
 
-export const getNftMintedAmount = async (tokenId: number) => {
+export const getNftMintedAmount = async (
+  tokenAddress: string,
+  instanceId: number
+) => {
+  const lazyPayableClaimInterface = new ethers.utils.Interface(
+    ERC721LazyPayableClaimAbi
+  )
   const response = await alchemy.core.call({
-    to: nftSmartContractAddress,
-    data: new ethers.utils.Interface(ERC1155ABI).encodeFunctionData(
-      'totalSupply',
-      [tokenId]
-    ),
+    to: lazyPayableClaimContractAddress,
+    data: lazyPayableClaimInterface.encodeFunctionData('getClaim', [
+      tokenAddress,
+      instanceId,
+    ]),
   })
-  // response is string but in a hex format of a BigNumber
-  return BigNumber.from(response).toNumber()
+  const result = lazyPayableClaimInterface.decodeFunctionResult(
+    'getClaim',
+    response
+  )
+  return result[0].total
 }
