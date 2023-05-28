@@ -1,10 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { db } from '../../../../../database'
 import { sql } from 'kysely'
-import { TaskDB } from '@/types'
+import { TaskRow } from '@/types'
 
 type SuccessData = {
-  tasks: TaskDB[]
+  tasks: TaskRow[]
 }
 
 type ErrorData = {

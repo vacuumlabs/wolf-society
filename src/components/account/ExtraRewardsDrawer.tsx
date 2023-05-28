@@ -83,7 +83,7 @@ const ExtraRewardsDrawer = ({
     } catch (err) {
       console.error(err)
     }
-    if (!signature) return
+    if (!signature) return { message: translate('messageNotSignedError') }
     return fetch(`/api/user/complete-task`, {
       method: 'POST',
       body: JSON.stringify({
@@ -94,6 +94,27 @@ const ExtraRewardsDrawer = ({
         'Content-Type': 'application/json',
       },
     })
+  }
+
+  const startCompletingTask = async (task: TaskDataExtended) => {
+    setCompletingTaskLast(completingTaskRef.current)
+    setCompletingTask(null)
+    const response = await postToCompleteTaskApi(task)
+    if (response && 'status' in response && response.status === 200) {
+      const completingTaskLastCurrent = completingTaskLastRef.current
+      if (completingTaskLastCurrent) {
+        completingTaskLastCurrent.isCompleted = true
+      }
+      setCompletingTaskLast(null)
+    } else {
+      const errorMessage =
+        'message' in response
+          ? response.message
+          : translateCommon('genericErrorMessage')
+      enqueueSnackbar(errorMessage, {
+        variant: 'error',
+      })
+    }
   }
 
   const actionButtonDisabledState = (task: TaskDataExtended): boolean => {
@@ -112,20 +133,7 @@ const ExtraRewardsDrawer = ({
     setCompletingTask(task)
     switch (task.id) {
       case StaticTask.BUY_ALL_NFTS:
-        setCompletingTaskLast(completingTaskRef.current)
-        setCompletingTask(null)
-        const response = await postToCompleteTaskApi(task)
-        if (response && response.status === 200) {
-          const completingTaskLastCurrent = completingTaskLastRef.current
-          if (completingTaskLastCurrent) {
-            completingTaskLastCurrent.isCompleted = true
-          }
-          setCompletingTaskLast(null)
-        } else {
-          enqueueSnackbar(translateCommon('genericErrorMessage'), {
-            variant: 'error',
-          })
-        }
+        await startCompletingTask(task)
         return
       case StaticTask.JOIN_DISCORD:
         window.open(translateNavbar('discordLink'), '_blank')
@@ -173,8 +181,6 @@ const ExtraRewardsDrawer = ({
         if (socialMedia && nftOrCollection) {
           let content
           if ('tokenAddress' in nftOrCollection) {
-            console.log('hm', nftOrCollection)
-            console.log('hm2', collectionData.nfts)
             content = getNftShareableContent(
               translateCommon('nftShareText'),
               collectionData.nfts.filter(
@@ -198,20 +204,7 @@ const ExtraRewardsDrawer = ({
     const listener = async function (event: FocusEvent) {
       const completingTaskCurrent = completingTaskRef.current
       if (completingTaskCurrent != null) {
-        setCompletingTaskLast(completingTaskRef.current)
-        setCompletingTask(null)
-        const response = await postToCompleteTaskApi(completingTaskCurrent)
-        if (response && response.status === 200) {
-          const completingTaskLastCurrent = completingTaskLastRef.current
-          if (completingTaskLastCurrent) {
-            completingTaskLastCurrent.isCompleted = true
-          }
-          setCompletingTaskLast(null)
-        } else {
-          enqueueSnackbar(translateCommon('genericErrorMessage'), {
-            variant: 'error',
-          })
-        }
+        await startCompletingTask(completingTaskCurrent)
       }
     }
     window.addEventListener('focus', listener, false)

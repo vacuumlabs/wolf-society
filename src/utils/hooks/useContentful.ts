@@ -143,6 +143,7 @@ export type AccountPageData = {
   unlockRewardsButton: string
   unlockExtraRewardsTitle: string
   unlockExtraRewardsDescription: string
+  messageNotSignedError: string
 }
 
 // Content to be injected into every page

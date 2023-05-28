@@ -51,8 +51,6 @@ export default async function handler(
     const collectionNfts = nfts
       .filter((nft) => nft.collection.fields.id === data.task_group_name)
       .map((nft) => nft.tokenAddress?.toLowerCase())
-    console.log('gr', data.task_group_name)
-    console.log('col', collectionNfts)
     if (collectionNfts.some((nft) => nft == null)) {
       return res.status(500).json({
         message: 'Not all NFTs have filled out token addresses.',
@@ -61,17 +59,13 @@ export default async function handler(
     const userNfts = await alchemy.nft.getNftsForOwner(data.eth_address, {
       contractAddresses: collectionNfts as string[],
     })
-    console.log(
-      'usernfts',
-      userNfts.ownedNfts.map((nft) => nft.contract.address)
-    )
-    if (
-      !(collectionNfts as string[]).every((collectionNft) =>
+    const userOwnsAllNfts = (collectionNfts as string[]).every(
+      (collectionNft) =>
         userNfts.ownedNfts.some(
           (userNft) => userNft.contract.address === collectionNft
         )
-      )
-    ) {
+    )
+    if (!userOwnsAllNfts) {
       return res.status(500).json({
         message: 'User does not own all NFTs from this collection.',
       })
