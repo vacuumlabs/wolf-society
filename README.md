@@ -54,7 +54,6 @@ Controls:
   - relatively limited regions: 3 us, 1 eu, 1 ap (singapore).
 - compatible with ORMs: we use [Kysely](https://github.com/kysely-org/kysely)
 
-
 ## Authentication
 
 - User signs payload using Metamask (blockchain communication)

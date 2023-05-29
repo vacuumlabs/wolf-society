@@ -19,6 +19,7 @@ import CloseIcon from '../icons/CloseIcon'
 import { SUBPAGES } from '@/consts'
 import TypographyWithTooltips from '../TypographyWithTooltips'
 import Link from 'next/link'
+import CardButton from '@/components/CardButton'
 
 export type ProjectCardProps = {
   name: string
@@ -80,13 +81,14 @@ const ProjectCard = ({ name, imageUrl, description }: ProjectCardProps) => {
             >
               {name}
             </Typography>
-            <Button
-              component="div"
-              sx={{ width: '100%' }}
-              endIcon={<ArrowRightIcon />}
-            >
-              {translate('readMore')}
-            </Button>
+            <CardButton sx={{ width: '100%' }}>
+              <Stack direction="row" alignItems="center" gap={1}>
+                <Typography variant="button">
+                  {translate('readMore')}
+                </Typography>
+                <ArrowRightIcon />
+              </Stack>
+            </CardButton>
           </CardContent>
         </CardActionArea>
       </Card>
