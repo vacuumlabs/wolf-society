@@ -38,7 +38,7 @@ const Footer = () => {
     },
     {
       text: 'twitter',
-      href: translate('twitterLink'),
+      href: `https://twitter.com/${translate('twitterAccount')}`,
       icon: <TwitterIcon />,
     },
     {

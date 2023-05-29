@@ -111,7 +111,11 @@ export type TaskData = {
   nftOrCollection?: {
     fields: NFTData | CollectionData
   }
-  taskType?: 'Share on Twitter' | 'Share on Facebook' | 'Share on LinkedIn'
+  taskType?:
+    | 'Share on Twitter'
+    | 'Share on Facebook'
+    | 'Share on LinkedIn'
+    | 'Buy all NFTs in a Collection'
 }
 
 export type CollectionsPageData = {
@@ -144,6 +148,7 @@ export type AccountPageData = {
   unlockExtraRewardsTitle: string
   unlockExtraRewardsDescription: string
   messageNotSignedError: string
+  tweetIdToRetweet: string
 }
 
 // Content to be injected into every page
@@ -163,7 +168,7 @@ export type Content = {
     faq: string
     account: string
     discordLink: string
-    twitterLink: string
+    twitterAccount: string
   }
   [ContentTypes.common]: {
     secondsShort: string

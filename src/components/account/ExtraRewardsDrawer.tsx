@@ -118,7 +118,10 @@ const ExtraRewardsDrawer = ({
   }
 
   const actionButtonDisabledState = (task: TaskDataExtended): boolean => {
-    if (task.id === StaticTask.BUY_ALL_NFTS) return !collectionIsComplete
+    if (task.taskType === 'Buy all NFTs in a Collection')
+      return !collectionIsComplete
+    if (task.id === StaticTask.RETWEET_TWITTER)
+      return translate('tweetIdToRetweet') === 'tweetIdToRetweet'
     const taskNftOrCollection = task.nftOrCollection?.fields
     if (taskNftOrCollection && 'tokenAddress' in taskNftOrCollection) {
       const nftOwned = collectionData.nfts.find(
@@ -131,31 +134,71 @@ const ExtraRewardsDrawer = ({
 
   const guideToTask = async (task: TaskDataExtended) => {
     setCompletingTask(task)
-    switch (task.id) {
-      case StaticTask.BUY_ALL_NFTS:
-        await startCompletingTask(task)
+    if (task.taskType != null) {
+      if (task.taskType === 'Buy all NFTs in a Collection') {
+        await startCompletingTask({ ...task, id: StaticTask.BUY_ALL_NFTS })
         return
+      }
+      let socialMedia: SocialMedia | undefined
+      switch (task.taskType) {
+        case 'Share on Facebook':
+          socialMedia = 'facebook'
+          break
+        case 'Share on Twitter':
+          socialMedia = 'twitter'
+          break
+        case 'Share on LinkedIn':
+          socialMedia = 'linkedin'
+          break
+      }
+      const nftOrCollection = task.nftOrCollection?.fields
+      if (socialMedia && nftOrCollection) {
+        let content
+        if ('tokenAddress' in nftOrCollection) {
+          content = getNftShareableContent(
+            translateCommon('nftShareText'),
+            collectionData.nfts.filter(
+              (nft) => nft.id === nftOrCollection.id
+            )[0]
+          )
+        } else {
+          content = getCollectionShareableContent(
+            translateCommon('collectionShareText'),
+            collectionData.name,
+            collectionData.id
+          )
+        }
+        shareContentOnSocialMedia(content, socialMedia)
+      }
+      return
+    }
+    switch (task.id) {
       case StaticTask.JOIN_DISCORD:
         window.open(translateNavbar('discordLink'), '_blank')
         break
-      case StaticTask.TURN_ON_DISCORD_NOTIFICATIONS:
-        window.open(translateNavbar('discordLink'), '_blank')
-        break
       case StaticTask.FOLLOW_TWITTER:
-        window.open(translateNavbar('twitterLink'), '_blank')
-        break
-      case StaticTask.TURN_ON_TWITTER_NOTIFICATIONS:
-        window.open(translateNavbar('twitterLink'), '_blank')
-        break
-      case StaticTask.RETWEET_TWITTER:
-        window.open(translateNavbar('twitterLink'), '_blank')
-        break
-      case StaticTask.FOLLOW_MEDIUM:
         window.open(
-          `https://medium.com/@${process.env.NEXT_PUBLIC_MEDIUM_USER}`,
+          `https://twitter.com/intent/follow?screen_name=${translateNavbar(
+            'twitterAccount'
+          )}`,
           '_blank'
         )
         break
+      case StaticTask.TURN_ON_TWITTER_NOTIFICATIONS:
+        window.open(
+          `https://twitter.com/${translateNavbar('twitterAccount')}`,
+          '_blank'
+        )
+        break
+      case StaticTask.RETWEET_TWITTER:
+        window.open(
+          `https://twitter.com/intent/retweet?tweet_id=${translate(
+            'tweetIdToRetweet'
+          )}`,
+          '_blank'
+        )
+        break
+      case StaticTask.FOLLOW_MEDIUM:
       case StaticTask.SUBSCRIBE_MEDIUM:
         window.open(
           `https://medium.com/@${process.env.NEXT_PUBLIC_MEDIUM_USER}`,
@@ -165,39 +208,14 @@ const ExtraRewardsDrawer = ({
       case StaticTask.SUBSCRIBE_NEWSLETTER:
         window.open(`${SUBPAGES.about}#newsletter`, '_blank')
         break
-      default:
-        let socialMedia: SocialMedia | undefined
-        switch (task.taskType) {
-          case 'Share on Facebook':
-            socialMedia = 'facebook'
-            break
-          case 'Share on Twitter':
-            socialMedia = 'twitter'
-            break
-          case 'Share on LinkedIn':
-            break
-        }
-        const nftOrCollection = task.nftOrCollection?.fields
-        if (socialMedia && nftOrCollection) {
-          let content
-          if ('tokenAddress' in nftOrCollection) {
-            content = getNftShareableContent(
-              translateCommon('nftShareText'),
-              collectionData.nfts.filter(
-                (nft) => nft.id === nftOrCollection.id
-              )[0]
-            )
-          } else {
-            content = getCollectionShareableContent(
-              translateCommon('collectionShareText'),
-              collectionData.name,
-              collectionData.id
-            )
-          }
-          shareContentOnSocialMedia(content, socialMedia)
-        }
-        break
     }
+  }
+
+  const formatTaskText = (task: TaskDataExtended) => {
+    return task.text.replaceAll(
+      '{nft.name}',
+      task.nftOrCollection?.fields.name ?? ''
+    )
   }
 
   useEffect(() => {
@@ -253,7 +271,7 @@ const ExtraRewardsDrawer = ({
           </Typography>
           <Stack>
             {collectionData.tasks.map((task) => (
-              <Box key={task.text}>
+              <Box key={formatTaskText(task)}>
                 <Stack
                   direction={{ mobile: 'column', [breakpoint]: 'row' }}
                   justifyContent="space-between"
@@ -267,7 +285,9 @@ const ExtraRewardsDrawer = ({
                     ) : (
                       <TaskNotCompleteIcon />
                     )}
-                    <Typography variant="body2">{task.text}</Typography>
+                    <Typography variant="body2">
+                      {formatTaskText(task)}
+                    </Typography>
                   </Stack>
                   {!task.isCompleted && (
                     <Button

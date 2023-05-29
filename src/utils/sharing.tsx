@@ -4,7 +4,7 @@ import EmailIcon from '@/components/icons/EmailIcon'
 import FacebookIcon from '@/components/icons/FacebookIcon'
 import { SUBPAGES, WEBPAGE_DOMAIN } from '@/consts'
 
-export type SocialMedia = 'twitter' | 'facebook' | 'email'
+export type SocialMedia = 'twitter' | 'facebook' | 'email' | 'linkedin'
 export type ShareableContent = { text: string; link: string; image?: unknown }
 
 export const socialMediaListData: Partial<
@@ -36,6 +36,13 @@ export const shareContentOnSocialMedia = (
     case 'facebook':
       window.open(
         `https://www.facebook.com/sharer/sharer.php?u=${content.link}`,
+        '_blank',
+        'noreferrer'
+      )
+      break
+    case 'linkedin':
+      window.open(
+        `https://www.linkedin.com/sharing/share-offsite/?url=${content.link}`,
         '_blank',
         'noreferrer'
       )
