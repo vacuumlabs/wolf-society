@@ -1,6 +1,6 @@
 import { Box, BoxProps, styled } from '@mui/material'
 
-const FakeButton = styled(Box)<BoxProps>(({ theme }) => ({
+const CardButton = styled(Box)<BoxProps>(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
   boxShadow: 'none',
   display: 'flex',
@@ -27,5 +27,4 @@ const FakeButton = styled(Box)<BoxProps>(({ theme }) => ({
   },
 }))
 
-export default FakeButton
-
+export default CardButton

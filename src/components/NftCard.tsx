@@ -15,7 +15,7 @@ import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { NFTDataExtended } from '@/utils/hooks/useGetNftDataExtended'
 import { getNftShareableContent } from '@/utils/sharing'
-import FakeButton from '@/components/CardButton'
+import CardButton from '@/components/CardButton'
 
 export type NftCardProps = {
   minted?: number
@@ -28,7 +28,8 @@ export type NftCardProps = {
 }
 
 const DynamicShareButton = dynamic(
-  () => import('./collections/FakeShareButton').then((mod) => mod.ShareButton),
+  () =>
+    import('./collections/CardShareButton').then((mod) => mod.CardShareButton),
   { ssr: false }
 )
 
@@ -72,6 +73,7 @@ const NftCard = ({
         shallow: true,
       }
     )
+    setIsDetailOpen(false)
   }
 
   useEffect(() => {
@@ -96,7 +98,6 @@ const NftCard = ({
           '&:hover .MuiCardContent-root': {
             mobile: {},
             [breakpoint]: { translate: '0 0' },
-            desktopM: { translate: '0 0' },
           },
         }}
       >
@@ -145,14 +146,16 @@ const NftCard = ({
             )}
           </Box>
           {!compact && (
-            <CardContent sx={{ 
-              p: 0, 
-              transition: 'translate 0.25s',
-              flexGrow: 1,
-              width: '100%',
-              display: { mobile: 'flex', [breakpoint]: 'block' },
-              flexDirection: 'column',
-              }}>
+            <CardContent
+              sx={{
+                p: 0,
+                transition: 'translate 0.25s',
+                flexGrow: 1,
+                width: '100%',
+                display: { mobile: 'flex', [breakpoint]: 'block' },
+                flexDirection: 'column',
+              }}
+            >
               <Stack sx={{ p: 4, textAlign: 'start' }} gap={1}>
                 <Typography variant="caption" color="secondary">
                   {name}
@@ -188,11 +191,11 @@ const NftCard = ({
                     nftData
                   )}
                 />
-              <FakeButton>
-                <Typography variant='button'>
-                  {translate('showDetails')}
-                </Typography>
-              </FakeButton>
+                <CardButton>
+                  <Typography variant="button">
+                    {translate('showDetails')}
+                  </Typography>
+                </CardButton>
               </Stack>
             </CardContent>
           )}

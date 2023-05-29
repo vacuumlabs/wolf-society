@@ -39,7 +39,7 @@ export default async function handler(
   return user != null
     ? res.json({
         address: eth_address,
-        points: user.reward_points
+        points: user.reward_points,
       })
     : res.json({
         address: eth_address,

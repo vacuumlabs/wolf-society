@@ -12,18 +12,18 @@ import {
   socialMediaListData,
 } from '@/utils/sharing'
 
-type ShareButtonProps = BoxProps & {
+type CardShareButtonProps = BoxProps & {
   shareableContent: ShareableContent
   variant?: 'primary' | 'outlined'
   color?: 'neutral' | 'black'
 }
 
-export const ShareButton = ({
+export const CardShareButton = ({
   variant = 'outlined',
   color = 'black',
   shareableContent,
   ...props
-}: ShareButtonProps) => {
+}: CardShareButtonProps) => {
   const isMobile = useMediaQuery((theme: Theme) =>
     theme.breakpoints.down('tabletS')
   )
@@ -49,7 +49,7 @@ export const ShareButton = ({
               <Button
                 sx={{
                   width: '100%',
-                  p: 2
+                  p: 2,
                 }}
                 color={color}
                 {...bindTrigger(popupState)}
@@ -65,7 +65,7 @@ export const ShareButton = ({
                 {...bindTrigger(popupState)}
                 sx={{
                   width: '100%',
-                  p: 2
+                  p: 2,
                 }}
                 onClick={(e) => {
                   bindTrigger(popupState).onClick(e)
