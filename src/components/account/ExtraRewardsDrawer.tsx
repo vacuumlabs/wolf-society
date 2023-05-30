@@ -70,7 +70,7 @@ const ExtraRewardsDrawer = ({
   const postToCompleteTaskApi = async (task: TaskDataWithCompletion) => {
     const { address } = getAccount()
     const taskGroupName = task.nftOrCollection
-      ? 'tokenAddress' in task.nftOrCollection.fields
+      ? 'nftDesc' in task.nftOrCollection.fields
         ? task.nftOrCollection.fields.tokenAddress
         : task.nftOrCollection.fields.id
       : TASKS_GROUP_NAME_SITEWIDE
@@ -129,7 +129,7 @@ const ExtraRewardsDrawer = ({
     if (task.id === StaticTask.RETWEET_TWITTER)
       return translate('tweetIdToRetweet') === 'tweetIdToRetweet'
     const taskNftOrCollection = task.nftOrCollection?.fields
-    if (taskNftOrCollection && 'tokenAddress' in taskNftOrCollection) {
+    if (taskNftOrCollection && 'nftDesc' in taskNftOrCollection) {
       const nftOwned = collectionData.nfts.find(
         (nft) => nft.id === taskNftOrCollection.id
       )?.owned
@@ -160,7 +160,7 @@ const ExtraRewardsDrawer = ({
       const nftOrCollection = task.nftOrCollection?.fields
       if (socialMedia && nftOrCollection) {
         let content
-        if ('tokenAddress' in nftOrCollection) {
+        if ('nftDesc' in nftOrCollection) {
           content = getNftShareableContent(
             translateCommon('nftShareText'),
             collectionData.nfts.filter(
