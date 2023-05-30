@@ -37,6 +37,7 @@ const ArtImpact = ({ collectionsData, nftData, query }: Props) => {
   if (queriedNftImageUrl != null && !queriedNftImageUrl.startsWith('https:')) {
     queriedNftImageUrl = 'https:' + queriedNftImageUrl
   }
+  const queriedNftArtist = queriedNft?.artist?.fields?.artistName
   return !collectionsData ? (
     <></>
   ) : (
@@ -71,8 +72,12 @@ const ArtImpact = ({ collectionsData, nftData, query }: Props) => {
       {queriedNft != null && (
         <Head>
           <meta name="og:title" content={queriedNft.name} />
+          <meta name="og:description" content={`by ${queriedNftArtist}`} />
           <meta name="og:image" content={queriedNftImageUrl} />
           <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:title" content={queriedNft.name} />
+          <meta name="twitter:description" content={`by ${queriedNftArtist}`} />
+          <meta name="twitter:image" content={queriedNftImageUrl} />
         </Head>
       )}
     </Stack>
