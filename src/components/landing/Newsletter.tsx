@@ -49,7 +49,7 @@ const Newsletter = () => {
     <>
       <Typography
         variant="headline"
-        sx={{ display: 'inline', verticalAlign: 'middle', mb: { mobile: 1 } }}
+        sx={{ display: 'inline', verticalAlign: 'middle', mb: { mobile: 2 } }}
       >
         {translate('newsletterText')}
       </Typography>
@@ -80,7 +80,7 @@ const Newsletter = () => {
             <Stack
               direction={'column'}
               sx={{
-                py: { mobile: 10, [breakpoint]: 20 },
+                py: { mobile: 5, [breakpoint]: 10 },
                 textAlign: 'center',
               }}
               gap={1}
