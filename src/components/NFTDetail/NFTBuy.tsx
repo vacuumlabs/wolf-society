@@ -139,7 +139,9 @@ export const NFTBuy = ({
           <Typography variant="display">{`${priceInEth} ETH`}</Typography>
           <Typography variant="caption" color="neutral.700">{`${(
             priceInEth * ethToUsd
-          ).toLocaleString('en-US', {maximumFractionDigits: 2})} USD`}</Typography>
+          ).toLocaleString('en-US', {
+            maximumFractionDigits: 2,
+          })} USD`}</Typography>
         </Stack>
         {nftData.owned && (
           <Stack gap={3} alignItems="center">
