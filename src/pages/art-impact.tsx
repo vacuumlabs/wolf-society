@@ -33,6 +33,10 @@ const ArtImpact = ({ collectionsData, nftData, query }: Props) => {
   const queriedNft = query.nft
     ? nftData?.find((nft) => nft.id === query.nft)
     : undefined
+  let queriedNftImageUrl = queriedNft?.image.fields.file.url
+  if (queriedNftImageUrl != null && !queriedNftImageUrl.startsWith('https:')) {
+    queriedNftImageUrl = 'https:' + queriedNftImageUrl
+  }
   return !collectionsData ? (
     <></>
   ) : (
@@ -67,7 +71,7 @@ const ArtImpact = ({ collectionsData, nftData, query }: Props) => {
       {queriedNft != null && (
         <Head>
           <meta name="og:title" content={queriedNft.name} />
-          <meta name="og:image" content={queriedNft.image.fields.file.url} />
+          <meta name="og:image" content={queriedNftImageUrl} />
           <meta name="twitter:card" content="summary_large_image" />
         </Head>
       )}
