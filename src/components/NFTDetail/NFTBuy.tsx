@@ -27,6 +27,7 @@ import {
   socialMediaListData,
   shareContentOnSocialMedia,
 } from '@/utils/sharing'
+import { useGetEthPrice } from '@/utils/hooks/useGetEthPrice'
 
 const CircleButton = ({
   label,
@@ -69,6 +70,7 @@ export const NFTBuy = ({
   const translate = useContentful(ContentTypes.nftDetail)
   const translateCommon = useContentful(ContentTypes.common)
   const { priceInEth, manifoldLink, instanceId } = nftData
+  const ethToUsd = useGetEthPrice()
   const breakpoint: keyof BreakpointOverrides = 'tabletM'
 
   const { openConnectModal } = useConnectModal()
@@ -92,7 +94,7 @@ export const NFTBuy = ({
     })
 
     try {
-      const txResponse = await walletClient.sendTransaction({
+      await walletClient.sendTransaction({
         to: lazyPayableClaimContractAddress,
         data: encodedData,
         value: BigInt(manifoldTxFee) + parseEther(`${priceInEth}`),
@@ -133,7 +135,14 @@ export const NFTBuy = ({
         flexGrow={1}
         gap={{ mobile: 5, [breakpoint]: 10 }}
       >
-        <Typography variant="display">{`${priceInEth} ETH`}</Typography>
+        <Stack alignItems="center" justifyContent="center" gap={3}>
+          <Typography variant="display">{`${priceInEth} ETH`}</Typography>
+          <Typography variant="caption" color="neutral.700">{`${(
+            priceInEth * ethToUsd
+          ).toLocaleString('en-US', {
+            maximumFractionDigits: 2,
+          })} USD`}</Typography>
+        </Stack>
         {nftData.owned && (
           <Stack gap={3} alignItems="center">
             <Typography variant="caption" color="neutral.700">
