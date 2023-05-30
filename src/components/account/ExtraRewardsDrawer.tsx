@@ -17,7 +17,7 @@ import TaskNotCompleteIcon from '../icons/TaskNotCompleteIcon'
 import IconButton from '../IconButton'
 import Button from '../Button'
 import { CollectionDataExtended } from './Collection'
-import { TaskDataExtended } from '@/utils/hooks/useGetTasksDataExtended'
+import { TaskDataWithCompletion } from '@/utils/hooks/useGetTasksDataWithCompletion'
 import { useEffect, useRef, useState } from 'react'
 import {
   MEDIUM_DOMAIN,
@@ -53,21 +53,21 @@ const ExtraRewardsDrawer = ({
   const translateNavbar = useContentful(ContentTypes.navbar)
   const breakpoint: keyof BreakpointOverrides = 'tabletM'
   const [completingTask, _setCompletingTask] =
-    useState<TaskDataExtended | null>(null)
+    useState<TaskDataWithCompletion | null>(null)
   const [completingTaskLast, _setCompletingTaskLast] =
-    useState<TaskDataExtended | null>(null)
+    useState<TaskDataWithCompletion | null>(null)
   const completingTaskRef = useRef(completingTask)
   const completingTaskLastRef = useRef(completingTask)
-  const setCompletingTask = (task: TaskDataExtended | null) => {
+  const setCompletingTask = (task: TaskDataWithCompletion | null) => {
     completingTaskRef.current = task
     _setCompletingTask(task)
   }
-  const setCompletingTaskLast = (task: TaskDataExtended | null) => {
+  const setCompletingTaskLast = (task: TaskDataWithCompletion | null) => {
     completingTaskLastRef.current = task
     _setCompletingTaskLast(task)
   }
 
-  const postToCompleteTaskApi = async (task: TaskDataExtended) => {
+  const postToCompleteTaskApi = async (task: TaskDataWithCompletion) => {
     const { address } = getAccount()
     const taskGroupName = task.nftOrCollection
       ? 'tokenAddress' in task.nftOrCollection.fields
@@ -102,7 +102,7 @@ const ExtraRewardsDrawer = ({
     })
   }
 
-  const startCompletingTask = async (task: TaskDataExtended) => {
+  const startCompletingTask = async (task: TaskDataWithCompletion) => {
     setCompletingTaskLast(completingTaskRef.current)
     setCompletingTask(null)
     const response = await postToCompleteTaskApi(task)
@@ -123,7 +123,7 @@ const ExtraRewardsDrawer = ({
     }
   }
 
-  const actionButtonDisabledState = (task: TaskDataExtended): boolean => {
+  const actionButtonDisabledState = (task: TaskDataWithCompletion): boolean => {
     if (task.taskType === 'Buy all NFTs in a Collection')
       return !collectionIsComplete
     if (task.id === StaticTask.RETWEET_TWITTER)
@@ -138,7 +138,7 @@ const ExtraRewardsDrawer = ({
     return false
   }
 
-  const guideToTask = async (task: TaskDataExtended) => {
+  const guideToTask = async (task: TaskDataWithCompletion) => {
     setCompletingTask(task)
     if (task.taskType != null) {
       if (task.taskType === 'Buy all NFTs in a Collection') {
@@ -217,7 +217,7 @@ const ExtraRewardsDrawer = ({
     }
   }
 
-  const formatTaskText = (task: TaskDataExtended) => {
+  const formatTaskText = (task: TaskDataWithCompletion) => {
     return task.text.replaceAll(
       '{nft.name}',
       task.nftOrCollection?.fields.name ?? ''

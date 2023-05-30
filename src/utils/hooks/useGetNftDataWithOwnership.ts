@@ -3,12 +3,14 @@ import { NFTData } from './useContentful'
 import { useGetNfts } from './useGetNfts'
 import { useAccount } from 'wagmi'
 
-export type NFTDataExtended = NFTData & { owned: boolean }
+export type NFTDataWithOwnership = NFTData & { owned: boolean }
 
-export const useGetNftDataExtended = (
+export const useGetNftDataWithOwnership = (
   nftsData: NFTData[] | null
-): NFTDataExtended[] => {
-  const [nftsDataExtended, setNftsDataExtended] = useState<NFTDataExtended[]>(
+): NFTDataWithOwnership[] => {
+  const [nftsDataWithOwnership, setNftsDataWithOwnership] = useState<
+    NFTDataWithOwnership[]
+  >(
     nftsData?.map((nftData) => {
       return { ...nftData, owned: false }
     }) ?? []
@@ -17,7 +19,7 @@ export const useGetNftDataExtended = (
   const userNfts = useGetNfts(userAccount.address)
 
   useEffect(() => {
-    setNftsDataExtended(
+    setNftsDataWithOwnership(
       nftsData?.map((nft) => {
         return {
           ...nft,
@@ -29,5 +31,5 @@ export const useGetNftDataExtended = (
     )
   }, [userNfts, nftsData])
 
-  return nftsDataExtended
+  return nftsDataWithOwnership
 }

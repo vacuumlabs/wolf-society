@@ -8,13 +8,13 @@ import { BreakpointOverrides, Grid, Stack, Typography } from '@mui/material'
 import Button from '../Button'
 import { Countdown } from '../Countdown'
 import { useState } from 'react'
-import { TaskDataExtended } from '@/utils/hooks/useGetTasksDataExtended'
+import { TaskDataWithCompletion } from '@/utils/hooks/useGetTasksDataWithCompletion'
 import ExtraRewardsDrawer from './ExtraRewardsDrawer'
 import NftCard from '../NftCard'
 
 export type CollectionDataExtended = CollectionData & {
   nfts: (NFTData & { owned: boolean })[]
-  tasks: TaskDataExtended[]
+  tasks: TaskDataWithCompletion[]
 }
 
 export type CollectionProps = {

@@ -3,13 +3,13 @@ import { useAccount } from 'wagmi'
 import { TaskData } from './useContentful'
 import { TaskRow } from '@/types'
 
-export type TaskDataExtended = TaskData & {
+export type TaskDataWithCompletion = TaskData & {
   isCompleted: boolean
 }
 
-export const useGetTasksDataExtended = (tasksData: TaskData[] | null) => {
-  const [tasksDataExtended, setTasksDataExtended] = useState<
-    TaskDataExtended[] | undefined
+export const useGetTasksDataWithCompletion = (tasksData: TaskData[] | null) => {
+  const [tasksDataWithCompletion, setTasksDataWithCompletion] = useState<
+    TaskDataWithCompletion[] | undefined
   >(undefined)
   const { address } = useAccount()
 
@@ -20,7 +20,7 @@ export const useGetTasksDataExtended = (tasksData: TaskData[] | null) => {
       if (message) {
         console.error("Failed to get user's tasks", message)
       } else {
-        setTasksDataExtended(
+        setTasksDataWithCompletion(
           tasksData?.map((taskData) => {
             return {
               ...taskData,
@@ -40,5 +40,5 @@ export const useGetTasksDataExtended = (tasksData: TaskData[] | null) => {
     fetchTasks(address)
   }, [address, tasksData])
 
-  return tasksDataExtended
+  return tasksDataWithCompletion
 }

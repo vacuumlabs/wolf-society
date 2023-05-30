@@ -1,10 +1,10 @@
 import { ContentTypes, useContentful } from '@/utils/hooks/useContentful'
 import { BreakpointOverrides, Grid, Stack, Typography } from '@mui/material'
 import NftCard from '../NftCard'
-import { NFTDataExtended } from '@/utils/hooks/useGetNftDataExtended'
+import { NFTDataWithOwnership } from '@/utils/hooks/useGetNftDataWithOwnership'
 
 export type ArtworksProps = {
-  nftsData: NFTDataExtended[]
+  nftsData: NFTDataWithOwnership[]
 }
 
 export const Artworks = ({ nftsData }: ArtworksProps) => {

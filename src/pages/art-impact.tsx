@@ -14,7 +14,7 @@ import Collection from '@/components/collections/Collection'
 import { TitleSection } from '@/components/collections/TitleSection'
 import { useRef } from 'react'
 import { COLLECTIONS_COLOR_ORDER } from '@/consts'
-import { useGetNftDataExtended } from '@/utils/hooks/useGetNftDataExtended'
+import { useGetNftDataWithOwnership } from '@/utils/hooks/useGetNftDataWithOwnership'
 
 type Props = {
   translations: Partial<Content>
@@ -25,14 +25,14 @@ type Props = {
 const ArtImpact = ({ collectionsData, nftData }: Props) => {
   const translate = useContentful(ContentTypes.common)
   const firstCollectionRef = useRef<HTMLDivElement>(null)
-  const nftsDataExtended = useGetNftDataExtended(nftData)
+  const nftsDataWithOwnership = useGetNftDataWithOwnership(nftData)
   return !collectionsData ? (
     <></>
   ) : (
     <Stack mt={10}>
       <TitleSection firstCollection={firstCollectionRef} />
       {collectionsData.map((collection, index) => {
-        const nftsInThisCollection = nftsDataExtended.filter(
+        const nftsInThisCollection = nftsDataWithOwnership.filter(
           (nft) => nft.collection.fields.id === collection.id
         )
 

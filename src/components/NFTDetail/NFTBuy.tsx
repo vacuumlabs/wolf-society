@@ -20,7 +20,7 @@ import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { encodeFunctionData, parseEther } from 'viem'
 import { NFTParameters } from './NFTParameters'
 import { useSnackbar } from 'notistack'
-import { NFTDataExtended } from '@/utils/hooks/useGetNftDataExtended'
+import { NFTDataWithOwnership } from '@/utils/hooks/useGetNftDataWithOwnership'
 import {
   SocialMedia,
   getNftShareableContent,
@@ -56,7 +56,7 @@ const CircleButton = ({
 )
 
 type NFTBuyComponentProps = {
-  nftData: NFTDataExtended
+  nftData: NFTDataWithOwnership
   buyInView: boolean
   className: string
 }

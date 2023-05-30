@@ -23,7 +23,7 @@ import NftCardArtImpact from './NftCardArtImpact'
 import Button from '../Button'
 import { ArtistCardMobile } from './ArtistCardMobile'
 import { BigNumber, ethers } from 'ethers'
-import { NFTDataExtended } from '@/utils/hooks/useGetNftDataExtended'
+import { NFTDataWithOwnership } from '@/utils/hooks/useGetNftDataWithOwnership'
 import dynamic from 'next/dynamic'
 import { getCollectionShareableContent } from '@/utils/sharing'
 
@@ -35,7 +35,7 @@ type Props = {
   subtitle: string
   deadline?: Date
   numberOfPieces?: number
-  nftData: NFTDataExtended[]
+  nftData: NFTDataWithOwnership[]
 }
 
 const DynamicShareButton = dynamic(

@@ -9,7 +9,7 @@ import {
 import dynamic from 'next/dynamic'
 import TypographyWithTooltips from '../TypographyWithTooltips'
 import { NFTParameters } from './NFTParameters'
-import { NFTDataExtended } from '@/utils/hooks/useGetNftDataExtended'
+import { NFTDataWithOwnership } from '@/utils/hooks/useGetNftDataWithOwnership'
 import { getNftShareableContent } from '@/utils/sharing'
 import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
 
@@ -19,7 +19,7 @@ const DynamicShareButton = dynamic(
 )
 
 export interface NFTDescriptionProps {
-  nftData: NFTDataExtended
+  nftData: NFTDataWithOwnership
 }
 
 export const NFTDescription = ({ nftData }: NFTDescriptionProps) => {

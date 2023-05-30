@@ -18,11 +18,11 @@ import {
 } from '@/utils/hooks/useContentful'
 import Artworks from './Artworks'
 import Collections from './Collections'
-import { useGetNftDataExtended } from '@/utils/hooks/useGetNftDataExtended'
+import { useGetNftDataWithOwnership } from '@/utils/hooks/useGetNftDataWithOwnership'
 import NextLink from 'next/link'
 import { SUBPAGES } from '@/consts'
 import Button from '../Button'
-import { useGetTasksDataExtended } from '@/utils/hooks/useGetTasksDataExtended'
+import { useGetTasksDataWithCompletion } from '@/utils/hooks/useGetTasksDataWithCompletion'
 
 enum TabIds {
   ARTWORKS,
@@ -59,9 +59,9 @@ export const ArtworksAndCollections = ({
   const [activeTab, setActiveTab] = useState<number>(0)
   const breakpoint: keyof BreakpointOverrides = 'tabletM'
 
-  const nftsDataExtended = useGetNftDataExtended(nftsData)
-  const tasksDataExtended = useGetTasksDataExtended(tasksData)
-  const ownedNfts = nftsDataExtended.filter((nftData) => nftData.owned)
+  const nftsDataWithOwnership = useGetNftDataWithOwnership(nftsData)
+  const tasksDataWithCompletion = useGetTasksDataWithCompletion(tasksData)
+  const ownedNfts = nftsDataWithOwnership.filter((nftData) => nftData.owned)
 
   return ownedNfts.length > 0 ? (
     <Box sx={{ bgcolor: 'neutral.400' }} py={{ mobile: 5, [breakpoint]: 10 }}>
@@ -98,14 +98,14 @@ export const ArtworksAndCollections = ({
           <Collections
             collectionsData={
               collectionsData?.map((collectionData) => {
-                const collectionNfts = nftsDataExtended.filter(
+                const collectionNfts = nftsDataWithOwnership.filter(
                   (nft) => nft.collection.fields.id === collectionData.id
                 )
                 return {
                   ...collectionData,
                   nfts: collectionNfts,
                   tasks:
-                    tasksDataExtended?.filter((taskData) => {
+                    tasksDataWithCompletion?.filter((taskData) => {
                       const taskNft = taskData.nftOrCollection
                       return (
                         taskNft == null ||
