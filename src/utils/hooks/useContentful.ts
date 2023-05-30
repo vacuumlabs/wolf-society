@@ -389,12 +389,27 @@ export const getNfts = async (locale?: string) => {
   )
 }
 
-export const getTasks = (locale?: string) =>
-  getArrayOfContent<TaskData>({
+export const getTasks = async (locale?: string) => {
+  const tasksData = await getArrayOfContent<TaskData>({
     contentType: ContentTypes.task,
     locale,
     orderBy: 'fields.id',
   })
+  if (!tasksData || process.env.NEXT_PUBLIC_TESTNET !== 'true') return tasksData
+  return tasksData.map((taskDataFromCMS) => {
+    const nftOrCollectionFields = taskDataFromCMS.nftOrCollection?.fields
+    if (
+      taskDataFromCMS.nftOrCollection != null &&
+      nftOrCollectionFields != null &&
+      'nftDesc' in nftOrCollectionFields
+    ) {
+      taskDataFromCMS.nftOrCollection.fields = changeNftPropertiesIfTestnet(
+        nftOrCollectionFields
+      )
+    }
+    return taskDataFromCMS
+  })
+}
 
 export const ContentContext = createContext<Content | undefined>(undefined)
 

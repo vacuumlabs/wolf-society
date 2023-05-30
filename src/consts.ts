@@ -11,13 +11,10 @@ import allocationProjectsImage from 'public/images/allocationProjects.png'
 export const tooltipCustomMarkdownRegex =
   /(\*([^*]*)\*\(((?:[^()]*|\((?:[^()]*|\([^()]*\))*\))*)\))/g
 
-export const nftTestnetSmartContractAddress =
+export const nftTestnetSmartContractAddress: `0x${string}` =
   '0x81a1419049a6731ab52505da86cf077d850b3fee'
 
 export const nftTestnetInstanceId = 1049684612
-
-export const nftSmartContractAddress =
-  '0x6c5a72a30ab18A013307A514133144bBcac1f61d'
 
 export const COLLECTIONS_COLOR_ORDER: string[] = [
   'common.blue',
