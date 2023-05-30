@@ -50,10 +50,13 @@ export default async function handler(
     .execute()
 
   return res.json({
-    tasks: tasks.map(({ reward_amount, id, is_completed }) => ({
-      id: id,
-      isCompleted: is_completed,
-      rewardAmount: reward_amount,
-    })),
+    tasks: tasks.map(
+      ({ reward_amount, id, task_group_name, is_completed }) => ({
+        id: id,
+        taskGroupName: task_group_name,
+        isCompleted: is_completed,
+        rewardAmount: reward_amount,
+      })
+    ),
   })
 }

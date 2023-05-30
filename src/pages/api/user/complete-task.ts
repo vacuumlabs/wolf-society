@@ -1,7 +1,7 @@
 import { verifyMessage } from 'viem'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { db, POSTGRES_KEY_ALREADY_EXISTS_ERROR_CODE } from '../../../database'
-import { StaticTask } from '@/consts'
+import { StaticTask, nftTestnetSmartContractAddress } from '@/consts'
 import { getNfts } from '@/utils/hooks/useContentful'
 import { alchemy } from '@/utils/configs/alchemy'
 
@@ -29,6 +29,15 @@ export default async function handler(
   }
 
   const { data, signature }: RequestData = req.body
+  if (
+    data.task_group_name === nftTestnetSmartContractAddress &&
+    process.env.NEXT_PUBLIC_TESTNET !== 'true'
+  ) {
+    return res.status(400).json({
+      message: 'This task is completable only on testnet.',
+    })
+  }
+
   const verification = await verifyMessage({
     address: data.eth_address,
     message: JSON.stringify(data),

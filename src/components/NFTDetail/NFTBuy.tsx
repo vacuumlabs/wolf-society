@@ -13,9 +13,7 @@ import {
   MAGIC_WALLET_USER_REJECTED_ACTION_MESSAGE,
   lazyPayableClaimContractAddress,
   manifoldTxFee,
-  nftSmartContractAddress,
 } from '@/consts'
-import { LazyPayableClaimAbi } from '@/abi/LazyPayableClaim'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { encodeFunctionData, parseEther } from 'viem'
 import { NFTParameters } from './NFTParameters'
@@ -28,6 +26,7 @@ import {
   shareContentOnSocialMedia,
 } from '@/utils/sharing'
 import { useGetEthPrice } from '@/utils/hooks/useGetEthPrice'
+import { ERC721LazyPayableClaimAbi } from '@/abi/ERC721LazyPayableClaim'
 
 const CircleButton = ({
   label,
@@ -69,7 +68,7 @@ export const NFTBuy = ({
 }: NFTBuyComponentProps) => {
   const translate = useContentful(ContentTypes.nftDetail)
   const translateCommon = useContentful(ContentTypes.common)
-  const { priceInEth, manifoldLink, instanceId } = nftData
+  const { priceInEth, manifoldLink, instanceId, tokenAddress } = nftData
   const ethToUsd = useGetEthPrice()
   const breakpoint: keyof BreakpointOverrides = 'tabletM'
 
@@ -81,16 +80,21 @@ export const NFTBuy = ({
   const isUserWalletMagic = connector != null && connector.id === 'magic'
 
   const buyNft = async () => {
-    if (!walletClient || !address || instanceId == null) {
+    if (
+      !walletClient ||
+      !address ||
+      instanceId == null ||
+      tokenAddress == null
+    ) {
       if (openConnectModal != undefined) {
         openConnectModal()
       }
       return
     }
     const encodedData = encodeFunctionData({
-      abi: LazyPayableClaimAbi,
+      abi: ERC721LazyPayableClaimAbi,
       functionName: 'mint',
-      args: [nftSmartContractAddress, BigInt(instanceId), 0, [], address],
+      args: [tokenAddress, BigInt(instanceId), 0, [], address],
     })
 
     try {
