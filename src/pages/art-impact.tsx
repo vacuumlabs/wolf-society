@@ -68,6 +68,7 @@ const ArtImpact = ({ collectionsData, nftData, query }: Props) => {
         <Head>
           <meta name="og:title" content={queriedNft.name} />
           <meta name="og:image" content={queriedNft.image.fields.file.url} />
+          <meta name="twitter:card" content="summary_large_image" />
         </Head>
       )}
     </Stack>
