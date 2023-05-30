@@ -136,16 +136,6 @@ const Collection = forwardRef<HTMLElement, Props>((props, ref) => {
               >
                 {description}
               </Typography>
-              <Button sx={{ height: 'auto !important' }}>
-                <Stack direction="column">
-                  <Typography variant="button">
-                    {translateCollection('getCompleteCollection')}
-                  </Typography>
-                  <Typography variant="button">
-                    {`${collectionEthPrice} ETH`}
-                  </Typography>
-                </Stack>
-              </Button>
             </Stack>
             <Stack
               alignItems="center"
