@@ -26,19 +26,6 @@ export const Collection = ({ collectionData }: CollectionProps) => {
   const breakpoint: keyof BreakpointOverrides = 'tabletM'
   const [drawerOpened, setDrawerOpened] = useState(false)
 
-  const toggleDrawer =
-    (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
-      if (
-        event.type === 'keydown' &&
-        ((event as React.KeyboardEvent).key === 'Tab' ||
-          (event as React.KeyboardEvent).key === 'Shift')
-      ) {
-        return
-      }
-
-      setDrawerOpened(open)
-    }
-
   const collectionIsComplete = collectionData.nfts.every((nft) => nft.owned)
   const allTasksAreCompleted = collectionData.tasks.every(
     (task) => task.isCompleted
@@ -68,7 +55,7 @@ export const Collection = ({ collectionData }: CollectionProps) => {
                   sx={{
                     display: { mobile: 'none', [breakpoint]: 'inherit' },
                   }}
-                  onClick={toggleDrawer(true)}
+                  onClick={() => setDrawerOpened(true)}
                 >
                   {translate('unlockRewardsButton')}
                 </Button>
@@ -84,7 +71,7 @@ export const Collection = ({ collectionData }: CollectionProps) => {
                     display: { mobile: 'inherit', [breakpoint]: 'none' },
                     mb: 3,
                   }}
-                  onClick={toggleDrawer(true)}
+                  onClick={() => setDrawerOpened(true)}
                 >
                   {translate('unlockRewardsButton')}
                 </Button>
@@ -137,7 +124,7 @@ export const Collection = ({ collectionData }: CollectionProps) => {
       </Grid>
       <ExtraRewardsDrawer
         drawerOpened={drawerOpened}
-        onClose={toggleDrawer(false)}
+        onClose={() => setDrawerOpened(false)}
         collectionData={collectionData}
         collectionIsComplete={collectionIsComplete}
       />
