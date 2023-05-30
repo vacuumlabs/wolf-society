@@ -19,7 +19,13 @@ import Button from '../Button'
 import { CollectionDataExtended } from './Collection'
 import { TaskDataExtended } from '@/utils/hooks/useGetTasksDataExtended'
 import { useEffect, useRef, useState } from 'react'
-import { SUBPAGES, StaticTask, TASKS_GROUP_NAME_SITEWIDE } from '@/consts'
+import {
+  MEDIUM_DOMAIN,
+  SUBPAGES,
+  StaticTask,
+  TASKS_GROUP_NAME_SITEWIDE,
+  TWITTER_DOMAIN,
+} from '@/consts'
 import { getAccount, getWalletClient } from '@wagmi/core'
 import { enqueueSnackbar } from 'notistack'
 import {
@@ -178,7 +184,7 @@ const ExtraRewardsDrawer = ({
         break
       case StaticTask.FOLLOW_TWITTER:
         window.open(
-          `https://twitter.com/intent/follow?screen_name=${translateNavbar(
+          `${TWITTER_DOMAIN}intent/follow?screen_name=${translateNavbar(
             'twitterAccount'
           )}`,
           '_blank'
@@ -186,13 +192,13 @@ const ExtraRewardsDrawer = ({
         break
       case StaticTask.TURN_ON_TWITTER_NOTIFICATIONS:
         window.open(
-          `https://twitter.com/${translateNavbar('twitterAccount')}`,
+          `${TWITTER_DOMAIN}${translateNavbar('twitterAccount')}`,
           '_blank'
         )
         break
       case StaticTask.RETWEET_TWITTER:
         window.open(
-          `https://twitter.com/intent/retweet?tweet_id=${translate(
+          `${TWITTER_DOMAIN}intent/retweet?tweet_id=${translate(
             'tweetIdToRetweet'
           )}`,
           '_blank'
@@ -201,7 +207,7 @@ const ExtraRewardsDrawer = ({
       case StaticTask.FOLLOW_MEDIUM:
       case StaticTask.SUBSCRIBE_MEDIUM:
         window.open(
-          `https://medium.com/@${process.env.NEXT_PUBLIC_MEDIUM_USER}`,
+          `${MEDIUM_DOMAIN}@${process.env.NEXT_PUBLIC_MEDIUM_USER}`,
           '_blank'
         )
         break

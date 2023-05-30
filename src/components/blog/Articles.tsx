@@ -9,6 +9,7 @@ import {
 import ArticleCard, { ArticleCardProps } from './ArticleCard'
 import Button from '../Button'
 import AppearingComponent from '../AppearingComponent'
+import { MEDIUM_DOMAIN } from '@/consts'
 
 type TBlog = {
   posts: ArticleCardProps[]
@@ -45,7 +46,7 @@ const Articles = ({ posts }: TBlog) => {
             <Stack sx={{ alignItems: 'center' }}>
               <Button
                 variant="outlined"
-                href={`https://medium.com/@${process.env.NEXT_PUBLIC_MEDIUM_USER}`}
+                href={`${MEDIUM_DOMAIN}@${process.env.NEXT_PUBLIC_MEDIUM_USER}`}
                 target="_blank"
               >
                 {translate('exploreMore')}

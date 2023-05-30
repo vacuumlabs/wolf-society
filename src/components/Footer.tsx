@@ -1,4 +1,4 @@
-import { SUBPAGES } from '@/consts'
+import { MEDIUM_DOMAIN, SUBPAGES, TWITTER_DOMAIN } from '@/consts'
 import { getSubpagesKeys } from '@/utils/helpers'
 import { ContentTypes, useContentful } from '@/utils/hooks/useContentful'
 import {
@@ -38,12 +38,12 @@ const Footer = () => {
     },
     {
       text: 'twitter',
-      href: `https://twitter.com/${translate('twitterAccount')}`,
+      href: `${TWITTER_DOMAIN}${translate('twitterAccount')}`,
       icon: <TwitterIcon />,
     },
     {
       text: 'medium',
-      href: `https://medium.com/@${process.env.NEXT_PUBLIC_MEDIUM_USER}`,
+      href: `${MEDIUM_DOMAIN}@${process.env.NEXT_PUBLIC_MEDIUM_USER}`,
       icon: <MediumIcon />,
     },
   ]
