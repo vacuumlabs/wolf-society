@@ -8,24 +8,36 @@ import {
   NFTData,
   useContentful,
 } from '@/utils/hooks/useContentful'
-import { GetStaticProps, GetStaticPropsContext } from 'next'
+import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 import { Stack } from '@mui/material'
 import Collection from '@/components/collections/Collection'
 import { TitleSection } from '@/components/collections/TitleSection'
 import { useRef } from 'react'
 import { COLLECTIONS_COLOR_ORDER } from '@/consts'
 import { useGetNftDataWithOwnership } from '@/utils/hooks/useGetNftDataWithOwnership'
+import { ParsedUrlQuery } from 'querystring'
+import Head from 'next/head'
 
 type Props = {
   translations: Partial<Content>
   collectionsData: CollectionData[] | null
   nftData: NFTData[] | null
+  query: ParsedUrlQuery
 }
 
-const ArtImpact = ({ collectionsData, nftData }: Props) => {
+const ArtImpact = ({ collectionsData, nftData, query }: Props) => {
   const translate = useContentful(ContentTypes.common)
   const firstCollectionRef = useRef<HTMLDivElement>(null)
   const nftsDataWithOwnership = useGetNftDataWithOwnership(nftData)
+
+  const queriedNft = query.nft
+    ? nftData?.find((nft) => nft.id === query.nft)
+    : undefined
+  let queriedNftImageUrl = queriedNft?.image.fields.file.url
+  if (queriedNftImageUrl != null && !queriedNftImageUrl.startsWith('https:')) {
+    queriedNftImageUrl = 'https:' + queriedNftImageUrl
+  }
+  const queriedNftArtist = queriedNft?.artist?.fields?.artistName
   return !collectionsData ? (
     <></>
   ) : (
@@ -57,13 +69,25 @@ const ArtImpact = ({ collectionsData, nftData }: Props) => {
           />
         )
       })}
+      {queriedNft != null && (
+        <Head>
+          <meta name="og:title" content={queriedNft.name} />
+          <meta name="og:description" content={`by ${queriedNftArtist}`} />
+          <meta name="og:image" content={queriedNftImageUrl} />
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:title" content={queriedNft.name} />
+          <meta name="twitter:description" content={`by ${queriedNftArtist}`} />
+          <meta name="twitter:image" content={queriedNftImageUrl} />
+        </Head>
+      )}
     </Stack>
   )
 }
 
-export const getStaticProps: GetStaticProps<Props> = async ({
+export const getServerSideProps: GetServerSideProps<Props> = async ({
+  query,
   locale,
-}: GetStaticPropsContext) => {
+}: GetServerSidePropsContext) => {
   return {
     // Will be passed to the page component as props
     props: {
@@ -73,8 +97,8 @@ export const getStaticProps: GetStaticProps<Props> = async ({
       },
       collectionsData: await getCollections(locale),
       nftData: await getNfts(locale),
+      query,
     },
-    revalidate: 60, // In seconds
   }
 }
 
