@@ -46,7 +46,7 @@ const Articles = ({ posts }: TBlog) => {
             <Stack sx={{ alignItems: 'center' }}>
               <Button
                 variant="outlined"
-                href={`${MEDIUM_DOMAIN}@${process.env.NEXT_PUBLIC_MEDIUM_USER}`}
+                href={`${MEDIUM_DOMAIN}/@${process.env.NEXT_PUBLIC_MEDIUM_USER}`}
                 target="_blank"
               >
                 {translate('exploreMore')}

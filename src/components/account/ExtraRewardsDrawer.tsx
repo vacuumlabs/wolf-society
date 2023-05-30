@@ -184,7 +184,7 @@ const ExtraRewardsDrawer = ({
         break
       case StaticTask.FOLLOW_TWITTER:
         window.open(
-          `${TWITTER_DOMAIN}intent/follow?screen_name=${translateNavbar(
+          `${TWITTER_DOMAIN}/intent/follow?screen_name=${translateNavbar(
             'twitterAccount'
           )}`,
           '_blank'
@@ -192,13 +192,13 @@ const ExtraRewardsDrawer = ({
         break
       case StaticTask.TURN_ON_TWITTER_NOTIFICATIONS:
         window.open(
-          `${TWITTER_DOMAIN}${translateNavbar('twitterAccount')}`,
+          `${TWITTER_DOMAIN}/${translateNavbar('twitterAccount')}`,
           '_blank'
         )
         break
       case StaticTask.RETWEET_TWITTER:
         window.open(
-          `${TWITTER_DOMAIN}intent/retweet?tweet_id=${translate(
+          `${TWITTER_DOMAIN}/intent/retweet?tweet_id=${translate(
             'tweetIdToRetweet'
           )}`,
           '_blank'
@@ -207,7 +207,7 @@ const ExtraRewardsDrawer = ({
       case StaticTask.FOLLOW_MEDIUM:
       case StaticTask.SUBSCRIBE_MEDIUM:
         window.open(
-          `${MEDIUM_DOMAIN}@${process.env.NEXT_PUBLIC_MEDIUM_USER}`,
+          `${MEDIUM_DOMAIN}/@${process.env.NEXT_PUBLIC_MEDIUM_USER}`,
           '_blank'
         )
         break

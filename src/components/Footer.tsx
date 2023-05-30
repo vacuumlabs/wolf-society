@@ -38,12 +38,12 @@ const Footer = () => {
     },
     {
       text: 'twitter',
-      href: `${TWITTER_DOMAIN}${translate('twitterAccount')}`,
+      href: `${TWITTER_DOMAIN}/${translate('twitterAccount')}`,
       icon: <TwitterIcon />,
     },
     {
       text: 'medium',
-      href: `${MEDIUM_DOMAIN}@${process.env.NEXT_PUBLIC_MEDIUM_USER}`,
+      href: `${MEDIUM_DOMAIN}/@${process.env.NEXT_PUBLIC_MEDIUM_USER}`,
       icon: <MediumIcon />,
     },
   ]

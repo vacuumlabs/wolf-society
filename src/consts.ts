@@ -38,10 +38,10 @@ export const METAMASK_USER_DENIED_SIGNATURE_DETAILS =
   'MetaMask Personal Message Signature: User denied message signature.'
 
 export const WEBPAGE_DOMAIN = 'https://wolfsociety.org'
-export const TWITTER_DOMAIN = 'https://twitter.com/'
-export const MEDIUM_DOMAIN = 'https://medium.com/'
-export const FACEBOOK_DOMAIN = 'https://facebook.com/'
-export const LINKEDIN_DOMAIN = 'https://linkedin.com/'
+export const TWITTER_DOMAIN = 'https://twitter.com'
+export const MEDIUM_DOMAIN = 'https://medium.com'
+export const FACEBOOK_DOMAIN = 'https://facebook.com'
+export const LINKEDIN_DOMAIN = 'https://linkedin.com'
 
 export const TASKS_GROUP_NAME_SITEWIDE = 'sitewide'
 

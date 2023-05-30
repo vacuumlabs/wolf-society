@@ -34,21 +34,21 @@ export const shareContentOnSocialMedia = (
   switch (socialMedia) {
     case 'twitter':
       window.open(
-        `${TWITTER_DOMAIN}intent/tweet?text=${content.text}&url=${content.link}`,
+        `${TWITTER_DOMAIN}/intent/tweet?text=${content.text}&url=${content.link}`,
         '_blank',
         'noreferrer'
       )
       break
     case 'facebook':
       window.open(
-        `${FACEBOOK_DOMAIN}sharer/sharer.php?u=${content.link}`,
+        `${FACEBOOK_DOMAIN}/sharer/sharer.php?u=${content.link}`,
         '_blank',
         'noreferrer'
       )
       break
     case 'linkedin':
       window.open(
-        `${LINKEDIN_DOMAIN}sharing/share-offsite/?url=${content.link}`,
+        `${LINKEDIN_DOMAIN}/sharing/share-offsite/?url=${content.link}`,
         '_blank',
         'noreferrer'
       )
