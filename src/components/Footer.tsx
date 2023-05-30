@@ -20,6 +20,7 @@ import DiscordIcon from './icons/DiscordIcon'
 import MediumIcon from './icons/MediumIcon'
 import TwitterIcon from './icons/TwitterIcon'
 import WSLogo from './icons/WSLogo'
+import Newsletter from './landing/Newsletter'
 import Link from './Link'
 
 const Footer = () => {
@@ -50,6 +51,7 @@ const Footer = () => {
   return (
     <Box sx={{ bgcolor: 'neutral.400' }}>
       <AppearingComponent>
+        <Newsletter />
         <Container sx={{ pb: 5, pt: { mobile: 5, [breakpoint]: 10 } }}>
           <Grid container spacing={{ mobile: 5, [breakpoint]: 0 }}>
             <Grid item mobile={12} {...{ [breakpoint]: 6 }}>

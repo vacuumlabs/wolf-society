@@ -197,6 +197,12 @@ export type Content = {
     retweet: string
     complete: string
     genericErrorMessage: string
+    newsletterText: string
+    newsletterInputLabel: string
+    newsletterButton: string
+    newsletterSubscriptionSuccess: string
+    newsletterSubscriptionError: string
+    newsletterSubscriptionConflict: string
   }
   [ContentTypes.landingPage]: {
     heroTitle: string
