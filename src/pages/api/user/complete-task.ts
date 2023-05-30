@@ -1,14 +1,17 @@
-import { splitSignature, verifyMessage } from 'ethers/lib/utils'
+import { verifyMessage } from 'viem'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { db, POSTGRES_KEY_ALREADY_EXISTS_ERROR_CODE } from '../../../database'
+import { StaticTask } from '@/consts'
+import { getNfts } from '@/utils/hooks/useContentful'
+import { alchemy } from '@/utils/configs/alchemy'
 
 type RequestData = {
   data: {
-    eth_address: string
+    eth_address: `0x${string}`
     task_id: number
     task_group_name: string
   }
-  signature: string
+  signature: `0x${string}`
 }
 
 type ResponseData = {
@@ -26,16 +29,47 @@ export default async function handler(
   }
 
   const { data, signature }: RequestData = req.body
-
-  const signatureObject = splitSignature(signature)
-
-  const verification =
-    verifyMessage(JSON.stringify(data), signatureObject) === data.eth_address
+  const verification = await verifyMessage({
+    address: data.eth_address,
+    message: JSON.stringify(data),
+    signature,
+  })
 
   if (verification !== true) {
     return res.status(403).json({
       message: "Message signature doesn't match.",
     })
+  }
+
+  if (data.task_id === StaticTask.BUY_ALL_NFTS) {
+    const nfts = await getNfts()
+    if (!nfts) {
+      return res.status(500).json({
+        message: 'Error getting NFT data from CMS.',
+      })
+    }
+    const collectionNfts = nfts
+      .filter((nft) => nft.collection.fields.id === data.task_group_name)
+      .map((nft) => nft.tokenAddress?.toLowerCase())
+    if (collectionNfts.some((nft) => nft == null)) {
+      return res.status(500).json({
+        message: 'Not all NFTs have filled out token addresses.',
+      })
+    }
+    const userNfts = await alchemy.nft.getNftsForOwner(data.eth_address, {
+      contractAddresses: collectionNfts as string[],
+    })
+    const userOwnsAllNfts = (collectionNfts as string[]).every(
+      (collectionNft) =>
+        userNfts.ownedNfts.some(
+          (userNft) => userNft.contract.address === collectionNft
+        )
+    )
+    if (!userOwnsAllNfts) {
+      return res.status(500).json({
+        message: 'User does not own all NFTs from this collection.',
+      })
+    }
   }
 
   // Check if user is already in DB

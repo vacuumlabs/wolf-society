@@ -2,6 +2,7 @@ import { Asset } from 'contentful'
 import { createContext, useContext } from 'react'
 import contentful from '../configs/contentful'
 import { getNftMintedAmount } from '../helpers'
+import { nftTestnetSmartContractAddress } from '@/consts'
 
 export enum ContentTypes {
   navbar = 'navbar',
@@ -17,6 +18,7 @@ export enum ContentTypes {
   nft = 'nft',
   nftDetail = 'nftDetail',
   nftArtist = 'nftArtist',
+  task = 'task',
 }
 
 export type ProjectData = {
@@ -97,8 +99,23 @@ export type NFTData = {
   beatTheDrumList: string
   breadAndButterList: string
   minted: number
+  tokenAddress?: string
   manifoldLink?: string
   instanceId?: number
+}
+
+export type TaskData = {
+  id: number
+  text: string
+  buttonLabel: string
+  nftOrCollection?: {
+    fields: NFTData | CollectionData
+  }
+  taskType?:
+    | 'Share on Twitter'
+    | 'Share on Facebook'
+    | 'Share on LinkedIn'
+    | 'Buy all NFTs in a Collection'
 }
 
 export type CollectionsPageData = {
@@ -126,8 +143,12 @@ export type AccountPageData = {
   collections: string
   complete: string
   noArtworks: string
-  unlockExtraRewards: string
-  collectQuest: string
+  unlockRewardsQuest: string
+  unlockRewardsButton: string
+  unlockExtraRewardsTitle: string
+  unlockExtraRewardsDescription: string
+  messageNotSignedError: string
+  tweetIdToRetweet: string
 }
 
 // Content to be injected into every page
@@ -147,7 +168,7 @@ export type Content = {
     faq: string
     account: string
     discordLink: string
-    twitterLink: string
+    twitterAccount: string
   }
   [ContentTypes.common]: {
     secondsShort: string
@@ -168,6 +189,14 @@ export type Content = {
     disconnectWallet: string
     nftShareText: string
     collectionShareText: string
+    share: string
+    follow: string
+    join: string
+    subscribe: string
+    turnOn: string
+    retweet: string
+    complete: string
+    genericErrorMessage: string
   }
   [ContentTypes.landingPage]: {
     heroTitle: string
@@ -223,6 +252,7 @@ export type Content = {
   [ContentTypes.nft]: NFTData
   [ContentTypes.nftDetail]: NFTDetailData
   [ContentTypes.nftArtist]: NFTArtistData
+  [ContentTypes.task]: TaskData
 }
 
 /**
@@ -340,10 +370,22 @@ export const getNfts = async (locale?: string) => {
       return {
         ...nftData,
         minted: nftData.tokenId ? await getNftMintedAmount(nftData.tokenId) : 0,
+        tokenAddress:
+          // For testing purposes, use testnet contract address for all NFTs
+          process.env.NEXT_PUBLIC_TESTNET === 'true'
+            ? nftTestnetSmartContractAddress
+            : nftData.tokenAddress,
       }
     })
   )
 }
+
+export const getTasks = (locale?: string) =>
+  getArrayOfContent<TaskData>({
+    contentType: ContentTypes.task,
+    locale,
+    orderBy: 'fields.id',
+  })
 
 export const ContentContext = createContext<Content | undefined>(undefined)
 

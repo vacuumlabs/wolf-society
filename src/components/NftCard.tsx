@@ -13,13 +13,13 @@ import { NFTDetail } from './NFTDetail/NFTDetail'
 import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
-import { NFTDataExtended } from '@/utils/hooks/useGetNftDataExtended'
+import { NFTDataWithOwnership } from '@/utils/hooks/useGetNftDataWithOwnership'
 import { getNftShareableContent } from '@/utils/sharing'
 import CardButton from '@/components/CardButton'
 
 export type NftCardProps = {
   minted?: number
-  nftData: NFTDataExtended
+  nftData: NFTDataWithOwnership
   displayPrice?: boolean
   displayCollection?: boolean
   compact?: boolean

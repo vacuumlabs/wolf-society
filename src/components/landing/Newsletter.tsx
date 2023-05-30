@@ -5,6 +5,7 @@ import AppearingComponent from '../AppearingComponent'
 import Button from '../Button'
 import TextField from '../TextField'
 import { useSnackbar } from 'notistack'
+import { SECTIONS } from '@/consts'
 
 const Newsletter = () => {
   const translate = useContentful(ContentTypes.landingPage)
@@ -33,7 +34,7 @@ const Newsletter = () => {
     )
   }
   return (
-    <Box sx={{ bgcolor: 'neutral.400' }}>
+    <Box sx={{ bgcolor: 'neutral.400' }} id={SECTIONS.about.newsletter.id}>
       <AppearingComponent>
         <Container>
           <Box

@@ -94,18 +94,6 @@ const Navigation = () => {
   const [showAccountLink, setShowAccountLink] = useState<boolean>(false)
 
   const translate = useContentful(ContentTypes.navbar)
-  const toggleDrawer =
-    (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
-      if (
-        event.type === 'keydown' &&
-        ((event as React.KeyboardEvent).key === 'Tab' ||
-          (event as React.KeyboardEvent).key === 'Shift')
-      ) {
-        return
-      }
-
-      setDrawerOpened(open)
-    }
   const currentPage = getSubpagesKeys().filter(
     (key) => SUBPAGES[key] === router.pathname
   )[0]
@@ -220,7 +208,7 @@ const Navigation = () => {
             <IconButton
               aria-controls="menu-appbar"
               aria-haspopup="true"
-              onClick={toggleDrawer(true)}
+              onClick={() => setDrawerOpened(true)}
             >
               <MenuIcon />
             </IconButton>
@@ -232,7 +220,7 @@ const Navigation = () => {
         id="menu-appbar"
         anchor="right"
         open={drawerOpened}
-        onClose={toggleDrawer(false)}
+        onClose={() => setDrawerOpened(false)}
         sx={{
           '& .MuiPaper-root': {
             width: '100vw',
@@ -246,7 +234,7 @@ const Navigation = () => {
               <IconButton
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
-                onClick={toggleDrawer(false)}
+                onClick={() => setDrawerOpened(false)}
               >
                 <CloseIcon />
               </IconButton>
@@ -281,7 +269,7 @@ const Navigation = () => {
                           href={SUBPAGES[subpageKey]}
                           underline="hover"
                           color="inherit"
-                          onClick={toggleDrawer(false)}
+                          onClick={() => setDrawerOpened(false)}
                         >
                           {translate(subpageKey)}
                         </Link>
@@ -296,7 +284,7 @@ const Navigation = () => {
                 href={SUBPAGES['collections']}
                 passHref
                 style={{ lineHeight: 0 }}
-                onClick={toggleDrawer(false)}
+                onClick={() => setDrawerOpened(false)}
               >
                 <Button fullWidth>{translate('makeImpact')}</Button>
               </NextLink>

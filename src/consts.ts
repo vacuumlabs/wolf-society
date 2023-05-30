@@ -11,6 +11,9 @@ import allocationProjectsImage from 'public/images/allocationProjects.png'
 export const tooltipCustomMarkdownRegex =
   /(\*([^*]*)\*\(((?:[^()]*|\((?:[^()]*|\([^()]*\))*\))*)\))/g
 
+export const nftTestnetSmartContractAddress =
+  '0x6c5a72a30ab18A013307A514133144bBcac1f61d'
+
 export const nftSmartContractAddress =
   '0x6c5a72a30ab18A013307A514133144bBcac1f61d'
 
@@ -31,8 +34,16 @@ export const nullAddress = '0x0000000000000000000000000000000000000000'
 
 export const MAGIC_WALLET_USER_REJECTED_ACTION_MESSAGE =
   'User rejected the action'
+export const METAMASK_USER_DENIED_SIGNATURE_DETAILS =
+  'MetaMask Personal Message Signature: User denied message signature.'
 
 export const WEBPAGE_DOMAIN = 'https://wolfsociety.org'
+export const TWITTER_DOMAIN = 'https://twitter.com'
+export const MEDIUM_DOMAIN = 'https://medium.com'
+export const FACEBOOK_DOMAIN = 'https://facebook.com'
+export const LINKEDIN_DOMAIN = 'https://linkedin.com'
+
+export const TASKS_GROUP_NAME_SITEWIDE = 'sitewide'
 
 export const SUBPAGES: {
   [key in keyof Pick<
@@ -52,6 +63,10 @@ export const SECTIONS = {
     roadmap: {
       id: 'roadmap',
       href: '/#roadmap',
+    },
+    newsletter: {
+      id: 'newsletter',
+      href: '/#newsletter',
     },
   },
 }
@@ -77,3 +92,14 @@ export const ALLOCATION_INFO: {
     image: allocationArtistsImage,
   },
 ]
+
+export enum StaticTask {
+  BUY_ALL_NFTS = 0,
+  JOIN_DISCORD = 1,
+  FOLLOW_TWITTER = 2,
+  TURN_ON_TWITTER_NOTIFICATIONS = 3,
+  RETWEET_TWITTER = 4,
+  FOLLOW_MEDIUM = 5,
+  SUBSCRIBE_MEDIUM = 6,
+  SUBSCRIBE_NEWSLETTER = 7,
+}

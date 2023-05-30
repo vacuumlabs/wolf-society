@@ -23,12 +23,12 @@ import {
   ContentTypes,
   NFTData,
 } from '@/utils/hooks/useContentful'
-import { NFTDataExtended } from '@/utils/hooks/useGetNftDataExtended'
+import { NFTDataWithOwnership } from '@/utils/hooks/useGetNftDataWithOwnership'
 
 export interface NFTDetailProps {
   isOpen: boolean
   onClose: () => void
-  nftData: NFTDataExtended
+  nftData: NFTDataWithOwnership
   nftArtistProps: NFTArtistProps
   nftUsageProps: NFTUsageProps
 }

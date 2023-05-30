@@ -14,13 +14,15 @@ import {
   Content,
   CollectionData,
   NFTData,
+  TaskData,
 } from '@/utils/hooks/useContentful'
 import Artworks from './Artworks'
 import Collections from './Collections'
-import { useGetNftDataExtended } from '@/utils/hooks/useGetNftDataExtended'
+import { useGetNftDataWithOwnership } from '@/utils/hooks/useGetNftDataWithOwnership'
 import NextLink from 'next/link'
 import { SUBPAGES } from '@/consts'
 import Button from '../Button'
+import { useGetTasksDataWithCompletion } from '@/utils/hooks/useGetTasksDataWithCompletion'
 
 enum TabIds {
   ARTWORKS,
@@ -44,19 +46,22 @@ const tabData: {
 type Props = {
   collectionsData: CollectionData[] | null
   nftsData: NFTData[] | null
+  tasksData: TaskData[] | null
 }
 
 export const ArtworksAndCollections = ({
   collectionsData,
   nftsData,
+  tasksData,
 }: Props) => {
   const translate = useContentful(ContentTypes.accountPage)
   const translateCommon = useContentful(ContentTypes.common)
   const [activeTab, setActiveTab] = useState<number>(0)
   const breakpoint: keyof BreakpointOverrides = 'tabletM'
 
-  const nftsDataExtended = useGetNftDataExtended(nftsData)
-  const ownedNfts = nftsDataExtended.filter((nftData) => nftData.owned)
+  const nftsDataWithOwnership = useGetNftDataWithOwnership(nftsData)
+  const tasksDataWithCompletion = useGetTasksDataWithCompletion(tasksData)
+  const ownedNfts = nftsDataWithOwnership.filter((nftData) => nftData.owned)
 
   return ownedNfts.length > 0 ? (
     <Box sx={{ bgcolor: 'neutral.400' }} py={{ mobile: 5, [breakpoint]: 10 }}>
@@ -93,11 +98,23 @@ export const ArtworksAndCollections = ({
           <Collections
             collectionsData={
               collectionsData?.map((collectionData) => {
+                const collectionNfts = nftsDataWithOwnership.filter(
+                  (nft) => nft.collection.fields.id === collectionData.id
+                )
                 return {
                   ...collectionData,
-                  nfts: nftsDataExtended.filter(
-                    (nft) => nft.collection.fields.id === collectionData.id
-                  ),
+                  nfts: collectionNfts,
+                  tasks:
+                    tasksDataWithCompletion?.filter((taskData) => {
+                      const taskNft = taskData.nftOrCollection
+                      return (
+                        taskNft == null ||
+                        taskNft.fields.id === collectionData.id ||
+                        collectionNfts.some(
+                          (nft) => nft.id === taskNft.fields.id
+                        )
+                      )
+                    }) ?? [],
                 }
               }) ?? []
             }

@@ -1,10 +1,10 @@
 import { Stack, Typography } from '@mui/material'
 import { Countdown } from '../Countdown'
 import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
-import { NFTDataExtended } from '@/utils/hooks/useGetNftDataExtended'
+import { NFTDataWithOwnership } from '@/utils/hooks/useGetNftDataWithOwnership'
 
 type Props = {
-  nftData: NFTDataExtended
+  nftData: NFTDataWithOwnership
   alignCenter?: boolean
 }
 
