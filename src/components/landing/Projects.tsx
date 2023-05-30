@@ -53,9 +53,9 @@ const Projects = ({ projectsData }: Props) => {
               <Typography
                 variant="display"
                 color="neutral.main"
-                sx={{ textAlign: 'center' }}
+                sx={{ textAlign: 'center', whiteSpace: 'pre-line' }}
               >
-                {translate('supportedProjects')}
+                {translate('supportedProjects').replace('\\n', '\n')}
               </Typography>
               <Stack sx={{ alignItems: 'center', display: 'none' }}>
                 <Button color="neutral" variant="outlined">
