@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useAccount } from 'wagmi'
 import { TaskData } from './useContentful'
 import { TaskRow } from '@/types'
+import { TASKS_GROUP_NAME_SITEWIDE } from '@/consts'
 
 export type TaskDataWithCompletion = TaskData & {
   isCompleted: boolean
@@ -22,10 +23,17 @@ export const useGetTasksDataWithCompletion = (tasksData: TaskData[] | null) => {
       } else {
         setTasksDataWithCompletion(
           tasksData?.map((taskData) => {
+            const taskDataGroupName =
+              taskData.nftOrCollection == null
+                ? TASKS_GROUP_NAME_SITEWIDE
+                : 'nftDesc' in taskData.nftOrCollection.fields
+                ? taskData.nftOrCollection.fields.tokenAddress
+                : taskData.nftOrCollection.fields.id
             return {
               ...taskData,
               isCompleted: !!(tasks as TaskRow[]).find(
-                ({ id }) => id === taskData.id
+                ({ id, taskGroupName }) =>
+                  id === taskData.id && taskGroupName === taskDataGroupName
               )?.isCompleted,
             }
           }) ?? []
