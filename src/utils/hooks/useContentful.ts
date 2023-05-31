@@ -104,17 +104,14 @@ export type NFTData = {
 }
 
 export type TaskData = {
-  id: number
+  id: string
+  databaseId: number
   text: string
   buttonLabel: string
   nftOrCollection?: {
     fields: NFTData | CollectionData
   }
-  taskType?:
-    | 'Share on Twitter'
-    | 'Share on Facebook'
-    | 'Share on LinkedIn'
-    | 'Buy all NFTs in a Collection'
+  taskType?: 'Share on Twitter' | 'Share on Facebook' | 'Share on LinkedIn'
 }
 
 export type CollectionsPageData = {
