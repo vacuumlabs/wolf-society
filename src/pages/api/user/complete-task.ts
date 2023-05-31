@@ -1,6 +1,10 @@
 import { verifyMessage } from 'viem'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { db, POSTGRES_KEY_ALREADY_EXISTS_ERROR_CODE } from '../../../database'
+import {
+  db,
+  POSTGRES_KEY_ALREADY_EXISTS_ERROR_CODE,
+  saveUserIfNotSaved,
+} from '../../../database'
 import { StaticTask, nftTestnetSmartContractAddress } from '@/consts'
 import { getNfts } from '@/utils/hooks/useContentful'
 import { alchemy } from '@/utils/configs/alchemy'
@@ -100,28 +104,12 @@ export default async function handler(
     }
   }
 
-  // Check if user is already in DB
-  const user = await db
-    .selectFrom('app_user')
-    .select('eth_address')
-    .where('eth_address', '=', data.eth_address)
-    .executeTakeFirst()
+  const userSaved = saveUserIfNotSaved(db, data.eth_address)
 
-  // If not, save the user
-  if (user == null) {
-    try {
-      await db
-        .insertInto('app_user')
-        .columns(['eth_address'])
-        .values({
-          eth_address: data.eth_address,
-        })
-        .execute()
-    } catch (error) {
-      return res.status(500).json({
-        message: 'Error saving user.',
-      })
-    }
+  if (!userSaved) {
+    return res.status(500).json({
+      message: 'Error saving user.',
+    })
   }
 
   try {

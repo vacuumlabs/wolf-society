@@ -55,3 +55,12 @@ ON completed_task
 FOR EACH ROW
 EXECUTE PROCEDURE trigger_function();
 
+CREATE TABLE nft_purchase (
+  purchased_by VARCHAR(42),
+  token_address VARCHAR(42),
+  token_id INTEGER,
+
+  PRIMARY KEY(token_address, token_id),
+  FOREIGN KEY(purchased_by) REFERENCES app_user(eth_address)
+);
+
