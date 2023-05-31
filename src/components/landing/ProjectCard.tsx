@@ -25,9 +25,19 @@ export type ProjectCardProps = {
   name: string
   imageUrl: string
   description: string
+  location: string
+  project: string
+  timeFrame: string
 }
 
-const ProjectCard = ({ name, imageUrl, description }: ProjectCardProps) => {
+const ProjectCard = ({
+  name,
+  imageUrl,
+  description,
+  location,
+  project,
+  timeFrame,
+}: ProjectCardProps) => {
   const [drawerOpened, setDrawerOpened] = useState(false)
   const translate = useContentful(ContentTypes.landingPage)
   const translateCommon = useContentful(ContentTypes.common)
@@ -63,13 +73,59 @@ const ProjectCard = ({ name, imageUrl, description }: ProjectCardProps) => {
             alt="Project image"
           />
           <CardContent sx={{ p: 0, transition: 'translate 0.25s' }}>
-            <Typography
-              variant="caption"
-              color="secondary"
-              sx={{ p: 4, textAlign: 'start' }}
-            >
-              {name}
-            </Typography>
+            <Stack sx={{ p: 4, textAlign: 'start' }}>
+              <Box>
+                <Typography
+                  variant="caption"
+                  color="neutral.700"
+                  display="inline"
+                >
+                  {translate('location')}
+                  {`: `}
+                </Typography>
+                <Typography
+                  variant="caption"
+                  color="secondary"
+                  display="inline"
+                >
+                  {location}
+                </Typography>
+              </Box>
+              <Box>
+                <Typography
+                  variant="caption"
+                  color="neutral.700"
+                  display="inline"
+                >
+                  {translate('project')}
+                  {`: `}
+                </Typography>
+                <Typography
+                  variant="caption"
+                  color="secondary"
+                  display="inline"
+                >
+                  {project}
+                </Typography>
+              </Box>
+              <Box>
+                <Typography
+                  variant="caption"
+                  color="neutral.700"
+                  display="inline"
+                >
+                  {translate('timeFrame')}
+                  {`: `}
+                </Typography>
+                <Typography
+                  variant="caption"
+                  color="secondary"
+                  display="inline"
+                >
+                  {timeFrame}
+                </Typography>
+              </Box>
+            </Stack>
             <CardButton sx={{ width: '100%' }}>
               <Stack direction="row" alignItems="center" gap={1}>
                 <Typography variant="button">

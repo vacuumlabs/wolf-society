@@ -26,6 +26,9 @@ export type ProjectData = {
   name: string
   image: Asset
   description: string
+  location: string
+  project: string
+  timeFrame: string
 }
 
 export type RoadmapData = {
@@ -237,6 +240,9 @@ export type Content = {
     newsletterSubscriptionSuccess: string
     newsletterSubscriptionError: string
     newsletterSubscriptionConflict: string
+    location: string
+    project: string
+    timeFrame: string
   }
   [ContentTypes.collectionsPage]: CollectionsPageData
   [ContentTypes.articlesPage]: {
