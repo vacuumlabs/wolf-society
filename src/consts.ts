@@ -11,8 +11,10 @@ import allocationProjectsImage from 'public/images/allocationProjects.png'
 export const tooltipCustomMarkdownRegex =
   /(\*([^*]*)\*\(((?:[^()]*|\((?:[^()]*|\([^()]*\))*\))*)\))/g
 
-export const nftSmartContractAddress =
-  '0x6c5a72a30ab18A013307A514133144bBcac1f61d'
+export const nftTestnetSmartContractAddress: `0x${string}` =
+  '0x81a1419049a6731ab52505da86cf077d850b3fee'
+
+export const nftTestnetInstanceId = 1049684612
 
 export const COLLECTIONS_COLOR_ORDER: string[] = [
   'common.blue',
@@ -21,9 +23,9 @@ export const COLLECTIONS_COLOR_ORDER: string[] = [
   'black.main',
 ]
 
-export const lazyPayableClaimContractAddress = process.env.NEXT_PUBLIC_TESTNET
-  ? '0x73CA7420625d312d1792Cea60Ced7B35D009322c'
-  : '0x'
+// Address is the same for Mainnet as for Goerli
+export const lazyPayableClaimContractAddress =
+  '0x074eaee8fc3e4e2b361762253f83d9a94aec6fd4'
 
 export const manifoldTxFee = 500000000000000
 
@@ -31,8 +33,16 @@ export const nullAddress = '0x0000000000000000000000000000000000000000'
 
 export const MAGIC_WALLET_USER_REJECTED_ACTION_MESSAGE =
   'User rejected the action'
+export const METAMASK_USER_DENIED_SIGNATURE_DETAILS =
+  'MetaMask Personal Message Signature: User denied message signature.'
 
 export const WEBPAGE_DOMAIN = 'https://wolfsociety.org'
+export const TWITTER_DOMAIN = 'https://twitter.com'
+export const MEDIUM_DOMAIN = 'https://medium.com'
+export const FACEBOOK_DOMAIN = 'https://facebook.com'
+export const LINKEDIN_DOMAIN = 'https://linkedin.com'
+
+export const TASKS_GROUP_NAME_SITEWIDE = 'sitewide'
 
 export const SUBPAGES: {
   [key in keyof Pick<
@@ -52,6 +62,10 @@ export const SECTIONS = {
     roadmap: {
       id: 'roadmap',
       href: '/#roadmap',
+    },
+    newsletter: {
+      id: 'newsletter',
+      href: '/#newsletter',
     },
   },
 }
@@ -77,3 +91,14 @@ export const ALLOCATION_INFO: {
     image: allocationArtistsImage,
   },
 ]
+
+export enum StaticTask {
+  BUY_ALL_NFTS = 0,
+  JOIN_DISCORD = 1,
+  FOLLOW_TWITTER = 2,
+  TURN_ON_TWITTER_NOTIFICATIONS = 3,
+  RETWEET_TWITTER = 4,
+  FOLLOW_MEDIUM = 5,
+  SUBSCRIBE_MEDIUM = 6,
+  SUBSCRIBE_NEWSLETTER = 7,
+}

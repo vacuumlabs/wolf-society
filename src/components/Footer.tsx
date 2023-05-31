@@ -1,4 +1,4 @@
-import { SUBPAGES } from '@/consts'
+import { MEDIUM_DOMAIN, SUBPAGES, TWITTER_DOMAIN } from '@/consts'
 import { getSubpagesKeys } from '@/utils/helpers'
 import { ContentTypes, useContentful } from '@/utils/hooks/useContentful'
 import {
@@ -20,6 +20,7 @@ import DiscordIcon from './icons/DiscordIcon'
 import MediumIcon from './icons/MediumIcon'
 import TwitterIcon from './icons/TwitterIcon'
 import WSLogo from './icons/WSLogo'
+import Newsletter from './landing/Newsletter'
 import Link from './Link'
 
 const Footer = () => {
@@ -38,18 +39,19 @@ const Footer = () => {
     },
     {
       text: 'twitter',
-      href: translate('twitterLink'),
+      href: `${TWITTER_DOMAIN}/${translate('twitterAccount')}`,
       icon: <TwitterIcon />,
     },
     {
       text: 'medium',
-      href: `https://medium.com/@${process.env.NEXT_PUBLIC_MEDIUM_USER}`,
+      href: `${MEDIUM_DOMAIN}/@${process.env.NEXT_PUBLIC_MEDIUM_USER}`,
       icon: <MediumIcon />,
     },
   ]
   return (
     <Box sx={{ bgcolor: 'neutral.400' }}>
       <AppearingComponent>
+        <Newsletter />
         <Container sx={{ pb: 5, pt: { mobile: 5, [breakpoint]: 10 } }}>
           <Grid container spacing={{ mobile: 5, [breakpoint]: 0 }}>
             <Grid item mobile={12} {...{ [breakpoint]: 6 }}>

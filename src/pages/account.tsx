@@ -5,8 +5,10 @@ import {
   Content,
   ContentTypes,
   NFTData,
+  TaskData,
   getCollections,
   getNfts,
+  getTasks,
   getTranslations,
 } from '@/utils/hooks/useContentful'
 import { Stack } from '@mui/material'
@@ -17,15 +19,17 @@ type Props = {
   translations: Partial<Content>
   collectionsData: CollectionData[] | null
   nftData: NFTData[] | null
+  tasksData: TaskData[] | null
 }
 
-export const Account = ({ collectionsData, nftData }: Props) => {
+export const Account = ({ collectionsData, nftData, tasksData }: Props) => {
   return (
     <Stack mt={10}>
       <ContributionAndRewards />
       <ArtworksAndCollections
         collectionsData={collectionsData}
         nftsData={nftData}
+        tasksData={tasksData}
       />
     </Stack>
   )
@@ -44,6 +48,7 @@ export const getStaticProps: GetStaticProps<{}> = async ({
       },
       collectionsData: await getCollections(locale),
       nftData: await getNfts(locale),
+      tasksData: await getTasks(locale),
       locale,
     },
     revalidate: 60, // In seconds

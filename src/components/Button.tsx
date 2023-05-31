@@ -21,7 +21,7 @@ const Button = styled(MuiButton)<
     paddingRight: isiconbutton ? '20px' : '32px',
   },
 
-  '&:focus': {
+  '&.Mui-focusVisible': {
     backgroundColor: theme.palette.primary['400'],
   },
 

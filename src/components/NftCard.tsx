@@ -9,23 +9,27 @@ import {
   Stack,
   Typography,
 } from '@mui/material'
-import Button from './Button'
 import { NFTDetail } from './NFTDetail/NFTDetail'
 import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
-import { NFTDataExtended } from '@/utils/hooks/useGetNftDataExtended'
+import { NFTDataWithOwnership } from '@/utils/hooks/useGetNftDataWithOwnership'
 import { getNftShareableContent } from '@/utils/sharing'
+import CardButton from '@/components/CardButton'
 
 export type NftCardProps = {
   minted?: number
-  nftData: NFTDataExtended
+  nftData: NFTDataWithOwnership
   displayPrice?: boolean
   displayCollection?: boolean
+  compact?: boolean
+  indicateOwnership?: boolean
+  hideMintedIfOwned?: boolean
 }
 
 const DynamicShareButton = dynamic(
-  () => import('./collections/ShareButton').then((mod) => mod.ShareButton),
+  () =>
+    import('./collections/CardShareButton').then((mod) => mod.CardShareButton),
   { ssr: false }
 )
 
@@ -34,6 +38,9 @@ const NftCard = ({
   nftData,
   displayPrice,
   displayCollection,
+  compact,
+  indicateOwnership,
+  hideMintedIfOwned,
 }: NftCardProps) => {
   const { totalSupply, name, priceInEth, image } = nftData
   const translate = useContentful(ContentTypes.common)
@@ -55,7 +62,6 @@ const NftCard = ({
   }
 
   function closeNFTDetail() {
-    setIsDetailOpen(false)
     const newQuery = { ...router.query }
     delete newQuery.nft
     router.replace(
@@ -67,6 +73,7 @@ const NftCard = ({
         shallow: true,
       }
     )
+    setIsDetailOpen(false)
   }
 
   useEffect(() => {
@@ -80,7 +87,9 @@ const NftCard = ({
       <Card
         sx={{
           bgcolor: 'neutral.main',
+          transition: '250ms',
           width: '100%',
+          height: '100%',
           '& .MuiCardContent-root': {
             mobile: {},
             [breakpoint]: { translate: '0 48px' },
@@ -96,15 +105,19 @@ const NftCard = ({
           onClick={() => {
             openNFTDetail()
           }}
+          sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
         >
           <Box position="relative">
             <CardMedia
               component="img"
-              sx={{ height: '100%' }}
+              sx={{
+                height: '100%',
+                opacity: !indicateOwnership || nftData.owned ? 1 : 0.2,
+              }}
               image={nftData.image.fields.file.url}
               alt="Project image"
             />
-            {minted !== undefined && (
+            {minted !== undefined && (!hideMintedIfOwned || !nftData.owned) && (
               <Box
                 bgcolor="black.main"
                 position="absolute"
@@ -114,67 +127,78 @@ const NftCard = ({
                 py={1}
               >
                 <Typography
-                  variant="body2"
+                  variant={compact ? 'body2S' : 'body2'}
                   display="inline"
                   color="neutral.400"
                 >
                   {minted}
                 </Typography>
                 <Typography
-                  variant="body2"
+                  variant={compact ? 'body2S' : 'body2'}
                   display="inline"
                   color="neutral.700"
                 >
                   {totalSupply
-                    ? `/${totalSupply} ${translate('pieces')}`
+                    ? `/${totalSupply} ${compact ? '' : translate('pieces')}`
                     : ` ${translate('minted')}`}
                 </Typography>
               </Box>
             )}
           </Box>
-          <CardContent sx={{ p: 0, transition: 'translate 0.25s' }}>
-            <Stack sx={{ p: 4, textAlign: 'start' }} gap={1}>
-              <Typography variant="caption" color="secondary">
-                {name}
-              </Typography>
-              <Stack direction="row" justifyContent="space-between">
-                {displayCollection && (
-                  <Typography variant="body2">
-                    {nftData.collection.fields.name}
-                  </Typography>
-                )}
-                <Typography variant="body2">
-                  {nftData.artist.fields.artistName}
+          {!compact && (
+            <CardContent
+              sx={{
+                p: 0,
+                transition: 'translate 0.25s',
+                flexGrow: 1,
+                width: '100%',
+                display: { mobile: 'flex', [breakpoint]: 'block' },
+                flexDirection: 'column',
+              }}
+            >
+              <Stack sx={{ p: 4, textAlign: 'start' }} gap={1}>
+                <Typography variant="caption" color="secondary">
+                  {name}
                 </Typography>
-                {displayPrice && (
-                  <Stack direction="row" alignItems="center" gap={1}>
-                    <Typography variant="caption">{priceInEth} ETH</Typography>
-                  </Stack>
-                )}
+                <Stack direction="row" justifyContent="space-between">
+                  {displayCollection && (
+                    <Typography variant="body2">
+                      {nftData.collection.fields.name}
+                    </Typography>
+                  )}
+                  <Typography variant="body2">
+                    {nftData.artist.fields.artistName}
+                  </Typography>
+                  {displayPrice && (
+                    <Stack direction="row" alignItems="center" gap={1}>
+                      <Typography variant="caption">
+                        {priceInEth} ETH
+                      </Typography>
+                    </Stack>
+                  )}
+                </Stack>
               </Stack>
-            </Stack>
-            <Stack direction="row" gap="1px">
-              <DynamicShareButton
-                variant="primary"
-                sx={{
-                  height: '100%',
-                  boxShadow: 'none',
-                  backgroundColor: 'red',
-                }}
-                shareableContent={getNftShareableContent(
-                  translate('nftShareText'),
-                  nftData
-                )}
-              />
-              <Button
-                component="div"
-                sx={{ width: '100%' }}
-                onClick={() => openNFTDetail()}
-              >
-                {translate('showDetails')}
-              </Button>
-            </Stack>
-          </CardContent>
+              <Stack direction="row" gap="1px">
+                <DynamicShareButton
+                  variant="primary"
+                  sx={{
+                    height: '100%',
+                    boxShadow: 'none',
+                    backgroundColor: 'red',
+                  }}
+                  shareableContent={getNftShareableContent(
+                    translate('nftShareText'),
+                    nftData
+                  )}
+                />
+                <CardButton>
+                  <Typography variant="button">
+                    {translate('showDetails')}
+                  </Typography>
+                </CardButton>
+              </Stack>
+            </CardContent>
+          )}
         </CardActionArea>
       </Card>
       <NFTDetail

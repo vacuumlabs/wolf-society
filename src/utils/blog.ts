@@ -1,3 +1,4 @@
+import { MEDIUM_DOMAIN } from '@/consts'
 import { ArticleProps } from '@/pages/blog'
 
 export type BlogData = {
@@ -8,7 +9,7 @@ export type BlogData = {
 
 export const getBlogData = async (): Promise<BlogData> => {
   const response = await fetch(
-    `https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@${process.env.NEXT_PUBLIC_MEDIUM_USER}`
+    `https://api.rss2json.com/v1/api.json?rss_url=${MEDIUM_DOMAIN}/feed/@${process.env.NEXT_PUBLIC_MEDIUM_USER}`
   )
 
   const data = await response.json()

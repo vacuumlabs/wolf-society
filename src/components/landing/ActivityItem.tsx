@@ -40,19 +40,6 @@ const ActivityItem = ({
   const displayHorizontally = useMediaQuery(theme.breakpoints.up(breakpoint))
   const displayImageOnTheRight = !displayHorizontally || imageOnTheRight
 
-  const toggleDrawer =
-    (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
-      if (
-        event.type === 'keydown' &&
-        ((event as React.KeyboardEvent).key === 'Tab' ||
-          (event as React.KeyboardEvent).key === 'Shift')
-      ) {
-        return
-      }
-
-      setDrawerOpened(open)
-    }
-
   const textStack = (
     <Stack
       sx={{
@@ -71,7 +58,7 @@ const ActivityItem = ({
         {description}
       </Typography>
       <Box>
-        <Button variant="outlined" onClick={toggleDrawer(true)}>
+        <Button variant="outlined" onClick={() => setDrawerOpened(true)}>
           {translate('readMore')}
         </Button>
       </Box>
@@ -114,7 +101,7 @@ const ActivityItem = ({
       <Drawer
         anchor="right"
         open={drawerOpened}
-        onClose={toggleDrawer(false)}
+        onClose={() => setDrawerOpened(false)}
         PaperProps={{
           sx: (theme) => ({
             overflowY: 'hidden',
@@ -136,7 +123,7 @@ const ActivityItem = ({
             zIndex={1}
           >
             <Stack justifyContent="end" direction="row">
-              <IconButton onClick={toggleDrawer(false)}>
+              <IconButton onClick={() => setDrawerOpened(false)}>
                 <CloseIcon />
               </IconButton>
             </Stack>

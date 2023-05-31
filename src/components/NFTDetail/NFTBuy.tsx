@@ -13,20 +13,20 @@ import {
   MAGIC_WALLET_USER_REJECTED_ACTION_MESSAGE,
   lazyPayableClaimContractAddress,
   manifoldTxFee,
-  nftSmartContractAddress,
 } from '@/consts'
-import { LazyPayableClaimAbi } from '@/abi/LazyPayableClaim'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { encodeFunctionData, parseEther } from 'viem'
 import { NFTParameters } from './NFTParameters'
 import { useSnackbar } from 'notistack'
-import { NFTDataExtended } from '@/utils/hooks/useGetNftDataExtended'
+import { NFTDataWithOwnership } from '@/utils/hooks/useGetNftDataWithOwnership'
 import {
   SocialMedia,
   getNftShareableContent,
   socialMediaListData,
   shareContentOnSocialMedia,
 } from '@/utils/sharing'
+import { useGetEthPrice } from '@/utils/hooks/useGetEthPrice'
+import { ERC721LazyPayableClaimAbi } from '@/abi/ERC721LazyPayableClaim'
 
 const CircleButton = ({
   label,
@@ -56,7 +56,7 @@ const CircleButton = ({
 )
 
 type NFTBuyComponentProps = {
-  nftData: NFTDataExtended
+  nftData: NFTDataWithOwnership
   buyInView: boolean
   className: string
 }
@@ -68,7 +68,8 @@ export const NFTBuy = ({
 }: NFTBuyComponentProps) => {
   const translate = useContentful(ContentTypes.nftDetail)
   const translateCommon = useContentful(ContentTypes.common)
-  const { priceInEth, manifoldLink, instanceId } = nftData
+  const { priceInEth, manifoldLink, instanceId, tokenAddress } = nftData
+  const ethToUsd = useGetEthPrice()
   const breakpoint: keyof BreakpointOverrides = 'tabletM'
 
   const { openConnectModal } = useConnectModal()
@@ -79,20 +80,25 @@ export const NFTBuy = ({
   const isUserWalletMagic = connector != null && connector.id === 'magic'
 
   const buyNft = async () => {
-    if (!walletClient || !address || instanceId == null) {
+    if (
+      !walletClient ||
+      !address ||
+      instanceId == null ||
+      tokenAddress == null
+    ) {
       if (openConnectModal != undefined) {
         openConnectModal()
       }
       return
     }
     const encodedData = encodeFunctionData({
-      abi: LazyPayableClaimAbi,
+      abi: ERC721LazyPayableClaimAbi,
       functionName: 'mint',
-      args: [nftSmartContractAddress, BigInt(instanceId), 0, [], address],
+      args: [tokenAddress, BigInt(instanceId), 0, [], address],
     })
 
     try {
-      const txResponse = await walletClient.sendTransaction({
+      await walletClient.sendTransaction({
         to: lazyPayableClaimContractAddress,
         data: encodedData,
         value: BigInt(manifoldTxFee) + parseEther(`${priceInEth}`),
@@ -133,7 +139,14 @@ export const NFTBuy = ({
         flexGrow={1}
         gap={{ mobile: 5, [breakpoint]: 10 }}
       >
-        <Typography variant="display">{`${priceInEth} ETH`}</Typography>
+        <Stack alignItems="center" justifyContent="center" gap={3}>
+          <Typography variant="display">{`${priceInEth} ETH`}</Typography>
+          <Typography variant="caption" color="neutral.700">{`${(
+            priceInEth * ethToUsd
+          ).toLocaleString('en-US', {
+            maximumFractionDigits: 2,
+          })} USD`}</Typography>
+        </Stack>
         {nftData.owned && (
           <Stack gap={3} alignItems="center">
             <Typography variant="caption" color="neutral.700">

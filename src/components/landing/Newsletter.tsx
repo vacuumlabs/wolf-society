@@ -1,14 +1,26 @@
 import { ContentTypes, useContentful } from '@/utils/hooks/useContentful'
-import { Box, Container, Typography, BreakpointOverrides } from '@mui/material'
+import {
+  Box,
+  Container,
+  Typography,
+  BreakpointOverrides,
+  useMediaQuery,
+  Theme,
+  Stack,
+} from '@mui/material'
 import React, { useState } from 'react'
 import AppearingComponent from '../AppearingComponent'
 import Button from '../Button'
 import TextField from '../TextField'
 import { useSnackbar } from 'notistack'
+import { SECTIONS } from '@/consts'
 
 const Newsletter = () => {
-  const translate = useContentful(ContentTypes.landingPage)
+  const translate = useContentful(ContentTypes.common)
   const breakpoint: keyof BreakpointOverrides = 'desktopS'
+  const isMobile = useMediaQuery((theme: Theme) =>
+    theme.breakpoints.down('tabletM')
+  )
   const [inputValue, setInputValue] = useState('')
   const { enqueueSnackbar } = useSnackbar()
 
@@ -32,39 +44,59 @@ const Newsletter = () => {
       }
     )
   }
+
+  const content = (
+    <>
+      <Typography
+        variant="headline"
+        sx={{ display: 'inline', verticalAlign: 'middle', mb: { mobile: 2 } }}
+      >
+        {translate('newsletterText')}
+      </Typography>
+      <TextField
+        value={inputValue}
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+          setInputValue(event.target.value)
+        }}
+        placeholder={translate('newsletterInputLabel')}
+        sx={{ verticalAlign: 'middle', mx: 1 }}
+      />
+      <Button
+        onClick={async () => {
+          await subscribeNewsletter()
+        }}
+        sx={{ verticalAlign: 'middle', mx: { mobile: 1 } }}
+      >
+        {translate('newsletterButton')}
+      </Button>
+    </>
+  )
+
   return (
-    <Box sx={{ bgcolor: 'neutral.400' }}>
+    <Box sx={{ bgcolor: 'neutral.400' }} id={SECTIONS.about.newsletter.id}>
       <AppearingComponent>
         <Container>
-          <Box
-            sx={{
-              my: { mobile: 10, [breakpoint]: 20 },
-              textAlign: 'center',
-            }}
-          >
-            <Typography
-              variant="headline"
-              sx={{ display: 'inline', verticalAlign: 'middle' }}
-            >
-              {translate('newsletterText')}
-            </Typography>
-            <TextField
-              value={inputValue}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                setInputValue(event.target.value)
+          {isMobile ? (
+            <Stack
+              direction={'column'}
+              sx={{
+                py: { mobile: 5, [breakpoint]: 10 },
+                textAlign: 'center',
               }}
-              placeholder={translate('newsletterInputLabel')}
-              sx={{ verticalAlign: 'middle', mx: 1 }}
-            ></TextField>
-            <Button
-              onClick={async () => {
-                await subscribeNewsletter()
-              }}
-              sx={{ verticalAlign: 'middle' }}
+              gap={1}
             >
-              {translate('newsletterButton')}
-            </Button>
-          </Box>
+              {content}
+            </Stack>
+          ) : (
+            <Box
+              sx={{
+                py: { mobile: 10, [breakpoint]: 20 },
+                textAlign: 'center',
+              }}
+            >
+              {content}
+            </Box>
+          )}
         </Container>
       </AppearingComponent>
     </Box>

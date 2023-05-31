@@ -19,6 +19,7 @@ import CloseIcon from '../icons/CloseIcon'
 import { SUBPAGES } from '@/consts'
 import TypographyWithTooltips from '../TypographyWithTooltips'
 import Link from 'next/link'
+import CardButton from '@/components/CardButton'
 
 export type ProjectCardProps = {
   name: string
@@ -36,18 +37,7 @@ const ProjectCard = ({ name, imageUrl, description }: ProjectCardProps) => {
     disableHysteresis: true,
     target: scrollTarget,
   })
-  const toggleDrawer =
-    (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
-      if (
-        event.type === 'keydown' &&
-        ((event as React.KeyboardEvent).key === 'Tab' ||
-          (event as React.KeyboardEvent).key === 'Shift')
-      ) {
-        return
-      }
 
-      setDrawerOpened(open)
-    }
   return (
     <>
       <Card
@@ -65,7 +55,7 @@ const ProjectCard = ({ name, imageUrl, description }: ProjectCardProps) => {
           },
         }}
       >
-        <CardActionArea onClick={toggleDrawer(true)}>
+        <CardActionArea onClick={() => setDrawerOpened(true)}>
           <CardMedia
             component="img"
             height="300"
@@ -80,20 +70,21 @@ const ProjectCard = ({ name, imageUrl, description }: ProjectCardProps) => {
             >
               {name}
             </Typography>
-            <Button
-              component="div"
-              sx={{ width: '100%' }}
-              endIcon={<ArrowRightIcon />}
-            >
-              {translate('readMore')}
-            </Button>
+            <CardButton sx={{ width: '100%' }}>
+              <Stack direction="row" alignItems="center" gap={1}>
+                <Typography variant="button">
+                  {translate('readMore')}
+                </Typography>
+                <ArrowRightIcon />
+              </Stack>
+            </CardButton>
           </CardContent>
         </CardActionArea>
       </Card>
       <Drawer
         anchor="right"
         open={drawerOpened}
-        onClose={toggleDrawer(false)}
+        onClose={() => setDrawerOpened(false)}
         PaperProps={{
           sx: (theme) => ({
             overflowY: 'hidden',
@@ -123,7 +114,7 @@ const ProjectCard = ({ name, imageUrl, description }: ProjectCardProps) => {
             p={2}
           >
             <Stack justifyContent="end" direction="row">
-              <IconButton onClick={toggleDrawer(false)}>
+              <IconButton onClick={() => setDrawerOpened(false)}>
                 <CloseIcon />
               </IconButton>
             </Stack>

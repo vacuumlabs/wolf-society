@@ -108,7 +108,6 @@ export const ContributionAndRewards = () => {
   return (
     <Stack
       pt={5}
-      pb={10}
       sx={{
         alignItems: { mobile: 'inherit', desktopS: 'center' },
         backgroundColor: 'neutral.400',

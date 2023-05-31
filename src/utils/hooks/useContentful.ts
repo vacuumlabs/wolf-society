@@ -2,6 +2,7 @@ import { Asset } from 'contentful'
 import { createContext, useContext } from 'react'
 import contentful from '../configs/contentful'
 import { getNftMintedAmount } from '../helpers'
+import { nftTestnetInstanceId, nftTestnetSmartContractAddress } from '@/consts'
 
 export enum ContentTypes {
   navbar = 'navbar',
@@ -17,6 +18,7 @@ export enum ContentTypes {
   nft = 'nft',
   nftDetail = 'nftDetail',
   nftArtist = 'nftArtist',
+  task = 'task',
 }
 
 export type ProjectData = {
@@ -67,7 +69,7 @@ export type NFTArtistData = {
   artistName: string
   artistImage: Asset
   artistDescLeft: string
-  artistDescRight: string
+  artistDescRight?: string
   artistMotto: string
   artistTwitter: string
   artistInstagram: string
@@ -85,7 +87,6 @@ export type NFTData = {
   collection: {
     fields: CollectionData
   }
-  tokenId?: number
   name: string
   priceInEth: number
   totalSupply?: number
@@ -97,8 +98,23 @@ export type NFTData = {
   beatTheDrumList: string
   breadAndButterList: string
   minted: number
+  tokenAddress?: `0x${string}`
   manifoldLink?: string
   instanceId?: number
+}
+
+export type TaskData = {
+  id: number
+  text: string
+  buttonLabel: string
+  nftOrCollection?: {
+    fields: NFTData | CollectionData
+  }
+  taskType?:
+    | 'Share on Twitter'
+    | 'Share on Facebook'
+    | 'Share on LinkedIn'
+    | 'Buy all NFTs in a Collection'
 }
 
 export type CollectionsPageData = {
@@ -126,8 +142,12 @@ export type AccountPageData = {
   collections: string
   complete: string
   noArtworks: string
-  unlockExtraRewards: string
-  collectQuest: string
+  unlockRewardsQuest: string
+  unlockRewardsButton: string
+  unlockExtraRewardsTitle: string
+  unlockExtraRewardsDescription: string
+  messageNotSignedError: string
+  tweetIdToRetweet: string
 }
 
 // Content to be injected into every page
@@ -147,7 +167,7 @@ export type Content = {
     faq: string
     account: string
     discordLink: string
-    twitterLink: string
+    twitterAccount: string
   }
   [ContentTypes.common]: {
     secondsShort: string
@@ -168,6 +188,20 @@ export type Content = {
     disconnectWallet: string
     nftShareText: string
     collectionShareText: string
+    share: string
+    follow: string
+    join: string
+    subscribe: string
+    turnOn: string
+    retweet: string
+    complete: string
+    genericErrorMessage: string
+    newsletterText: string
+    newsletterInputLabel: string
+    newsletterButton: string
+    newsletterSubscriptionSuccess: string
+    newsletterSubscriptionError: string
+    newsletterSubscriptionConflict: string
   }
   [ContentTypes.landingPage]: {
     heroTitle: string
@@ -223,6 +257,7 @@ export type Content = {
   [ContentTypes.nft]: NFTData
   [ContentTypes.nftDetail]: NFTDetailData
   [ContentTypes.nftArtist]: NFTArtistData
+  [ContentTypes.task]: TaskData
 }
 
 /**
@@ -328,6 +363,17 @@ export const getCollections = (locale?: string) =>
     orderBy: 'fields.orderNumber',
   })
 
+// For testing purposes, use testnet contract address for all NFTs
+const changeNftPropertiesIfTestnet = (nftData: NFTData) => {
+  return process.env.NEXT_PUBLIC_TESTNET === 'true'
+    ? {
+        ...nftData,
+        tokenAddress: nftTestnetSmartContractAddress,
+        instanceId: nftTestnetInstanceId,
+      }
+    : nftData
+}
+
 export const getNfts = async (locale?: string) => {
   const nftsData = await getArrayOfContent<NFTData>({
     contentType: ContentTypes.nft,
@@ -336,13 +382,39 @@ export const getNfts = async (locale?: string) => {
   })
   if (!nftsData) return nftsData
   return await Promise.all(
-    nftsData.map(async (nftData) => {
+    nftsData.map(async (nftDataFromCMS) => {
+      const nftData = changeNftPropertiesIfTestnet(nftDataFromCMS)
       return {
         ...nftData,
-        minted: nftData.tokenId ? await getNftMintedAmount(nftData.tokenId) : 0,
+        minted:
+          nftData.tokenAddress && nftData.instanceId
+            ? await getNftMintedAmount(nftData.tokenAddress, nftData.instanceId)
+            : 0,
       }
     })
   )
+}
+
+export const getTasks = async (locale?: string) => {
+  const tasksData = await getArrayOfContent<TaskData>({
+    contentType: ContentTypes.task,
+    locale,
+    orderBy: 'fields.id',
+  })
+  if (!tasksData || process.env.NEXT_PUBLIC_TESTNET !== 'true') return tasksData
+  return tasksData.map((taskDataFromCMS) => {
+    const nftOrCollectionFields = taskDataFromCMS.nftOrCollection?.fields
+    if (
+      taskDataFromCMS.nftOrCollection != null &&
+      nftOrCollectionFields != null &&
+      'nftDesc' in nftOrCollectionFields
+    ) {
+      taskDataFromCMS.nftOrCollection.fields = changeNftPropertiesIfTestnet(
+        nftOrCollectionFields
+      )
+    }
+    return taskDataFromCMS
+  })
 }
 
 export const ContentContext = createContext<Content | undefined>(undefined)
