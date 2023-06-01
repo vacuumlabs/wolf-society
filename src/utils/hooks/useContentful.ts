@@ -19,6 +19,7 @@ export enum ContentTypes {
   nftDetail = 'nftDetail',
   nftArtist = 'nftArtist',
   task = 'task',
+  taskTexts = 'taskTexts',
 }
 
 export type ProjectData = {
@@ -110,11 +111,37 @@ export type TaskData = {
   id: string
   databaseId: number
   text: string
+  taskText:
+    | 'buyAllNfts'
+    | 'joinDiscord'
+    | 'followTwitter'
+    | 'turnOnTwitterNotifications'
+    | 'retweet'
+    | 'followMedium'
+    | 'subscribeMedium'
+    | 'subscribeNewsletter'
+    | 'shareNftOnTwitter'
+    | 'shareNftOnFacebook'
+    | 'shareNftOnLinkedIn'
   buttonLabel: string
   nftOrCollection?: {
     fields: NFTData | CollectionData
   }
   taskType?: 'Share on Twitter' | 'Share on Facebook' | 'Share on LinkedIn'
+}
+
+export type TaskTextsData = {
+  buyAllNfts: string
+  joinDiscord: string
+  followTwitter: string
+  turnOnTwitterNotifications: string
+  retweet: string
+  followMedium: string
+  subscribeMedium: string
+  subscribeNewsletter: string
+  shareNftOnTwitter: string
+  shareNftOnFacebook: string
+  shareNftOnLinkedIn: string
 }
 
 export type CollectionsPageData = {
@@ -261,6 +288,7 @@ export type Content = {
   [ContentTypes.nftDetail]: NFTDetailData
   [ContentTypes.nftArtist]: NFTArtistData
   [ContentTypes.task]: TaskData
+  [ContentTypes.taskTexts]: TaskTextsData
 }
 
 /**
