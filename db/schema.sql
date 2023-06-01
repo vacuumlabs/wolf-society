@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS task (
   id INTEGER,
   task_group_name VARCHAR(42) NOT NULL,
   reward_amount INTEGER DEFAULT 0,
+  active BOOLEAN,
   PRIMARY KEY(id, task_group_name),
   FOREIGN KEY(task_group_name) REFERENCES task_group(name)
 );

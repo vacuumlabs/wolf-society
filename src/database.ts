@@ -15,6 +15,7 @@ interface TaskTable {
   id: number
   task_group_name: string
   reward_amount: number
+  active: boolean
 }
 
 interface CompletedTaskTable {

@@ -124,10 +124,13 @@ const ExtraRewardsDrawer = ({
   }
 
   const actionButtonDisabledState = (task: TaskDataWithCompletion): boolean => {
+    if (!task.isActive)
+      return true
     if (task.databaseId === StaticTask.BUY_ALL_NFTS)
       return !collectionIsComplete
     if (task.databaseId === StaticTask.RETWEET_TWITTER)
       return translate('tweetIdToRetweet') === 'tweetIdToRetweet'
+
     const taskNftOrCollection = task.nftOrCollection?.fields
     if (taskNftOrCollection && 'nftDesc' in taskNftOrCollection) {
       const nftOwned = collectionData.nfts.find(
