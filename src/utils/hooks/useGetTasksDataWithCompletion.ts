@@ -33,7 +33,8 @@ export const useGetTasksDataWithCompletion = (tasksData: TaskData[] | null) => {
               ...taskData,
               isCompleted: !!(tasks as TaskRow[]).find(
                 ({ id, taskGroupName }) =>
-                  id === taskData.id && taskGroupName === taskDataGroupName
+                  id === taskData.databaseId &&
+                  taskGroupName === taskDataGroupName
               )?.isCompleted,
             }
           }) ?? []

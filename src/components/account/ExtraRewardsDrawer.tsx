@@ -76,7 +76,7 @@ const ExtraRewardsDrawer = ({
       : TASKS_GROUP_NAME_SITEWIDE
     const data = {
       eth_address: address,
-      task_id: task.id,
+      task_id: task.databaseId,
       task_group_name: taskGroupName,
     }
 
@@ -124,9 +124,9 @@ const ExtraRewardsDrawer = ({
   }
 
   const actionButtonDisabledState = (task: TaskDataWithCompletion): boolean => {
-    if (task.taskType === 'Buy all NFTs in a Collection')
+    if (task.databaseId === StaticTask.BUY_ALL_NFTS)
       return !collectionIsComplete
-    if (task.id === StaticTask.RETWEET_TWITTER)
+    if (task.databaseId === StaticTask.RETWEET_TWITTER)
       return translate('tweetIdToRetweet') === 'tweetIdToRetweet'
     const taskNftOrCollection = task.nftOrCollection?.fields
     if (taskNftOrCollection && 'nftDesc' in taskNftOrCollection) {
@@ -141,10 +141,6 @@ const ExtraRewardsDrawer = ({
   const guideToTask = async (task: TaskDataWithCompletion) => {
     setCompletingTask(task)
     if (task.taskType != null) {
-      if (task.taskType === 'Buy all NFTs in a Collection') {
-        await startCompletingTask({ ...task, id: StaticTask.BUY_ALL_NFTS })
-        return
-      }
       let socialMedia: SocialMedia | undefined
       switch (task.taskType) {
         case 'Share on Facebook':
@@ -178,7 +174,10 @@ const ExtraRewardsDrawer = ({
       }
       return
     }
-    switch (task.id) {
+    switch (task.databaseId) {
+      case StaticTask.BUY_ALL_NFTS:
+        await startCompletingTask(task)
+        return
       case StaticTask.JOIN_DISCORD:
         window.open(translateNavbar('discordLink'), '_blank')
         break

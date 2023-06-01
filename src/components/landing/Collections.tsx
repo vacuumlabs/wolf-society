@@ -33,7 +33,9 @@ const Collections = ({ collectionsData }: Props) => {
             trigger: slider.current,
             scrub: 0,
             start: `top+=${pixelsPause} top`,
-            end: () => '+=' + window.innerWidth * panels.length,
+            end: () =>
+              '+=' +
+              window.innerWidth * (panels.length > 1 ? panels.length : 0),
             pin: true,
           },
         })
@@ -60,7 +62,9 @@ const Collections = ({ collectionsData }: Props) => {
           sx={{
             pt: '80px',
             width: `${100 * collectionsData.length}vw`,
-            height: `calc(${100 * collectionsData.length}vw + 100vh)`,
+            height: `calc(${
+              100 * (collectionsData.length > 1 ? collectionsData.length : 0)
+            }vw + 100vh)`,
             display: 'flex',
             flexWrap: 'wrap',
           }}

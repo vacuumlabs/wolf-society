@@ -74,6 +74,9 @@ const Projects = ({ projectsData }: Props) => {
                       name={project.name}
                       imageUrl={project.image.fields.file.url}
                       description={project.description}
+                      location={project.location}
+                      project={project.project}
+                      timeFrame={project.timeFrame}
                     />
                   </ScrollingCard>
                 </Stack>

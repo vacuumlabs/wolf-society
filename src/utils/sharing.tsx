@@ -69,7 +69,7 @@ export const getNftShareableContent = (cmsText: string, nftData: NFTData) => {
     text,
     image: nftData.image.fields.file.url,
     link: encodeURIComponent(
-      `${WEBPAGE_DOMAIN}${SUBPAGES.collections}?nft=${nftData.id}`
+      `${WEBPAGE_DOMAIN}${SUBPAGES.collections}/${nftData.id}`
     ),
   }
 }
