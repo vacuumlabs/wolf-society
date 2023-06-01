@@ -7,6 +7,7 @@ import { TASKS_GROUP_NAME_SITEWIDE } from '@/consts'
 export type TaskDataWithCompletion = TaskData & {
   isCompleted: boolean
   isActive: boolean
+  rewardAmount: number | undefined
 }
 
 export const useGetTasksDataWithCompletion = (tasksData: TaskData[] | null) => {
@@ -40,6 +41,7 @@ export const useGetTasksDataWithCompletion = (tasksData: TaskData[] | null) => {
               ...taskData,
               isActive: !!thisTask?.active,
               isCompleted: !!thisTask?.isCompleted,
+              rewardAmount: thisTask?.rewardAmount,
             }
           }) ?? []
         )
