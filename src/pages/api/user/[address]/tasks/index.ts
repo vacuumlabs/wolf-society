@@ -43,6 +43,7 @@ export default async function handler(
       't.task_group_name',
       't.id',
       't.reward_amount',
+      't.active',
       sql<boolean>`CASE WHEN ct.completed_by = ${eth_address} THEN TRUE ELSE FALSE END`.as(
         'is_completed'
       ),
@@ -51,11 +52,12 @@ export default async function handler(
 
   return res.json({
     tasks: tasks.map(
-      ({ reward_amount, id, task_group_name, is_completed }) => ({
+      ({ reward_amount, id, task_group_name, is_completed, active }) => ({
         id: id,
         taskGroupName: task_group_name,
         isCompleted: is_completed,
         rewardAmount: reward_amount,
+        active: active,
       })
     ),
   })
