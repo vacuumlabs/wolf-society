@@ -50,6 +50,25 @@ export default async function handler(
     })
   }
 
+  try {
+    const isTaskActive = await db
+      .selectFrom('task')
+      .select(['active'])
+      .where('task_group_name', '=', data.task_group_name)
+      .where('id', '=', data.task_id)
+      .executeTakeFirst()
+
+    if (isTaskActive == null || !isTaskActive.active) {
+      return res.status(400).json({
+        message: "Can't complete inactive task!"
+      })
+    }
+  } catch (error) {
+      return res.status(500).json({
+        message: 'Error checking task active status.',
+      })
+  }
+    
   if (data.task_id === StaticTask.BUY_ALL_NFTS) {
     const nfts = await getNfts()
     if (!nfts) {

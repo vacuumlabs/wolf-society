@@ -51,6 +51,7 @@ const ExtraRewardsDrawer = ({
   const translate = useContentful(ContentTypes.accountPage)
   const translateCommon = useContentful(ContentTypes.common)
   const translateNavbar = useContentful(ContentTypes.navbar)
+  const translateTaskText = useContentful(ContentTypes.taskTexts)
   const breakpoint: keyof BreakpointOverrides = 'tabletM'
   const [completingTask, _setCompletingTask] =
     useState<TaskDataWithCompletion | null>(null)
@@ -124,10 +125,13 @@ const ExtraRewardsDrawer = ({
   }
 
   const actionButtonDisabledState = (task: TaskDataWithCompletion): boolean => {
+    if (!task.isActive)
+      return true
     if (task.databaseId === StaticTask.BUY_ALL_NFTS)
       return !collectionIsComplete
     if (task.databaseId === StaticTask.RETWEET_TWITTER)
       return translate('tweetIdToRetweet') === 'tweetIdToRetweet'
+
     const taskNftOrCollection = task.nftOrCollection?.fields
     if (taskNftOrCollection && 'nftDesc' in taskNftOrCollection) {
       const nftOwned = collectionData.nfts.find(
@@ -217,7 +221,7 @@ const ExtraRewardsDrawer = ({
   }
 
   const formatTaskText = (task: TaskDataWithCompletion) => {
-    return task.text.replaceAll(
+    return translateTaskText(task.taskText).replaceAll(
       '{nft.name}',
       task.nftOrCollection?.fields.name ?? ''
     )

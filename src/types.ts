@@ -3,4 +3,5 @@ export type TaskRow = {
   taskGroupName: string
   isCompleted: boolean
   rewardAmount: number
+  active: boolean
 }

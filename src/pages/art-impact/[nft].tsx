@@ -1,4 +1,4 @@
-import { SUBPAGES } from '@/consts'
+import { SUBPAGES, WEBPAGE_DOMAIN } from '@/consts'
 import { NFTData, getNfts } from '@/utils/hooks/useContentful'
 import { GetStaticProps, GetStaticPropsContext } from 'next'
 import Head from 'next/head'
@@ -20,15 +20,21 @@ const ArtImpactNft = ({ nft }: Props) => {
     queriedNftImageUrl = 'https:' + queriedNftImageUrl
   }
   const queriedNftArtist = nft?.artist?.fields?.artistName
+  const pageUrl = `${WEBPAGE_DOMAIN}${SUBPAGES.collections}/${nft?.id ?? ''}`
   return nft != null ? (
     <Head>
       <meta name="og:title" content={nft.name} />
       <meta name="og:description" content={`by ${queriedNftArtist}`} />
       <meta name="og:image" content={queriedNftImageUrl} />
+      <meta name="og:url" content={pageUrl} />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={nft.name} />
       <meta name="twitter:description" content={`by ${queriedNftArtist}`} />
       <meta name="twitter:image" content={queriedNftImageUrl} />
+      <meta property="og:title" content={nft.name} />
+      <meta property="og:description" content={`by ${queriedNftArtist}`} />
+      <meta property="og:image" content={queriedNftImageUrl} />
+      <meta property="og:url" content={pageUrl} />
     </Head>
   ) : (
     <></>

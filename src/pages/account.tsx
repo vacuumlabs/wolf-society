@@ -45,6 +45,7 @@ export const getStaticProps: GetStaticProps<{}> = async ({
         ...(await getTranslations(ContentTypes.collectionsPage, locale)),
         ...(await getTranslations(ContentTypes.nftDetail, locale)),
         ...(await getTranslations(ContentTypes.accountPage, locale)),
+        ...(await getTranslations(ContentTypes.taskTexts, locale)),
       },
       collectionsData: await getCollections(locale),
       nftData: await getNfts(locale),
