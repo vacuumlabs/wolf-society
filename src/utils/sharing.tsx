@@ -2,6 +2,7 @@ import { NFTData } from './hooks/useContentful'
 import TwitterIcon from '@/components/icons/TwitterIcon'
 import EmailIcon from '@/components/icons/EmailIcon'
 import FacebookIcon from '@/components/icons/FacebookIcon'
+import LinkedInIcon from '@mui/icons-material/LinkedIn'
 import {
   FACEBOOK_DOMAIN,
   LINKEDIN_DOMAIN,
@@ -21,6 +22,9 @@ export const socialMediaListData: Partial<
   },
   facebook: {
     icon: <FacebookIcon />,
+  },
+  linkedin: {
+    icon: <LinkedInIcon />,
   },
   email: {
     icon: <EmailIcon />,
