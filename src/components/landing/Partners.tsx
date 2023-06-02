@@ -6,11 +6,9 @@ import {
   Stack,
   Typography,
 } from '@mui/material'
-import Image from 'next/image'
-import GediIcon from '../icons/GediIcon'
-import globaia from 'public/images/Globaia.png'
 import VacuumlabsIcon from '../icons/VacuumlabsIcon'
 import AppearingComponent from '../AppearingComponent'
+import ReforestationLogo from '../icons/ReforestationLogo'
 
 const Partners = () => {
   const translate = useContentful(ContentTypes.landingPage)
@@ -37,9 +35,8 @@ const Partners = () => {
               direction={{ mobile: 'column', [breakpoint]: 'row' }}
               alignItems="center"
             >
-              <GediIcon />
-              <Image src={globaia} alt="Globaia logo" height={42} />
               <VacuumlabsIcon />
+              <ReforestationLogo />
             </Stack>
           </Stack>
         </Container>
