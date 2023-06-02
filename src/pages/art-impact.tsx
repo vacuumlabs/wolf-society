@@ -75,6 +75,7 @@ export const getStaticProps: GetStaticProps<Props> = async ({
       collectionsData: await getCollections(locale),
       nftData: await getNfts(locale),
     },
+    revalidate: 60, // In seconds
   }
 }
 
