@@ -11,7 +11,7 @@ import {
 import HorizontalScroll from 'react-scroll-horizontal'
 import { NFTDescription } from './NFTDescription'
 import { NFTArtist, NFTArtistProps } from './NFTArtist'
-import CloseIcon from '@mui/icons-material/Close'
+import CloseIcon from '../icons/CloseIcon'
 import { NFTUsage, NFTUsageProps } from './NFTUsage'
 import { NFTBuy } from './NFTBuy'
 import { useRef, useState } from 'react'

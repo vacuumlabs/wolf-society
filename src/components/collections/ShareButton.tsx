@@ -1,4 +1,4 @@
-import ShareIcon from '@mui/icons-material/Share'
+import ShareIcon from '../icons/ShareIcon'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state'

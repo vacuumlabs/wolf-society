@@ -1,13 +1,13 @@
 import { IconButton, Stack } from '@mui/material'
-import TwitterIcon from '@mui/icons-material/Twitter'
-import InstagramIcon from '@mui/icons-material/Instagram'
-import LanguageIcon from '@mui/icons-material/Language'
-import FacebookIcon from '@mui/icons-material/Facebook'
 import LinkedInIcon from '@mui/icons-material/LinkedIn'
 import YoutubeIcon from '@mui/icons-material/YouTube'
-import EmailIcon from '@mui/icons-material/Email'
 import DiscordIcon from '../icons/DiscordIcon'
 import LinktreeIcon from '../icons/LinktreeIcon'
+import TwitterIcon from '../icons/TwitterIcon'
+import InstagramIcon from '../icons/InstagramIcon'
+import FacebookIcon from '../icons/FacebookIcon'
+import WebIcon from '../icons/WebIcon'
+import EmailIcon from '../icons/EmailIcon'
 
 export interface NFTArtistSocialMediasProps {
   twitterUrl?: string
@@ -43,7 +43,7 @@ export const NFTArtistSocialMedias = ({
     },
     {
       value: webUrl,
-      component: <LanguageIcon />,
+      component: <WebIcon />,
     },
     {
       value: facebookUrl,
