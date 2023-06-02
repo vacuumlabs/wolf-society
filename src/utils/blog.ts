@@ -13,6 +13,9 @@ export const getBlogData = async (): Promise<BlogData> => {
   )
 
   const data = await response.json()
+  ;(data.items as ArticleProps[] | undefined)?.forEach((post) => {
+    post.title = post.title.replace(/&amp;/g, '&')
+  })
 
   return {
     posts: data.items ?? [],
