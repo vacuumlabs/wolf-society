@@ -1,5 +1,6 @@
 import ArtworksAndCollections from '@/components/account/ArtworksAndCollections'
 import ContributionAndRewards from '@/components/account/ContributionAndRewards'
+import { RefetchTokensContext } from '@/utils/context/refetchTokens'
 import {
   CollectionData,
   Content,
@@ -13,7 +14,8 @@ import {
 } from '@/utils/hooks/useContentful'
 import { Stack } from '@mui/material'
 import { GetStaticProps, GetStaticPropsContext } from 'next'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useAccount } from 'wagmi'
 
 type Props = {
   translations: Partial<Content>
@@ -23,15 +25,38 @@ type Props = {
 }
 
 export const Account = ({ collectionsData, nftData, tasksData }: Props) => {
+  const [gameTokens, setGameTokens] = useState<number | undefined>(undefined)
+  const [refetch, setRefetch] = useState(0)
+  const { address } = useAccount()
+
+  useEffect(() => {
+    const fetchBalance = async (address: string) => {
+      const res = await fetch(`/api/user/${address}`)
+      const { points } = await res.json()
+
+      setGameTokens(points)
+    }
+
+    if (address == null) {
+      return undefined
+    }
+
+    fetchBalance(address)
+  }, [address, refetch])
+
+  const refetchGameTokens = () => setRefetch(refetch + 1)
+
   return (
-    <Stack mt={10}>
-      <ContributionAndRewards />
-      <ArtworksAndCollections
-        collectionsData={collectionsData}
-        nftsData={nftData}
-        tasksData={tasksData}
-      />
-    </Stack>
+    <RefetchTokensContext.Provider value={refetchGameTokens}>
+      <Stack mt={10}>
+        <ContributionAndRewards {...{ gameTokens }} />
+        <ArtworksAndCollections
+          collectionsData={collectionsData}
+          nftsData={nftData}
+          tasksData={tasksData}
+        />
+      </Stack>
+    </RefetchTokensContext.Provider>
   )
 }
 

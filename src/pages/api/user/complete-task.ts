@@ -60,15 +60,15 @@ export default async function handler(
 
     if (isTaskActive == null || !isTaskActive.active) {
       return res.status(400).json({
-        message: "Can't complete inactive task!"
+        message: "Can't complete inactive task!",
       })
     }
   } catch (error) {
-      return res.status(500).json({
-        message: 'Error checking task active status.',
-      })
+    return res.status(500).json({
+      message: 'Error checking task active status.',
+    })
   }
-    
+
   if (data.task_id === StaticTask.BUY_ALL_NFTS) {
     const nfts = await getNfts()
     if (!nfts) {
