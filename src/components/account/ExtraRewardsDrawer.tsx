@@ -299,7 +299,7 @@ const ExtraRewardsDrawer = ({
                     direction="row"
                     alignItems="center"
                     gap={2}
-                    width="100%"
+                    width={{ mobile: '100%', [breakpoint]: 'auto' }}
                   >
                     {task.isCompleted ? (
                       <TaskCompleteIcon />
