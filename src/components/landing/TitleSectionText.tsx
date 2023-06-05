@@ -59,37 +59,40 @@ const TitleSectionText = ({ titles, texts, isDark, showButton }: Props) => {
 
   const desktopView = (
     <>
-      <Tabs
-        value={activeTab}
-        variant="fullWidth"
-        TabIndicatorProps={{ sx: { display: 'none' } }}
-      >
-        {titles.map((title, index) => (
-          <Tab
-            wrapped
-            key={`tab-${index}`}
-            sx={{
-              py: 5,
-              root: { width: '100px' },
-              '&.Mui-selected': {
-                color: '#1890ff',
-              },
-              borderBottom: '3px solid',
-              borderColor: activeTab === index ? colors.main : colors.secondary,
-            }}
-            label={
-              <Typography
-                variant="caption"
-                color={activeTab === index ? colors.main : colors.secondary}
-                sx={{ '&:hover': { color: colors.main } }}
-              >
-                {title}
-              </Typography>
-            }
-            onClick={() => setActiveTab(index)}
-          />
-        ))}
-      </Tabs>
+      <AppearingComponent>
+        <Tabs
+          value={activeTab}
+          variant="fullWidth"
+          TabIndicatorProps={{ sx: { display: 'none' } }}
+        >
+          {titles.map((title, index) => (
+            <Tab
+              wrapped
+              key={`tab-${index}`}
+              sx={{
+                py: 5,
+                root: { width: '100px' },
+                '&.Mui-selected': {
+                  color: '#1890ff',
+                },
+                borderBottom: '3px solid',
+                borderColor:
+                  activeTab === index ? colors.main : colors.secondary,
+              }}
+              label={
+                <Typography
+                  variant="caption"
+                  color={activeTab === index ? colors.main : colors.secondary}
+                  sx={{ '&:hover': { color: colors.main } }}
+                >
+                  {title}
+                </Typography>
+              }
+              onClick={() => setActiveTab(index)}
+            />
+          ))}
+        </Tabs>
+      </AppearingComponent>
       {texts.map((text, index) =>
         index === activeTab ? (
           <Box key={index} mt={10}>

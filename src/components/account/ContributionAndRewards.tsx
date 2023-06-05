@@ -12,6 +12,7 @@ import {
   nullAddress,
 } from '@/consts'
 import { useGetGameTokens } from '@/utils/hooks/useGetGameTokens'
+import AppearingComponent from '../AppearingComponent'
 
 export const ContributionAndRewards = () => {
   const translate = useContentful(ContentTypes.accountPage)
@@ -106,25 +107,32 @@ export const ContributionAndRewards = () => {
     </Stack>
   )
   return (
-    <Stack
-      pt={5}
+    <Box
       sx={{
-        alignItems: { mobile: 'inherit', desktopS: 'center' },
         backgroundColor: 'neutral.400',
       }}
     >
-      <Container sx={{ display: { mobile: 'none', desktopS: 'inherit' } }}>
-        {cardStack}
-      </Container>
-      <Stack
-        sx={{
-          display: { mobile: 'inherit', desktopS: 'none' },
-          overflowX: 'auto',
-        }}
-      >
-        {cardStack}
-      </Stack>
-    </Stack>
+      <AppearingComponent>
+        <Stack
+          pt={5}
+          sx={{
+            alignItems: { mobile: 'inherit', desktopS: 'center' },
+          }}
+        >
+          <Container sx={{ display: { mobile: 'none', desktopS: 'inherit' } }}>
+            {cardStack}
+          </Container>
+          <Stack
+            sx={{
+              display: { mobile: 'inherit', desktopS: 'none' },
+              overflowX: 'auto',
+            }}
+          >
+            {cardStack}
+          </Stack>
+        </Stack>
+      </AppearingComponent>
+    </Box>
   )
 }
 
