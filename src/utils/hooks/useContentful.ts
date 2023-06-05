@@ -175,6 +175,8 @@ export type AccountPageData = {
   unlockExtraRewardsDescription: string
   messageNotSignedError: string
   tweetIdToRetweet: string
+  earn: string
+  youOwnXOfY: string
 }
 
 // Content to be injected into every page
