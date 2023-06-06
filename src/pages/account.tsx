@@ -38,6 +38,31 @@ export const Account = ({ collectionsData, nftData, tasksData }: Props) => {
   const [dialogOpen, setDialogOpen] = useState(false)
   const storedNfts = useGetStoredPurchasedNfts(nftData)
 
+  useEffect(() => {
+    setDialogOpen((storedNfts || []).some((it) => !it.stored))
+  }, [storedNfts])
+
+  const [gameTokens, setGameTokens] = useState<number | undefined>(undefined)
+  const [refetch, setRefetch] = useState(0)
+  const { address } = useAccount()
+
+  useEffect(() => {
+    const fetchBalance = async (address: string) => {
+      const res = await fetch(`/api/user/${address}`)
+      const { points } = await res.json()
+
+      setGameTokens(points)
+    }
+
+    if (address == null) {
+      return undefined
+    }
+
+    fetchBalance(address)
+  }, [address, refetch])
+
+  const refetchGameTokens = () => setRefetch(refetch + 1)
+
   const postToApi = async ({ tokenAddress, tokenId }: StoredNftData) => {
     const { address } = getAccount()
     const data = {
@@ -93,33 +118,9 @@ export const Account = ({ collectionsData, nftData, tasksData }: Props) => {
     enqueueSnackbar(translate('nftPurchaseRewardClaimed'), {
       variant: 'success',
     })
+    refetchGameTokens()
     setDialogOpen(false)
   }
-
-  useEffect(() => {
-    setDialogOpen((storedNfts || []).some((it) => !it.stored))
-  }, [storedNfts])
-
-  const [gameTokens, setGameTokens] = useState<number | undefined>(undefined)
-  const [refetch, setRefetch] = useState(0)
-  const { address } = useAccount()
-
-  useEffect(() => {
-    const fetchBalance = async (address: string) => {
-      const res = await fetch(`/api/user/${address}`)
-      const { points } = await res.json()
-
-      setGameTokens(points)
-    }
-
-    if (address == null) {
-      return undefined
-    }
-
-    fetchBalance(address)
-  }, [address, refetch])
-
-  const refetchGameTokens = () => setRefetch(refetch + 1)
 
   return (
     <RefetchTokensContext.Provider value={refetchGameTokens}>
