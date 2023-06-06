@@ -1,5 +1,5 @@
 import { createKysely } from '@vercel/postgres-kysely'
-import { ColumnType, Generated } from 'kysely'
+import { ColumnType, Generated, Kysely } from 'kysely'
 
 interface AppUserTable {
   eth_address: string
@@ -25,11 +25,18 @@ interface CompletedTaskTable {
   completed_at: ColumnType<Date, never, never>
 }
 
+interface NftPurchaseTable {
+  purchased_by: string
+  token_address: string
+  token_id: number
+}
+
 export interface Database {
   app_user: AppUserTable
   task_group: TaskGroupTable
   task: TaskTable
   completed_task: CompletedTaskTable
+  nft_purchase: NftPurchaseTable
 }
 
 /**
@@ -38,3 +45,31 @@ export interface Database {
 export const db = createKysely<Database>()
 
 export const POSTGRES_KEY_ALREADY_EXISTS_ERROR_CODE = '23505'
+
+export const saveUserIfNotSaved = async (
+  db: Kysely<Database>,
+  eth_address: string
+): Promise<boolean> => {
+  // Check if user is already in DB
+  const user = await db
+    .selectFrom('app_user')
+    .select('eth_address')
+    .where('eth_address', '=', eth_address)
+    .executeTakeFirst()
+
+  // If not, save the user
+  if (user == null) {
+    try {
+      await db
+        .insertInto('app_user')
+        .columns(['eth_address'])
+        .values({
+          eth_address: eth_address,
+        })
+        .execute()
+    } catch (error) {
+      return false
+    }
+  }
+  return true
+}

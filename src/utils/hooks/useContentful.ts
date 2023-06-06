@@ -177,6 +177,10 @@ export type AccountPageData = {
   tweetIdToRetweet: string
   earn: string
   youOwnXOfY: string
+  nftRewardDialogTitle: string
+  nftRewardDialogText: string
+  nftRewardDialogButtonText: string
+  nftPurchaseRewardClaimed: string
 }
 
 // Content to be injected into every page
