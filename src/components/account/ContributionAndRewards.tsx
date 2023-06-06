@@ -37,7 +37,7 @@ export const ContributionAndRewards = ({
         await alchemy.core.getAssetTransfers({
           fromAddress: nullAddress,
           toAddress: address,
-          category: [AssetTransfersCategory.ERC1155],
+          category: [AssetTransfersCategory.ERC721],
         })
       ).transfers
 
