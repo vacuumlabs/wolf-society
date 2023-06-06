@@ -20,7 +20,7 @@ import TypographyWithTooltips from '../TypographyWithTooltips'
 
 type NftPurchasedDialogProps = {
   isOpen: boolean
-  onClose: (preventPopup: boolean) => void
+  onClose: () => void
 }
 
 export const NftPurchasedDialog = ({
@@ -34,16 +34,16 @@ export const NftPurchasedDialog = ({
   return (
     <Dialog
       open={isOpen}
-      onClose={() => onClose(false)}
+      onClose={onClose}
       maxWidth={'tabletS'}
-      PaperProps={{ sx: { width: isMobile ? '100%' : '30%' } }}
+      PaperProps={{ sx: { width: isMobile ? '100%' : '30%', borderRadius: 0 } }}
     >
       <DialogTitle
         variant="title"
         sx={{ bgcolor: 'neutral.400', textAlign: 'center', py: 2, px: 2 }}
       >
         <Stack alignItems={'end'}>
-          <IconButton onClick={() => onClose(true)}>
+          <IconButton onClick={onClose}>
             <CloseIcon />
           </IconButton>
         </Stack>
@@ -65,21 +65,19 @@ export const NftPurchasedDialog = ({
         </Stack>
       </DialogTitle>
       <DialogContent sx={{ bgcolor: 'neutral.400', pt: 3, px: 4 }}>
-        <DialogContentText>
-          <TypographyWithTooltips
-            variant="body2"
-            whiteSpace={'pre-line'}
-            sx={{ textAlign: 'center' }}
-            key={'nft-dialog-text'}
-            text={translate('nftRewardDialogText')}
-          />
-        </DialogContentText>
+        <TypographyWithTooltips
+          variant="body2"
+          whiteSpace={'pre-line'}
+          sx={{ textAlign: 'center' }}
+          key={'nft-dialog-text'}
+          text={translate('nftRewardDialogText')}
+        />
         <DialogActions
           sx={{
             mt: 4,
           }}
         >
-          <Button onClick={() => onClose(false)} sx={{ width: '100%' }}>
+          <Button onClick={onClose} sx={{ width: '100%' }}>
             {translate('nftRewardDialogButtonText')}
           </Button>
         </DialogActions>

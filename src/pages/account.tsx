@@ -68,12 +68,7 @@ export const Account = ({ collectionsData, nftData, tasksData }: Props) => {
     })
   }
 
-  const claimNftReward = async (stopSign: boolean) => {
-    if (stopSign) {
-      setDialogOpen(false)
-      return
-    }
-
+  const claimNftReward = async () => {
     // Should never happen
     if (storedNfts == null || storedNfts.length < 0) {
       setDialogOpen(false)
@@ -95,8 +90,7 @@ export const Account = ({ collectionsData, nftData, tasksData }: Props) => {
       return
     }
 
-    const successMessage = 'Extra reward claimed! 🚀'
-    enqueueSnackbar(successMessage, {
+    enqueueSnackbar(translate('nftPurchaseRewardClaimed'), {
       variant: 'success',
     })
     setDialogOpen(false)
