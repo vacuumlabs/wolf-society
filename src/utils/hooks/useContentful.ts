@@ -59,7 +59,6 @@ export type NFTDetailData = {
   buyNftAndSupport: string
   buyWithCard: string
   buyWithCrypto: string
-  shareOnTwitter: string
   buyNft: string
   beatTheDrumTitle: string
   beatTheDrumSubtitle: string
@@ -155,7 +154,6 @@ export type CollectionsPageData = {
   artImpactText2: string
   artImpactHeadline: string
   viewArtworks: string
-  getCompleteCollection: string
 }
 
 export type AccountPageData = {
@@ -183,6 +181,104 @@ export type AccountPageData = {
   nftPurchaseRewardClaimed: string
 }
 
+export type NavbarData = {
+  about: string
+  collections: string
+  blog: string
+  email: string
+  makeImpact: string
+  launchApp: string
+  faq: string
+  account: string
+  discordLink: string
+  twitterAccount: string
+}
+
+export type CommonData = {
+  secondsShort: string
+  minutesShort: string
+  hoursShort: string
+  daysShort: string
+  pieces: string
+  minted: string
+  limitedEdition: string
+  timeLeft: string
+  makeImpactButton: string
+  readMore: string
+  showDetails: string
+  allocationPart1: string
+  allocationPart2: string
+  allocationPart3: string
+  connectWallet: string
+  disconnectWallet: string
+  nftShareText: string
+  collectionShareText: string
+  share: string
+  follow: string
+  join: string
+  subscribe: string
+  turnOn: string
+  retweet: string
+  complete: string
+  genericErrorMessage: string
+  newsletterText: string
+  newsletterInputLabel: string
+  newsletterButton: string
+  newsletterSubscriptionSuccess: string
+  newsletterSubscriptionError: string
+  newsletterSubscriptionConflict: string
+}
+
+export type LandingPageData = {
+  heroTitle: string
+  heroSubtitle: string
+  youAreWolfSociety: string
+  makeImpact: string
+  manifestTitle1: string
+  manifestTitle2: string
+  manifestTitle3: string
+  manifestTitle4: string
+  manifestContent1: string
+  manifestContent2: string
+  manifestContent3: string
+  manifestContent4: string
+  supportedProjects: string
+  allProjects: string
+  makeImpactText: string
+  readMore: string
+  makeItHappen: string
+  makeItHappenText: string
+  haveFun: string
+  haveFunText: string
+  haveFunDrawerContent: string
+  breadAndButter: string
+  breadAndButterText: string
+  breadAndButterDrawerContent: string
+  showCollection: string
+  questions: string
+  articles: string
+  allArticles: string
+  roadmap: string
+  partners: string
+  newsletterText: string
+  newsletterInputLabel: string
+  newsletterButton: string
+  newsletterSubscriptionSuccess: string
+  newsletterSubscriptionError: string
+  newsletterSubscriptionConflict: string
+  location: string
+  project: string
+  timeFrame: string
+}
+
+export type ArticlesPageData = {
+  articles: string
+  readMore: string
+  exploreMore: string
+  gratefulPart1: string
+  gratefulPart2: string
+}
+
 // Content to be injected into every page
 const SHARED_CONTENT: ContentTypes[] = [
   ContentTypes.navbar,
@@ -190,101 +286,11 @@ const SHARED_CONTENT: ContentTypes[] = [
 ]
 
 export type Content = {
-  [ContentTypes.navbar]: {
-    about: string
-    collections: string
-    blog: string
-    email: string
-    makeImpact: string
-    launchApp: string
-    faq: string
-    account: string
-    discordLink: string
-    twitterAccount: string
-  }
-  [ContentTypes.common]: {
-    secondsShort: string
-    minutesShort: string
-    hoursShort: string
-    daysShort: string
-    pieces: string
-    minted: string
-    limitedEdition: string
-    timeLeft: string
-    makeImpactButton: string
-    readMore: string
-    showDetails: string
-    allocationPart1: string
-    allocationPart2: string
-    allocationPart3: string
-    connectWallet: string
-    disconnectWallet: string
-    nftShareText: string
-    collectionShareText: string
-    share: string
-    follow: string
-    join: string
-    subscribe: string
-    turnOn: string
-    retweet: string
-    complete: string
-    genericErrorMessage: string
-    newsletterText: string
-    newsletterInputLabel: string
-    newsletterButton: string
-    newsletterSubscriptionSuccess: string
-    newsletterSubscriptionError: string
-    newsletterSubscriptionConflict: string
-  }
-  [ContentTypes.landingPage]: {
-    heroTitle: string
-    heroSubtitle: string
-    youAreWolfSociety: string
-    makeImpact: string
-    manifestTitle1: string
-    manifestTitle2: string
-    manifestTitle3: string
-    manifestTitle4: string
-    manifestContent1: string
-    manifestContent2: string
-    manifestContent3: string
-    manifestContent4: string
-    supportedProjects: string
-    allProjects: string
-    makeImpactText: string
-    readMore: string
-    makeItHappen: string
-    makeItHappenText: string
-    haveFun: string
-    haveFunText: string
-    haveFunDrawerContent: string
-    breadAndButter: string
-    breadAndButterText: string
-    breadAndButterDrawerContent: string
-    showCollection: string
-    questions: string
-    articles: string
-    allArticles: string
-    roadmap: string
-    partners: string
-    newsletterText: string
-    newsletterInputLabel: string
-    newsletterButton: string
-    newsletterSubscriptionSuccess: string
-    newsletterSubscriptionError: string
-    newsletterSubscriptionConflict: string
-    location: string
-    project: string
-    timeFrame: string
-  }
+  [ContentTypes.navbar]: NavbarData
+  [ContentTypes.common]: CommonData
+  [ContentTypes.landingPage]: LandingPageData
   [ContentTypes.collectionsPage]: CollectionsPageData
-  [ContentTypes.articlesPage]: {
-    articles: string
-    readMore: string
-    exploreMore: string
-    gratefulPart1: string
-    gratefulPart2: string
-  }
+  [ContentTypes.articlesPage]: ArticlesPageData
   [ContentTypes.accountPage]: AccountPageData
   [ContentTypes.project]: ProjectData
   [ContentTypes.roadmap]: RoadmapData
