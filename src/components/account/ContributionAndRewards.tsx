@@ -11,13 +11,17 @@ import {
   manifoldTxFee,
   nullAddress,
 } from '@/consts'
-import { useGetGameTokens } from '@/utils/hooks/useGetGameTokens'
 import AppearingComponent from '../AppearingComponent'
 
-export const ContributionAndRewards = () => {
+type ContributionAndRewardsProps = {
+  gameTokens: number | undefined
+}
+
+export const ContributionAndRewards = ({
+  gameTokens,
+}: ContributionAndRewardsProps) => {
   const translate = useContentful(ContentTypes.accountPage)
   const { address } = useAccount()
-  const gameTokens = useGetGameTokens()
   const [userContribution, setUserContribution] = useState<string | null>(null)
   useEffect(() => {
     const getUserContribution = async () => {

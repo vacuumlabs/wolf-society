@@ -20,7 +20,7 @@ import IconButton from '../IconButton'
 import Button from '../Button'
 import { CollectionDataExtended } from './Collection'
 import { TaskDataWithCompletion } from '@/utils/hooks/useGetTasksDataWithCompletion'
-import { useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import {
   MEDIUM_DOMAIN,
   SUBPAGES,
@@ -36,6 +36,7 @@ import {
   getNftShareableContent,
   shareContentOnSocialMedia,
 } from '@/utils/sharing'
+import { RefetchTokensContext } from '@/utils/context/refetchTokens'
 
 type Props = {
   onClose: (event: React.KeyboardEvent | React.MouseEvent) => void
@@ -72,6 +73,7 @@ const ExtraRewardsDrawer = ({
     completingTaskLastRef.current = task
     _setCompletingTaskLast(task)
   }
+  const refetchGameTokenBalance = useContext(RefetchTokensContext)
 
   const postToCompleteTaskApi = async (task: TaskDataWithCompletion) => {
     const { address } = getAccount()
@@ -236,6 +238,7 @@ const ExtraRewardsDrawer = ({
       const completingTaskCurrent = completingTaskRef.current
       if (completingTaskCurrent != null) {
         await startCompletingTask(completingTaskCurrent)
+        refetchGameTokenBalance()
       }
     }
     window.addEventListener('focus', listener, false)
