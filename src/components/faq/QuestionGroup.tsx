@@ -14,6 +14,7 @@ const QuestionGroup = ({ questionsAndAnswersData }: Props) => (
       <Stack
         sx={{ width: '100%', my: { mobile: 10, desktopM: 20 } }}
         spacing={4}
+        textAlign="left"
       >
         <Box>
           {questionsAndAnswersData

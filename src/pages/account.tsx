@@ -1,5 +1,8 @@
+import { getAccount, getWalletClient } from '@wagmi/core'
 import ArtworksAndCollections from '@/components/account/ArtworksAndCollections'
 import ContributionAndRewards from '@/components/account/ContributionAndRewards'
+import { RefetchTokensContext } from '@/utils/context/refetchTokens'
+import { NftPurchasedDialog } from '@/components/account/NftPurchasedDialog'
 import {
   CollectionData,
   Content,
@@ -10,10 +13,17 @@ import {
   getNfts,
   getTasks,
   getTranslations,
+  useContentful,
 } from '@/utils/hooks/useContentful'
+import {
+  StoredNftData,
+  useGetStoredPurchasedNfts,
+} from '@/utils/hooks/useGetStoredPurchasedNfts'
 import { Stack } from '@mui/material'
 import { GetStaticProps, GetStaticPropsContext } from 'next'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useAccount } from 'wagmi'
+import { enqueueSnackbar } from 'notistack'
 
 type Props = {
   translations: Partial<Content>
@@ -23,15 +33,107 @@ type Props = {
 }
 
 export const Account = ({ collectionsData, nftData, tasksData }: Props) => {
+  const translate = useContentful(ContentTypes.accountPage)
+  const translateCommon = useContentful(ContentTypes.common)
+  const [dialogOpen, setDialogOpen] = useState(false)
+  const storedNfts = useGetStoredPurchasedNfts(nftData)
+
+  useEffect(() => {
+    setDialogOpen((storedNfts || []).some((it) => !it.stored))
+  }, [storedNfts])
+
+  const [gameTokens, setGameTokens] = useState<number | undefined>(undefined)
+  const [refetch, setRefetch] = useState(0)
+  const { address } = useAccount()
+
+  useEffect(() => {
+    const fetchBalance = async (address: string) => {
+      const res = await fetch(`/api/user/${address}`)
+      const { points } = await res.json()
+
+      setGameTokens(points)
+    }
+
+    if (address == null) {
+      return undefined
+    }
+
+    fetchBalance(address)
+  }, [address, refetch])
+
+  const refetchGameTokens = () => setRefetch(refetch + 1)
+
+  const postToApi = async ({ tokenAddress, tokenId }: StoredNftData) => {
+    const { address } = getAccount()
+    const data = {
+      eth_address: address,
+      token_address: tokenAddress,
+      token_id: tokenId,
+    }
+
+    const walletClient = await getWalletClient()
+    let signature: `0x${string}` | undefined
+    try {
+      signature = await walletClient?.signMessage({
+        message: JSON.stringify(data),
+      })
+    } catch (err) {
+      console.error(err)
+    }
+    if (!signature) return { message: translate('messageNotSignedError') }
+    return fetch(`/api/user/nft-purchased`, {
+      method: 'POST',
+      body: JSON.stringify({
+        data,
+        signature,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+  }
+
+  const claimNftReward = async () => {
+    // Should never happen
+    if (storedNfts == null || storedNfts.length < 0) {
+      setDialogOpen(false)
+      return
+    }
+
+    const response = await postToApi(storedNfts[0])
+    const responseSuccess =
+      response != null && 'status' in response && response.status === 200
+
+    if (!responseSuccess) {
+      const errorMessage =
+        'message' in response
+          ? (response.message as string)
+          : translateCommon('genericErrorMessage')
+      enqueueSnackbar(errorMessage, {
+        variant: 'error',
+      })
+      return
+    }
+
+    enqueueSnackbar(translate('nftPurchaseRewardClaimed'), {
+      variant: 'success',
+    })
+    refetchGameTokens()
+    setDialogOpen(false)
+  }
+
   return (
-    <Stack mt={10}>
-      <ContributionAndRewards />
-      <ArtworksAndCollections
-        collectionsData={collectionsData}
-        nftsData={nftData}
-        tasksData={tasksData}
-      />
-    </Stack>
+    <RefetchTokensContext.Provider value={refetchGameTokens}>
+      <Stack mt={10}>
+        <ContributionAndRewards {...{ gameTokens }} />
+        <ArtworksAndCollections
+          collectionsData={collectionsData}
+          nftsData={nftData}
+          tasksData={tasksData}
+        />
+      </Stack>
+      <NftPurchasedDialog isOpen={dialogOpen} onClose={claimNftReward} />
+    </RefetchTokensContext.Provider>
   )
 }
 

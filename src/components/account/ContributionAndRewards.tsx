@@ -11,12 +11,17 @@ import {
   manifoldTxFee,
   nullAddress,
 } from '@/consts'
-import { useGetGameTokens } from '@/utils/hooks/useGetGameTokens'
+import AppearingComponent from '../AppearingComponent'
 
-export const ContributionAndRewards = () => {
+type ContributionAndRewardsProps = {
+  gameTokens: number | undefined
+}
+
+export const ContributionAndRewards = ({
+  gameTokens,
+}: ContributionAndRewardsProps) => {
   const translate = useContentful(ContentTypes.accountPage)
   const { address } = useAccount()
-  const gameTokens = useGetGameTokens()
   const [userContribution, setUserContribution] = useState<string | null>(null)
   useEffect(() => {
     const getUserContribution = async () => {
@@ -32,7 +37,7 @@ export const ContributionAndRewards = () => {
         await alchemy.core.getAssetTransfers({
           fromAddress: nullAddress,
           toAddress: address,
-          category: [AssetTransfersCategory.ERC1155],
+          category: [AssetTransfersCategory.ERC721],
         })
       ).transfers
 
@@ -106,25 +111,32 @@ export const ContributionAndRewards = () => {
     </Stack>
   )
   return (
-    <Stack
-      pt={5}
+    <Box
       sx={{
-        alignItems: { mobile: 'inherit', desktopS: 'center' },
         backgroundColor: 'neutral.400',
       }}
     >
-      <Container sx={{ display: { mobile: 'none', desktopS: 'inherit' } }}>
-        {cardStack}
-      </Container>
-      <Stack
-        sx={{
-          display: { mobile: 'inherit', desktopS: 'none' },
-          overflowX: 'auto',
-        }}
-      >
-        {cardStack}
-      </Stack>
-    </Stack>
+      <AppearingComponent>
+        <Stack
+          pt={5}
+          sx={{
+            alignItems: { mobile: 'inherit', desktopS: 'center' },
+          }}
+        >
+          <Container sx={{ display: { mobile: 'none', desktopS: 'inherit' } }}>
+            {cardStack}
+          </Container>
+          <Stack
+            sx={{
+              display: { mobile: 'inherit', desktopS: 'none' },
+              overflowX: 'auto',
+            }}
+          >
+            {cardStack}
+          </Stack>
+        </Stack>
+      </AppearingComponent>
+    </Box>
   )
 }
 

@@ -10,6 +10,8 @@ import {
   Typography,
   Divider,
   BreakpointOverrides,
+  Theme,
+  useMediaQuery,
 } from '@mui/material'
 import CloseIcon from '../icons/CloseIcon'
 import TaskCompleteIcon from '../icons/TaskCompleteIcon'
@@ -18,7 +20,7 @@ import IconButton from '../IconButton'
 import Button from '../Button'
 import { CollectionDataExtended } from './Collection'
 import { TaskDataWithCompletion } from '@/utils/hooks/useGetTasksDataWithCompletion'
-import { useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import {
   MEDIUM_DOMAIN,
   SUBPAGES,
@@ -34,6 +36,7 @@ import {
   getNftShareableContent,
   shareContentOnSocialMedia,
 } from '@/utils/sharing'
+import { RefetchTokensContext } from '@/utils/context/refetchTokens'
 
 type Props = {
   onClose: (event: React.KeyboardEvent | React.MouseEvent) => void
@@ -53,6 +56,9 @@ const ExtraRewardsDrawer = ({
   const translateNavbar = useContentful(ContentTypes.navbar)
   const translateTaskText = useContentful(ContentTypes.taskTexts)
   const breakpoint: keyof BreakpointOverrides = 'tabletM'
+  const isMobile = useMediaQuery((theme: Theme) =>
+    theme.breakpoints.down(breakpoint)
+  )
   const [completingTask, _setCompletingTask] =
     useState<TaskDataWithCompletion | null>(null)
   const [completingTaskLast, _setCompletingTaskLast] =
@@ -67,6 +73,7 @@ const ExtraRewardsDrawer = ({
     completingTaskLastRef.current = task
     _setCompletingTaskLast(task)
   }
+  const refetchGameTokenBalance = useContext(RefetchTokensContext)
 
   const postToCompleteTaskApi = async (task: TaskDataWithCompletion) => {
     const { address } = getAccount()
@@ -125,8 +132,7 @@ const ExtraRewardsDrawer = ({
   }
 
   const actionButtonDisabledState = (task: TaskDataWithCompletion): boolean => {
-    if (!task.isActive)
-      return true
+    if (!task.isActive) return true
     if (task.databaseId === StaticTask.BUY_ALL_NFTS)
       return !collectionIsComplete
     if (task.databaseId === StaticTask.RETWEET_TWITTER)
@@ -232,6 +238,7 @@ const ExtraRewardsDrawer = ({
       const completingTaskCurrent = completingTaskRef.current
       if (completingTaskCurrent != null) {
         await startCompletingTask(completingTaskCurrent)
+        refetchGameTokenBalance()
       }
     }
     window.addEventListener('focus', listener, false)
@@ -239,6 +246,9 @@ const ExtraRewardsDrawer = ({
       window.removeEventListener('focus', listener)
     }
   }, [])
+
+  const ownedNftsCount = collectionData.nfts.filter((nft) => nft.owned).length
+  const collectionNftsCount = collectionData.nfts.length
 
   return (
     <Drawer
@@ -288,29 +298,52 @@ const ExtraRewardsDrawer = ({
                   py={3}
                   gap={2}
                 >
-                  <Stack direction="row" alignItems="center" gap={2}>
+                  <Stack
+                    direction="row"
+                    alignItems="center"
+                    gap={2}
+                    width={{ mobile: '100%', [breakpoint]: 'auto' }}
+                  >
                     {task.isCompleted ? (
                       <TaskCompleteIcon />
                     ) : (
                       <TaskNotCompleteIcon />
                     )}
-                    <Typography variant="body2">
-                      {formatTaskText(task)}
-                    </Typography>
+                    <Stack>
+                      <Typography variant="body2">
+                        {formatTaskText(task)}
+                      </Typography>
+                      <Typography variant="body2" color="neutral.700">
+                        {[
+                          task.isCompleted ? null : translate('earn'),
+                          task.rewardAmount,
+                          translate('gameTokens'),
+                        ].join(' ')}
+                      </Typography>
+                    </Stack>
                   </Stack>
-                  {!task.isCompleted && (
-                    <Button
-                      sx={{ whiteSpace: 'nowrap' }}
-                      onClick={() => {
-                        guideToTask(task)
-                      }}
-                      disabled={actionButtonDisabledState(task)}
-                    >
-                      {translateCommon(
-                        task.buttonLabel as keyof Content[ContentTypes.common]
-                      )}
-                    </Button>
-                  )}
+                  {!task.isCompleted &&
+                    (task.databaseId === StaticTask.BUY_ALL_NFTS &&
+                    ownedNftsCount < collectionNftsCount ? (
+                      <Typography variant="body2">
+                        {translate('youOwnXOfY')
+                          .replace('{X}', ownedNftsCount.toString())
+                          .replace('{Y}', collectionNftsCount.toString())}
+                      </Typography>
+                    ) : (
+                      <Button
+                        sx={{ whiteSpace: 'nowrap' }}
+                        onClick={() => {
+                          guideToTask(task)
+                        }}
+                        disabled={actionButtonDisabledState(task)}
+                        fullWidth={isMobile}
+                      >
+                        {translateCommon(
+                          task.buttonLabel as keyof Content[ContentTypes.common]
+                        )}
+                      </Button>
+                    ))}
                 </Stack>
                 <Divider />
               </Box>
