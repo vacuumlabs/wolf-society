@@ -59,7 +59,6 @@ export type NFTDetailData = {
   buyNftAndSupport: string
   buyWithCard: string
   buyWithCrypto: string
-  shareOnTwitter: string
   buyNft: string
   beatTheDrumTitle: string
   beatTheDrumSubtitle: string
@@ -155,7 +154,6 @@ export type CollectionsPageData = {
   artImpactText2: string
   artImpactHeadline: string
   viewArtworks: string
-  getCompleteCollection: string
 }
 
 export type AccountPageData = {
