@@ -270,6 +270,7 @@ export type LandingPageData = {
   location: string
   project: string
   timeFrame: string
+  projectEndorsedBy: string
 }
 
 export type ArticlesPageData = {
