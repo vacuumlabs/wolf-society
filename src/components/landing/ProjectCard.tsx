@@ -20,6 +20,7 @@ import { SUBPAGES } from '@/consts'
 import TypographyWithTooltips from '../TypographyWithTooltips'
 import Link from 'next/link'
 import CardButton from '@/components/CardButton'
+import Image from 'next/image'
 
 export type ProjectCardProps = {
   name: string
@@ -28,6 +29,7 @@ export type ProjectCardProps = {
   location: string
   project: string
   timeFrame: string
+  partnerLogoImageUrl?: string
 }
 
 const ProjectCard = ({
@@ -37,6 +39,7 @@ const ProjectCard = ({
   location,
   project,
   timeFrame,
+  partnerLogoImageUrl,
 }: ProjectCardProps) => {
   const [drawerOpened, setDrawerOpened] = useState(false)
   const translate = useContentful(ContentTypes.landingPage)
@@ -198,8 +201,18 @@ const ProjectCard = ({
               variant="body2"
               flexGrow={1}
             />
+            {partnerLogoImageUrl != null && (
+              <>
+                <Typography variant="caption">
+                  {translate('projectEndorsedBy')}
+                </Typography>
+                <Box position={'relative'} height={100}>
+                  <Image fill src={partnerLogoImageUrl} alt={'Partner Logo'} />
+                </Box>
+              </>
+            )}
             <Link href={SUBPAGES['collections']} passHref>
-              <Button>{translateCommon('makeImpactButton')}</Button>
+              <Button fullWidth>{translateCommon('makeImpactButton')}</Button>
             </Link>
           </Stack>
         </Stack>
