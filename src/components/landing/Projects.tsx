@@ -77,6 +77,7 @@ const Projects = ({ projectsData }: Props) => {
                       location={project.location}
                       project={project.project}
                       timeFrame={project.timeFrame}
+                      partnerLogoImageUrl={project.partnerLogo ? project.partnerLogo.fields.file.url : undefined}
                     />
                   </ScrollingCard>
                 </Stack>

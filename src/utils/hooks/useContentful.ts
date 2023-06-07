@@ -30,6 +30,7 @@ export type ProjectData = {
   location: string
   project: string
   timeFrame: string
+  partnerLogo: Asset
 }
 
 export type RoadmapData = {
