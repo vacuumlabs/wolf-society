@@ -201,13 +201,15 @@ const ProjectCard = ({
               variant="body2"
               flexGrow={1}
             />
-            <Typography variant="caption">
-              {translate('projectEndorsedBy')}
-            </Typography>
             {partnerLogoImageUrl != null && (
-              <Box position={'relative'} height={100}>
-                <Image fill src={partnerLogoImageUrl} alt={'Partner Logo'} />
-              </Box>
+              <>
+                <Typography variant="caption">
+                  {translate('projectEndorsedBy')}
+                </Typography>
+                <Box position={'relative'} height={100}>
+                  <Image fill src={partnerLogoImageUrl} alt={'Partner Logo'} />
+                </Box>
+              </>
             )}
             <Link href={SUBPAGES['collections']} passHref>
               <Button fullWidth>{translateCommon('makeImpactButton')}</Button>
