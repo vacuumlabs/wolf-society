@@ -1,19 +1,19 @@
 # wolf-society
 
-Website for Wolf Society Foundation!
+Website for Wolf Society Foundation!  
+[Documentation here](https://docs.google.com/document/d/1O7_B6RaGlOpwaipWm6czbKrHQiYKEMjgBi-d03W7UDo/edit?usp=sharing).
 
 ## Getting Started
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 First, set up the environment variables:
-Create a copy of `.env.template`, name it `.env.local`, and fill out the variables.
+Install Vercel CLI globally, connect the project, and pull the latest environment variables:
 
 ```
-CONTENTFUL_SPACE_ID - Contentful CMS Space ID
-CONTENTFUL_CDN_TOKEN - Contentful CMS Content Delivery API access token
-NEXT_PUBLIC_ALCHEMY_API_KEY - Alchemy API key
-NEXT_PUBLIC_MEDIUM_USER - Username of the Medium user to display blog posts of
+yarn global add vercel
+vercel link
+vercel env pull .env.development.local
 ```
 
 Then, run the development server:
@@ -24,7 +24,7 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Encoding videos for the animations on the About page
+# How the videos for the animations on the About page were encoded
 
 You need to [download `ffmpeg`](https://ffmpeg.org/download.html).
 
