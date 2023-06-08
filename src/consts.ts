@@ -25,7 +25,7 @@ export const COLLECTIONS_COLOR_ORDER: string[] = [
 
 // Address is the same for Mainnet as for Goerli
 export const lazyPayableClaimContractAddress =
-  '0x074eaee8fc3e4e2b361762253f83d9a94aec6fd4'
+  '0x1EB73FEE2090fB1C20105d5Ba887e3c3bA14a17E'
 
 export const manifoldTxFee = 500000000000000
 

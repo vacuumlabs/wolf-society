@@ -1,6 +1,7 @@
 export const ERC721LazyPayableClaimAbi = [
   {
     inputs: [
+      { internalType: 'address', name: 'initialOwner', type: 'address' },
       { internalType: 'address', name: 'delegationRegistry', type: 'address' },
     ],
     stateMutability: 'nonpayable',

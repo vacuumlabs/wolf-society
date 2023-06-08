@@ -7,7 +7,7 @@ Website for Wolf Society Foundation!
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-First, set up the environment variables:
+First, set up the environment variables: 
 Install Vercel CLI globally, connect the project, and pull the latest environment variables:
 
 ```
