@@ -17,13 +17,7 @@ export const LaunchAppButton = ({ redirect }: LaunchAppButtonProps) => {
   const magic = useMagic()
   const { connector } = useAccount()
   const isUserWalletMagic = connector != null && connector.id === 'magic'
-  useAccount({
-    onConnect({ isReconnected }) {
-      if (redirect === true && SUBPAGES.account && !isReconnected) {
-        router.push(SUBPAGES.account)
-      }
-    },
-  })
+  useAccount()
 
   return (
     <ConnectButton.Custom>
