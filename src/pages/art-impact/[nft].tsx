@@ -1,26 +1,39 @@
 import { SUBPAGES, WEBPAGE_DOMAIN } from '@/consts'
-import { NFTData, getNfts } from '@/utils/hooks/useContentful'
+import {
+  NFTData,
+  getNfts,
+  getTranslations,
+  ContentTypes,
+  Content,
+} from '@/utils/hooks/useContentful'
 import { GetStaticProps, GetStaticPropsContext } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 
 type Props = {
-  nft: NFTData | null
+  translations: Partial<Content>
+  nftData: NFTData[] | null
 }
 
-const ArtImpactNft = ({ nft }: Props) => {
+const ArtImpactNft = ({ nftData }: Props) => {
   const router = useRouter()
 
+  const nft = nftData?.find((nft) => nft.id === router.query.nft) ?? null
+
   useEffect(() => {
-    router.replace({ pathname: SUBPAGES.collections, query: { nft: nft?.id } })
-  }, [])
+    if (nft != null) {
+      router.replace({ pathname: SUBPAGES.collections, query: { nft: nft.id } })
+    }
+  }, [nft])
+
   let queriedNftImageUrl = nft?.image.fields.file.url
   if (queriedNftImageUrl != null && !queriedNftImageUrl.startsWith('https:')) {
     queriedNftImageUrl = 'https:' + queriedNftImageUrl
   }
   const queriedNftArtist = nft?.artist?.fields?.artistName
   const pageUrl = `${WEBPAGE_DOMAIN}${SUBPAGES.collections}/${nft?.id ?? ''}`
+
   return nft != null ? (
     <Head>
       <meta name="og:title" content={nft.name} />
@@ -43,12 +56,13 @@ const ArtImpactNft = ({ nft }: Props) => {
 
 export const getStaticProps: GetStaticProps<Props> = async ({
   locale,
-  params,
 }: GetStaticPropsContext) => {
-  const nftData = await getNfts(locale)
   return {
     props: {
-      nft: nftData?.find((nft) => nft.id === params?.nft) ?? null,
+      translations: {
+        ...(await getTranslations(ContentTypes.collectionsPage, locale)),
+      },
+      nftData: await getNfts(locale),
     },
   }
 }

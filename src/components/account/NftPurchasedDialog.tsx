@@ -20,7 +20,7 @@ import TypographyWithTooltips from '../TypographyWithTooltips'
 
 type NftPurchasedDialogProps = {
   isOpen: boolean
-  onClose: () => void
+  onClose: (skipSigning: boolean) => void
 }
 
 export const NftPurchasedDialog = ({
@@ -34,7 +34,7 @@ export const NftPurchasedDialog = ({
   return (
     <Dialog
       open={isOpen}
-      onClose={onClose}
+      onClose={() => onClose(false)}
       maxWidth={'tabletS'}
       PaperProps={{ sx: { width: isMobile ? '100%' : '30%', borderRadius: 0 } }}
     >
@@ -43,7 +43,7 @@ export const NftPurchasedDialog = ({
         sx={{ bgcolor: 'neutral.400', textAlign: 'center', py: 2, px: 2 }}
       >
         <Stack alignItems={'end'}>
-          <IconButton onClick={onClose}>
+          <IconButton onClick={() => onClose(true)}>
             <CloseIcon />
           </IconButton>
         </Stack>
@@ -77,7 +77,7 @@ export const NftPurchasedDialog = ({
             mt: 4,
           }}
         >
-          <Button onClick={onClose} sx={{ width: '100%' }}>
+          <Button onClick={() => onClose(false)} sx={{ width: '100%' }}>
             {translate('nftRewardDialogButtonText')}
           </Button>
         </DialogActions>
