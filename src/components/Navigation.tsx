@@ -166,7 +166,7 @@ const Navigation = () => {
                 />
               </Stack>
             )}
-            <LaunchAppButton />
+            <LaunchAppButton redirect />
             {trigger && !isConnected && (
               <NextLink
                 href={SUBPAGES['collections']}
@@ -279,7 +279,7 @@ const Navigation = () => {
               </Stack>
             </Stack>
             <Stack gap={2}>
-              <LaunchAppButton />
+              <LaunchAppButton redirect />
               <NextLink
                 href={SUBPAGES['collections']}
                 passHref

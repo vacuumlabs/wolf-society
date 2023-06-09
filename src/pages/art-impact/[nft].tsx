@@ -26,12 +26,14 @@ const ArtImpactNft = ({ nftData }: Props) => {
       router.replace({ pathname: SUBPAGES.collections, query: { nft: nft.id } })
     }
   }, [nft])
+
   let queriedNftImageUrl = nft?.image.fields.file.url
   if (queriedNftImageUrl != null && !queriedNftImageUrl.startsWith('https:')) {
     queriedNftImageUrl = 'https:' + queriedNftImageUrl
   }
   const queriedNftArtist = nft?.artist?.fields?.artistName
   const pageUrl = `${WEBPAGE_DOMAIN}${SUBPAGES.collections}/${nft?.id ?? ''}`
+
   return nft != null ? (
     <Head>
       <meta name="og:title" content={nft.name} />

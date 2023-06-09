@@ -7,7 +7,11 @@ import { useRouter } from 'next/router'
 import { formatAddress } from '@/utils/helpers'
 import { useMagic } from '@/utils/hooks/useMagic'
 
-export const LaunchAppButton = () => {
+type LaunchAppButtonProps = {
+  redirect?: boolean
+}
+
+export const LaunchAppButton = ({ redirect }: LaunchAppButtonProps) => {
   const router = useRouter()
   const translateNavbar = useContentful(ContentTypes.common)
   const magic = useMagic()
@@ -15,7 +19,7 @@ export const LaunchAppButton = () => {
   const isUserWalletMagic = connector != null && connector.id === 'magic'
   useAccount({
     onConnect({ isReconnected }) {
-      if (SUBPAGES.account && !isReconnected) {
+      if (redirect && SUBPAGES.account && !isReconnected) {
         router.push(SUBPAGES.account)
       }
     },
