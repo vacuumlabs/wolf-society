@@ -2,17 +2,10 @@ import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
 import Button from './Button'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { useAccount } from 'wagmi'
-import { SUBPAGES } from '@/consts'
-import { useRouter } from 'next/router'
 import { formatAddress } from '@/utils/helpers'
 import { useMagic } from '@/utils/hooks/useMagic'
 
-type LaunchAppButtonProps = {
-  redirect?: boolean
-}
-
-export const LaunchAppButton = ({ redirect }: LaunchAppButtonProps) => {
-  const router = useRouter()
+export const LaunchAppButton = () => {
   const translateNavbar = useContentful(ContentTypes.common)
   const magic = useMagic()
   const { connector } = useAccount()
