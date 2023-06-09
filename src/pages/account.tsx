@@ -95,6 +95,7 @@ export const Account = ({ collectionsData, nftData, tasksData }: Props) => {
 
   const claimNftReward = async (skipSigning: boolean) => {
     if (skipSigning) {
+      setDialogOpen(false)
       return
     }
 
