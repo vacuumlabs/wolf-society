@@ -27,7 +27,7 @@ const ArtImpact = ({ collectionsData, nftData }: Props) => {
   const firstCollectionRef = useRef<HTMLDivElement>(null)
   const nftsDataWithOwnership = useGetNftDataWithOwnership(nftData)
 
-  return !collectionsData ? (
+  return collectionsData == null ? (
     <></>
   ) : (
     <Stack mt={10}>
