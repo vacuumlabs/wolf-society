@@ -20,7 +20,7 @@ const AppearingComponent = ({ children }: React.PropsWithChildren) => {
   }, [ref])
 
   return (
-    <div ref={ref} className="hide">
+    <div ref={ref} className="show">
       {children}
     </div>
   )
