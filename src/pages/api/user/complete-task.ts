@@ -104,7 +104,7 @@ export default async function handler(
     }
   }
 
-  const userSaved = saveUserIfNotSaved(db, data.eth_address)
+  const userSaved = await saveUserIfNotSaved(db, data.eth_address)
 
   if (!userSaved) {
     return res.status(500).json({
