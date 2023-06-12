@@ -36,11 +36,11 @@ export const Account = ({ collectionsData, nftData, tasksData }: Props) => {
   const translate = useContentful(ContentTypes.accountPage)
   const translateCommon = useContentful(ContentTypes.common)
   const [dialogOpen, setDialogOpen] = useState(false)
-  const storedNfts = useGetStoredPurchasedNfts(nftData)
+  const unstoredNfts = useGetStoredPurchasedNfts(nftData)?.filter((it) => !it.stored)
 
   useEffect(() => {
-    setDialogOpen((storedNfts || []).some((it) => !it.stored))
-  }, [storedNfts])
+    setDialogOpen((unstoredNfts || []).length > 0)
+  }, [unstoredNfts])
 
   const [gameTokens, setGameTokens] = useState<number | undefined>(undefined)
   const [refetch, setRefetch] = useState(0)
@@ -100,12 +100,12 @@ export const Account = ({ collectionsData, nftData, tasksData }: Props) => {
     }
 
     // Should never happen
-    if (storedNfts == null || storedNfts.length < 0) {
+    if (unstoredNfts == null || unstoredNfts.length < 0) {
       setDialogOpen(false)
       return
     }
 
-    const response = await postToApi(storedNfts[0])
+    const response = await postToApi(unstoredNfts[0])
     const responseSuccess =
       response != null && 'status' in response && response.status === 200
 
