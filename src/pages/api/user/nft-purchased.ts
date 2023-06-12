@@ -92,7 +92,7 @@ export default async function handler(
   )!.priceInEth
   const tokensToAward = Math.floor(nftPrice * 1000)
 
-  const userSaved = saveUserIfNotSaved(db, eth_address)
+  const userSaved = await saveUserIfNotSaved(db, eth_address)
 
   if (!userSaved) {
     return res.status(500).json({
