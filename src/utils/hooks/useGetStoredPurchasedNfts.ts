@@ -39,7 +39,8 @@ export const useGetStoredPurchasedNfts = (cmsNftData: NFTData[] | null) => {
         tokenId: Number.parseInt(nft.tokenId),
         stored: nfts.some(
           (storedNft) =>
-            storedNft.token_address === nft.contract.address &&
+            storedNft.token_address.toLowerCase() ===
+              nft.contract.address.toLowerCase() &&
             storedNft.token_id === Number.parseInt(nft.tokenId)
         ),
       }))

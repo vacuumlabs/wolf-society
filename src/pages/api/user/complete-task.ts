@@ -94,7 +94,9 @@ export default async function handler(
     const userOwnsAllNfts = (collectionNfts as string[]).every(
       (collectionNft) =>
         userNfts.ownedNfts.some(
-          (userNft) => userNft.contract.address === collectionNft
+          (userNft) =>
+            userNft.contract.address.toLowerCase() ===
+            collectionNft.toLowerCase()
         )
     )
     if (!userOwnsAllNfts) {
