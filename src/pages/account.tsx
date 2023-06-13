@@ -36,7 +36,9 @@ export const Account = ({ collectionsData, nftData, tasksData }: Props) => {
   const translate = useContentful(ContentTypes.accountPage)
   const translateCommon = useContentful(ContentTypes.common)
   const [dialogOpen, setDialogOpen] = useState(false)
-  const unstoredNfts = useGetStoredPurchasedNfts(nftData)?.filter((it) => !it.stored)
+  const unstoredNfts = useGetStoredPurchasedNfts(nftData)?.filter(
+    (it) => !it.stored
+  )
 
   useEffect(() => {
     setDialogOpen((unstoredNfts || []).length > 0)
