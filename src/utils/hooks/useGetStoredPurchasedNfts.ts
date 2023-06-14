@@ -14,7 +14,7 @@ type ApiResponseData = {
   message: string | undefined
 }
 
-export const useGetStoredPurchasedNfts = (cmsNftData: NFTData[] | null) => {
+export const useGetStoredPurchasedNfts = (cmsNftData: NFTData[] | null, refetch: number) => {
   const [storedNftData, setStoredNftData] = useState<
     StoredNftData[] | undefined
   >(undefined)
@@ -53,7 +53,7 @@ export const useGetStoredPurchasedNfts = (cmsNftData: NFTData[] | null) => {
     }
 
     fetchStoredNfts(address)
-  }, [address, cmsNftData, ownedNfts])
+  }, [address, cmsNftData, ownedNfts, refetch])
 
   return storedNftData
 }

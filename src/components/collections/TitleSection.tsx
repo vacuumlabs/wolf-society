@@ -4,6 +4,8 @@ import { Box, Container, Stack, Typography } from '@mui/material'
 import TitleSectionText from '../landing/TitleSectionText'
 import Button from '../Button'
 import AppearingComponent from '../AppearingComponent'
+import Image from 'next/image'
+import makeImpactTitle from 'public/images/makeImpactTitle.png'
 
 type Props = {
   firstCollection?: React.RefObject<HTMLElement>
@@ -28,12 +30,21 @@ export const TitleSection = ({ firstCollection }: Props) => {
           }}
         >
           <AppearingComponent>
-            <Typography
-              variant="display"
-              sx={{ px: { mobile: 0, desktopM: '190px' } }}
+            <Box
+              sx={{
+                alignItems: 'center',
+              }}
             >
-              {translate('artImpactTitle')}
-            </Typography>
+              <Image
+                src={makeImpactTitle}
+                alt={'The Earth Is What We All Have in Common'}
+                style={{
+                  alignItems: 'center',
+                  width: '80vw',
+                  height: 'auto',
+                }}
+              />
+            </Box>
           </AppearingComponent>
           <TitleSectionText titles={titles} texts={texts} />
           <AppearingComponent>
