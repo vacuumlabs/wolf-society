@@ -54,7 +54,7 @@ export default async function handler(
   }
 
   const isProvidedNftOurs = ourNfts.some(
-    ({ tokenAddress }) => token_address === tokenAddress
+    ({ tokenAddress }) => token_address.toLowerCase() === tokenAddress?.toLowerCase()
   )
 
   if (!isProvidedNftOurs) {
@@ -88,7 +88,7 @@ export default async function handler(
 
   // Must be != null due to earlier check
   const nftPrice = ourNfts.find(
-    (it) => it.tokenAddress === token_address
+    (it) => it.tokenAddress?.toLowerCase() === token_address.toLowerCase()
   )!.priceInEth
   const tokensToAward = Math.floor(nftPrice * 1000)
 

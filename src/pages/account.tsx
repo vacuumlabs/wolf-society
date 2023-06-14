@@ -1,4 +1,4 @@
-import { getAccount, getWalletClient } from '@wagmi/core'
+import { getWalletClient } from '@wagmi/core'
 import ArtworksAndCollections from '@/components/account/ArtworksAndCollections'
 import ContributionAndRewards from '@/components/account/ContributionAndRewards'
 import { RefetchTokensContext } from '@/utils/context/refetchTokens'
@@ -36,17 +36,26 @@ export const Account = ({ collectionsData, nftData, tasksData }: Props) => {
   const translate = useContentful(ContentTypes.accountPage)
   const translateCommon = useContentful(ContentTypes.common)
   const [dialogOpen, setDialogOpen] = useState(false)
-  const unstoredNfts = useGetStoredPurchasedNfts(nftData)?.filter(
+  const [doneFetching, setDoneFetching] = useState(false)
+  const [gameTokens, setGameTokens] = useState<number | undefined>(undefined)
+  const [refetch, setRefetch] = useState(0)
+  const { address } = useAccount()
+
+  const unstoredNfts = useGetStoredPurchasedNfts(nftData, refetch)?.filter(
     (it) => !it.stored
   )
 
   useEffect(() => {
-    setDialogOpen((unstoredNfts || []).length > 0)
-  }, [unstoredNfts])
+    if (doneFetching) {
+      return
+    }
+    const hasUnstoredNfts = (unstoredNfts || []).length > 0
 
-  const [gameTokens, setGameTokens] = useState<number | undefined>(undefined)
-  const [refetch, setRefetch] = useState(0)
-  const { address } = useAccount()
+    setDialogOpen(hasUnstoredNfts)
+    if (hasUnstoredNfts) {
+      setDoneFetching(true)
+    }
+  }, [unstoredNfts])
 
   useEffect(() => {
     const fetchBalance = async (address: string) => {
@@ -66,7 +75,6 @@ export const Account = ({ collectionsData, nftData, tasksData }: Props) => {
   const refetchGameTokens = () => setRefetch(refetch + 1)
 
   const postToApi = async ({ tokenAddress, tokenId }: StoredNftData) => {
-    const { address } = getAccount()
     const data = {
       eth_address: address,
       token_address: tokenAddress,
@@ -104,6 +112,7 @@ export const Account = ({ collectionsData, nftData, tasksData }: Props) => {
     // Should never happen
     if (unstoredNfts == null || unstoredNfts.length < 0) {
       setDialogOpen(false)
+      refetchGameTokens()
       return
     }
 
@@ -125,8 +134,8 @@ export const Account = ({ collectionsData, nftData, tasksData }: Props) => {
     enqueueSnackbar(translate('nftPurchaseRewardClaimed'), {
       variant: 'success',
     })
-    refetchGameTokens()
     setDialogOpen(false)
+    refetchGameTokens()
   }
 
   return (
