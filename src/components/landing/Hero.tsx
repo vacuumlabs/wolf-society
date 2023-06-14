@@ -14,6 +14,8 @@ import AppearingComponent from '../AppearingComponent'
 import HeroParallax from '../HeroParallax'
 import { SUBPAGES } from '@/consts'
 import Button from '../Button'
+import Image from 'next/image'
+import heroTitle from 'public/images/heroTitle.png'
 
 type Props = {
   manifestoRef: React.RefObject<HTMLElement>
@@ -35,9 +37,21 @@ const Hero = ({ manifestoRef }: Props) => {
               textAlign: 'center',
             }}
           >
-            <Typography variant="display" sx={{ fontWeight: 600 }}>
-              {translate('heroTitle')}
-            </Typography>
+            <Box
+              sx={{
+                alignItems: 'center',
+              }}
+            >
+              <Image
+                src={heroTitle}
+                alt={'The Earth Is What We All Have in Common'}
+                style={{
+                  alignItems: 'center',
+                  width: '80vw',
+                  height: 'auto',
+                }}
+              />
+            </Box>
             <Typography variant="body2" display="inline">
               {translate('heroSubtitle').concat(' ')}
               <br style={{ display: displayLineBreak ? 'inherit' : 'none' }} />
