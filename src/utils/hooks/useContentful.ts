@@ -180,6 +180,7 @@ export type AccountPageData = {
   nftRewardDialogText: string
   nftRewardDialogButtonText: string
   nftPurchaseRewardClaimed: string
+  availableFor: string
 }
 
 export type NavbarData = {

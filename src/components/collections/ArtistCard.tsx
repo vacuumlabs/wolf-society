@@ -79,12 +79,20 @@ const ArtistCard = ({
           color={color}
           sx={{
             p: 4,
-            pt: { mobile: 8, [breakpoint]: 11 },
+            pt: { mobile: 8, [breakpoint]: 4 },
             textAlign: 'start',
           }}
         >
           {firstName}
-          {firstName && firstName.length > 0 && <br />}
+          {/* 
+            FIXME: Last name parsing should be removed and instead moved to CMS
+            lastName.length > 2 check expects last name to be something like ' 5'
+            for 'Unknown Artist 5'.
+          */}
+          {firstName &&
+            firstName.length > 0 &&
+            lastName &&
+            lastName.length > 2 && <br />}
           {lastName}
         </Typography>
       </Card>

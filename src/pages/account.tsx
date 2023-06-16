@@ -24,6 +24,7 @@ import { GetStaticProps, GetStaticPropsContext } from 'next'
 import React, { useEffect, useState } from 'react'
 import { useAccount } from 'wagmi'
 import { enqueueSnackbar } from 'notistack'
+import { useRouter } from 'next/router'
 
 type Props = {
   translations: Partial<Content>
@@ -39,11 +40,18 @@ export const Account = ({ collectionsData, nftData, tasksData }: Props) => {
   const [doneFetching, setDoneFetching] = useState(false)
   const [gameTokens, setGameTokens] = useState<number | undefined>(undefined)
   const [refetch, setRefetch] = useState(0)
-  const { address } = useAccount()
+  const { address, isConnected } = useAccount()
+  const router = useRouter()
 
   const unstoredNfts = useGetStoredPurchasedNfts(nftData, refetch)?.filter(
     (it) => !it.stored
   )
+
+  useEffect(() => {
+    if (isConnected === false) {
+      router.push('/')
+    }
+  }, [isConnected])
 
   useEffect(() => {
     if (doneFetching) {

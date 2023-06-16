@@ -167,31 +167,33 @@ const Navigation = () => {
               </Stack>
             )}
             <LaunchAppButton />
-            {trigger && !isConnected && (
-              <NextLink
-                href={SUBPAGES['collections']}
-                passHref
-                style={{ lineHeight: 0 }}
-              >
-                <Button
-                  style={{ height: '48px', padding: '12px 24px' }}
-                  sx={(theme) => ({
-                    // Button S for M breakpoint
-                    [theme.breakpoints.down('desktopL')]: {
-                      fontSize: '16px',
-                      lineHeight: '24px',
-                    },
-                    // Button M for L breakpoint
-                    [theme.breakpoints.up('desktopL')]: {
-                      fontSize: '20px',
-                      lineHeight: '24px',
-                    },
-                  })}
+            {trigger &&
+              !isConnected &&
+              router.pathname !== SUBPAGES['collections'] && (
+                <NextLink
+                  href={SUBPAGES['collections']}
+                  passHref
+                  style={{ lineHeight: 0 }}
                 >
-                  {translate('makeImpact')}
-                </Button>
-              </NextLink>
-            )}
+                  <Button
+                    style={{ height: '48px', padding: '12px 24px' }}
+                    sx={(theme) => ({
+                      // Button S for M breakpoint
+                      [theme.breakpoints.down('desktopL')]: {
+                        fontSize: '16px',
+                        lineHeight: '24px',
+                      },
+                      // Button M for L breakpoint
+                      [theme.breakpoints.up('desktopL')]: {
+                        fontSize: '20px',
+                        lineHeight: '24px',
+                      },
+                    })}
+                  >
+                    {translate('makeImpact')}
+                  </Button>
+                </NextLink>
+              )}
           </Stack>
           <Stack
             direction="row"
