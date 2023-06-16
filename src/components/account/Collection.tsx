@@ -36,7 +36,16 @@ export const Collection = ({ collectionData }: CollectionProps) => {
       <Grid item mobile={12} {...{ [breakpoint]: 6 }}>
         <Stack gap={3} height="100%" justifyContent="center">
           <Stack gap={2}>
-            <Typography variant="caption">{collectionData.name}</Typography>
+            <Stack direction={'row'} justifyContent="space-between">
+              <Typography variant="caption">{collectionData.name}</Typography>
+              {collectionData.deadline !== undefined &&
+                !collectionIsComplete && (
+                  <Typography variant="caption">
+                    {translate('availableFor')}{' '}
+                    <Countdown deadline={new Date(collectionData.deadline)} />
+                  </Typography>
+                )}
+            </Stack>
             <Typography variant="body2">
               {translate('unlockRewardsQuest')}
             </Typography>
@@ -59,12 +68,6 @@ export const Collection = ({ collectionData }: CollectionProps) => {
                 >
                   {translate('unlockRewardsButton')}
                 </Button>
-                {collectionData.deadline !== undefined &&
-                  !collectionIsComplete && (
-                    <Typography variant="caption">
-                      <Countdown deadline={new Date(collectionData.deadline)} />
-                    </Typography>
-                  )}
                 <Button
                   fullWidth
                   sx={{
