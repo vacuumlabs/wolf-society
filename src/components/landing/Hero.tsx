@@ -25,6 +25,7 @@ const Hero = ({ manifestoRef }: Props) => {
   const translate = useContentful(ContentTypes.landingPage)
   const theme = useTheme()
   const displayLineBreak = useMediaQuery(theme.breakpoints.up(528))
+  const isMobile = useMediaQuery(theme.breakpoints.down('tabletM'))
 
   return (
     <Box sx={{ bgcolor: 'neutral.400' }}>
@@ -47,7 +48,8 @@ const Hero = ({ manifestoRef }: Props) => {
                 alt={'The Earth Is What We All Have in Common'}
                 style={{
                   alignItems: 'center',
-                  width: '80vw',
+                  width: isMobile ? '100vw' : '80vw',
+                  maxWidth: '100%',
                   height: 'auto',
                 }}
               />

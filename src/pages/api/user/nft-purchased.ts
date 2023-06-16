@@ -54,7 +54,8 @@ export default async function handler(
   }
 
   const isProvidedNftOurs = ourNfts.some(
-    ({ tokenAddress }) => token_address.toLowerCase() === tokenAddress?.toLowerCase()
+    ({ tokenAddress }) =>
+      token_address.toLowerCase() === tokenAddress?.toLowerCase()
   )
 
   if (!isProvidedNftOurs) {
