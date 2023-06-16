@@ -289,65 +289,67 @@ const ExtraRewardsDrawer = ({
             {translate('unlockExtraRewardsDescription')}
           </Typography>
           <Stack>
-            {collectionData.tasks.map((task) => (
-              <Box key={formatTaskText(task)}>
-                <Stack
-                  direction={{ mobile: 'column', [breakpoint]: 'row' }}
-                  justifyContent="space-between"
-                  alignItems="center"
-                  py={3}
-                  gap={2}
-                >
+            {collectionData.tasks
+              .sort((a, b) => a.databaseId - b.databaseId)
+              .map((task) => (
+                <Box key={formatTaskText(task)}>
                   <Stack
-                    direction="row"
+                    direction={{ mobile: 'column', [breakpoint]: 'row' }}
+                    justifyContent="space-between"
                     alignItems="center"
+                    py={3}
                     gap={2}
-                    width={{ mobile: '100%', [breakpoint]: 'auto' }}
                   >
-                    {task.isCompleted ? (
-                      <TaskCompleteIcon />
-                    ) : (
-                      <TaskNotCompleteIcon />
-                    )}
-                    <Stack>
-                      <Typography variant="body2">
-                        {formatTaskText(task)}
-                      </Typography>
-                      <Typography variant="body2" color="neutral.700">
-                        {[
-                          task.isCompleted ? null : translate('earn'),
-                          task.rewardAmount,
-                          translate('gameTokens'),
-                        ].join(' ')}
-                      </Typography>
+                    <Stack
+                      direction="row"
+                      alignItems="center"
+                      gap={2}
+                      width={{ mobile: '100%', [breakpoint]: 'auto' }}
+                    >
+                      {task.isCompleted ? (
+                        <TaskCompleteIcon />
+                      ) : (
+                        <TaskNotCompleteIcon />
+                      )}
+                      <Stack>
+                        <Typography variant="body2">
+                          {formatTaskText(task)}
+                        </Typography>
+                        <Typography variant="body2" color="neutral.700">
+                          {[
+                            task.isCompleted ? null : translate('earn'),
+                            task.rewardAmount,
+                            translate('gameTokens'),
+                          ].join(' ')}
+                        </Typography>
+                      </Stack>
                     </Stack>
+                    {!task.isCompleted &&
+                      (task.databaseId === StaticTask.BUY_ALL_NFTS &&
+                      ownedNftsCount < collectionNftsCount ? (
+                        <Typography variant="body2">
+                          {translate('youOwnXOfY')
+                            .replace('{X}', ownedNftsCount.toString())
+                            .replace('{Y}', collectionNftsCount.toString())}
+                        </Typography>
+                      ) : (
+                        <Button
+                          sx={{ whiteSpace: 'nowrap' }}
+                          onClick={() => {
+                            guideToTask(task)
+                          }}
+                          disabled={actionButtonDisabledState(task)}
+                          fullWidth={isMobile}
+                        >
+                          {translateCommon(
+                            task.buttonLabel as keyof Content[ContentTypes.common]
+                          )}
+                        </Button>
+                      ))}
                   </Stack>
-                  {!task.isCompleted &&
-                    (task.databaseId === StaticTask.BUY_ALL_NFTS &&
-                    ownedNftsCount < collectionNftsCount ? (
-                      <Typography variant="body2">
-                        {translate('youOwnXOfY')
-                          .replace('{X}', ownedNftsCount.toString())
-                          .replace('{Y}', collectionNftsCount.toString())}
-                      </Typography>
-                    ) : (
-                      <Button
-                        sx={{ whiteSpace: 'nowrap' }}
-                        onClick={() => {
-                          guideToTask(task)
-                        }}
-                        disabled={actionButtonDisabledState(task)}
-                        fullWidth={isMobile}
-                      >
-                        {translateCommon(
-                          task.buttonLabel as keyof Content[ContentTypes.common]
-                        )}
-                      </Button>
-                    ))}
-                </Stack>
-                <Divider />
-              </Box>
-            ))}
+                  <Divider />
+                </Box>
+              ))}
           </Stack>
         </Stack>
       </Stack>
