@@ -47,9 +47,7 @@ const CircleButton = ({
   >
     <Stack alignItems="center">
       {label.split('\\n').map((lab) => (
-        <Box key={lab} width="max-content">
-          {lab}
-        </Box>
+        <Box key={lab}>{lab}</Box>
       ))}
     </Stack>
   </Button>
