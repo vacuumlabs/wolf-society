@@ -18,11 +18,7 @@ import { useRef, useState } from 'react'
 import { NFTDividerLine } from './NFTDividerLine'
 import { NFTAllocation } from './NFTAllocation'
 import { OnScreen } from '@/components/OnScreen'
-import {
-  useContentful,
-  ContentTypes,
-  NFTData,
-} from '@/utils/hooks/useContentful'
+import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
 import { NFTDataWithOwnership } from '@/utils/hooks/useGetNftDataWithOwnership'
 import { useAccount } from 'wagmi'
 import { LaunchAppButton } from '../LaunchAppButton'
@@ -122,48 +118,44 @@ export const NFTDetail = ({
             zIndex: 99,
           }}
         >
-          {isConnected ? (
-            <Button
-              variant="contained"
-              fullWidth={isMobile}
-              onClick={() => {
-                if (isMobile) {
-                  drawerPaperRef.current?.scrollTo({
-                    top: drawerPaperRef.current?.scrollHeight,
-                    behavior: 'smooth',
-                  })
-                } else {
-                  const scrollDiv =
-                    document.getElementsByClassName('scroll-horizontal')[0]
-                      .children[0]
+          <Button
+            variant="contained"
+            fullWidth={isMobile}
+            onClick={() => {
+              if (isMobile) {
+                drawerPaperRef.current?.scrollTo({
+                  top: drawerPaperRef.current?.scrollHeight,
+                  behavior: 'smooth',
+                })
+              } else {
+                const scrollDiv =
+                  document.getElementsByClassName('scroll-horizontal')[0]
+                    .children[0]
 
-                  const scrollDivTransformX = new WebKitCSSMatrix(
-                    window
-                      .getComputedStyle(scrollDiv)
-                      .getPropertyValue('transform')
-                  ).m41
+                const scrollDivTransformX = new WebKitCSSMatrix(
+                  window
+                    .getComputedStyle(scrollDiv)
+                    .getPropertyValue('transform')
+                ).m41
 
-                  const scrollAmount =
-                    -scrollDiv.clientWidth -
-                    scrollDivTransformX +
-                    window.innerWidth
-                  setScrollAnimValue(
-                    scrollAnimValue === scrollAmount
-                      ? scrollAmount - 1
-                      : scrollAmount
-                  )
-                }
-              }}
-            >
-              <Stack direction="row" gap={'1ch'}>
-                <Typography variant="button">{`${translate('buyNft')} ${
-                  nftData.priceInEth
-                } ETH`}</Typography>
-              </Stack>
-            </Button>
-          ) : (
-            <LaunchAppButton />
-          )}
+                const scrollAmount =
+                  -scrollDiv.clientWidth -
+                  scrollDivTransformX +
+                  window.innerWidth
+                setScrollAnimValue(
+                  scrollAnimValue === scrollAmount
+                    ? scrollAmount - 1
+                    : scrollAmount
+                )
+              }
+            }}
+          >
+            <Stack direction="row" gap={'1ch'}>
+              <Typography variant="button">{`${translate('buyNft')} ${
+                nftData.priceInEth
+              } ETH`}</Typography>
+            </Stack>
+          </Button>
         </Box>
       )}
       <OnScreen selector=".nftBuy" setIntersecting={setBuyInView} />
