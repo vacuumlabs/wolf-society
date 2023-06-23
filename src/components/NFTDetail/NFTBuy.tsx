@@ -180,7 +180,24 @@ export const NFTBuy = ({
           </Stack>
         )}
       </Stack>
-      {!nftData.owned && (
+      {!nftData.owned && !isUserWalletMagic && (
+        <Stack
+          direction="row"
+          justifyContent="center"
+          gap={2}
+          width="100%"
+          pt={{ mobile: 0, [breakpoint]: 5 }}
+        >
+          <>
+            <CircleButton
+              label={translate('buyWithCrypto')}
+              href={manifoldLink}
+              disabled={manifoldLink == null || isUserWalletMagic}
+            />
+          </>
+        </Stack>
+      )}
+      {!nftData.owned && isUserWalletMagic && (
         <Stack
           direction="row"
           justifyContent="space-between"
@@ -201,7 +218,7 @@ export const NFTBuy = ({
             <CircleButton
               label={translate('buyWithCrypto')}
               href={manifoldLink}
-              disabled={manifoldLink == null || isUserWalletMagic}
+              disabled={manifoldLink == null}
             />
           </>
         </Stack>
