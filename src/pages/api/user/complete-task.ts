@@ -8,7 +8,7 @@ import { isKeyAlreadyExistError } from '@/utils/api'
 import { isNotNull } from '@/utils/helpers'
 import { Address } from 'wagmi'
 
-type RequestData = {
+export type CompleteTaskRequestData = {
   data: {
     eth_address: Address
     task_id: StaticTask
@@ -17,13 +17,13 @@ type RequestData = {
   signature: `0x${string}`
 }
 
-type ResponseData = {
+export type CompleteTaskResponseData = {
   message: string
 }
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<ResponseData>
+  res: NextApiResponse<CompleteTaskResponseData>
 ) {
   if (req.method !== 'POST') {
     res.status(405).json({
@@ -32,7 +32,7 @@ export default async function handler(
     return
   }
 
-  const { data, signature } = req.body as RequestData
+  const { data, signature } = req.body as CompleteTaskRequestData
   if (
     data.task_group_name === nftTestnetSmartContractAddress &&
     process.env.NEXT_PUBLIC_TESTNET !== 'true'

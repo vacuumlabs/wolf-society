@@ -9,12 +9,16 @@ export const useGetEthPrice = () => {
 
   useEffect(() => {
     const fetchEthPrice = async () => {
-      const res = await fetch(
-        'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=ethereum'
-      )
-      const [{ current_price }] = (await res.json()) as CurrentPriceResponse
+      try {
+        const res = await fetch(
+          'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=ethereum'
+        )
+        const [{ current_price }] = (await res.json()) as CurrentPriceResponse
 
-      setEthPrice(current_price)
+        setEthPrice(current_price)
+      } catch (err) {
+        console.error(err)
+      }
     }
 
     fetchEthPrice()

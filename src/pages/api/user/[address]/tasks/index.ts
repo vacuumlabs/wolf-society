@@ -11,24 +11,29 @@ export type TaskRow = {
   active: boolean
 }
 
-type SuccessData = {
+type GetTasksSuccessResponseData = {
+  success: true
   tasks: TaskRow[]
 }
 
-type ErrorData = {
+type GetTasksErrorResponseData = {
+  success: false
   message: string
 }
 
-export type ResponseData = SuccessData | ErrorData
+export type GetTasksResponseData =
+  | GetTasksSuccessResponseData
+  | GetTasksErrorResponseData
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<ResponseData>
+  res: NextApiResponse<GetTasksResponseData>
 ) {
   const eth_address = req.query.address
 
   if (typeof eth_address !== 'string') {
     res.status(400).json({
+      success: false,
       message: 'No ETH address provided.',
     })
     return
@@ -36,6 +41,7 @@ export default async function handler(
 
   if (req.method !== 'GET') {
     res.status(405).json({
+      success: false,
       message: 'Bad HTTP method.',
     })
     return
@@ -61,6 +67,7 @@ export default async function handler(
     .execute()
 
   res.json({
+    success: true,
     tasks: tasks.map(
       ({ reward_amount, id, task_group_name, is_completed, active }) => ({
         id: id,

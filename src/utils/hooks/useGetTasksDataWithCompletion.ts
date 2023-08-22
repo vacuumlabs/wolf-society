@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useAccount } from 'wagmi'
 import { TaskData } from './useContentful'
-import { TaskRow } from '@/types'
 import { TASKS_GROUP_NAME_SITEWIDE } from '@/consts'
+import { GetTasksResponseData } from '@/pages/api/user/[address]/tasks'
 
 export type TaskDataWithCompletion = TaskData & {
   isCompleted: boolean
@@ -18,9 +18,10 @@ export const useGetTasksDataWithCompletion = (tasksData: TaskData[] | null) => {
   useEffect(() => {
     const fetchTasks = async (address: string) => {
       const res = await fetch(`/api/user/${address}/tasks`)
-      const { tasks, message } = await res.json()
-      if (message) {
-        console.error("Failed to get user's tasks", message)
+      const responseData = (await res.json()) as GetTasksResponseData
+
+      if (!responseData.success) {
+        console.error("Failed to get user's tasks", responseData.message)
       } else {
         setTasksDataWithCompletion(
           tasksData?.map((taskData) => {
@@ -30,7 +31,8 @@ export const useGetTasksDataWithCompletion = (tasksData: TaskData[] | null) => {
                 : 'nftDesc' in taskData.nftOrCollection.fields
                 ? taskData.nftOrCollection.fields.tokenAddress
                 : taskData.nftOrCollection.fields.id
-            const thisTask = (tasks as TaskRow[]).find(
+
+            const thisTask = responseData.tasks.find(
               ({ id, taskGroupName }) =>
                 id === taskData.databaseId &&
                 taskGroupName === taskDataGroupName
@@ -47,11 +49,9 @@ export const useGetTasksDataWithCompletion = (tasksData: TaskData[] | null) => {
       }
     }
 
-    if (address == null) {
-      return undefined
+    if (address) {
+      fetchTasks(address)
     }
-
-    fetchTasks(address)
   }, [address, tasksData])
 
   return tasksDataWithCompletion

@@ -25,6 +25,7 @@ import { useAccount } from 'wagmi'
 import { enqueueSnackbar } from 'notistack'
 import { useRouter } from 'next/router'
 import { signMessage } from '@/utils/wallet'
+import { GetUserResponseData } from './api/user/[address]'
 
 type Props = {
   translations: Partial<Content>
@@ -67,10 +68,17 @@ export const Account = ({ collectionsData, nftData, tasksData }: Props) => {
 
   useEffect(() => {
     const fetchBalance = async (address: string) => {
-      const res = await fetch(`/api/user/${address}`)
-      const { points } = await res.json()
+      const response = await fetch(`/api/user/${address}`)
+      const responseData = (await response.json()) as GetUserResponseData
 
-      setGameTokens(points)
+      if (responseData.success) {
+        setGameTokens(responseData.points)
+      } else {
+        console.error(
+          "Failed to get user's account details",
+          responseData.message
+        )
+      }
     }
 
     if (address) {

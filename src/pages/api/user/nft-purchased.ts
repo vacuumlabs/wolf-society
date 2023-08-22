@@ -6,7 +6,7 @@ import { alchemy } from '@/utils/configs/alchemy'
 import { isKeyAlreadyExistError } from '@/utils/api'
 import { Address } from 'wagmi'
 
-type RequestData = {
+export type PurchaseNftRequestData = {
   data: {
     eth_address: Address
     token_address: Address
@@ -15,13 +15,13 @@ type RequestData = {
   signature: `0x${string}`
 }
 
-type ResponseData = {
+export type PurchaseNftResponseData = {
   message: string
 }
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<ResponseData>
+  res: NextApiResponse<PurchaseNftResponseData>
 ) {
   if (req.method !== 'POST') {
     res.status(405).json({
@@ -30,7 +30,7 @@ export default async function handler(
     return
   }
 
-  const { data, signature } = req.body as RequestData
+  const { data, signature } = req.body as PurchaseNftRequestData
   const { eth_address, token_address, token_id } = data
 
   const verification = await verifyMessage({

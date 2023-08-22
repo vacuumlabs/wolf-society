@@ -1,27 +1,32 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { db } from '../../../../database'
 
-type SuccessData = {
+export type GetNftsSuccessResponseData = {
+  success: true
   nfts: {
     token_address: string
     token_id: number
   }[]
 }
 
-type ErrorData = {
+export type GetNftsErrorResponseData = {
+  success: false
   message: string
 }
 
-export type ResponseData = SuccessData | ErrorData
+export type GetNftsResponseData =
+  | GetNftsSuccessResponseData
+  | GetNftsErrorResponseData
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<ResponseData>
+  res: NextApiResponse<GetNftsResponseData>
 ) {
   const eth_address = req.query.address
 
   if (typeof eth_address !== 'string') {
     res.status(400).json({
+      success: false,
       message: 'No ETH address provided.',
     })
     return
@@ -29,6 +34,7 @@ export default async function handler(
 
   if (req.method !== 'GET') {
     res.status(405).json({
+      success: false,
       message: 'Bad HTTP method.',
     })
     return
@@ -40,5 +46,5 @@ export default async function handler(
     .where('nft_purchase.purchased_by', '=', eth_address)
     .execute()
 
-  res.json({ nfts })
+  res.json({ success: true, nfts })
 }
