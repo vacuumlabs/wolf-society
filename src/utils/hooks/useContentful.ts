@@ -1,5 +1,5 @@
 import { Asset } from 'contentful'
-import { createContext, useContext } from 'react'
+import { createContext, useCallback, useContext } from 'react'
 import contentful from '../configs/contentful'
 import { getNftMintedAmount } from '../helpers'
 import { nftTestnetInstanceId, nftTestnetSmartContractAddress } from '@/consts'
@@ -475,5 +475,9 @@ export const ContentContext = createContext<Content | undefined>(undefined)
 
 export const useContentful = <T extends ContentTypes>(contentType: T) => {
   const content = useContext(ContentContext)
-  return (key: keyof Content[T]) => content?.[contentType][key] ?? key
+
+  return useCallback(
+    (key: keyof Content[T]) => content?.[contentType][key] ?? key,
+    [content, contentType]
+  )
 }

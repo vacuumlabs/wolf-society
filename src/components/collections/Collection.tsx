@@ -13,7 +13,7 @@ import {
   Typography,
   useMediaQuery,
 } from '@mui/material'
-import { useState, useEffect, forwardRef } from 'react'
+import { useState, forwardRef } from 'react'
 import { ParallaxProvider } from 'react-scroll-parallax'
 import { Countdown } from '../Countdown'
 import ScrollingCard from '../ScrollingCard'
@@ -52,7 +52,6 @@ const Collection = forwardRef<HTMLElement, Props>((props, ref) => {
     nftData,
   } = props
   const [pointerOverNft, setPointerOverNft] = useState(false)
-  const [countdownOrPieces, setCountdownOrPieces] = useState<React.ReactNode>()
   const locale = useLocale()
   const translateCommon = useContentful(ContentTypes.common)
   const isMobile = useMediaQuery((theme: Theme) =>
@@ -71,16 +70,6 @@ const Collection = forwardRef<HTMLElement, Props>((props, ref) => {
   const [artistMotto, setArtistMotto] = useState<string | undefined>(
     nftData[0]?.artist.fields.artistMotto
   )
-
-  useEffect(() => {
-    setCountdownOrPieces(
-      deadline !== undefined ? (
-        <Countdown deadline={deadline} />
-      ) : (
-        `${numberOfPieces?.toLocaleString(locale)} ${translateCommon('pieces')}`
-      )
-    )
-  }, [])
 
   const handleChangeArtist = (nft: NFTData) => {
     setArtistName(nft.artist.fields.artistName)
@@ -104,7 +93,13 @@ const Collection = forwardRef<HTMLElement, Props>((props, ref) => {
                 {subtitle}:
               </Typography>
               <Typography variant="caption" color="neutral.400">
-                {countdownOrPieces}
+                {deadline != null ? (
+                  <Countdown deadline={deadline} />
+                ) : (
+                  `${numberOfPieces?.toLocaleString(locale)} ${translateCommon(
+                    'pieces'
+                  )}`
+                )}
               </Typography>
             </Stack>
             <Typography variant="display" color="neutral.main">

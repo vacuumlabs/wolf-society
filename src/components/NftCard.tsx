@@ -82,7 +82,7 @@ const NftCard = ({
     if (router.query.nft === nftData.id) {
       setIsDetailOpen(true)
     }
-  }, [router.query.nft])
+  }, [nftData.id, router.query.nft])
 
   return (
     <>

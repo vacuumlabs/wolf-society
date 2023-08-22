@@ -25,7 +25,7 @@ const ArtImpactNft = ({ nftData }: Props) => {
     if (nft != null) {
       router.replace({ pathname: SUBPAGES.collections, query: { nft: nft.id } })
     }
-  }, [nft])
+  }, [nft, router])
 
   let queriedNftImageUrl = nft?.image.fields.file.url
   if (queriedNftImageUrl != null && !queriedNftImageUrl.startsWith('https:')) {

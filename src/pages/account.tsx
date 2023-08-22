@@ -51,7 +51,7 @@ export const Account = ({ collectionsData, nftData, tasksData }: Props) => {
     if (!isConnected) {
       router.push('/')
     }
-  }, [isConnected])
+  }, [isConnected, router])
 
   useEffect(() => {
     if (doneFetching) {
@@ -63,7 +63,7 @@ export const Account = ({ collectionsData, nftData, tasksData }: Props) => {
     if (hasUnstoredNfts) {
       setDoneFetching(true)
     }
-  }, [unstoredNfts])
+  }, [unstoredNfts, doneFetching])
 
   useEffect(() => {
     const fetchBalance = async (address: string) => {
@@ -73,11 +73,9 @@ export const Account = ({ collectionsData, nftData, tasksData }: Props) => {
       setGameTokens(points)
     }
 
-    if (address == null) {
-      return undefined
+    if (address) {
+      fetchBalance(address)
     }
-
-    fetchBalance(address)
   }, [address, refetch])
 
   const refetchGameTokens = useCallback(

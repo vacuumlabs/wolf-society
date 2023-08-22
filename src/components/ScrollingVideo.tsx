@@ -27,6 +27,29 @@ const MEDIA_DIMENSIONS: Record<Sizes, { w: number; h: number }> = {
 
 const VIDEO_DURATION_SECONDS = 5
 
+const preloadVideo = (url: string, onLoad: (src: string) => void) => {
+  const xhr = new XMLHttpRequest()
+  xhr.open('GET', url, true)
+  xhr.responseType = 'arraybuffer'
+
+  xhr.onload = () => {
+    if (xhr.response instanceof ArrayBuffer) {
+      const blob = new Blob([xhr.response], {
+        type: 'video/mp4',
+      })
+      onLoad(URL.createObjectURL(blob))
+    } else {
+      console.error('Response is not an ArrayBuffer.')
+    }
+  }
+
+  xhr.onerror = (e) => {
+    console.error('Request failed:', e)
+  }
+
+  xhr.send()
+}
+
 const ScrollingVideo = ({
   id,
   textImage,
@@ -35,9 +58,9 @@ const ScrollingVideo = ({
   bottomColor,
 }: Props) => {
   const [aspectRatio, setAspectRatio] = useState(1.6)
-  const [videosRequested, setVideosRequested] = useState<Sizes[]>([])
   const component = useRef<HTMLDivElement>(null)
   const slider = useRef<HTMLDivElement>(null)
+
   const isTabletSSR = useMediaQuery((theme: Theme) =>
     theme.breakpoints.up('tabletS')
   )
@@ -55,6 +78,8 @@ const ScrollingVideo = ({
   )
 
   const size: Sizes = isDesktop ? Sizes.L : isTablet ? Sizes.M : Sizes.S
+  const dimension = MEDIA_DIMENSIONS[size].w
+  const url = `/animations/${id}${dimension}.mp4`
 
   useEffect(() => {
     setAspectRatio(MEDIA_DIMENSIONS[size].w / MEDIA_DIMENSIONS[size].h)
@@ -67,27 +92,11 @@ const ScrollingVideo = ({
       ) as HTMLVideoElement | null
       if (!video) return
 
-      const dimension = MEDIA_DIMENSIONS[size].w
-      const url = `/animations/${id}${dimension}.mp4`
-
       const textPanel = gsap.utils.toArray('.textPanel')
 
-      if (!videosRequested.includes(size)) {
-        // Preload the video
-        const xhr = new XMLHttpRequest()
-        xhr.open('GET', url, true)
-        xhr.responseType = 'arraybuffer'
-        xhr.onload = function (oEvent) {
-          const blob = new Blob([(oEvent.target as any).response], {
-            type: 'video/mp4',
-          })
-          video.src = URL.createObjectURL(blob)
-        }
-        xhr.send()
-        setVideosRequested(videosRequested.concat([size]))
-      } else {
-        video.src = url
-      }
+      preloadVideo(url, (src) => {
+        video.src = src
+      })
 
       gsap
         .timeline({
@@ -126,7 +135,7 @@ const ScrollingVideo = ({
     }, component)
 
     return () => ctx.revert()
-  }, [size])
+  }, [id, url])
 
   return (
     <Box ref={component} position="relative" sx={{ overflowY: 'hidden' }}>
@@ -164,7 +173,6 @@ const ScrollingVideo = ({
           <video
             id={`${id}-video`}
             className="video"
-            src=""
             width="100%"
             height="auto"
             preload="auto"

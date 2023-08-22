@@ -20,7 +20,7 @@ import IconButton from '../IconButton'
 import Button from '../Button'
 import { CollectionDataExtended } from './Collection'
 import { TaskDataWithCompletion } from '@/utils/hooks/useGetTasksDataWithCompletion'
-import { useContext, useEffect, useRef, useState } from 'react'
+import { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import {
   MEDIUM_DOMAIN,
   SUBPAGES,
@@ -75,61 +75,75 @@ const ExtraRewardsDrawer = ({
   }
   const refetchGameTokenBalance = useContext(RefetchTokensContext)
 
-  const postToCompleteTaskApi = async (task: TaskDataWithCompletion) => {
-    const { address } = getAccount()
-    const taskGroupName = task.nftOrCollection
-      ? 'nftDesc' in task.nftOrCollection.fields
-        ? task.nftOrCollection.fields.tokenAddress
-        : task.nftOrCollection.fields.id
-      : TASKS_GROUP_NAME_SITEWIDE
-    const data = {
-      eth_address: address,
-      task_id: task.databaseId,
-      task_group_name: taskGroupName,
-    }
+  const postToCompleteTaskApi = useCallback(
+    async (task: TaskDataWithCompletion) => {
+      const { address } = getAccount()
 
-    const walletClient = await getWalletClient()
-    let signature: `0x${string}` | undefined
-    try {
-      signature = await walletClient?.signMessage({
-        message: JSON.stringify(data),
-      })
-    } catch (err) {
-      console.error(err)
-    }
-    if (!signature) return { message: translate('messageNotSignedError') }
-    return fetch(`/api/user/complete-task`, {
-      method: 'POST',
-      body: JSON.stringify({
-        data,
-        signature,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-  }
+      const taskGroupName = task.nftOrCollection
+        ? 'nftDesc' in task.nftOrCollection.fields
+          ? task.nftOrCollection.fields.tokenAddress
+          : task.nftOrCollection.fields.id
+        : TASKS_GROUP_NAME_SITEWIDE
 
-  const startCompletingTask = async (task: TaskDataWithCompletion) => {
-    setCompletingTaskLast(completingTaskRef.current)
-    setCompletingTask(null)
-    const response = await postToCompleteTaskApi(task)
-    if ('status' in response && response.status === 200) {
-      const completingTaskLastCurrent = completingTaskLastRef.current
-      if (completingTaskLastCurrent) {
-        completingTaskLastCurrent.isCompleted = true
+      const data = {
+        eth_address: address,
+        task_id: task.databaseId,
+        task_group_name: taskGroupName,
       }
-      setCompletingTaskLast(null)
-    } else {
-      const errorMessage =
-        'message' in response
-          ? response.message
-          : translateCommon('genericErrorMessage')
-      enqueueSnackbar(errorMessage, {
-        variant: 'error',
+
+      const walletClient = await getWalletClient()
+      let signature: `0x${string}` | undefined
+
+      try {
+        signature = await walletClient?.signMessage({
+          message: JSON.stringify(data),
+        })
+      } catch (err) {
+        console.error(err)
+      }
+
+      if (!signature) {
+        return { message: translate('messageNotSignedError') }
+      }
+
+      return fetch(`/api/user/complete-task`, {
+        method: 'POST',
+        body: JSON.stringify({
+          data,
+          signature,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
       })
-    }
-  }
+    },
+    [translate]
+  )
+
+  const startCompletingTask = useCallback(
+    async (task: TaskDataWithCompletion) => {
+      setCompletingTaskLast(completingTaskRef.current)
+      setCompletingTask(null)
+      const response = await postToCompleteTaskApi(task)
+
+      if ('status' in response && response.status === 200) {
+        const completingTaskLastCurrent = completingTaskLastRef.current
+        if (completingTaskLastCurrent) {
+          completingTaskLastCurrent.isCompleted = true
+        }
+        setCompletingTaskLast(null)
+      } else {
+        const errorMessage =
+          'message' in response
+            ? response.message
+            : translateCommon('genericErrorMessage')
+        enqueueSnackbar(errorMessage, {
+          variant: 'error',
+        })
+      }
+    },
+    [postToCompleteTaskApi, translateCommon]
+  )
 
   const actionButtonDisabledState = (task: TaskDataWithCompletion): boolean => {
     if (!task.isActive) return true
@@ -245,7 +259,7 @@ const ExtraRewardsDrawer = ({
     return () => {
       window.removeEventListener('focus', listener)
     }
-  }, [])
+  }, [refetchGameTokenBalance, startCompletingTask])
 
   const ownedNftsCount = collectionData.nfts.filter((nft) => nft.owned).length
   const collectionNftsCount = collectionData.nfts.length
