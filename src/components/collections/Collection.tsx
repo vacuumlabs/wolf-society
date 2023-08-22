@@ -13,7 +13,7 @@ import {
   Typography,
   useMediaQuery,
 } from '@mui/material'
-import { useState, forwardRef } from 'react'
+import { useState, forwardRef, useCallback } from 'react'
 import { ParallaxProvider } from 'react-scroll-parallax'
 import { Countdown } from '../Countdown'
 import ScrollingCard from '../ScrollingCard'
@@ -71,11 +71,11 @@ const Collection = forwardRef<HTMLElement, Props>((props, ref) => {
     nftData[0]?.artist.fields.artistMotto
   )
 
-  const handleChangeArtist = (nft: NFTData) => {
+  const handleChangeArtist = useCallback((nft: NFTData) => {
     setArtistName(nft.artist.fields.artistName)
     setArtistImage(nft.artist.fields.artistImage.fields.file.url)
     setArtistMotto(nft.artist.fields.artistMotto)
-  }
+  }, [])
 
   return (
     <Box sx={{ bgcolor: color, textAlign: 'center' }} id={id} ref={ref}>
@@ -156,13 +156,8 @@ const Collection = forwardRef<HTMLElement, Props>((props, ref) => {
                 />
                 <ScrollingCard index={index}>
                   <NftCardArtImpact
-                    nftCardProps={{
-                      minted: nft.minted,
-                      nftData: nft,
-                    }}
-                    changeArtist={() => {
-                      handleChangeArtist(nft)
-                    }}
+                    nftData={nft}
+                    changeArtist={handleChangeArtist}
                     isLast={index === nftData.length - 1}
                     setPointerOver={setPointerOverNft}
                   />
@@ -175,6 +170,7 @@ const Collection = forwardRef<HTMLElement, Props>((props, ref) => {
     </Box>
   )
 })
+
 Collection.displayName = 'Collection'
 
 export default Collection

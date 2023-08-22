@@ -16,9 +16,9 @@ import { NFTUsage, NFTUsageProps } from './NFTUsage'
 import { NFTBuy } from './NFTBuy'
 import { PropsWithChildren, useRef, useState } from 'react'
 import { NFTDividerLine } from './NFTDividerLine'
-import { OnScreen } from '@/components/OnScreen'
 import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
 import { NFTDataWithOwnership } from '@/utils/hooks/useGetNftDataWithOwnership'
+import { useIntersectionObserver } from '@/utils/hooks/useIntersectionObserver'
 
 export interface NFTDetailProps {
   isOpen: boolean
@@ -42,6 +42,8 @@ export const NFTDetail = ({
   )
   const [buyInView, setBuyInView] = useState(false)
   const [scrollAnimValue, setScrollAnimValue] = useState(0)
+
+  useIntersectionObserver('.nftBuy', setBuyInView)
 
   const content: React.ReactElement<PropsWithChildren> = (
     <>
@@ -152,7 +154,6 @@ export const NFTDetail = ({
           </Button>
         </Box>
       )}
-      <OnScreen selector=".nftBuy" setIntersecting={setBuyInView} />
     </Drawer>
   )
 }

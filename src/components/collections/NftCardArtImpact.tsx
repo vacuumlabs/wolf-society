@@ -1,45 +1,54 @@
 import { Box } from '@mui/material'
-import NftCard, { NftCardProps } from '../NftCard'
-import { OnScreen } from '../OnScreen'
+import NftCard from '../NftCard'
+import { useIntersectionObserver } from '@/utils/hooks/useIntersectionObserver'
+import { useCallback } from 'react'
+import { NFTDataWithOwnership } from '@/utils/hooks/useGetNftDataWithOwnership'
 
 export type NftCardArtImpactProps = {
-  changeArtist: () => void
+  changeArtist: (data: NFTDataWithOwnership) => void
   isLast: boolean
-  nftCardProps: NftCardProps
+  nftData: NFTDataWithOwnership
   setPointerOver: (value: boolean) => void
 }
 
 const NftCardArtImpact = ({
   changeArtist,
   isLast,
-  nftCardProps,
+  nftData,
   setPointerOver,
 }: NftCardArtImpactProps) => {
+  const handleIntersection = useCallback(
+    (visible: boolean) => {
+      if (visible) {
+        changeArtist(nftData)
+      }
+    },
+    [changeArtist, nftData]
+  )
+
+  useIntersectionObserver(`.nftCard${nftData.id}`, handleIntersection)
+
   return (
-    <>
-      <Box
-        className={`nftCard${nftCardProps.nftData.id}`}
-        onPointerEnter={() => {
-          setPointerOver(true)
-        }}
-        onPointerLeave={() => {
-          setPointerOver(false)
-        }}
-        sx={{
-          mb: { mobile: '0', tabletM: isLast ? 'calc(100vh - 80px)' : '130vh' },
-        }}
-      >
-        <NftCard {...nftCardProps} displayPrice limitHeight={false} />
-      </Box>
-      <OnScreen
-        selector={`.nftCard${nftCardProps.nftData.id}`}
-        setIntersecting={(visible: boolean) => {
-          if (visible) {
-            changeArtist()
-          }
-        }}
+    <Box
+      className={`nftCard${nftData.id}`}
+      onPointerEnter={() => {
+        setPointerOver(true)
+      }}
+      onPointerLeave={() => {
+        setPointerOver(false)
+      }}
+      sx={{
+        mb: { mobile: '0', tabletM: isLast ? 'calc(100vh - 80px)' : '130vh' },
+      }}
+    >
+      <NftCard
+        nftData={nftData}
+        minted={nftData.minted}
+        displayPrice
+        limitHeight={false}
       />
-    </>
+    </Box>
   )
 }
+
 export default NftCardArtImpact
