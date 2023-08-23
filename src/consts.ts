@@ -3,6 +3,7 @@ import { Content, ContentTypes } from './utils/hooks/useContentful'
 import allocationArtistsImage from 'public/images/allocationArtists.png'
 import allocationDevelopmentImage from 'public/images/allocationDevelopment.png'
 import allocationProjectsImage from 'public/images/allocationProjects.png'
+import { Address } from 'wagmi'
 
 /**
  * Matches the custom markdown tooltip syntax in the form:
@@ -11,7 +12,7 @@ import allocationProjectsImage from 'public/images/allocationProjects.png'
 export const tooltipCustomMarkdownRegex =
   /(\*([^*]*)\*\(((?:[^()]*|\((?:[^()]*|\([^()]*\))*\))*)\))/g
 
-export const nftTestnetSmartContractAddress: `0x${string}` =
+export const nftTestnetSmartContractAddress: Address =
   '0x81a1419049a6731ab52505da86cf077d850b3fee'
 
 export const nftTestnetInstanceId = 1049684612

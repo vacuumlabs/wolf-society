@@ -1,17 +1,15 @@
 import { verifyMessage } from 'viem'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import {
-  db,
-  POSTGRES_KEY_ALREADY_EXISTS_ERROR_CODE,
-  saveUserIfNotSaved,
-} from '@/database'
+import { db, saveUserIfNotSaved } from '@/database'
 import { getNfts } from '@/utils/hooks/useContentful'
 import { alchemy } from '@/utils/configs/alchemy'
+import { isKeyAlreadyExistError } from '@/utils/api'
+import { Address } from 'wagmi'
 
 type RequestData = {
   data: {
-    eth_address: `0x${string}`
-    token_address: `0x${string}`
+    eth_address: Address
+    token_address: Address
     token_id: number
   }
   signature: `0x${string}`
@@ -127,7 +125,7 @@ export default async function handler(
       })
       .execute()
   } catch (error) {
-    if ((error as any).code === POSTGRES_KEY_ALREADY_EXISTS_ERROR_CODE) {
+    if (isKeyAlreadyExistError(error)) {
       res.status(500).json({
         message: 'Tokens for NFT purchase can only be claimed once!',
       })

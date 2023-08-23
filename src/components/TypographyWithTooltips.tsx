@@ -5,6 +5,8 @@ import React from 'react'
 import Tooltip from './Tooltip'
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown'
 import { visit } from 'unist-util-visit' // dep of react-markdown
+import type { Plugin } from 'unified'
+import type { Root } from 'mdast'
 
 /**
  * `react-markdown` trims whitespace on the node by default,
@@ -14,15 +16,14 @@ import { visit } from 'unist-util-visit' // dep of react-markdown
  * @param toBack  Add space to back?
  * @returns a remark parser plugin
  */
-const genMarkdownParser = (toFront: boolean, toBack: boolean) => {
-  return () => {
-    return (tree: any) => {
-      visit(tree, 'text', (node) => {
-        node.value = `${toFront ? ' ' : ''}${node.value}${toBack ? ' ' : ''}`
-      })
-    }
+const genMarkdownParser =
+  (toFront: boolean, toBack: boolean): Plugin<[], Root> =>
+  () =>
+  (tree) => {
+    visit(tree, 'text', (node) => {
+      node.value = `${toFront ? ' ' : ''}${node.value}${toBack ? ' ' : ''}`
+    })
   }
-}
 
 /**
  *

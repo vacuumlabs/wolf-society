@@ -38,13 +38,8 @@ export default async function handler(
     .where('app_user.eth_address', '=', eth_address)
     .executeTakeFirst()
 
-  user != null
-    ? res.json({
-        address: eth_address,
-        points: user.reward_points,
-      })
-    : res.json({
-        address: eth_address,
-        points: 0,
-      })
+  res.json({
+    address: eth_address,
+    points: user?.reward_points ?? 0,
+  })
 }

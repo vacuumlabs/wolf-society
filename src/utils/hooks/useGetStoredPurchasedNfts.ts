@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react'
 import { useAccount } from 'wagmi'
 import { NFTData } from './useContentful'
 import { useGetNfts } from './useGetNfts'
+import { isNotNull } from '../helpers'
 
 export type StoredNftData = {
-  tokenAddress: `0x${string}`
+  tokenAddress: string
   tokenId: number
   stored: boolean
 }
@@ -22,9 +23,9 @@ export const useGetStoredPurchasedNfts = (
     StoredNftData[] | undefined
   >(undefined)
   const { address } = useAccount()
-  const nftAddresses = (cmsNftData
-    ?.map((nftData) => nftData.tokenAddress)
-    ?.filter((address) => address != null) ?? []) as `0x${string}`[]
+
+  const nftAddresses =
+    cmsNftData?.map((nftData) => nftData.tokenAddress)?.filter(isNotNull) ?? []
   const ownedNfts = useGetNfts(address, nftAddresses)
 
   useEffect(() => {
@@ -38,7 +39,7 @@ export const useGetStoredPurchasedNfts = (
       }
 
       const storedOwnedNfts = ownedNfts.map((nft) => ({
-        tokenAddress: nft.contract.address as `0x${string}`,
+        tokenAddress: nft.contract.address,
         tokenId: Number.parseInt(nft.tokenId),
         stored: nfts.some(
           (storedNft) =>

@@ -1,7 +1,15 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { db } from '../../../../../database'
 import { sql } from 'kysely'
-import { TaskRow } from '@/types'
+import { StaticTask } from '@/consts'
+
+export type TaskRow = {
+  id: StaticTask
+  taskGroupName: string
+  isCompleted: boolean
+  rewardAmount: number
+  active: boolean
+}
 
 type SuccessData = {
   tasks: TaskRow[]

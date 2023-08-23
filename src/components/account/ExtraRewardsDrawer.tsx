@@ -28,7 +28,7 @@ import {
   TASKS_GROUP_NAME_SITEWIDE,
   TWITTER_DOMAIN,
 } from '@/consts'
-import { getAccount, getWalletClient } from '@wagmi/core'
+import { getAccount } from '@wagmi/core'
 import { enqueueSnackbar } from 'notistack'
 import {
   SocialMedia,
@@ -37,8 +37,9 @@ import {
   shareContentOnSocialMedia,
 } from '@/utils/sharing'
 import { RefetchTokensContext } from '@/utils/context/refetchTokens'
+import { signMessage } from '@/utils/wallet'
 
-type Props = {
+type ExtraRewardsDrawerProps = {
   onClose: (event: React.KeyboardEvent | React.MouseEvent) => void
   drawerOpened: boolean
   collectionData: CollectionDataExtended
@@ -50,7 +51,7 @@ const ExtraRewardsDrawer = ({
   drawerOpened,
   collectionData,
   collectionIsComplete,
-}: Props) => {
+}: ExtraRewardsDrawerProps) => {
   const translate = useContentful(ContentTypes.accountPage)
   const translateCommon = useContentful(ContentTypes.common)
   const translateNavbar = useContentful(ContentTypes.navbar)
@@ -91,16 +92,7 @@ const ExtraRewardsDrawer = ({
         task_group_name: taskGroupName,
       }
 
-      const walletClient = await getWalletClient()
-      let signature: `0x${string}` | undefined
-
-      try {
-        signature = await walletClient?.signMessage({
-          message: JSON.stringify(data),
-        })
-      } catch (err) {
-        console.error(err)
-      }
+      const signature = await signMessage(data)
 
       if (!signature) {
         return { message: translate('messageNotSignedError') }

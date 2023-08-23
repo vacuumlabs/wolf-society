@@ -27,6 +27,12 @@ import {
 } from '@/utils/sharing'
 import { useGetEthPrice } from '@/utils/hooks/useGetEthPrice'
 import { ERC721LazyPayableClaimAbi } from '@/abi/ERC721LazyPayableClaim'
+import { isObjectWithProperty } from '@/utils/helpers'
+
+const isUserRejectedError = (error: Error) =>
+  isObjectWithProperty(error.cause, 'cause') &&
+  isObjectWithProperty(error.cause.cause, 'rawMessage') &&
+  error.cause.cause.rawMessage === MAGIC_WALLET_USER_REJECTED_ACTION_MESSAGE
 
 const CircleButton = ({
   label,
@@ -101,16 +107,13 @@ export const NFTBuy = ({
         data: encodedData,
         value: BigInt(manifoldTxFee) + parseEther(`${priceInEth}`),
       })
-    } catch (err: any) {
-      if (
-        err.cause?.cause?.rawMessage ===
-        MAGIC_WALLET_USER_REJECTED_ACTION_MESSAGE
-      ) {
+    } catch (error) {
+      if (!(error instanceof Error) || isUserRejectedError(error)) {
         return
-      } else {
-        enqueueSnackbar(err.message, { variant: 'error' })
-        console.error(err)
       }
+
+      enqueueSnackbar(error.message, { variant: 'error' })
+      console.error(error)
     }
   }
 

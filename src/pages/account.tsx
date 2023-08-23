@@ -1,4 +1,3 @@
-import { getWalletClient } from '@wagmi/core'
 import ArtworksAndCollections from '@/components/account/ArtworksAndCollections'
 import ContributionAndRewards from '@/components/account/ContributionAndRewards'
 import { RefetchTokensContext } from '@/utils/context/refetchTokens'
@@ -25,6 +24,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useAccount } from 'wagmi'
 import { enqueueSnackbar } from 'notistack'
 import { useRouter } from 'next/router'
+import { signMessage } from '@/utils/wallet'
 
 type Props = {
   translations: Partial<Content>
@@ -90,16 +90,12 @@ export const Account = ({ collectionsData, nftData, tasksData }: Props) => {
       token_id: tokenId,
     }
 
-    const walletClient = await getWalletClient()
-    let signature: `0x${string}` | undefined
-    try {
-      signature = await walletClient?.signMessage({
-        message: JSON.stringify(data),
-      })
-    } catch (err) {
-      console.error(err)
+    const signature = await signMessage(data)
+
+    if (!signature) {
+      return { message: translate('messageNotSignedError') }
     }
-    if (!signature) return { message: translate('messageNotSignedError') }
+
     return fetch(`/api/user/nft-purchased`, {
       method: 'POST',
       body: JSON.stringify({

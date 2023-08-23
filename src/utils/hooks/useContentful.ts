@@ -2,7 +2,12 @@ import { Asset } from 'contentful'
 import { createContext, useCallback, useContext } from 'react'
 import contentful from '../configs/contentful'
 import { getNftMintedAmount } from '../helpers'
-import { nftTestnetInstanceId, nftTestnetSmartContractAddress } from '@/consts'
+import {
+  StaticTask,
+  nftTestnetInstanceId,
+  nftTestnetSmartContractAddress,
+} from '@/consts'
+import { Address } from 'wagmi'
 
 export enum ContentTypes {
   navbar = 'navbar',
@@ -31,7 +36,7 @@ export type ProjectData = {
   location: string
   project: string
   timeFrame: string
-  partnerLogo: Asset
+  partnerLogo?: Asset
 }
 
 export type RoadmapData = {
@@ -103,14 +108,14 @@ export type NFTData = {
   beatTheDrumList: string
   breadAndButterList: string
   minted: number
-  tokenAddress?: `0x${string}`
+  tokenAddress?: Address
   manifoldLink?: string
   instanceId?: number
 }
 
 export type TaskData = {
   id: string
-  databaseId: number
+  databaseId: StaticTask
   text: string
   taskText:
     | 'buyAllNfts'
@@ -330,7 +335,7 @@ export const getArrayOfContent = async <T extends { id: string }>({
   contentType: ContentTypes
   locale?: string
   orderBy?: string
-  query?: any
+  query?: object
 }): Promise<T[] | null> => {
   if (!contentful) return null
   const entriesLocalized = await contentful.getEntries<T>({
@@ -365,22 +370,23 @@ export const getTranslations = async (
   if (!contentful) return {}
   let result = {}
   for (const contType of SHARED_CONTENT.concat(contentType)) {
-    const entriesLocalized = await contentful.getEntries({
-      content_type: contType,
-      'fields.locale': locale,
-    })
-    const entriesEnglish = await contentful.getEntries({
+    const entriesLocalized = await contentful.getEntries<Content[ContentTypes]>(
+      {
+        content_type: contType,
+        'fields.locale': locale,
+      }
+    )
+    const entriesEnglish = await contentful.getEntries<Content[ContentTypes]>({
       content_type: contType,
       'fields.locale': 'en-US',
     })
-    const contentLocalized = entriesLocalized.items.reduce(
-      (all: Partial<Content>, item: any) => ({ ...all, ...item.fields }),
-      {}
-    )
-    const contentEnglish = entriesEnglish.items.reduce(
-      (all: Partial<Content>, item: any) => ({ ...all, ...item.fields }),
-      {}
-    )
+    const contentLocalized = entriesLocalized.items.reduce<
+      Partial<Content[ContentTypes]>
+    >((all, item) => ({ ...all, ...item.fields }), {})
+    const contentEnglish = entriesEnglish.items.reduce<
+      Partial<Content[ContentTypes]>
+    >((all, item) => ({ ...all, ...item.fields }), {})
+
     result = {
       ...result,
       [contType]: { ...contentEnglish, ...contentLocalized },

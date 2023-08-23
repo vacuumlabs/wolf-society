@@ -11,9 +11,8 @@ export type TaskDataWithCompletion = TaskData & {
 }
 
 export const useGetTasksDataWithCompletion = (tasksData: TaskData[] | null) => {
-  const [tasksDataWithCompletion, setTasksDataWithCompletion] = useState<
-    TaskDataWithCompletion[] | undefined
-  >(undefined)
+  const [tasksDataWithCompletion, setTasksDataWithCompletion] =
+    useState<TaskDataWithCompletion[]>()
   const { address } = useAccount()
 
   useEffect(() => {

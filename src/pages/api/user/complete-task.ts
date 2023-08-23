@@ -1,18 +1,17 @@
 import { verifyMessage } from 'viem'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import {
-  db,
-  POSTGRES_KEY_ALREADY_EXISTS_ERROR_CODE,
-  saveUserIfNotSaved,
-} from '../../../database'
+import { db, saveUserIfNotSaved } from '../../../database'
 import { StaticTask, nftTestnetSmartContractAddress } from '@/consts'
 import { getNfts } from '@/utils/hooks/useContentful'
 import { alchemy } from '@/utils/configs/alchemy'
+import { isKeyAlreadyExistError } from '@/utils/api'
+import { isNotNull } from '@/utils/helpers'
+import { Address } from 'wagmi'
 
 type RequestData = {
   data: {
-    eth_address: `0x${string}`
-    task_id: number
+    eth_address: Address
+    task_id: StaticTask
     task_group_name: string
   }
   signature: `0x${string}`
@@ -86,6 +85,7 @@ export default async function handler(
       })
       return
     }
+
     const collectionNfts = nfts
       .filter(
         (nft) =>
@@ -93,23 +93,25 @@ export default async function handler(
           nft.collection.fields.id === data.task_group_name
       )
       .map((nft) => nft.tokenAddress?.toLowerCase())
-    if (collectionNfts.some((nft) => nft == null)) {
+
+    if (!collectionNfts.every(isNotNull)) {
       res.status(500).json({
         message: 'Not all NFTs have filled out token addresses.',
       })
       return
     }
+
     const userNfts = await alchemy.nft.getNftsForOwner(data.eth_address, {
-      contractAddresses: collectionNfts as string[],
+      contractAddresses: collectionNfts,
     })
-    const userOwnsAllNfts = (collectionNfts as string[]).every(
-      (collectionNft) =>
-        userNfts.ownedNfts.some(
-          (userNft) =>
-            userNft.contract.address.toLowerCase() ===
-            collectionNft.toLowerCase()
-        )
+
+    const userOwnsAllNfts = collectionNfts.every((collectionNft) =>
+      userNfts.ownedNfts.some(
+        (userNft) =>
+          userNft.contract.address.toLowerCase() === collectionNft.toLowerCase()
+      )
     )
+
     if (!userOwnsAllNfts) {
       res.status(500).json({
         message: 'User does not own all NFTs from this collection.',
@@ -138,7 +140,7 @@ export default async function handler(
       })
       .execute()
   } catch (error) {
-    if ((error as any).code === POSTGRES_KEY_ALREADY_EXISTS_ERROR_CODE) {
+    if (isKeyAlreadyExistError(error)) {
       res.status(400).json({
         message: 'Task already completed.',
       })

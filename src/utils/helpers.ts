@@ -1,7 +1,7 @@
 import { SUBPAGES, lazyPayableClaimContractAddress } from '@/consts'
-import { ethers } from 'ethers'
-import { alchemy } from './configs/alchemy'
 import { ERC721LazyPayableClaimAbi } from '@/abi/ERC721LazyPayableClaim'
+import { getPublicClient } from '@wagmi/core'
+import { Address } from 'wagmi'
 
 export const formatAddress = (address: string) => {
   if (address.length <= 8) return address
@@ -12,7 +12,7 @@ export const getSubpagesKeys = () => {
   return Object.keys(SUBPAGES) as (keyof typeof SUBPAGES)[]
 }
 
-export const formatDate = (date: string, locale: any) => {
+export const formatDate = (date: string, locale: string) => {
   return new Date(date).toLocaleDateString(locale, { dateStyle: 'medium' })
 }
 
@@ -26,22 +26,30 @@ export const formatCategories = (categories: string[]) => {
 }
 
 export const getNftMintedAmount = async (
-  tokenAddress: string,
+  tokenAddress: Address,
   instanceId: number
 ) => {
-  const lazyPayableClaimInterface = new ethers.utils.Interface(
-    ERC721LazyPayableClaimAbi
-  )
-  const response = await alchemy.core.call({
-    to: lazyPayableClaimContractAddress,
-    data: lazyPayableClaimInterface.encodeFunctionData('getClaim', [
-      tokenAddress,
-      instanceId,
-    ]),
+  const publicClient = getPublicClient()
+
+  const response = await publicClient.readContract({
+    address: lazyPayableClaimContractAddress,
+    abi: ERC721LazyPayableClaimAbi,
+    functionName: 'getClaim',
+    args: [tokenAddress, BigInt(instanceId)],
   })
-  const result = lazyPayableClaimInterface.decodeFunctionResult(
-    'getClaim',
-    response
-  )
-  return result[0].total
+
+  return response.total
 }
+
+export const isNotNull = <T>(value: T | null | undefined): value is T =>
+  value != null
+
+export const isObject = (value: unknown): value is Record<string, unknown> =>
+  typeof value === 'object' && value !== null && !Array.isArray(value)
+
+export const isObjectWithProperty = <T extends string>(
+  obj: unknown,
+  propName: T
+): obj is Record<string, unknown> & {
+  [key in T]: unknown
+} => isObject(obj) && propName in obj
