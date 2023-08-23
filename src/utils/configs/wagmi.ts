@@ -15,8 +15,13 @@ const { chains, publicClient, webSocketPublicClient } = configureChains(
   [process.env.NEXT_PUBLIC_TESTNET === 'false' ? mainnet : goerli],
   [publicProvider()]
 )
-const appName = 'Wolf-society'
-const params = { appName, chains }
+
+const params = {
+  appName: 'Wolf-society',
+  chains,
+  projectId: '711f14d39871ec176fc9f9303307994b',
+}
+
 const connectors = connectorsForWallets([
   {
     groupName: 'Log in with Social Media',
@@ -27,10 +32,7 @@ const connectors = connectorsForWallets([
     wallets: [
       metaMaskWallet(params),
       rainbowWallet(params),
-      walletConnectWallet({
-        ...params,
-        projectId: '711f14d39871ec176fc9f9303307994b',
-      }),
+      walletConnectWallet(params),
       coinbaseWallet(params),
       injectedWallet(params),
     ],

@@ -1,4 +1,4 @@
-import { MagicConnectConnector } from '@everipedia/wagmi-magic-connector'
+import { UniversalWalletConnector } from '@magiclabs/wagmi-connector'
 import { strict as assert } from 'assert'
 import { Chain, goerli, mainnet } from 'wagmi/chains'
 import MagicLogo from 'public/images/magiclogo.svg'
@@ -18,7 +18,7 @@ export const rainbowMagicConnector = ({
   const { src: iconUrl } = MagicLogo as { src: string }
 
   const createConnector = () => {
-    const connector = new MagicConnectConnector({
+    const connector = new UniversalWalletConnector({
       chains: chains,
       options: {
         apiKey: magicApiKey,
