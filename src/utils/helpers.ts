@@ -1,5 +1,4 @@
 import { SUBPAGES, lazyPayableClaimContractAddress } from '@/consts'
-import { Nft } from 'alchemy-sdk'
 import { ethers } from 'ethers'
 import { alchemy } from './configs/alchemy'
 import { ERC721LazyPayableClaimAbi } from '@/abi/ERC721LazyPayableClaim'

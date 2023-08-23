@@ -1,5 +1,5 @@
 import { ALLOCATION_INFO } from '@/consts'
-import { Box, BreakpointOverrides, Stack, Typography } from '@mui/material'
+import { BreakpointOverrides, Stack, Typography } from '@mui/material'
 import AllocationInfoStack from '../AllocationInfoStack'
 import { ContentTypes, useContentful } from '@/utils/hooks/useContentful'
 

@@ -1,11 +1,6 @@
 import React from 'react'
-import { GetStaticPropsContext } from 'next'
 import { Box, Container, Grid, Stack, Typography } from '@mui/material'
-import {
-  ContentTypes,
-  getTranslations,
-  useContentful,
-} from '@/utils/hooks/useContentful'
+import { ContentTypes, useContentful } from '@/utils/hooks/useContentful'
 import ArticleCard, { ArticleCardProps } from './ArticleCard'
 import Button from '../Button'
 import AppearingComponent from '../AppearingComponent'

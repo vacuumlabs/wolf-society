@@ -1,5 +1,4 @@
 import Hero from '@/components/landing/Hero'
-import TitleSectionText from '@/components/landing/TitleSectionText'
 import Projects from '@/components/landing/Projects'
 import {
   CollectionData,
@@ -11,7 +10,6 @@ import {
   getTranslations,
   ProjectData,
   RoadmapData,
-  useContentful,
 } from '@/utils/hooks/useContentful'
 import { Stack } from '@mui/material'
 import {

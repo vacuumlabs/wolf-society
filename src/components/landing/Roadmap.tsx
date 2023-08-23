@@ -12,35 +12,9 @@ import {
   Typography,
   useMediaQuery,
 } from '@mui/material'
-import RoadmapCard, { RoadmapCardProps } from './RoadmapCard'
+import RoadmapCard from './RoadmapCard'
 import { RoadmapDesktop } from './RoadmapDesktop'
 import { SECTIONS } from '@/consts'
-
-const MockedItem =
-  'Launch of the second Wolf Society Collection NFTs lorem ipsum'
-
-const MockedRoadmap: Omit<RoadmapCardProps, 'color'>[] = [
-  {
-    quarter: 'Q01',
-    year: '2023',
-    items: new Array(4).fill(MockedItem),
-  },
-  {
-    quarter: 'Q02',
-    year: '2023',
-    items: new Array(4).fill(MockedItem),
-  },
-  {
-    quarter: 'Q03',
-    year: '2023',
-    items: new Array(4).fill(MockedItem),
-  },
-  {
-    quarter: 'Q04',
-    year: '2023',
-    items: new Array(4).fill(MockedItem),
-  },
-]
 
 const COLOR_ORDER: string[] = [
   'secondary.main',

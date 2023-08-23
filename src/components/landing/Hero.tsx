@@ -23,7 +23,6 @@ const Hero = ({ manifestoRef }: Props) => {
   const translate = useContentful(ContentTypes.landingPage)
   const theme = useTheme()
   const displayLineBreak = useMediaQuery(theme.breakpoints.up(528))
-  const isMobile = useMediaQuery(theme.breakpoints.down('tabletM'))
 
   return (
     <Box sx={{ bgcolor: 'neutral.400' }}>

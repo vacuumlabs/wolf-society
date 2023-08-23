@@ -44,7 +44,7 @@ const NftCard = ({
   hideMintedIfOwned,
   limitHeight = true,
 }: NftCardProps) => {
-  const { totalSupply, name, priceInEth, image } = nftData
+  const { totalSupply, name, priceInEth } = nftData
   const translate = useContentful(ContentTypes.common)
   const translateNftDetail = useContentful(ContentTypes.nftDetail)
   const breakpoint: keyof BreakpointOverrides = 'desktopS'

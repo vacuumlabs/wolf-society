@@ -7,6 +7,6 @@ const Link = styled(({ children, ...props }: LinkProps) => {
       {children}
     </MuiLink>
   )
-})<LinkProps>(({ theme }) => ({}))
+})<LinkProps>(() => ({}))
 
 export default Link

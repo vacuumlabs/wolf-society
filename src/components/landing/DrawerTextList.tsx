@@ -4,7 +4,6 @@ import {
   Divider,
   List,
   ListItem,
-  Typography,
 } from '@mui/material'
 import TypographyWithTooltips from '../TypographyWithTooltips'
 

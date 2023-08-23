@@ -15,14 +15,11 @@ import {
 } from '@mui/material'
 import { useState, useEffect, forwardRef } from 'react'
 import { ParallaxProvider } from 'react-scroll-parallax'
-import AppearingComponent from '../AppearingComponent'
 import { Countdown } from '../Countdown'
 import ScrollingCard from '../ScrollingCard'
 import ArtistCard from './ArtistCard'
 import NftCardArtImpact from './NftCardArtImpact'
-import Button from '../Button'
 import { ArtistCardMobile } from './ArtistCardMobile'
-import { BigNumber, ethers } from 'ethers'
 import { NFTDataWithOwnership } from '@/utils/hooks/useGetNftDataWithOwnership'
 import dynamic from 'next/dynamic'
 import { getCollectionShareableContent } from '@/utils/sharing'
@@ -58,19 +55,11 @@ const Collection = forwardRef<HTMLElement, Props>((props, ref) => {
   const [countdownOrPieces, setCountdownOrPieces] = useState<React.ReactNode>()
   const locale = useLocale()
   const translateCommon = useContentful(ContentTypes.common)
-  const translateCollection = useContentful(ContentTypes.collectionsPage)
   const isMobile = useMediaQuery((theme: Theme) =>
     theme.breakpoints.down('tabletS')
   )
 
   const breakpoint: keyof BreakpointOverrides = 'tabletM'
-
-  const collectionEthPrice = ethers.utils.formatEther(
-    nftData.reduce(
-      (acc, nft) => acc.add(ethers.utils.parseEther(nft.priceInEth.toString())),
-      BigNumber.from(0)
-    ) ?? 0
-  )
 
   const [artistName, setArtistName] = useState<string | undefined>(
     nftData[0]?.artist.fields.artistName

@@ -16,12 +16,9 @@ import { NFTUsage, NFTUsageProps } from './NFTUsage'
 import { NFTBuy } from './NFTBuy'
 import { useRef, useState } from 'react'
 import { NFTDividerLine } from './NFTDividerLine'
-import { NFTAllocation } from './NFTAllocation'
 import { OnScreen } from '@/components/OnScreen'
 import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
 import { NFTDataWithOwnership } from '@/utils/hooks/useGetNftDataWithOwnership'
-import { useAccount } from 'wagmi'
-import { LaunchAppButton } from '../LaunchAppButton'
 
 export interface NFTDetailProps {
   isOpen: boolean
@@ -45,8 +42,6 @@ export const NFTDetail = ({
   )
   const [buyInView, setBuyInView] = useState(false)
   const [scrollAnimValue, setScrollAnimValue] = useState(0)
-
-  const { isConnected } = useAccount()
 
   const content = (
     <>

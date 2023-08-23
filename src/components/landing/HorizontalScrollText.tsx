@@ -1,5 +1,5 @@
-import { Box, Stack, Theme, Typography } from '@mui/material'
-import { MutableRefObject, RefObject, useEffect, useRef, useState } from 'react'
+import { Stack, Typography } from '@mui/material'
+import { RefObject, useEffect, useRef, useState } from 'react'
 import StarDelimiter from '../icons/StarDelimiter'
 
 interface HorizontalScrollTextProps {

@@ -1,13 +1,5 @@
-import { SUBPAGES } from '@/consts'
 import { ContentTypes, useContentful } from '@/utils/hooks/useContentful'
-import {
-  Box,
-  Container,
-  Stack,
-  Theme,
-  Typography,
-  useMediaQuery,
-} from '@mui/material'
+import { Box, Container, Stack, Typography } from '@mui/material'
 import TitleSectionText from '../landing/TitleSectionText'
 import Button from '../Button'
 import AppearingComponent from '../AppearingComponent'
@@ -23,9 +15,6 @@ export const TitleSection = ({ firstCollection }: Props) => {
     translate('artImpactSubtitle2'),
   ]
   const texts = [translate('artImpactText1'), translate('artImpactText2')]
-  const isMobile = useMediaQuery((theme: Theme) =>
-    theme.breakpoints.down('tabletM')
-  )
 
   return (
     <Box sx={{ backgroundColor: 'neutral.400' }}>

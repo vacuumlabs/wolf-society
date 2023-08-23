@@ -1,4 +1,4 @@
-import { Box, Stack, Typography } from '@mui/material'
+import { Stack, Typography } from '@mui/material'
 import Image, { StaticImageData } from 'next/image'
 import TypographyWithTooltips from './TypographyWithTooltips'
 
