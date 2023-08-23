@@ -211,7 +211,7 @@ const ProjectCard = ({
                 </Box>
               </>
             )}
-            <Link href={SUBPAGES['collections']} passHref>
+            <Link href={SUBPAGES.collections} passHref>
               <Button fullWidth>{translateCommon('makeImpactButton')}</Button>
             </Link>
           </Stack>

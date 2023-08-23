@@ -21,7 +21,7 @@ import {
 } from '@/utils/hooks/useGetStoredPurchasedNfts'
 import { Stack } from '@mui/material'
 import { GetStaticProps, GetStaticPropsContext } from 'next'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useAccount } from 'wagmi'
 import { enqueueSnackbar } from 'notistack'
 import { useRouter } from 'next/router'
@@ -48,7 +48,7 @@ export const Account = ({ collectionsData, nftData, tasksData }: Props) => {
   )
 
   useEffect(() => {
-    if (isConnected === false) {
+    if (!isConnected) {
       router.push('/')
     }
   }, [isConnected])
@@ -57,7 +57,7 @@ export const Account = ({ collectionsData, nftData, tasksData }: Props) => {
     if (doneFetching) {
       return
     }
-    const hasUnstoredNfts = (unstoredNfts || []).length > 0
+    const hasUnstoredNfts = !!unstoredNfts?.length
 
     setDialogOpen(hasUnstoredNfts)
     if (hasUnstoredNfts) {
@@ -80,7 +80,10 @@ export const Account = ({ collectionsData, nftData, tasksData }: Props) => {
     fetchBalance(address)
   }, [address, refetch])
 
-  const refetchGameTokens = () => setRefetch(refetch + 1)
+  const refetchGameTokens = useCallback(
+    () => setRefetch((value) => value + 1),
+    []
+  )
 
   const postToApi = async ({ tokenAddress, tokenId }: StoredNftData) => {
     const data = {
@@ -118,20 +121,19 @@ export const Account = ({ collectionsData, nftData, tasksData }: Props) => {
     }
 
     // Should never happen
-    if (unstoredNfts == null || unstoredNfts.length < 0) {
+    if (unstoredNfts == null) {
       setDialogOpen(false)
       refetchGameTokens()
       return
     }
 
     const response = await postToApi(unstoredNfts[0])
-    const responseSuccess =
-      response != null && 'status' in response && response.status === 200
+    const responseSuccess = 'status' in response && response.status === 200
 
     if (!responseSuccess) {
       const errorMessage =
         'message' in response
-          ? (response.message as string)
+          ? response.message
           : translateCommon('genericErrorMessage')
       enqueueSnackbar(errorMessage, {
         variant: 'error',
@@ -149,7 +151,7 @@ export const Account = ({ collectionsData, nftData, tasksData }: Props) => {
   return (
     <RefetchTokensContext.Provider value={refetchGameTokens}>
       <Stack mt={10}>
-        <ContributionAndRewards {...{ gameTokens }} />
+        <ContributionAndRewards gameTokens={gameTokens} />
         <ArtworksAndCollections
           collectionsData={collectionsData}
           nftsData={nftData}
@@ -161,7 +163,7 @@ export const Account = ({ collectionsData, nftData, tasksData }: Props) => {
   )
 }
 
-export const getStaticProps: GetStaticProps<{}> = async ({
+export const getStaticProps: GetStaticProps<object> = async ({
   locale,
 }: GetStaticPropsContext) => {
   return {

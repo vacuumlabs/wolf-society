@@ -26,12 +26,13 @@ export default async function handler(
   res: NextApiResponse<ResponseData>
 ) {
   if (req.method !== 'POST') {
-    return res.status(405).json({
+    res.status(405).json({
       message: 'Bad HTTP method.',
     })
+    return
   }
 
-  const { data, signature }: RequestData = req.body
+  const { data, signature } = req.body as RequestData
   const { eth_address, token_address, token_id } = data
 
   const verification = await verifyMessage({
@@ -40,17 +41,19 @@ export default async function handler(
     signature,
   })
 
-  if (verification !== true) {
-    return res.status(403).json({
+  if (!verification) {
+    res.status(403).json({
       message: "Message signature doesn't match.",
     })
+    return
   }
 
   const ourNfts = await getNfts()
   if (!ourNfts) {
-    return res.status(500).json({
+    res.status(500).json({
       message: 'Error getting NFT data from CMS.',
     })
+    return
   }
 
   const isProvidedNftOurs = ourNfts.some(
@@ -59,9 +62,10 @@ export default async function handler(
   )
 
   if (!isProvidedNftOurs) {
-    return res.status(422).json({
+    res.status(422).json({
       message: "Provided Token Address doesn't match a Wolf Society NFT.",
     })
+    return
   }
 
   const ownedNftsForGivenTokenAddress = await alchemy.nft.getNftsForOwner(
@@ -72,9 +76,10 @@ export default async function handler(
   )
 
   if (ownedNftsForGivenTokenAddress.totalCount < 1) {
-    return res.status(422).json({
+    res.status(422).json({
       message: 'Provided NFT not owned (address mismatch).',
     })
+    return
   }
 
   const specificNft = ownedNftsForGivenTokenAddress.ownedNfts.find(
@@ -82,23 +87,33 @@ export default async function handler(
   )
 
   if (specificNft == null) {
-    return res.status(422).json({
+    res.status(422).json({
       message: 'Provided NFT not owned (id mismatch).',
     })
+    return
   }
 
   // Must be != null due to earlier check
   const nftPrice = ourNfts.find(
     (it) => it.tokenAddress?.toLowerCase() === token_address.toLowerCase()
-  )!.priceInEth
+  )?.priceInEth
+
+  if (nftPrice == null) {
+    res.status(500).json({
+      message: "Couldn't find token by address",
+    })
+    return
+  }
+
   const tokensToAward = Math.floor(nftPrice * 1000)
 
   const userSaved = await saveUserIfNotSaved(db, eth_address)
 
   if (!userSaved) {
-    return res.status(500).json({
+    res.status(500).json({
       message: 'Error saving user.',
     })
+    return
   }
 
   // Award tokens
@@ -113,12 +128,13 @@ export default async function handler(
       .execute()
   } catch (error) {
     if ((error as any).code === POSTGRES_KEY_ALREADY_EXISTS_ERROR_CODE) {
-      return res.status(500).json({
+      res.status(500).json({
         message: 'Tokens for NFT purchase can only be claimed once!',
       })
+      return
     }
 
-    return res.status(500).json({
+    res.status(500).json({
       message: 'Error saving NFT purchase.',
     })
   }
@@ -132,12 +148,13 @@ export default async function handler(
       .where('eth_address', '=', eth_address)
       .execute()
   } catch (error) {
-    return res.status(500).json({
+    res.status(500).json({
       message: 'Error crediting tokens for NFT purchase.',
     })
+    return
   }
 
-  return res.json({
+  res.json({
     message: 'success',
   })
 }

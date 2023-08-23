@@ -46,7 +46,7 @@ const Hero = ({ manifestoRef }: Props) => {
                 underline="hover"
                 sx={{ cursor: 'pointer' }}
                 onClick={() => {
-                  manifestoRef?.current?.scrollIntoView({ behavior: 'smooth' })
+                  manifestoRef.current?.scrollIntoView({ behavior: 'smooth' })
                 }}
               >
                 {} {translate('youAreWolfSociety')}
@@ -54,7 +54,7 @@ const Hero = ({ manifestoRef }: Props) => {
             </Typography>
             <Stack sx={{ alignItems: 'center' }}>
               <NextLink
-                href={SUBPAGES['collections']}
+                href={SUBPAGES.collections}
                 passHref
                 style={{ lineHeight: 0 }}
               >

@@ -33,7 +33,7 @@ const genMarkdownParser = (toFront: boolean, toBack: boolean) => {
 const parseText = (
   text: string,
   key: React.Key
-): React.ReactElement<any, any> | string => {
+): React.ReactElement | string => {
   const foundTooltipArray = text.match(tooltipCustomMarkdownRegex)
   if (foundTooltipArray == null) {
     return (
@@ -130,7 +130,7 @@ const parseText = (
     </Tooltip>
   ))
 
-  let joined: JSX.Element[] = []
+  const joined: JSX.Element[] = []
   for (
     let i = 0, j = 0;
     i < normalTexts.length || j < tooltippedTexts.length;

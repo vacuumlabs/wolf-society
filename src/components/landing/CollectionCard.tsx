@@ -49,7 +49,7 @@ const CollectionCard = ({
   const theme = useTheme()
   const displayHorizontally = useMediaQuery(theme.breakpoints.up('tabletM'))
   const nameFormatted = name.replaceAll(' ', '\n')
-  const href = `${SUBPAGES['collections']}#${id}`
+  const href = `${SUBPAGES.collections}#${id}`
 
   useEffect(() => {
     setCountdownOrPieces(

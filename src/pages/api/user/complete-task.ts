@@ -27,19 +27,21 @@ export default async function handler(
   res: NextApiResponse<ResponseData>
 ) {
   if (req.method !== 'POST') {
-    return res.status(405).json({
+    res.status(405).json({
       message: 'Bad HTTP method.',
     })
+    return
   }
 
-  const { data, signature }: RequestData = req.body
+  const { data, signature } = req.body as RequestData
   if (
     data.task_group_name === nftTestnetSmartContractAddress &&
     process.env.NEXT_PUBLIC_TESTNET !== 'true'
   ) {
-    return res.status(400).json({
+    res.status(400).json({
       message: 'This task is completable only on testnet.',
     })
+    return
   }
 
   const verification = await verifyMessage({
@@ -48,10 +50,11 @@ export default async function handler(
     signature,
   })
 
-  if (verification !== true) {
-    return res.status(403).json({
+  if (!verification) {
+    res.status(403).json({
       message: "Message signature doesn't match.",
     })
+    return
   }
 
   try {
@@ -63,22 +66,25 @@ export default async function handler(
       .executeTakeFirst()
 
     if (isTaskActive == null || !isTaskActive.active) {
-      return res.status(400).json({
+      res.status(400).json({
         message: "Can't complete inactive task!",
       })
+      return
     }
   } catch (error) {
-    return res.status(500).json({
+    res.status(500).json({
       message: 'Error checking task active status.',
     })
+    return
   }
 
   if (data.task_id === StaticTask.BUY_ALL_NFTS) {
     const nfts = await getNfts()
     if (!nfts) {
-      return res.status(500).json({
+      res.status(500).json({
         message: 'Error getting NFT data from CMS.',
       })
+      return
     }
     const collectionNfts = nfts
       .filter(
@@ -88,9 +94,10 @@ export default async function handler(
       )
       .map((nft) => nft.tokenAddress?.toLowerCase())
     if (collectionNfts.some((nft) => nft == null)) {
-      return res.status(500).json({
+      res.status(500).json({
         message: 'Not all NFTs have filled out token addresses.',
       })
+      return
     }
     const userNfts = await alchemy.nft.getNftsForOwner(data.eth_address, {
       contractAddresses: collectionNfts as string[],
@@ -104,18 +111,20 @@ export default async function handler(
         )
     )
     if (!userOwnsAllNfts) {
-      return res.status(500).json({
+      res.status(500).json({
         message: 'User does not own all NFTs from this collection.',
       })
+      return
     }
   }
 
   const userSaved = await saveUserIfNotSaved(db, data.eth_address)
 
   if (!userSaved) {
-    return res.status(500).json({
+    res.status(500).json({
       message: 'Error saving user.',
     })
+    return
   }
 
   try {
@@ -130,17 +139,19 @@ export default async function handler(
       .execute()
   } catch (error) {
     if ((error as any).code === POSTGRES_KEY_ALREADY_EXISTS_ERROR_CODE) {
-      return res.status(400).json({
+      res.status(400).json({
         message: 'Task already completed.',
       })
+      return
     }
 
-    return res.status(500).json({
+    res.status(500).json({
       message: 'Error saving user.',
     })
+    return
   }
 
-  return res.json({
+  res.json({
     message: 'success',
   })
 }

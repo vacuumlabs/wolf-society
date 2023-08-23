@@ -22,9 +22,9 @@ const Collections = ({ collectionsData }: Props) => {
   gsap.registerPlugin(ScrollTrigger)
 
   useEffect(() => {
-    let ctx = gsap.context(() => {
+    const ctx = gsap.context(() => {
       const pixelsPause = 0
-      let panels = gsap.utils.toArray('.panel')
+      const panels = gsap.utils.toArray('.panel')
       if (panels.length) {
         gsap.to(panels, {
           xPercent: -100 * (panels.length - 1),

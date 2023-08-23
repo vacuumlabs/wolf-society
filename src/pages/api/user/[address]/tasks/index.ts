@@ -20,15 +20,17 @@ export default async function handler(
   const eth_address = req.query.address
 
   if (typeof eth_address !== 'string') {
-    return res.status(400).json({
+    res.status(400).json({
       message: 'No ETH address provided.',
     })
+    return
   }
 
   if (req.method !== 'GET') {
-    return res.status(405).json({
+    res.status(405).json({
       message: 'Bad HTTP method.',
     })
+    return
   }
 
   const tasks = await db
@@ -50,7 +52,7 @@ export default async function handler(
     ])
     .execute()
 
-  return res.json({
+  res.json({
     tasks: tasks.map(
       ({ reward_amount, id, task_group_name, is_completed, active }) => ({
         id: id,

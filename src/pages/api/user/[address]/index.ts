@@ -19,15 +19,17 @@ export default async function handler(
   const eth_address = req.query.address
 
   if (typeof eth_address !== 'string') {
-    return res.status(400).json({
+    res.status(400).json({
       message: 'No ETH address provided.',
     })
+    return
   }
 
   if (req.method !== 'GET') {
-    return res.status(405).json({
+    res.status(405).json({
       message: 'Bad HTTP method.',
     })
+    return
   }
 
   const user = await db
@@ -36,7 +38,7 @@ export default async function handler(
     .where('app_user.eth_address', '=', eth_address)
     .executeTakeFirst()
 
-  return user != null
+  user != null
     ? res.json({
         address: eth_address,
         points: user.reward_points,

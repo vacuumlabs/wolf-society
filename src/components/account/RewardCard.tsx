@@ -30,9 +30,7 @@ const RewardCard = ({
     >
       <Typography variant="body2">{title}</Typography>
       <Stack direction="row" mt={10} gap="4px">
-        <Typography variant="headline">
-          {amount !== null ? amount : '...'}
-        </Typography>
+        <Typography variant="headline">{amount ?? '...'}</Typography>
         {isEthAmount && (
           <Typography
             variant="caption"

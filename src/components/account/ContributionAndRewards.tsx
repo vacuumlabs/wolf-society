@@ -76,7 +76,7 @@ export const ContributionAndRewards = ({
       amount: userContribution,
       isEthAmount: true,
       buttonText: translate('distribute'),
-      buttonAction: () => {},
+      buttonAction: () => null,
       isDisabled: true,
     },
     {
@@ -84,7 +84,7 @@ export const ContributionAndRewards = ({
       amount: '0',
       isEthAmount: true,
       buttonText: translate('claimRewards'),
-      buttonAction: () => {},
+      buttonAction: () => null,
       isDisabled: false,
     },
     {
@@ -92,7 +92,7 @@ export const ContributionAndRewards = ({
       amount: `${gameTokens ?? '...'}`,
       isEthAmount: false,
       buttonText: translate('playGame'),
-      buttonAction: () => {},
+      buttonAction: () => null,
       isDisabled: true,
     },
   ]

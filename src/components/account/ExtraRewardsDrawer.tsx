@@ -61,7 +61,7 @@ const ExtraRewardsDrawer = ({
   )
   const [completingTask, _setCompletingTask] =
     useState<TaskDataWithCompletion | null>(null)
-  const [completingTaskLast, _setCompletingTaskLast] =
+  const [_completingTaskLast, _setCompletingTaskLast] =
     useState<TaskDataWithCompletion | null>(null)
   const completingTaskRef = useRef(completingTask)
   const completingTaskLastRef = useRef(completingTask)
@@ -114,7 +114,7 @@ const ExtraRewardsDrawer = ({
     setCompletingTaskLast(completingTaskRef.current)
     setCompletingTask(null)
     const response = await postToCompleteTaskApi(task)
-    if (response && 'status' in response && response.status === 200) {
+    if ('status' in response && response.status === 200) {
       const completingTaskLastCurrent = completingTaskLastRef.current
       if (completingTaskLastCurrent) {
         completingTaskLastCurrent.isCompleted = true
@@ -164,7 +164,7 @@ const ExtraRewardsDrawer = ({
           break
       }
       const nftOrCollection = task.nftOrCollection?.fields
-      if (socialMedia && nftOrCollection) {
+      if (nftOrCollection) {
         let content
         if ('nftDesc' in nftOrCollection) {
           content = getNftShareableContent(
@@ -234,7 +234,7 @@ const ExtraRewardsDrawer = ({
   }
 
   useEffect(() => {
-    const listener = async function (event: FocusEvent) {
+    const listener = async () => {
       const completingTaskCurrent = completingTaskRef.current
       if (completingTaskCurrent != null) {
         await startCompletingTask(completingTaskCurrent)

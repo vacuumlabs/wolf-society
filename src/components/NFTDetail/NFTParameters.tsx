@@ -21,7 +21,7 @@ export const NFTParameters = ({ nftData, alignCenter }: Props) => {
         <Typography variant="caption" color="neutral.700">
           {`${translateCommon('minted')}:`}&nbsp;
         </Typography>
-        <Typography variant="caption">{`${minted ?? 0}`}</Typography>
+        <Typography variant="caption">{minted}</Typography>
         {totalSupply !== undefined && (
           <Typography variant="caption">{`/${totalSupply}`}</Typography>
         )}

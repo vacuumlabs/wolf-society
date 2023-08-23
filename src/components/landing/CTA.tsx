@@ -37,7 +37,7 @@ const CTA = () => {
     >
       <AppearingComponent>
         <Container>
-          <Link href={SUBPAGES['collections']} passHref>
+          <Link href={SUBPAGES.collections} passHref>
             <Button
               sx={{
                 borderRadius: '170px',

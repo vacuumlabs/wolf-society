@@ -31,7 +31,7 @@ const ArtImpactNft = ({ nftData }: Props) => {
   if (queriedNftImageUrl != null && !queriedNftImageUrl.startsWith('https:')) {
     queriedNftImageUrl = 'https:' + queriedNftImageUrl
   }
-  const queriedNftArtist = nft?.artist?.fields?.artistName
+  const queriedNftArtist = nft?.artist.fields.artistName
   const pageUrl = `${WEBPAGE_DOMAIN}${SUBPAGES.collections}/${nft?.id ?? ''}`
 
   return nft != null ? (

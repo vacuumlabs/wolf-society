@@ -30,10 +30,10 @@ export const useGetStoredPurchasedNfts = (
   useEffect(() => {
     const fetchStoredNfts = async (address: string) => {
       const res = await fetch(`/api/user/${address}/nfts`)
-      const { nfts, message }: ApiResponseData = await res.json()
+      const { nfts, message } = (await res.json()) as ApiResponseData
 
       if (nfts == null || message) {
-        console.error("Failed to get user's NFT purchases", message || '')
+        console.error("Failed to get user's NFT purchases", message ?? '')
         return
       }
 

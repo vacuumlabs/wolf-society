@@ -54,19 +54,18 @@ const ScrollingVideo = ({
     }
   )
 
-  useEffect(() => {
-    const size: Sizes = isDesktop ? Sizes.L : isTablet ? Sizes.M : Sizes.S
-    setAspectRatio(MEDIA_DIMENSIONS[size].w / MEDIA_DIMENSIONS[size].h)
-  }, [isTablet, isDesktop])
+  const size: Sizes = isDesktop ? Sizes.L : isTablet ? Sizes.M : Sizes.S
 
   useEffect(() => {
-    let ctx = gsap.context(() => {
+    setAspectRatio(MEDIA_DIMENSIONS[size].w / MEDIA_DIMENSIONS[size].h)
+  }, [size])
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
       const video = document.getElementById(
         `${id}-video`
       ) as HTMLVideoElement | null
       if (!video) return
-
-      const size: Sizes = isDesktop ? Sizes.L : isTablet ? Sizes.M : Sizes.S
 
       const dimension = MEDIA_DIMENSIONS[size].w
       const url = `/animations/${id}${dimension}.mp4`
@@ -75,11 +74,11 @@ const ScrollingVideo = ({
 
       if (!videosRequested.includes(size)) {
         // Preload the video
-        var xhr = new XMLHttpRequest()
+        const xhr = new XMLHttpRequest()
         xhr.open('GET', url, true)
         xhr.responseType = 'arraybuffer'
         xhr.onload = function (oEvent) {
-          var blob = new Blob([(oEvent.target as any).response], {
+          const blob = new Blob([(oEvent.target as any).response], {
             type: 'video/mp4',
           })
           video.src = URL.createObjectURL(blob)
@@ -127,7 +126,7 @@ const ScrollingVideo = ({
     }, component)
 
     return () => ctx.revert()
-  }, [isTablet, isDesktop])
+  }, [size])
 
   return (
     <Box ref={component} position="relative" sx={{ overflowY: 'hidden' }}>

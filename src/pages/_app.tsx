@@ -4,9 +4,14 @@ import React from 'react'
 import { WagmiConfig } from 'wagmi'
 import { wagmiConfig, chains } from '@/utils/configs/wagmi'
 import '@rainbow-me/rainbowkit/styles.css'
-import { createTheme, CssBaseline, ThemeProvider } from '@mui/material'
+import {
+  createTheme,
+  CssBaseline,
+  PaletteColorOptions,
+  ThemeProvider,
+} from '@mui/material'
 import Navigation from '@/components/Navigation'
-import { ContentContext } from '@/utils/hooks/useContentful'
+import { Content, ContentContext } from '@/utils/hooks/useContentful'
 import localFont from 'next/font/local'
 import Footer from '@/components/Footer'
 import { Reenie_Beanie } from 'next/font/google'
@@ -30,12 +35,12 @@ declare module '@mui/material/styles' {
     desktopL: true
   }
   interface Palette {
-    neutral: Palette['primary']
-    black: Palette['primary']
+    neutral: PaletteColor
+    black: PaletteColor
   }
   interface PaletteOptions {
-    neutral: PaletteOptions['primary']
-    black: PaletteOptions['primary']
+    neutral: PaletteColorOptions
+    black: PaletteColorOptions
   }
 
   interface PaletteColor {
@@ -466,16 +471,18 @@ theme.components = {
   },
 }
 
+const typographyDisplayDesktopMStyles = {
+  fontSize: '141px',
+  lineHeight: '128px',
+}
+
 theme.typography.display = {
   ...theme.typography.display,
   fontWeight: 600,
   fontSize: '50px',
   lineHeight: '48px',
   textTransform: 'uppercase',
-  [theme.breakpoints.up('desktopM')]: {
-    fontSize: '141px',
-    lineHeight: '128px',
-  },
+  [theme.breakpoints.up('desktopM')]: typographyDisplayDesktopMStyles,
   [theme.breakpoints.up('desktopL')]: {
     fontSize: '189px',
     lineHeight: '166px',
@@ -484,27 +491,11 @@ theme.typography.display = {
 
 theme.typography.displayM = {
   ...theme.typography.display,
-  fontSize: (
-    (theme.typography.display as any)[
-      theme.breakpoints.up('desktopM')
-    ] as React.CSSProperties
-  ).fontSize,
-  lineHeight: (
-    (theme.typography.display as any)[
-      theme.breakpoints.up('desktopM')
-    ] as React.CSSProperties
-  ).lineHeight,
+  fontSize: typographyDisplayDesktopMStyles.fontSize,
+  lineHeight: typographyDisplayDesktopMStyles.lineHeight,
   [theme.breakpoints.up('desktopL')]: {
-    fontSize: (
-      (theme.typography.display as any)[
-        theme.breakpoints.up('desktopM')
-      ] as React.CSSProperties
-    ).fontSize,
-    lineHeight: (
-      (theme.typography.display as any)[
-        theme.breakpoints.up('desktopM')
-      ] as React.CSSProperties
-    ).lineHeight,
+    fontSize: typographyDisplayDesktopMStyles.fontSize,
+    lineHeight: typographyDisplayDesktopMStyles.lineHeight,
   },
 }
 
@@ -526,8 +517,6 @@ theme.typography.headline = {
 
 theme.typography.headlineS = {
   ...theme.typography.headline,
-  fontSize: theme.typography.headline.fontSize,
-  lineHeight: theme.typography.headline.lineHeight,
   [theme.breakpoints.up('desktopM')]: {
     fontSize: theme.typography.headline.fontSize,
     lineHeight: theme.typography.headline.lineHeight,
@@ -605,9 +594,6 @@ theme.typography.body2 = {
 
 theme.typography.body2S = {
   ...theme.typography.body2,
-  fontWeight: 400,
-  fontSize: theme.typography.body2.fontSize,
-  lineHeight: theme.typography.body2.lineHeight,
   [theme.breakpoints.up('desktopM')]: {
     fontSize: theme.typography.body2.fontSize,
     lineHeight: theme.typography.body2.lineHeight,
@@ -616,7 +602,6 @@ theme.typography.body2S = {
 
 theme.typography.body2XS = {
   ...theme.typography.body2,
-  fontWeight: 400,
   fontSize: '13px',
   lineHeight: '16px',
   [theme.breakpoints.up('desktopM')]: {
@@ -682,14 +667,19 @@ const rainbowKitTheme = lightTheme({
   accentColor: theme.palette.primary.main,
 })
 
-const App = ({ Component, pageProps }: AppProps) => (
+type CustomPageProps = {
+  locale: string
+  translations: Content
+}
+
+const App = ({ Component, pageProps }: AppProps<CustomPageProps>) => (
   <WagmiConfig config={wagmiConfig}>
     <RainbowKitProvider chains={chains} theme={rainbowKitTheme}>
       <title>Wolf Society</title>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <ContentContext.Provider value={pageProps?.translations}>
-          <LocaleContext.Provider value={pageProps?.locale}>
+        <ContentContext.Provider value={pageProps.translations}>
+          <LocaleContext.Provider value={pageProps.locale}>
             <SnackbarProvider
               Components={{
                 success: Snackbar,

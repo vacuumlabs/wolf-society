@@ -321,7 +321,7 @@ export type Content = {
  * @param orderBy String parameter for the query to order results by. If you want descending order, prefix with a minus. E.g. '-fields.id'
  * @returns Array of content
  */
-export const getArrayOfContent = async <T>({
+export const getArrayOfContent = async <T extends { id: string }>({
   contentType,
   locale = 'en-US',
   orderBy,
@@ -345,10 +345,10 @@ export const getArrayOfContent = async <T>({
     'fields.locale': 'en-US',
     order: orderBy,
   })
-  const content = entriesEnglish.items.reduce((all: T[], item: any) => {
+  const content = entriesEnglish.items.reduce((all: T[], item) => {
     let fields = item.fields
     const itemLocalized = entriesLocalized.items.filter(
-      (content: any) => content.fields.id === item.fields.id
+      (content) => content.fields.id === item.fields.id
     )
     if (itemLocalized.length > 0) {
       fields = { ...fields, ...itemLocalized[0].fields }
@@ -360,7 +360,7 @@ export const getArrayOfContent = async <T>({
 
 export const getTranslations = async (
   contentType: ContentTypes,
-  locale: string = 'en-US'
+  locale = 'en-US'
 ): Promise<Partial<Content>> => {
   if (!contentful) return {}
   let result = {}
@@ -475,5 +475,5 @@ export const ContentContext = createContext<Content | undefined>(undefined)
 
 export const useContentful = <T extends ContentTypes>(contentType: T) => {
   const content = useContext(ContentContext)
-  return (key: keyof Content[T]) => content?.[contentType]?.[key] ?? key
+  return (key: keyof Content[T]) => content?.[contentType][key] ?? key
 }

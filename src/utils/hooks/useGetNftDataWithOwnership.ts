@@ -29,7 +29,7 @@ export const useGetNftDataWithOwnership = (
           owned: !!userNfts.find((userNft) => {
             return (
               userNft.contract.address.toLowerCase() ===
-              (nft.tokenAddress || '').toLowerCase()
+              (nft.tokenAddress ?? '').toLowerCase()
             )
           }),
         }

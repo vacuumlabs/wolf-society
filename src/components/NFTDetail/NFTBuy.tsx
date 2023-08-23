@@ -208,11 +208,7 @@ export const NFTBuy = ({
           <>
             <CircleButton
               label={translate('buyWithCard')}
-              disabled={
-                !isUserWalletMagic ||
-                isWalletClientLoading ||
-                instanceId == null
-              }
+              disabled={isWalletClientLoading || instanceId == null}
               onClick={() => buyNft()}
             />
             <CircleButton
