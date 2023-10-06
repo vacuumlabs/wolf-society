@@ -81,7 +81,11 @@ export default async function handler(
       })
     }
     const collectionNfts = nfts
-      .filter((nft) => nft.collection.fields.id === data.task_group_name)
+      .filter(
+        (nft) =>
+          nft.collection?.fields != null &&
+          nft.collection.fields.id === data.task_group_name
+      )
       .map((nft) => nft.tokenAddress?.toLowerCase())
     if (collectionNfts.some((nft) => nft == null)) {
       return res.status(500).json({

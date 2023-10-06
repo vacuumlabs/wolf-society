@@ -34,7 +34,9 @@ const ArtImpact = ({ collectionsData, nftData }: Props) => {
       <TitleSection firstCollection={firstCollectionRef} />
       {collectionsData.map((collection, index) => {
         const nftsInThisCollection = nftsDataWithOwnership.filter(
-          (nft) => nft.collection.fields.id === collection.id
+          (nft) =>
+            nft.collection?.fields != null &&
+            nft.collection.fields.id === collection.id
         )
 
         return (

@@ -104,7 +104,7 @@ export const ArtworksAndCollections = ({
               collectionsData={
                 collectionsData?.map((collectionData) => {
                   const collectionNfts = nftsDataWithOwnership.filter(
-                    (nft) => nft.collection.fields.id === collectionData.id
+                    (nft) => nft.collection.fields?.id === collectionData.id
                   )
                   return {
                     ...collectionData,
