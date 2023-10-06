@@ -89,7 +89,7 @@ export type NFTArtistData = {
 export type NFTData = {
   id: string
   collection: {
-    fields: CollectionData
+    fields?: CollectionData
   }
   name: string
   priceInEth: number
