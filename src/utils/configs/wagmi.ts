@@ -27,7 +27,10 @@ const connectors = connectorsForWallets([
     wallets: [
       metaMaskWallet(params),
       rainbowWallet(params),
-      walletConnectWallet(params),
+      walletConnectWallet({
+        ...params,
+        projectId: '711f14d39871ec176fc9f9303307994b',
+      }),
       coinbaseWallet(params),
       injectedWallet(params),
     ],
