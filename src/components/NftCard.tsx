@@ -163,7 +163,7 @@ const NftCard = ({
                 <Stack direction="row" justifyContent="space-between">
                   {displayCollection && (
                     <Typography variant="body2">
-                      {nftData.collection.fields.name}
+                      {nftData.collection.fields?.name}
                     </Typography>
                   )}
                   <Typography variant="body2">

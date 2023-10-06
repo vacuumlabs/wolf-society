@@ -12,7 +12,7 @@ export const NFTParameters = ({ nftData, alignCenter }: Props) => {
   const translateCommon = useContentful(ContentTypes.common)
   const { minted, totalSupply } = nftData
   const deadline =
-    nftData.collection.fields.deadline != null
+    nftData.collection.fields?.deadline != null
       ? new Date(nftData.collection.fields.deadline)
       : undefined
   return (
