@@ -1,10 +1,11 @@
 import { MagicConnectConnector } from '@everipedia/wagmi-magic-connector'
 import { goerli, mainnet } from 'wagmi/chains'
+import MagicLogo from 'public/images/magiclogo.svg'
 
 export const rainbowMagicConnector = ({ chains, appName }: any) => ({
   id: 'magic',
   name: 'Magic',
-  iconUrl: 'https://svgshare.com/i/iJK.svg',
+  iconUrl: MagicLogo.src,
   iconBackground: '#fff',
   appName: appName,
   createConnector: () => {
