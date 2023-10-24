@@ -50,13 +50,14 @@ export const SUBPAGES: {
   [key in keyof Pick<
     Content[ContentTypes.navbar],
     'about' | 'collections' | 'blog' | 'faq' | 'account'
-  >]: string
+  > & 'presale']: string
 } = {
   about: '/',
   collections: '/art-impact',
   blog: '/blog',
   faq: '/faq',
   account: '/account',
+  presale: '/presale',
 }
 
 export const SECTIONS = {
