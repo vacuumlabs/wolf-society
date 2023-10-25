@@ -4,7 +4,7 @@ import {
   GetStaticPropsContext,
   InferGetStaticPropsType,
 } from 'next'
-import { Content } from '@/utils/hooks/useContentful'
+import { Content, useContentful } from '@/utils/hooks/useContentful'
 import NextLink from 'next/link'
 import { Box, Stack, Typography } from '@mui/material'
 import { ContentTypes, getTranslations } from '@/utils/hooks/useContentful'
@@ -16,14 +16,14 @@ type Props = {
   translations: Partial<Content>
 }
 
-const Presale = ({
-  locale,
-}: InferGetStaticPropsType<typeof getStaticProps>) => {
+const Presale = ({}: Props) => {
+  const translate = useContentful(ContentTypes.presalePage)
+
   return (
     <Stack mt={10}>
       <Box sx={{ bgcolor: 'neutral.400' }}>
         <Typography variant="display" sx={{ textAlign: 'center', mt: 10 }}>
-          {'Presale NFT'}
+          {translate('title')}
         </Typography>
         <Stack sx={{ mt: 10, alignItems: 'center' }}>
           <NextLink href={'/presale'} passHref style={{ lineHeight: 0 }}>
@@ -42,7 +42,7 @@ export const getStaticProps: GetStaticProps<Props> = async ({
   return {
     // Will be passed to the page component as props
     props: {
-      translations: await getTranslations(ContentTypes.landingPage, locale),
+      translations: await getTranslations(ContentTypes.presalePage, locale),
       locale,
     },
     revalidate: 60, // In seconds

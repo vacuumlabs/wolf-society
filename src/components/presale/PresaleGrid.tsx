@@ -2,9 +2,11 @@ import React from 'react'
 import { Box, Container, Grid, Stack, Typography } from '@mui/material'
 import AppearingComponent from '../AppearingComponent'
 import PresaleCard from './PresaleCard'
+import { ContentTypes, useContentful } from '@/utils/hooks/useContentful'
 
 const PresaleGrid = ({}) => {
   const gridItems = ['lorem', 'ipsum', 'dolor', 'sit', 'amet', 'consectetur']
+  const translate = useContentful(ContentTypes.presalePage)
 
   return (
     <Box sx={{ bgcolor: 'neutral.400' }}>
@@ -16,7 +18,7 @@ const PresaleGrid = ({}) => {
           }}
         >
           <Stack spacing={5}>
-            <Typography variant="title">{'Presale lorem ipsum'}</Typography>
+            <Typography variant="title">{translate('gridTitle')}</Typography>
             <Box>
               <Grid container>
                 {gridItems.map((item) => (
