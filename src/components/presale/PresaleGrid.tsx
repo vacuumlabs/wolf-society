@@ -23,7 +23,12 @@ const PresaleGrid = ({}) => {
               <Grid container>
                 {gridItems.map((item) => (
                   <Grid item key={item} mobile={12} tabletS={6} desktopS={4}>
-                    <PresaleCard />
+                    <PresaleCard
+                      title={'Lorem ipsum dolor sit amet'}
+                      description={
+                        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum. Lorem consectetur elit amer dolor. Quisquam, voluptatum. '
+                      }
+                    />
                   </Grid>
                 ))}
               </Grid>

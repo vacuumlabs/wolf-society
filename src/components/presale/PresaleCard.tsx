@@ -8,7 +8,12 @@ import {
   Typography,
 } from '@mui/material'
 
-const PresaleCard = ({}) => {
+type PresaleCardProps = {
+  title: string
+  description: string
+}
+
+const PresaleCard = ({ title, description }: PresaleCardProps) => {
   const breakpoint: keyof BreakpointOverrides = 'desktopS'
 
   return (
@@ -43,12 +48,10 @@ const PresaleCard = ({}) => {
             justifyContent="space-between"
           >
             <Typography variant="caption" color="black">
-              {'Lorem ipsum dolor sit amet'}
+              {title}
             </Typography>
             <Typography variant="body2S" color="black">
-              {
-                'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum. Lorem consectetur elit amer dolor. Quisquam, voluptatum. '
-              }
+              {description}
             </Typography>
           </Stack>
         </CardContent>
