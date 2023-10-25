@@ -4,34 +4,29 @@ import {
   GetStaticPropsContext,
   InferGetStaticPropsType,
 } from 'next'
-import {Content} from '@/utils/hooks/useContentful'
+import { Content } from '@/utils/hooks/useContentful'
 import NextLink from 'next/link'
-import { Box, Stack, Typography } from "@mui/material"
+import { Box, Stack, Typography } from '@mui/material'
 import { ContentTypes, getTranslations } from '@/utils/hooks/useContentful'
-import PresaleGrid from "../components/presale/PresaleGrid"
-import Button from "../components/Button"
+import PresaleGrid from '../components/presale/PresaleGrid'
+import Button from '../components/Button'
 
 type Props = {
   locale: string | undefined
   translations: Partial<Content>
 }
 
-const Presale = ({locale}: InferGetStaticPropsType<typeof getStaticProps>) => {
+const Presale = ({
+  locale,
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
     <Stack mt={10}>
       <Box sx={{ bgcolor: 'neutral.400' }}>
-        <Typography
-              variant="display"
-              sx={{ px: { mobile: 0, desktopM: '190px' } }}
-          >
+        <Typography variant="display" sx={{ textAlign: 'center', mt: 10 }}>
           {'Presale NFT'}
         </Typography>
         <Stack sx={{ mt: 10, alignItems: 'center' }}>
-          <NextLink
-            href={'/presale'}
-            passHref
-            style={{ lineHeight: 0 }}
-          >
+          <NextLink href={'/presale'} passHref style={{ lineHeight: 0 }}>
             <Button>{'Buy NFT'}</Button>
           </NextLink>
         </Stack>

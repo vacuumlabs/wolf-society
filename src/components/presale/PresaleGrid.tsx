@@ -20,13 +20,7 @@ const PresaleGrid = ({}) => {
             <Box>
               <Grid container>
                 {gridItems.map((item) => (
-                  <Grid
-                    item
-                    key={item}
-                    mobile={12}
-                    tabletS={6}
-                    desktopS={4}
-                  >
+                  <Grid item key={item} mobile={12} tabletS={6} desktopS={4}>
                     <PresaleCard />
                   </Grid>
                 ))}
@@ -36,7 +30,6 @@ const PresaleGrid = ({}) => {
         </Container>
       </AppearingComponent>
     </Box>
-
   )
 }
 

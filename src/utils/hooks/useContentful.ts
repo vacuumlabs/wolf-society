@@ -194,6 +194,7 @@ export type NavbarData = {
   account: string
   discordLink: string
   twitterAccount: string
+  presale: string
 }
 
 export type CommonData = {
