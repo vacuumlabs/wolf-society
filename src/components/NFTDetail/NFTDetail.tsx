@@ -54,8 +54,6 @@ export const NFTDetail = ({
       <NFTDividerLine />
       <NFTArtist {...nftArtistProps} />
       <NFTDividerLine />
-      <NFTAllocation />
-      <NFTDividerLine />
       <NFTUsage {...nftUsageProps} />
       {!isMobile && <NFTDividerLine />}
       <NFTBuy nftData={nftData} buyInView={buyInView} className="nftBuy" />

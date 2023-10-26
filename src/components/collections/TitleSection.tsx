@@ -11,8 +11,6 @@ import {
 import TitleSectionText from '../landing/TitleSectionText'
 import Button from '../Button'
 import AppearingComponent from '../AppearingComponent'
-import Image from 'next/image'
-import makeImpactTitle from 'public/images/makeImpactTitle.png'
 
 type Props = {
   firstCollection?: React.RefObject<HTMLElement>
@@ -41,22 +39,12 @@ export const TitleSection = ({ firstCollection }: Props) => {
           }}
         >
           <AppearingComponent>
-            <Box
-              sx={{
-                alignItems: 'center',
-              }}
+            <Typography
+              variant="display"
+              sx={{ px: { mobile: 0, desktopM: '190px' } }}
             >
-              <Image
-                src={makeImpactTitle}
-                alt={'The Earth Is What We All Have in Common'}
-                style={{
-                  alignItems: 'center',
-                  width: isMobile ? '100vw' : '80vw',
-                  maxWidth: '100%',
-                  height: 'auto',
-                }}
-              />
-            </Box>
+              {translate('artImpactTitle')}
+            </Typography>
           </AppearingComponent>
           <TitleSectionText titles={titles} texts={texts} />
           <AppearingComponent>

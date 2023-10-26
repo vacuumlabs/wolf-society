@@ -225,11 +225,6 @@ const NftCard = ({
         nftUsageProps={{
           lists: [
             {
-              caption: translateNftDetail('beatTheDrumTitle'),
-              description: translateNftDetail('beatTheDrumSubtitle'),
-              texts: nftData.beatTheDrumList.split('\n'),
-            },
-            {
               caption: translateNftDetail('breadAndButterTitle'),
               description: translateNftDetail('breadAndButterSubtitle'),
               texts: nftData.breadAndButterList.split('\n'),
