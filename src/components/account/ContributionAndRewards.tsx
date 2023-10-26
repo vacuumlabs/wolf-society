@@ -3,8 +3,7 @@ import RewardCard from './RewardCard'
 import { alchemy } from '@/utils/configs/alchemy'
 import { useEffect, useState } from 'react'
 import { useAccount } from 'wagmi'
-import { AssetTransfersCategory, BigNumber } from 'alchemy-sdk'
-import { ethers } from 'ethers'
+import { AssetTransfersCategory } from 'alchemy-sdk'
 import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
 import {
   lazyPayableClaimContractAddress,
@@ -12,6 +11,7 @@ import {
   nullAddress,
 } from '@/consts'
 import AppearingComponent from '../AppearingComponent'
+import { formatEther, parseEther } from 'viem'
 
 type ContributionAndRewardsProps = {
   gameTokens: number | undefined
@@ -47,20 +47,20 @@ export const ContributionAndRewards = ({
         )
 
       const valueBN = successfulPaymentTransactionsToMintingContract.reduce(
-        (prev, curr) =>
-          prev.add(
-            curr.value !== null
-              ? ethers.utils
-                  .parseEther(curr.value.toString())
-                  .sub(manifoldTxFee)
-              : BigNumber.from(0)
-          ),
-        BigNumber.from(0)
+        (prev, { value }) => {
+          const parsedValue =
+            value == null
+              ? BigInt(0)
+              : parseEther(`${value}`) - BigInt(manifoldTxFee)
+
+          return prev + parsedValue
+        },
+        BigInt(0)
       )
 
       // Format the BN value into string with up to 5 decimal places, stripping unnecessary zeroes from the end
       const valueFormatted = parseFloat(
-        Number(ethers.utils.formatEther(valueBN)).toFixed(5)
+        Number(formatEther(valueBN)).toFixed(5)
       ).toString()
 
       setUserContribution(valueFormatted)
