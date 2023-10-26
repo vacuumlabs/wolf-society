@@ -53,3 +53,6 @@ export const isObjectWithProperty = <T extends string>(
 ): obj is Record<string, unknown> & {
   [key in T]: unknown
 } => isObject(obj) && propName in obj
+
+export const addProtocolToUrl = (url: string) =>
+  url.startsWith('//') ? `https:${url}` : url

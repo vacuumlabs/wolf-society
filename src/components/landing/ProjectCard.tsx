@@ -21,6 +21,7 @@ import TypographyWithTooltips from '../TypographyWithTooltips'
 import Link from 'next/link'
 import CardButton from '@/components/CardButton'
 import Image from 'next/image'
+import { addProtocolToUrl } from '@/utils/helpers'
 
 export type ProjectCardProps = {
   name: string
@@ -166,6 +167,20 @@ const ProjectCard = ({
           }}
         >
           <Box
+            sx={{
+              position: 'relative',
+              flexBasis: '400px',
+              flexShrink: 0,
+            }}
+          >
+            <Image
+              src={addProtocolToUrl(imageUrl)}
+              alt={name}
+              fill
+              style={{ objectFit: 'cover' }}
+            />
+          </Box>
+          <Box
             position="absolute"
             left={0}
             right={0}
@@ -177,15 +192,6 @@ const ProjectCard = ({
                 <CloseIcon />
               </IconButton>
             </Stack>
-          </Box>
-          <Box width="100%" height="400px">
-            <img
-              src={imageUrl}
-              alt={name}
-              width="100%"
-              height="100%"
-              style={{ objectFit: 'cover' }}
-            />
           </Box>
           <Stack
             pt={{ mobile: 5, tabletS: 10 }}
