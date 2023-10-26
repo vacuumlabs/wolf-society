@@ -25,6 +25,7 @@ export type NftCardProps = {
   compact?: boolean
   indicateOwnership?: boolean
   hideMintedIfOwned?: boolean
+  limitHeight?: boolean
 }
 
 const DynamicShareButton = dynamic(
@@ -41,6 +42,7 @@ const NftCard = ({
   compact,
   indicateOwnership,
   hideMintedIfOwned,
+  limitHeight = true,
 }: NftCardProps) => {
   const { totalSupply, name, priceInEth, image } = nftData
   const translate = useContentful(ContentTypes.common)
@@ -92,12 +94,12 @@ const NftCard = ({
           height: '100%',
           '& .MuiCardContent-root': {
             mobile: {},
-            [breakpoint]: { translate: '0 48px' },
-            desktopM: { translate: '0 56px' },
+            [breakpoint]: { translate: '0 0' },
           },
           '&:hover .MuiCardContent-root': {
             mobile: {},
-            [breakpoint]: { translate: '0 0' },
+            [breakpoint]: { translate: '0 -48px' },
+            desktopM: { translate: '0 -56px' },
           },
         }}
       >
@@ -107,11 +109,15 @@ const NftCard = ({
           }}
           sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
         >
-          <Box position="relative">
+          <Box position="relative" width="100%">
             <CardMedia
               component="img"
               sx={{
-                height: '100%',
+                height: limitHeight
+                  ? compact
+                    ? { mobile: '164px', [breakpoint]: '186px' }
+                    : { mobile: '342px', [breakpoint]: '404px' }
+                  : '100%',
                 opacity: !indicateOwnership || nftData.owned ? 1 : 0.2,
               }}
               image={nftData.image.fields.file.url}
@@ -156,47 +162,72 @@ const NftCard = ({
                 flexDirection: 'column',
               }}
             >
-              <Stack sx={{ p: 4, textAlign: 'start' }} gap={1}>
-                <Typography variant="caption" color="secondary">
-                  {name}
-                </Typography>
-                <Stack direction="row" justifyContent="space-between">
-                  {displayCollection && (
-                    <Typography variant="body2">
-                      {nftData.collection.fields?.name}
-                    </Typography>
-                  )}
-                  <Typography variant="body2">
-                    {nftData.artist.fields.artistName}
+              <Stack
+                sx={{
+                  textAlign: 'start',
+                  p: 4,
+                  height: { mobile: 'auto', [breakpoint]: '100%' },
+                  flexGrow: 1,
+                }}
+              >
+                <Stack
+                  sx={{
+                    gap: 3,
+                    pt: { [breakpoint]: '48px', desktopM: '56px' },
+                    justifyContent: 'space-between',
+                    flexGrow: 1,
+                  }}
+                >
+                  <Typography variant="caption" color="secondary">
+                    {name}
                   </Typography>
-                  {displayPrice && (
-                    <Stack direction="row" alignItems="center" gap={1}>
-                      <Typography variant="caption">
-                        {priceInEth} ETH
+                  <Stack direction="row" justifyContent="space-between">
+                    {displayCollection && (
+                      <Typography variant="body2">
+                        {nftData.collection.fields?.name}
                       </Typography>
-                    </Stack>
-                  )}
+                    )}
+                    <Typography variant="body2">
+                      {nftData.artist.fields.artistName}
+                    </Typography>
+                    {displayPrice && (
+                      <Stack direction="row" alignItems="center" gap={1}>
+                        <Typography variant="caption">
+                          {priceInEth} ETH
+                        </Typography>
+                      </Stack>
+                    )}
+                  </Stack>
                 </Stack>
               </Stack>
-              <Stack direction="row" gap="1px">
-                <DynamicShareButton
-                  variant="primary"
-                  sx={{
-                    height: '100%',
-                    boxShadow: 'none',
-                    backgroundColor: 'red',
-                  }}
-                  shareableContent={getNftShareableContent(
-                    translate('nftShareText'),
-                    nftData
-                  )}
-                />
-                <CardButton>
-                  <Typography variant="button">
-                    {translate('showDetails')}
-                  </Typography>
-                </CardButton>
-              </Stack>
+              <Box
+                sx={{
+                  width: '100%',
+                  position: { mobile: 'relative', [breakpoint]: 'absolute' },
+                  transition: 'translate 0.25s',
+                  left: 0,
+                }}
+              >
+                <Stack direction="row" gap="1px">
+                  <DynamicShareButton
+                    variant="primary"
+                    sx={{
+                      height: '100%',
+                      boxShadow: 'none',
+                      backgroundColor: 'red',
+                    }}
+                    shareableContent={getNftShareableContent(
+                      translate('nftShareText'),
+                      nftData
+                    )}
+                  />
+                  <CardButton>
+                    <Typography variant="button">
+                      {translate('showDetails')}
+                    </Typography>
+                  </CardButton>
+                </Stack>
+              </Box>
             </CardContent>
           )}
         </CardActionArea>
