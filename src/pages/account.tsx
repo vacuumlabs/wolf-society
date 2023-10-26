@@ -25,7 +25,7 @@ import { useAccount } from 'wagmi'
 import { enqueueSnackbar } from 'notistack'
 import { useRouter } from 'next/router'
 import { signMessage } from '@/utils/wallet'
-import { GetUserResponseData } from './api/user/[address]'
+import type { GetUserResponseData } from './api/user/[address]'
 
 type Props = {
   translations: Partial<Content>

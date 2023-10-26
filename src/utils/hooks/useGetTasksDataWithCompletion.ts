@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useAccount } from 'wagmi'
 import { TaskData } from './useContentful'
 import { TASKS_GROUP_NAME_SITEWIDE } from '@/consts'
-import { GetTasksResponseData } from '@/pages/api/user/[address]/tasks'
+import type { GetTasksResponseData } from '@/pages/api/user/[address]/tasks'
 
 export type TaskDataWithCompletion = TaskData & {
   isCompleted: boolean

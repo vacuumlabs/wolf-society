@@ -3,7 +3,7 @@ import { useAccount } from 'wagmi'
 import { NFTData } from './useContentful'
 import { useGetNfts } from './useGetNfts'
 import { isNotNull } from '../helpers'
-import {
+import type {
   GetNftsResponseData,
   GetNftsSuccessResponseData,
 } from '@/pages/api/user/[address]/nfts'
