@@ -30,6 +30,9 @@ const Newsletter = () => {
       body: JSON.stringify({
         email: inputValue,
       }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
     })
     enqueueSnackbar(
       translate(
