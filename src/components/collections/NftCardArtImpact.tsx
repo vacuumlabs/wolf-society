@@ -29,7 +29,7 @@ const NftCardArtImpact = ({
           mb: { mobile: '0', tabletM: isLast ? 'calc(100vh - 80px)' : '130vh' },
         }}
       >
-        <NftCard {...nftCardProps} displayPrice />
+        <NftCard {...nftCardProps} displayPrice limitHeight={false} />
       </Box>
       <OnScreen
         selector={`.nftCard${nftCardProps.nftData.id}`}
