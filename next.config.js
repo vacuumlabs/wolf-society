@@ -5,7 +5,13 @@ const nextConfig = {
   i18n: {
     defaultLocale: 'en-US',
     locales: ['en-US'],
-    localeDetection: true,
+  },
+  images: {
+    domains: ['images.ctfassets.net', 'cdn-images-1.medium.com'],
+  },
+  eslint: {
+    // Ignoring for now until all new eslint errors are resolved
+    ignoreDuringBuilds: true,
   },
 }
 

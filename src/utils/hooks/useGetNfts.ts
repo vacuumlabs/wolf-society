@@ -23,6 +23,7 @@ export const useGetNfts = (
     } else {
       setNfts([])
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userAddress, JSON.stringify(nftsAddresses)])
 
   return nfts

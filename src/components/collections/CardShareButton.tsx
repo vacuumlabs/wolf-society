@@ -83,7 +83,7 @@ export const CardShareButton = ({
                 onClick={(e) => {
                   e.stopPropagation()
                 }}
-                onClose={(e) => {
+                onClose={() => {
                   setIsOpen(false)
                 }}
                 disableScrollLock={true}

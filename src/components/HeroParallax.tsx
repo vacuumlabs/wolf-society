@@ -118,6 +118,7 @@ const HeroParallax = () => {
         >
           <Image
             src={peopleImage}
+            priority
             alt="People image"
             style={{
               width: '59vw',

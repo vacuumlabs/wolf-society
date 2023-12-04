@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { NFTData } from './useContentful'
 import { useGetNfts } from './useGetNfts'
 import { useAccount } from 'wagmi'
+import { isNotNull } from '../helpers'
 
 export type NFTDataWithOwnership = NFTData & { owned: boolean }
 
@@ -10,30 +11,23 @@ export const useGetNftDataWithOwnership = (
 ): NFTDataWithOwnership[] => {
   const [nftsDataWithOwnership, setNftsDataWithOwnership] = useState<
     NFTDataWithOwnership[]
-  >(
-    nftsData?.map((nftData) => {
-      return { ...nftData, owned: false }
-    }) ?? []
-  )
+  >(nftsData?.map((nftData) => ({ ...nftData, owned: false })) ?? [])
+
   const userAccount = useAccount()
-  const nftsAddresses = (nftsData
-    ?.map((nftData) => nftData.tokenAddress)
-    ?.filter((address) => address != null) ?? []) as `0x${string}`[]
+  const nftsAddresses =
+    nftsData?.map((nftData) => nftData.tokenAddress)?.filter(isNotNull) ?? []
   const userNfts = useGetNfts(userAccount.address, nftsAddresses)
 
   useEffect(() => {
     setNftsDataWithOwnership(
-      nftsData?.map((nft) => {
-        return {
-          ...nft,
-          owned: !!userNfts.find((userNft) => {
-            return (
-              userNft.contract.address.toLowerCase() ===
-              (nft.tokenAddress || '').toLowerCase()
-            )
-          }),
-        }
-      }) ?? []
+      nftsData?.map((nft) => ({
+        ...nft,
+        owned: !!userNfts.find(
+          (userNft) =>
+            userNft.contract.address.toLowerCase() ===
+            (nft.tokenAddress ?? '').toLowerCase()
+        ),
+      })) ?? []
     )
   }, [userNfts, nftsData])
 

@@ -13,16 +13,13 @@ import {
   Typography,
   useMediaQuery,
 } from '@mui/material'
-import { useState, useEffect, forwardRef } from 'react'
+import { useState, forwardRef, useCallback } from 'react'
 import { ParallaxProvider } from 'react-scroll-parallax'
-import AppearingComponent from '../AppearingComponent'
 import { Countdown } from '../Countdown'
 import ScrollingCard from '../ScrollingCard'
 import ArtistCard from './ArtistCard'
 import NftCardArtImpact from './NftCardArtImpact'
-import Button from '../Button'
 import { ArtistCardMobile } from './ArtistCardMobile'
-import { BigNumber, ethers } from 'ethers'
 import { NFTDataWithOwnership } from '@/utils/hooks/useGetNftDataWithOwnership'
 import dynamic from 'next/dynamic'
 import { getCollectionShareableContent } from '@/utils/sharing'
@@ -55,22 +52,13 @@ const Collection = forwardRef<HTMLElement, Props>((props, ref) => {
     nftData,
   } = props
   const [pointerOverNft, setPointerOverNft] = useState(false)
-  const [countdownOrPieces, setCountdownOrPieces] = useState<React.ReactNode>()
   const locale = useLocale()
   const translateCommon = useContentful(ContentTypes.common)
-  const translateCollection = useContentful(ContentTypes.collectionsPage)
   const isMobile = useMediaQuery((theme: Theme) =>
     theme.breakpoints.down('tabletS')
   )
 
   const breakpoint: keyof BreakpointOverrides = 'tabletM'
-
-  const collectionEthPrice = ethers.utils.formatEther(
-    nftData.reduce(
-      (acc, nft) => acc.add(ethers.utils.parseEther(nft.priceInEth.toString())),
-      BigNumber.from(0)
-    ) ?? 0
-  )
 
   const [artistName, setArtistName] = useState<string | undefined>(
     nftData[0]?.artist.fields.artistName
@@ -83,21 +71,11 @@ const Collection = forwardRef<HTMLElement, Props>((props, ref) => {
     nftData[0]?.artist.fields.artistMotto
   )
 
-  useEffect(() => {
-    setCountdownOrPieces(
-      deadline !== undefined ? (
-        <Countdown deadline={deadline} />
-      ) : (
-        `${numberOfPieces?.toLocaleString(locale)} ${translateCommon('pieces')}`
-      )
-    )
-  }, [])
-
-  const handleChangeArtist = (nft: NFTData) => {
+  const handleChangeArtist = useCallback((nft: NFTData) => {
     setArtistName(nft.artist.fields.artistName)
     setArtistImage(nft.artist.fields.artistImage.fields.file.url)
     setArtistMotto(nft.artist.fields.artistMotto)
-  }
+  }, [])
 
   return (
     <Box sx={{ bgcolor: color, textAlign: 'center' }} id={id} ref={ref}>
@@ -115,7 +93,13 @@ const Collection = forwardRef<HTMLElement, Props>((props, ref) => {
                 {subtitle}:
               </Typography>
               <Typography variant="caption" color="neutral.400">
-                {countdownOrPieces}
+                {deadline != null ? (
+                  <Countdown deadline={deadline} />
+                ) : (
+                  `${numberOfPieces?.toLocaleString(locale)} ${translateCommon(
+                    'pieces'
+                  )}`
+                )}
               </Typography>
             </Stack>
             <Typography variant="display" color="neutral.main">
@@ -172,13 +156,8 @@ const Collection = forwardRef<HTMLElement, Props>((props, ref) => {
                 />
                 <ScrollingCard index={index}>
                   <NftCardArtImpact
-                    nftCardProps={{
-                      minted: nft.minted,
-                      nftData: nft,
-                    }}
-                    changeArtist={() => {
-                      handleChangeArtist(nft)
-                    }}
+                    nftData={nft}
+                    changeArtist={handleChangeArtist}
                     isLast={index === nftData.length - 1}
                     setPointerOver={setPointerOverNft}
                   />
@@ -191,6 +170,7 @@ const Collection = forwardRef<HTMLElement, Props>((props, ref) => {
     </Box>
   )
 })
+
 Collection.displayName = 'Collection'
 
 export default Collection

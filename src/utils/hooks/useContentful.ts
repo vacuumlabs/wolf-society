@@ -1,8 +1,13 @@
 import { Asset } from 'contentful'
-import { createContext, useContext } from 'react'
+import { createContext, useCallback, useContext } from 'react'
 import contentful from '../configs/contentful'
 import { getNftMintedAmount } from '../helpers'
-import { nftTestnetInstanceId, nftTestnetSmartContractAddress } from '@/consts'
+import {
+  StaticTask,
+  nftTestnetInstanceId,
+  nftTestnetSmartContractAddress,
+} from '@/consts'
+import { Address } from 'wagmi'
 
 export enum ContentTypes {
   navbar = 'navbar',
@@ -31,7 +36,7 @@ export type ProjectData = {
   location: string
   project: string
   timeFrame: string
-  partnerLogo: Asset
+  partnerLogo?: Asset
 }
 
 export type RoadmapData = {
@@ -103,14 +108,14 @@ export type NFTData = {
   beatTheDrumList: string
   breadAndButterList: string
   minted: number
-  tokenAddress?: `0x${string}`
+  tokenAddress?: Address
   manifoldLink?: string
   instanceId?: number
 }
 
 export type TaskData = {
   id: string
-  databaseId: number
+  databaseId: StaticTask
   text: string
   taskText:
     | 'buyAllNfts'
@@ -321,7 +326,7 @@ export type Content = {
  * @param orderBy String parameter for the query to order results by. If you want descending order, prefix with a minus. E.g. '-fields.id'
  * @returns Array of content
  */
-export const getArrayOfContent = async <T>({
+export const getArrayOfContent = async <T extends { id: string }>({
   contentType,
   locale = 'en-US',
   orderBy,
@@ -330,7 +335,7 @@ export const getArrayOfContent = async <T>({
   contentType: ContentTypes
   locale?: string
   orderBy?: string
-  query?: any
+  query?: object
 }): Promise<T[] | null> => {
   if (!contentful) return null
   const entriesLocalized = await contentful.getEntries<T>({
@@ -345,10 +350,10 @@ export const getArrayOfContent = async <T>({
     'fields.locale': 'en-US',
     order: orderBy,
   })
-  const content = entriesEnglish.items.reduce((all: T[], item: any) => {
+  const content = entriesEnglish.items.reduce((all: T[], item) => {
     let fields = item.fields
     const itemLocalized = entriesLocalized.items.filter(
-      (content: any) => content.fields.id === item.fields.id
+      (content) => content.fields.id === item.fields.id
     )
     if (itemLocalized.length > 0) {
       fields = { ...fields, ...itemLocalized[0].fields }
@@ -360,27 +365,28 @@ export const getArrayOfContent = async <T>({
 
 export const getTranslations = async (
   contentType: ContentTypes,
-  locale: string = 'en-US'
+  locale = 'en-US'
 ): Promise<Partial<Content>> => {
   if (!contentful) return {}
   let result = {}
   for (const contType of SHARED_CONTENT.concat(contentType)) {
-    const entriesLocalized = await contentful.getEntries({
-      content_type: contType,
-      'fields.locale': locale,
-    })
-    const entriesEnglish = await contentful.getEntries({
+    const entriesLocalized = await contentful.getEntries<Content[ContentTypes]>(
+      {
+        content_type: contType,
+        'fields.locale': locale,
+      }
+    )
+    const entriesEnglish = await contentful.getEntries<Content[ContentTypes]>({
       content_type: contType,
       'fields.locale': 'en-US',
     })
-    const contentLocalized = entriesLocalized.items.reduce(
-      (all: Partial<Content>, item: any) => ({ ...all, ...item.fields }),
-      {}
-    )
-    const contentEnglish = entriesEnglish.items.reduce(
-      (all: Partial<Content>, item: any) => ({ ...all, ...item.fields }),
-      {}
-    )
+    const contentLocalized = entriesLocalized.items.reduce<
+      Partial<Content[ContentTypes]>
+    >((all, item) => ({ ...all, ...item.fields }), {})
+    const contentEnglish = entriesEnglish.items.reduce<
+      Partial<Content[ContentTypes]>
+    >((all, item) => ({ ...all, ...item.fields }), {})
+
     result = {
       ...result,
       [contType]: { ...contentEnglish, ...contentLocalized },
@@ -475,5 +481,9 @@ export const ContentContext = createContext<Content | undefined>(undefined)
 
 export const useContentful = <T extends ContentTypes>(contentType: T) => {
   const content = useContext(ContentContext)
-  return (key: keyof Content[T]) => content?.[contentType]?.[key] ?? key
+
+  return useCallback(
+    (key: keyof Content[T]) => content?.[contentType][key] ?? key,
+    [content, contentType]
+  )
 }

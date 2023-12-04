@@ -8,12 +8,8 @@ import {
   Typography,
   Grid,
   BreakpointOverrides,
-  Theme,
-  useMediaQuery,
 } from '@mui/material'
-import Image from 'next/image'
 import { useRouter } from 'next/router'
-import heroImage from 'public/images/hero.png'
 import AppearingComponent from './AppearingComponent'
 import HeroParallax from './HeroParallax'
 import DiscordIcon from './icons/DiscordIcon'
@@ -27,9 +23,6 @@ const Footer = () => {
   const translate = useContentful(ContentTypes.navbar)
   const router = useRouter()
   const breakpoint: keyof BreakpointOverrides = 'tabletM'
-  const isMobileHero = useMediaQuery((theme: Theme) =>
-    theme.breakpoints.down('tabletS')
-  )
 
   const socials: { text: string; href: string; icon: React.ReactNode }[] = [
     {

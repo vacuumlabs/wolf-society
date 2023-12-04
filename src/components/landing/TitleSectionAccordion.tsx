@@ -1,6 +1,5 @@
 import { Accordion, AccordionSummary, Theme, Typography } from '@mui/material'
 import PlusIcon24 from '../icons/PlusIcon24'
-import { useState } from 'react'
 import { Colors } from './TitleSectionText'
 
 export type TitleTextAccordionProps = {
@@ -19,7 +18,6 @@ export const TitleSectionAccordion = ({
   colors,
 }: TitleTextAccordionProps) => {
   const expandIcon = <PlusIcon24 sx={{ color: colors.main }} />
-  const isExpanded = useState<number>(0)
 
   return (
     <Accordion

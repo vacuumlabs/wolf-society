@@ -1,5 +1,4 @@
 import CTA from '@/components/landing/CTA'
-import Partners from '@/components/landing/Partners'
 import Questions from '@/components/faq/Questions'
 import {
   ContentTypes,

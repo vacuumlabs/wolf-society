@@ -1,14 +1,12 @@
 import { useEffect } from 'react'
 
-type OnScreenProps = {
-  setIntersecting: (arg0: boolean) => void
-  selector: string
-}
-
-export const OnScreen = ({ setIntersecting, selector }: OnScreenProps) => {
+export const useIntersectionObserver = (
+  selector: string,
+  onIntersection: (isIntersecting: boolean) => void
+) =>
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => setIntersecting(entry.isIntersecting),
+      ([entry]) => onIntersection(entry.isIntersecting),
       { root: null, rootMargin: '0px', threshold: 0 }
     )
 
@@ -21,7 +19,4 @@ export const OnScreen = ({ setIntersecting, selector }: OnScreenProps) => {
     return () => {
       observer.disconnect()
     }
-  }, [])
-
-  return null
-}
+  }, [selector, onIntersection])

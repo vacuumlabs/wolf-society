@@ -26,7 +26,7 @@ const VariantIcons: Partial<Record<VariantType, React.ReactNode>> = {
 }
 
 const Snackbar = forwardRef<HTMLDivElement, CustomContentProps>(
-  ({ id, ...props }, ref) => {
+  (props, ref) => {
     return (
       <SnackbarContent ref={ref}>
         <Card

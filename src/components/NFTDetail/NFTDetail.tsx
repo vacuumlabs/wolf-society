@@ -14,14 +14,11 @@ import { NFTArtist, NFTArtistProps } from './NFTArtist'
 import CloseIcon from '../icons/CloseIcon'
 import { NFTUsage, NFTUsageProps } from './NFTUsage'
 import { NFTBuy } from './NFTBuy'
-import { useRef, useState } from 'react'
+import { PropsWithChildren, useRef, useState } from 'react'
 import { NFTDividerLine } from './NFTDividerLine'
-import { NFTAllocation } from './NFTAllocation'
-import { OnScreen } from '@/components/OnScreen'
 import { useContentful, ContentTypes } from '@/utils/hooks/useContentful'
 import { NFTDataWithOwnership } from '@/utils/hooks/useGetNftDataWithOwnership'
-import { useAccount } from 'wagmi'
-import { LaunchAppButton } from '../LaunchAppButton'
+import { useIntersectionObserver } from '@/utils/hooks/useIntersectionObserver'
 
 export interface NFTDetailProps {
   isOpen: boolean
@@ -46,9 +43,9 @@ export const NFTDetail = ({
   const [buyInView, setBuyInView] = useState(false)
   const [scrollAnimValue, setScrollAnimValue] = useState(0)
 
-  const { isConnected } = useAccount()
+  useIntersectionObserver('.nftBuy', setBuyInView)
 
-  const content = (
+  const content: React.ReactElement<PropsWithChildren> = (
     <>
       <NFTDescription nftData={nftData} />
       <NFTDividerLine />
@@ -59,6 +56,7 @@ export const NFTDetail = ({
       <NFTBuy nftData={nftData} buyInView={buyInView} className="nftBuy" />
     </>
   )
+
   return (
     <Drawer
       anchor="right"
@@ -122,7 +120,7 @@ export const NFTDetail = ({
             onClick={() => {
               if (isMobile) {
                 drawerPaperRef.current?.scrollTo({
-                  top: drawerPaperRef.current?.scrollHeight,
+                  top: drawerPaperRef.current.scrollHeight,
                   behavior: 'smooth',
                 })
               } else {
@@ -156,7 +154,6 @@ export const NFTDetail = ({
           </Button>
         </Box>
       )}
-      <OnScreen selector=".nftBuy" setIntersecting={setBuyInView} />
     </Drawer>
   )
 }

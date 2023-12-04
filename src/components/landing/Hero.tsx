@@ -23,7 +23,6 @@ const Hero = ({ manifestoRef }: Props) => {
   const translate = useContentful(ContentTypes.landingPage)
   const theme = useTheme()
   const displayLineBreak = useMediaQuery(theme.breakpoints.up(528))
-  const isMobile = useMediaQuery(theme.breakpoints.down('tabletM'))
 
   return (
     <Box sx={{ bgcolor: 'neutral.400' }}>
@@ -47,7 +46,7 @@ const Hero = ({ manifestoRef }: Props) => {
                 underline="hover"
                 sx={{ cursor: 'pointer' }}
                 onClick={() => {
-                  manifestoRef?.current?.scrollIntoView({ behavior: 'smooth' })
+                  manifestoRef.current?.scrollIntoView({ behavior: 'smooth' })
                 }}
               >
                 {} {translate('youAreWolfSociety')}
@@ -55,7 +54,7 @@ const Hero = ({ manifestoRef }: Props) => {
             </Typography>
             <Stack sx={{ alignItems: 'center' }}>
               <NextLink
-                href={SUBPAGES['collections']}
+                href={SUBPAGES.collections}
                 passHref
                 style={{ lineHeight: 0 }}
               >

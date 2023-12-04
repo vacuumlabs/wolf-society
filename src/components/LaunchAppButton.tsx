@@ -10,7 +10,6 @@ export const LaunchAppButton = () => {
   const magic = useMagic()
   const { connector } = useAccount()
   const isUserWalletMagic = connector != null && connector.id === 'magic'
-  useAccount()
 
   return (
     <ConnectButton.Custom>
@@ -29,6 +28,26 @@ export const LaunchAppButton = () => {
           chain &&
           (!authenticationStatus || authenticationStatus === 'authenticated')
 
+        const getOnClickFn = () => {
+          if (!connected) {
+            return openConnectModal
+          }
+          if (!isUserWalletMagic) {
+            return openAccountModal
+          }
+
+          return async () => {
+            try {
+              // This throws an error if user has logged out of Magic Wallet,
+              // but that fact seemingly cannot be observed by wagmi hooks, connected === true.
+              // So we try to show Magic UI and if that fails, we show Rainbowkit UI
+              await magic?.wallet.showUI()
+            } catch (error) {
+              openAccountModal()
+            }
+          }
+        }
+
         return (
           <Button
             variant="outlined"
@@ -45,22 +64,7 @@ export const LaunchAppButton = () => {
                 lineHeight: '24px',
               },
             })}
-            onClick={
-              connected
-                ? isUserWalletMagic
-                  ? async () => {
-                      try {
-                        // This throws an error if user has logged out of Magic Wallet,
-                        // but that fact seemingly cannot be observed by wagmi hooks, connected === true.
-                        // So we try to show Magic UI and if that fails, we show Rainbowkit UI
-                        await magic?.wallet?.showUI()
-                      } catch (error) {
-                        openAccountModal()
-                      }
-                    }
-                  : openAccountModal
-                : openConnectModal
-            }
+            onClick={getOnClickFn()}
           >
             {connected
               ? formatAddress(account.address)

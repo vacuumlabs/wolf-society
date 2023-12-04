@@ -1,5 +1,4 @@
-import { ContentTypes, useContentful } from '@/utils/hooks/useContentful'
-import { BreakpointOverrides, Grid, Stack, Typography } from '@mui/material'
+import { Grid } from '@mui/material'
 import NftCard from '../NftCard'
 import { NFTDataWithOwnership } from '@/utils/hooks/useGetNftDataWithOwnership'
 
@@ -8,8 +7,6 @@ export type ArtworksProps = {
 }
 
 export const Artworks = ({ nftsData }: ArtworksProps) => {
-  const breakpoint: keyof BreakpointOverrides = 'tabletM'
-  const translate = useContentful(ContentTypes.accountPage)
   return (
     <Grid container>
       {nftsData.map((nft) => (

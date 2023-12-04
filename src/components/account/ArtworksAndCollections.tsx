@@ -31,7 +31,7 @@ enum TabIds {
 }
 
 const tabData: {
-  id: number
+  id: TabIds
   textKey: keyof Content[ContentTypes.accountPage]
 }[] = [
   {
@@ -57,7 +57,7 @@ export const ArtworksAndCollections = ({
 }: Props) => {
   const translate = useContentful(ContentTypes.accountPage)
   const translateCommon = useContentful(ContentTypes.common)
-  const [activeTab, setActiveTab] = useState<number>(0)
+  const [activeTab, setActiveTab] = useState(TabIds.ARTWORKS)
   const breakpoint: keyof BreakpointOverrides = 'tabletM'
 
   const nftsDataWithOwnership = useGetNftDataWithOwnership(nftsData)
@@ -72,31 +72,28 @@ export const ArtworksAndCollections = ({
             value={activeTab}
             TabIndicatorProps={{ sx: { display: 'none' } }}
           >
-            {tabData.map((data, index) => {
-              const color = activeTab === index ? 'black.main' : 'neutral.700'
-              return (
-                <Tab
-                  wrapped
-                  key={`tab-${index}`}
-                  sx={{
-                    p: 0,
-                    pb: 3,
-                    pl: index > 0 ? 5 : 0,
-                    maxWidth: 'none',
-                  }}
-                  label={
-                    <Typography
-                      variant="title"
-                      color={color}
-                      sx={{ '&:hover': { color: 'black.main' } }}
-                    >
-                      {translate(data.textKey)}
-                    </Typography>
-                  }
-                  onClick={() => setActiveTab(index)}
-                />
-              )
-            })}
+            {tabData.map((data, index) => (
+              <Tab
+                wrapped
+                key={data.id}
+                sx={{
+                  p: 0,
+                  pb: 3,
+                  pl: index > 0 ? 5 : 0,
+                  maxWidth: 'none',
+                }}
+                label={
+                  <Typography
+                    variant="title"
+                    color={activeTab === data.id ? 'black.main' : 'neutral.700'}
+                    sx={{ '&:hover': { color: 'black.main' } }}
+                  >
+                    {translate(data.textKey)}
+                  </Typography>
+                }
+                onClick={() => setActiveTab(data.id)}
+              />
+            ))}
           </Tabs>
           {activeTab === TabIds.ARTWORKS && <Artworks nftsData={ownedNfts} />}
           {activeTab === TabIds.COLLECTIONS && (
@@ -137,7 +134,7 @@ export const ArtworksAndCollections = ({
               {translate('noArtworks')}
             </Typography>
             <NextLink
-              href={SUBPAGES['collections']}
+              href={SUBPAGES.collections}
               passHref
               style={{ lineHeight: 0 }}
             >

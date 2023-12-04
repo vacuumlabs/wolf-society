@@ -31,8 +31,8 @@ const ArtistCard = ({
   )
   const [nameHeight, setNameHeight] = useState(0)
 
-  const lastName = name?.substring(name?.lastIndexOf(' '))
-  const firstName = name?.substring(0, name?.lastIndexOf(' '))
+  const lastName = name?.substring(name.lastIndexOf(' '))
+  const firstName = name?.substring(0, name.lastIndexOf(' '))
 
   useEffect(() => {
     setNameHeight(nameRef.current?.clientHeight ?? 0)

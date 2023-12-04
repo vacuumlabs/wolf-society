@@ -1,34 +1,50 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { db } from '../../../../../database'
 import { sql } from 'kysely'
-import { TaskRow } from '@/types'
+import { StaticTask } from '@/consts'
 
-type SuccessData = {
+export type TaskRow = {
+  id: StaticTask
+  taskGroupName: string
+  isCompleted: boolean
+  rewardAmount: number
+  active: boolean
+}
+
+type GetTasksSuccessResponseData = {
+  success: true
   tasks: TaskRow[]
 }
 
-type ErrorData = {
+type GetTasksErrorResponseData = {
+  success: false
   message: string
 }
 
-export type ResponseData = SuccessData | ErrorData
+export type GetTasksResponseData =
+  | GetTasksSuccessResponseData
+  | GetTasksErrorResponseData
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<ResponseData>
+  res: NextApiResponse<GetTasksResponseData>
 ) {
   const eth_address = req.query.address
 
   if (typeof eth_address !== 'string') {
-    return res.status(400).json({
+    res.status(400).json({
+      success: false,
       message: 'No ETH address provided.',
     })
+    return
   }
 
   if (req.method !== 'GET') {
-    return res.status(405).json({
+    res.status(405).json({
+      success: false,
       message: 'Bad HTTP method.',
     })
+    return
   }
 
   const tasks = await db
@@ -50,7 +66,8 @@ export default async function handler(
     ])
     .execute()
 
-  return res.json({
+  res.json({
+    success: true,
     tasks: tasks.map(
       ({ reward_amount, id, task_group_name, is_completed, active }) => ({
         id: id,

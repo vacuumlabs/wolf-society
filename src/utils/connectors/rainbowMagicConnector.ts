@@ -1,18 +1,27 @@
-import { MagicConnectConnector } from '@everipedia/wagmi-magic-connector'
-import { goerli, mainnet } from 'wagmi/chains'
+import { UniversalWalletConnector } from '@magiclabs/wagmi-connector'
+import { strict as assert } from 'assert'
+import { Chain, goerli, mainnet } from 'wagmi/chains'
 import MagicLogo from 'public/images/magiclogo.svg'
 
-export const rainbowMagicConnector = ({ chains, appName }: any) => ({
-  id: 'magic',
-  name: 'Magic',
-  iconUrl: MagicLogo.src,
-  iconBackground: '#fff',
-  appName: appName,
-  createConnector: () => {
-    const connector = new MagicConnectConnector({
+type RainbowMagicConnectorParams = {
+  chains: Chain[]
+  appName: string
+}
+
+export const rainbowMagicConnector = ({
+  chains,
+  appName,
+}: RainbowMagicConnectorParams) => {
+  const magicApiKey = process.env.NEXT_PUBLIC_MAGIC_CONNECT_API_KEY
+  assert(magicApiKey, 'NEXT_PUBLIC_MAGIC_CONNECT_API_KEY is not set')
+
+  const { src: iconUrl } = MagicLogo as { src: string }
+
+  const createConnector = () => {
+    const connector = new UniversalWalletConnector({
       chains: chains,
       options: {
-        apiKey: process.env.NEXT_PUBLIC_MAGIC_CONNECT_API_KEY as string,
+        apiKey: magicApiKey,
         magicSdkConfiguration: {
           network: {
             chainId:
@@ -27,8 +36,16 @@ export const rainbowMagicConnector = ({ chains, appName }: any) => ({
         },
       },
     })
-    return {
-      connector,
-    }
-  },
-})
+
+    return { connector }
+  }
+
+  return {
+    id: 'magic',
+    name: 'Magic',
+    iconUrl,
+    iconBackground: '#fff',
+    appName,
+    createConnector,
+  }
+}

@@ -1,5 +1,5 @@
-import { Box, Stack, Theme, Typography } from '@mui/material'
-import { MutableRefObject, RefObject, useEffect, useRef, useState } from 'react'
+import { Stack, Typography } from '@mui/material'
+import { RefObject, useEffect, useRef, useState } from 'react'
 import StarDelimiter from '../icons/StarDelimiter'
 
 interface HorizontalScrollTextProps {
@@ -25,10 +25,10 @@ export const HorizontalScrollText = ({
   color,
 }: HorizontalScrollTextProps) => {
   const textElemetnRef = useRef<HTMLDivElement>(null)
-  const elementWidth = textElemetnRef?.current
+  const elementWidth = textElemetnRef.current
     ? textElemetnRef.current.offsetWidth
     : 0
-  const [offsets, setOffsets] = useState<Array<number>>([])
+  const [offsets, setOffsets] = useState<number[]>([])
 
   useEffect(() => {
     const newOffsets = calculateOffsets(numberOfItems, elementWidth)
@@ -101,7 +101,7 @@ const HorizontalScrollTextItem = ({
         position: 'absolute',
         transition:
           //prevent animation when object are moved back at the end of scroll effect
-          leftOffset < globalThis.window?.innerWidth + elementWidth &&
+          leftOffset < globalThis.window.innerWidth + elementWidth &&
           leftOffset > -2 * elementWidth
             ? 'all 1s ease-out'
             : 'none',

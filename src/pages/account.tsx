@@ -1,4 +1,3 @@
-import { getWalletClient } from '@wagmi/core'
 import ArtworksAndCollections from '@/components/account/ArtworksAndCollections'
 import ContributionAndRewards from '@/components/account/ContributionAndRewards'
 import { RefetchTokensContext } from '@/utils/context/refetchTokens'
@@ -21,10 +20,12 @@ import {
 } from '@/utils/hooks/useGetStoredPurchasedNfts'
 import { Stack } from '@mui/material'
 import { GetStaticProps, GetStaticPropsContext } from 'next'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useAccount } from 'wagmi'
 import { enqueueSnackbar } from 'notistack'
 import { useRouter } from 'next/router'
+import { signMessage } from '@/utils/wallet'
+import type { GetUserResponseData } from './api/user/[address]'
 
 type Props = {
   translations: Partial<Content>
@@ -48,39 +49,47 @@ export const Account = ({ collectionsData, nftData, tasksData }: Props) => {
   )
 
   useEffect(() => {
-    if (isConnected === false) {
+    if (!isConnected) {
       router.push('/')
     }
-  }, [isConnected])
+  }, [isConnected, router])
 
   useEffect(() => {
     if (doneFetching) {
       return
     }
-    const hasUnstoredNfts = (unstoredNfts || []).length > 0
+    const hasUnstoredNfts = !!unstoredNfts?.length
 
     setDialogOpen(hasUnstoredNfts)
     if (hasUnstoredNfts) {
       setDoneFetching(true)
     }
-  }, [unstoredNfts])
+  }, [unstoredNfts, doneFetching])
 
   useEffect(() => {
     const fetchBalance = async (address: string) => {
-      const res = await fetch(`/api/user/${address}`)
-      const { points } = await res.json()
+      const response = await fetch(`/api/user/${address}`)
+      const responseData = (await response.json()) as GetUserResponseData
 
-      setGameTokens(points)
+      if (responseData.success) {
+        setGameTokens(responseData.points)
+      } else {
+        console.error(
+          "Failed to get user's account details",
+          responseData.message
+        )
+      }
     }
 
-    if (address == null) {
-      return undefined
+    if (address) {
+      fetchBalance(address)
     }
-
-    fetchBalance(address)
   }, [address, refetch])
 
-  const refetchGameTokens = () => setRefetch(refetch + 1)
+  const refetchGameTokens = useCallback(
+    () => setRefetch((value) => value + 1),
+    []
+  )
 
   const postToApi = async ({ tokenAddress, tokenId }: StoredNftData) => {
     const data = {
@@ -89,16 +98,12 @@ export const Account = ({ collectionsData, nftData, tasksData }: Props) => {
       token_id: tokenId,
     }
 
-    const walletClient = await getWalletClient()
-    let signature: `0x${string}` | undefined
-    try {
-      signature = await walletClient?.signMessage({
-        message: JSON.stringify(data),
-      })
-    } catch (err) {
-      console.error(err)
+    const signature = await signMessage(data)
+
+    if (!signature) {
+      return { message: translate('messageNotSignedError') }
     }
-    if (!signature) return { message: translate('messageNotSignedError') }
+
     return fetch(`/api/user/nft-purchased`, {
       method: 'POST',
       body: JSON.stringify({
@@ -118,20 +123,19 @@ export const Account = ({ collectionsData, nftData, tasksData }: Props) => {
     }
 
     // Should never happen
-    if (unstoredNfts == null || unstoredNfts.length < 0) {
+    if (unstoredNfts == null) {
       setDialogOpen(false)
       refetchGameTokens()
       return
     }
 
     const response = await postToApi(unstoredNfts[0])
-    const responseSuccess =
-      response != null && 'status' in response && response.status === 200
+    const responseSuccess = 'status' in response && response.status === 200
 
     if (!responseSuccess) {
       const errorMessage =
         'message' in response
-          ? (response.message as string)
+          ? response.message
           : translateCommon('genericErrorMessage')
       enqueueSnackbar(errorMessage, {
         variant: 'error',
@@ -149,7 +153,7 @@ export const Account = ({ collectionsData, nftData, tasksData }: Props) => {
   return (
     <RefetchTokensContext.Provider value={refetchGameTokens}>
       <Stack mt={10}>
-        <ContributionAndRewards {...{ gameTokens }} />
+        <ContributionAndRewards gameTokens={gameTokens} />
         <ArtworksAndCollections
           collectionsData={collectionsData}
           nftsData={nftData}
@@ -161,7 +165,7 @@ export const Account = ({ collectionsData, nftData, tasksData }: Props) => {
   )
 }
 
-export const getStaticProps: GetStaticProps<{}> = async ({
+export const getStaticProps: GetStaticProps<object> = async ({
   locale,
 }: GetStaticPropsContext) => {
   return {

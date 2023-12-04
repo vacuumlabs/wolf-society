@@ -12,6 +12,7 @@ import AppearingComponent from '../AppearingComponent'
 import Button from '../Button'
 import ArrowTurnTopIcon from '../icons/ArrowTurnTopIcon'
 import { ArticleCardProps } from './ArticleCard'
+import Image from 'next/image'
 
 type Props = {
   post?: ArticleCardProps
@@ -73,7 +74,7 @@ const HeaderArticle = ({ post, image }: Props) => {
                       </Stack>
                       <Stack direction="row" gap={2} width="50%">
                         {image !== '' && (
-                          <img
+                          <Image
                             src={image}
                             width={56}
                             height={56}

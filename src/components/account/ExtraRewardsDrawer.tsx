@@ -20,7 +20,7 @@ import IconButton from '../IconButton'
 import Button from '../Button'
 import { CollectionDataExtended } from './Collection'
 import { TaskDataWithCompletion } from '@/utils/hooks/useGetTasksDataWithCompletion'
-import { useContext, useEffect, useRef, useState } from 'react'
+import { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import {
   MEDIUM_DOMAIN,
   SUBPAGES,
@@ -28,7 +28,7 @@ import {
   TASKS_GROUP_NAME_SITEWIDE,
   TWITTER_DOMAIN,
 } from '@/consts'
-import { getAccount, getWalletClient } from '@wagmi/core'
+import { getAccount } from '@wagmi/core'
 import { enqueueSnackbar } from 'notistack'
 import {
   SocialMedia,
@@ -37,8 +37,9 @@ import {
   shareContentOnSocialMedia,
 } from '@/utils/sharing'
 import { RefetchTokensContext } from '@/utils/context/refetchTokens'
+import { signMessage } from '@/utils/wallet'
 
-type Props = {
+type ExtraRewardsDrawerProps = {
   onClose: (event: React.KeyboardEvent | React.MouseEvent) => void
   drawerOpened: boolean
   collectionData: CollectionDataExtended
@@ -50,7 +51,7 @@ const ExtraRewardsDrawer = ({
   drawerOpened,
   collectionData,
   collectionIsComplete,
-}: Props) => {
+}: ExtraRewardsDrawerProps) => {
   const translate = useContentful(ContentTypes.accountPage)
   const translateCommon = useContentful(ContentTypes.common)
   const translateNavbar = useContentful(ContentTypes.navbar)
@@ -61,7 +62,7 @@ const ExtraRewardsDrawer = ({
   )
   const [completingTask, _setCompletingTask] =
     useState<TaskDataWithCompletion | null>(null)
-  const [completingTaskLast, _setCompletingTaskLast] =
+  const [_completingTaskLast, _setCompletingTaskLast] =
     useState<TaskDataWithCompletion | null>(null)
   const completingTaskRef = useRef(completingTask)
   const completingTaskLastRef = useRef(completingTask)
@@ -75,61 +76,66 @@ const ExtraRewardsDrawer = ({
   }
   const refetchGameTokenBalance = useContext(RefetchTokensContext)
 
-  const postToCompleteTaskApi = async (task: TaskDataWithCompletion) => {
-    const { address } = getAccount()
-    const taskGroupName = task.nftOrCollection
-      ? 'nftDesc' in task.nftOrCollection.fields
-        ? task.nftOrCollection.fields.tokenAddress
-        : task.nftOrCollection.fields.id
-      : TASKS_GROUP_NAME_SITEWIDE
-    const data = {
-      eth_address: address,
-      task_id: task.databaseId,
-      task_group_name: taskGroupName,
-    }
+  const postToCompleteTaskApi = useCallback(
+    async (task: TaskDataWithCompletion) => {
+      const { address } = getAccount()
 
-    const walletClient = await getWalletClient()
-    let signature: `0x${string}` | undefined
-    try {
-      signature = await walletClient?.signMessage({
-        message: JSON.stringify(data),
-      })
-    } catch (err) {
-      console.error(err)
-    }
-    if (!signature) return { message: translate('messageNotSignedError') }
-    return fetch(`/api/user/complete-task`, {
-      method: 'POST',
-      body: JSON.stringify({
-        data,
-        signature,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-  }
+      const taskGroupName = task.nftOrCollection
+        ? 'nftDesc' in task.nftOrCollection.fields
+          ? task.nftOrCollection.fields.tokenAddress
+          : task.nftOrCollection.fields.id
+        : TASKS_GROUP_NAME_SITEWIDE
 
-  const startCompletingTask = async (task: TaskDataWithCompletion) => {
-    setCompletingTaskLast(completingTaskRef.current)
-    setCompletingTask(null)
-    const response = await postToCompleteTaskApi(task)
-    if (response && 'status' in response && response.status === 200) {
-      const completingTaskLastCurrent = completingTaskLastRef.current
-      if (completingTaskLastCurrent) {
-        completingTaskLastCurrent.isCompleted = true
+      const data = {
+        eth_address: address,
+        task_id: task.databaseId,
+        task_group_name: taskGroupName,
       }
-      setCompletingTaskLast(null)
-    } else {
-      const errorMessage =
-        'message' in response
-          ? response.message
-          : translateCommon('genericErrorMessage')
-      enqueueSnackbar(errorMessage, {
-        variant: 'error',
+
+      const signature = await signMessage(data)
+
+      if (!signature) {
+        return { message: translate('messageNotSignedError') }
+      }
+
+      return fetch(`/api/user/complete-task`, {
+        method: 'POST',
+        body: JSON.stringify({
+          data,
+          signature,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
       })
-    }
-  }
+    },
+    [translate]
+  )
+
+  const startCompletingTask = useCallback(
+    async (task: TaskDataWithCompletion) => {
+      setCompletingTaskLast(completingTaskRef.current)
+      setCompletingTask(null)
+      const response = await postToCompleteTaskApi(task)
+
+      if ('status' in response && response.status === 200) {
+        const completingTaskLastCurrent = completingTaskLastRef.current
+        if (completingTaskLastCurrent) {
+          completingTaskLastCurrent.isCompleted = true
+        }
+        setCompletingTaskLast(null)
+      } else {
+        const errorMessage =
+          'message' in response
+            ? response.message
+            : translateCommon('genericErrorMessage')
+        enqueueSnackbar(errorMessage, {
+          variant: 'error',
+        })
+      }
+    },
+    [postToCompleteTaskApi, translateCommon]
+  )
 
   const actionButtonDisabledState = (task: TaskDataWithCompletion): boolean => {
     if (!task.isActive) return true
@@ -164,7 +170,7 @@ const ExtraRewardsDrawer = ({
           break
       }
       const nftOrCollection = task.nftOrCollection?.fields
-      if (socialMedia && nftOrCollection) {
+      if (nftOrCollection) {
         let content
         if ('nftDesc' in nftOrCollection) {
           content = getNftShareableContent(
@@ -234,7 +240,7 @@ const ExtraRewardsDrawer = ({
   }
 
   useEffect(() => {
-    const listener = async function (event: FocusEvent) {
+    const listener = async () => {
       const completingTaskCurrent = completingTaskRef.current
       if (completingTaskCurrent != null) {
         await startCompletingTask(completingTaskCurrent)
@@ -245,7 +251,7 @@ const ExtraRewardsDrawer = ({
     return () => {
       window.removeEventListener('focus', listener)
     }
-  }, [])
+  }, [refetchGameTokenBalance, startCompletingTask])
 
   const ownedNftsCount = collectionData.nfts.filter((nft) => nft.owned).length
   const collectionNftsCount = collectionData.nfts.length

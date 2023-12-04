@@ -1,14 +1,5 @@
-import {
-  Box,
-  BreakpointOverrides,
-  Stack,
-  Theme,
-  Typography,
-  useMediaQuery,
-} from '@mui/material'
+import { Box, BreakpointOverrides, Stack, Typography } from '@mui/material'
 import DrawerTextList from '../landing/DrawerTextList'
-import { Fragment } from 'react'
-import { NFTDividerLine } from './NFTDividerLine'
 
 export interface NFTUsageProps {
   lists: ListProps[]

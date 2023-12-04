@@ -1,9 +1,5 @@
 import React from 'react'
-import {
-  GetStaticProps,
-  GetStaticPropsContext,
-  InferGetStaticPropsType,
-} from 'next'
+import { GetStaticProps, GetStaticPropsContext } from 'next'
 import { Content, useContentful } from '@/utils/hooks/useContentful'
 import NextLink from 'next/link'
 import { Box, Stack, Typography } from '@mui/material'

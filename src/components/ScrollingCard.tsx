@@ -1,5 +1,5 @@
 import { Grid, Theme, useMediaQuery } from '@mui/material'
-import { PropsWithChildren, useEffect, useState } from 'react'
+import { PropsWithChildren } from 'react'
 import { Parallax } from 'react-scroll-parallax'
 
 export type Props = {

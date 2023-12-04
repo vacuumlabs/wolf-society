@@ -162,16 +162,16 @@ const Navigation = () => {
                 <NavbarLink
                   subpageKey="account"
                   label={translate('account')}
-                  href={SUBPAGES['account']}
+                  href={SUBPAGES.account}
                 />
               </Stack>
             )}
             <LaunchAppButton />
             {trigger &&
               !isConnected &&
-              router.pathname !== SUBPAGES['collections'] && (
+              router.pathname !== SUBPAGES.collections && (
                 <NextLink
-                  href={SUBPAGES['collections']}
+                  href={SUBPAGES.collections}
                   passHref
                   style={{ lineHeight: 0 }}
                 >
@@ -283,7 +283,7 @@ const Navigation = () => {
             <Stack gap={2}>
               <LaunchAppButton />
               <NextLink
-                href={SUBPAGES['collections']}
+                href={SUBPAGES.collections}
                 passHref
                 style={{ lineHeight: 0 }}
                 onClick={() => setDrawerOpened(false)}

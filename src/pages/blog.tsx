@@ -10,7 +10,7 @@ import HeaderArticle from '@/components/blog/HeaderArticle'
 import Articles from '@/components/blog/Articles'
 import CTA from '@/components/landing/CTA'
 import { BlogData, getBlogData } from '@/utils/blog'
-import { useBlogData } from '@/utils/hooks/useBlogData'
+import { useFormattedBlogData } from '@/utils/hooks/useFormattedBlogData'
 import AppearingComponent from '@/components/AppearingComponent'
 
 export type ArticleProps = {
@@ -32,7 +32,7 @@ const Blog = ({
   blogData,
   locale,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const formattedPosts = useBlogData(blogData, locale)
+  const formattedPosts = useFormattedBlogData(blogData, locale)
   const { errorMessage, image } = blogData
 
   return (

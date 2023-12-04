@@ -1,5 +1,4 @@
 import Hero from '@/components/landing/Hero'
-import TitleSectionText from '@/components/landing/TitleSectionText'
 import Projects from '@/components/landing/Projects'
 import {
   CollectionData,
@@ -11,7 +10,6 @@ import {
   getTranslations,
   ProjectData,
   RoadmapData,
-  useContentful,
 } from '@/utils/hooks/useContentful'
 import { Stack } from '@mui/material'
 import {
@@ -26,7 +24,7 @@ import CTA from '@/components/landing/CTA'
 import { useRef } from 'react'
 import Activities from '@/components/landing/Activities'
 import { BlogData, getBlogData } from '@/utils/blog'
-import { useBlogData } from '@/utils/hooks/useBlogData'
+import { useFormattedBlogData } from '@/utils/hooks/useFormattedBlogData'
 import Partners from '@/components/landing/Partners'
 import Collections from '@/components/landing/Collections'
 import Manifesto from '@/components/landing/Manifesto'
@@ -55,7 +53,7 @@ const Home = ({
   collectionsData,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const manifestoRef = useRef(null)
-  const formattedPosts = useBlogData(
+  const formattedPosts = useFormattedBlogData(
     { ...blogData, posts: blogData.posts.slice(0, 3) },
     locale
   )
