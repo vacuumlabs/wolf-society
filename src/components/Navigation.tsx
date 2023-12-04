@@ -31,7 +31,7 @@ import NextLink from 'next/link'
 type NavbarLinkProps = {
   subpageKey: keyof Pick<
     Content[ContentTypes.navbar],
-    'about' | 'collections' | 'blog' | 'faq' | 'account' | 'presale'
+    'about' | 'collections' | 'blog' | 'faq' | 'account'
   >
   href?: string
   label: string

@@ -49,7 +49,7 @@ export const TASKS_GROUP_NAME_SITEWIDE = 'sitewide'
 export const SUBPAGES: {
   [key in keyof Pick<
     Content[ContentTypes.navbar],
-    'about' | 'collections' | 'blog' | 'faq' | 'account' | 'presale'
+    'about' | 'collections' | 'blog' | 'faq' | 'account'
   >]: string
 } = {
   about: '/',
@@ -57,7 +57,6 @@ export const SUBPAGES: {
   blog: '/blog',
   faq: '/faq',
   account: '/account',
-  presale: '/presale',
 }
 
 export const SECTIONS = {

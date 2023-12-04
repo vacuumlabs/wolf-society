@@ -11,7 +11,6 @@ export enum ContentTypes {
   collectionsPage = 'collectionsPage',
   articlesPage = 'articlesPage',
   accountPage = 'accountPage',
-  presalePage = 'presale',
   project = 'project',
   roadmap = 'roadmap',
   questionAndAnswer = 'questionAndAnswer',
@@ -184,11 +183,6 @@ export type AccountPageData = {
   availableFor: string
 }
 
-export type PresalePageData = {
-  title: string
-  gridTitle: string
-}
-
 export type NavbarData = {
   about: string
   collections: string
@@ -200,7 +194,6 @@ export type NavbarData = {
   account: string
   discordLink: string
   twitterAccount: string
-  presale: string
 }
 
 export type CommonData = {
@@ -302,7 +295,6 @@ export type Content = {
   [ContentTypes.collectionsPage]: CollectionsPageData
   [ContentTypes.articlesPage]: ArticlesPageData
   [ContentTypes.accountPage]: AccountPageData
-  [ContentTypes.presalePage]: PresalePageData
   [ContentTypes.project]: ProjectData
   [ContentTypes.roadmap]: RoadmapData
   [ContentTypes.questionAndAnswer]: QuestionAndAnswerData
