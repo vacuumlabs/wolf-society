@@ -807,10 +807,10 @@
     magic-sdk "^17.1.3"
     tsc-esm-fix "^2.20.10"
 
-"@hubspot/api-client@^8.9.0":
-  version "8.9.0"
-  resolved "https://registry.yarnpkg.com/@hubspot/api-client/-/api-client-8.9.0.tgz#ef5c708f5e217996bcbd0b10b0347762b4c31bb2"
-  integrity sha512-0BrtxZ2hnVtUxnCyDbYVBpoRXC031moUhVyXfyI2YVa0ETtDBSmFPx2p50gj4dXpTP6vwT1IDdA8jur+iiPXsg==
+"@hubspot/api-client@^10.1.0":
+  version "10.1.0"
+  resolved "https://registry.yarnpkg.com/@hubspot/api-client/-/api-client-10.1.0.tgz#2afbd88dae3b61260e660f5401c0058ec0bbaa9a"
+  integrity sha512-2UMv3xWED0g/l6UM183LxlrFB3CD7oC7bctEvU96+V2KKDoCyFdVWHjjX8Zko7gREODiMnqidyOZt/2akKj75Q==
   dependencies:
     "@types/node-fetch" "^2.5.7"
     bottleneck "^2.19.5"
