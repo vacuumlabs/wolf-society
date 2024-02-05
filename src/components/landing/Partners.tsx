@@ -8,7 +8,6 @@ import {
 } from '@mui/material'
 import VacuumlabsIcon from '../icons/VacuumlabsIcon'
 import AppearingComponent from '../AppearingComponent'
-import ReforestationLogo from '../icons/ReforestationLogo'
 
 const Partners = () => {
   const translate = useContentful(ContentTypes.landingPage)
@@ -36,7 +35,6 @@ const Partners = () => {
               alignItems="center"
             >
               <VacuumlabsIcon />
-              <ReforestationLogo />
             </Stack>
           </Stack>
         </Container>
